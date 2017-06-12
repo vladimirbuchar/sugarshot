@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    MceInit('{HtmlEditorId}');
+    RegisterHtmlEditor('{HtmlEditorId}');
+    function MceInit(id)
+    {
+        tinymce.init({
+        selector: "textarea#"+id,
+        theme: "modern",
+        entity_encoding : "named",
+        plugins: [
+            "advlist autolink lists link image charmap  hr anchor pagebreak",
+            "searchreplace wordcount visualblocks visualchars  fullscreen",
+            "insertdatetime media nonbreaking  table contextmenu directionality",
+            "  paste textcolor colorpicker textpattern {ShowEditHtmlCode}"
+        ],
+        toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        toolbar2: "media | forecolor backcolor emoticons ",
+        image_advtab: true,
+        removed_menuitems: 'newdocument,insertdatetime',
+        language : '{AdminLang}',
+        setup: function(editor) {
+      
+        }
+    
+        });
+    }
+
+
+</script>
+<textarea rows="20" id="{HtmlEditorId}" class="noDatabase">{Html}</textarea>

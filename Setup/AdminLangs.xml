@@ -1,0 +1,23 @@
+<root>
+	<item>
+		<Id><![CDATA[1]]></Id>
+		<Deleted><![CDATA[0]]></Deleted>
+		<IsSystem><![CDATA[0]]></IsSystem>
+		<LangName><![CDATA[Čeština]]></LangName>
+		<LangIdentificator><![CDATA[CS]]></LangIdentificator>
+	</item>
+	<item>
+		<Id><![CDATA[6]]></Id>
+		<Deleted><![CDATA[0]]></Deleted>
+		<IsSystem><![CDATA[0]]></IsSystem>
+		<LangName><![CDATA[Angličtina]]></LangName>
+		<LangIdentificator><![CDATA[EN]]></LangIdentificator>
+	</item>
+	<item>
+		<Id><![CDATA[7]]></Id>
+		<Deleted><![CDATA[0]]></Deleted>
+		<IsSystem><![CDATA[0]]></IsSystem>
+		<LangName><![CDATA[Slovenština]]></LangName>
+		<LangIdentificator><![CDATA[SK]]></LangIdentificator>
+	</item>
+</root>

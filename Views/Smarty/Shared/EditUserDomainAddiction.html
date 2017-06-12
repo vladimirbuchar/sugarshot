@@ -1,0 +1,91 @@
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="myModalLabel"><!--{$word707}--> </h4>
+</div>
+ 
+
+<div class="modal-body">
+    <ul class="nav nav-tabs">
+        <li class="active"> <a href="#tab-1" data-toggle="tab" aria-expanded="true"><!--{$word708}--></a></li>
+
+    </ul>
+    <div class="tabs tab-content">
+        <div id="tab-1" class="tab-pane fade active in">
+            <div id="itemForm" class="form-horizontal" role="form">
+                
+                <br />
+                <input type="hidden" name="Id" Id="Id" />                      
+                <input type="hidden" Id="DomainId" value="<!--{$DomainId}-->" class="noClear" />
+                <div class="form-group"><label for="AddictionName" class="control-label col-sm-4"><!--{$word709}--></label>
+                    <div class="col-sm-8">
+                        <input type="text" id="AddictionName" name="AddictionName" class="required form-control"/></div>
+                </div>
+                
+                <div class="form-group"><label for="Item1" class="control-label col-sm-4"><!--{$word710}--></label>
+                    <div class="col-sm-8">
+                        <select id="Item1" class="form-control">
+                            <option value="">---</option>
+                               <!--{section name=data loop=$ItemList1}-->
+                               <option value="<!--{$ItemList1[data].Id}-->"><!--{$ItemList1[data].ShowName}--></option>
+                            <!--{/section}--> 
+                        </select>    
+                </div>
+            </div>
+                <div class="form-group"><label for="RuleName" class="control-label col-sm-4"><!--{$word711}--></label>
+                    <div class="col-sm-8">
+                        <select id="RuleName" class="form-control">
+                            <option value="">---</option>
+                            <option value=">">></option>
+                            <option value=">=">>=</option>
+                            <option value="<"><</option>
+                            <option value="<="><=</option>
+                            <option value="==">=</option>
+                            <option value="!="><></option>
+                            <option value="selected"><!--{$word720}--></option>
+                               
+                        </select>
+                </div>
+            </div>    
+                <div class="form-group"><label for="Item1Value" class="control-label col-sm-4"><!--{$word712}--></label>
+                    <div class="col-sm-8">
+                        <input type="text" id="Item1Value" name="Item1Value" class="form-control"/></div>
+                </div>
+                
+                <div class="form-group"><label for="ActionName" class="control-label col-sm-4"><!--{$word713}--></label>
+                    <div class="col-sm-8">
+                        <select id="ActionName" class="form-control">
+                            <option value="">---</option>
+                            <option value="show"><!--{$word714}--></option>
+                            <option value="hide"><!--{$word715}--></option>  
+                            <option value="setvalue"><!--{$word716}--></option>   
+                            
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group"><label for="ItemXValue" class="control-label col-sm-4"><!--{$word717}--></label>
+                    <div class="col-sm-8">
+                        <input type="text" id="ItemXValue" name="ItemXValue" class="form-control"/></div>
+                </div>
+                <div class="form-group"><label for="ItemX" class="control-label col-sm-4"><!--{$word718}--></label>
+                    <div class="col-sm-8">
+                        <select id="ItemX" class="form-control">
+                            <option value="">---</option>
+                               <!--{section name=data loop=$ItemList2}-->
+                               <option value="<!--{$ItemList2[data].Id}-->"><!--{$ItemList2[data].ShowName}--></option>
+                            <!--{/section}--> 
+                        </select>    
+                </div>
+            </div>
+                <div class="form-group"><label for="Priority" class="control-label col-sm-4"><!--{$word719}--></label>
+                    <div class="col-sm-8">
+                        <input type="text" id="Priority" name="Priority" class="form-control"/></div>
+                </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+</div>

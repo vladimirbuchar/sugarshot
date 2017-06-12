@@ -1,0 +1,33 @@
+<script type="text/javascript">
+   
+</script>
+<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title SelectedItem"><!--{$word553}--></h4>
+            
+        </div>
+<div class="modal-body">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <input type="hidden" id="Id" value="0"/>
+                      <div class="form-group">
+            <label for="Email"  class="control-label col-sm-2"><!--{$word554}--></label>
+            <div class="col-sm-10">
+            <input type="text" id="Email" name="Email" class="required form-control"  /></div>
+                    </div>
+                </div>
+                <div id="mailingGroups" class="form-horizontal" role="form">
+                    <!--{section name=data loop=$MailingGroups}-->
+                              <div class="form-group">
+            <label for="MailingGroupName_<!--{$MailingGroups[data].ObjectId}-->"  class="control-label col-sm-2"><!--{$MailingGroups[data].MailingGroupName}--></label>
+            <div class="col-sm-10">
+            <input type="checkbox" id="MailingGroupName_<!--{$MailingGroups[data].ObjectId}-->" name="MailingGroupName_<!--{$MailingGroups[data].ObjectId}-->" ignore="ignoreDomainsave" value="<!--{$MailingGroups[data].ObjectId}-->" /></div>
+                    </div>
+                    
+                    <!--{/section}--> 
+                    
+            
+                </div>
+                
+                
+                
+            </div>

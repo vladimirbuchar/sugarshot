@@ -1,0 +1,66 @@
+<ul id="FolderMenu">
+    <li class="btn btn-default"><a href="#"  data-target="#AddDialog" data-toggle="modal"><!--{$word552}--></a></li>
+</ul>
+
+
+<table class="table table-striped table-bordered table-hover">
+    <!--{section name=data loop=$contacts}-->
+<tr id="<!--{$contacts[data].Id}-->">
+    <td>
+        <!--{$contacts[data].Email}-->
+    </td>
+    <td>
+        <a href="#" onclick="Edit('<!--{$contacts[data].Id}-->')" data-target="#AddDialog" data-toggle="modal"><!--{$word556}--></a>
+    </td>
+    <td>
+        <a href="#" onclick="Delete('<!--{$contacts[data].Id}-->')"><!--{$word557}--></a>
+    </td>
+    
+</tr>
+                            
+<!--{/section}--> 
+
+</table>
+<div class="modal fade" id="AddDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title SelectedItem"><!--{$word553}--></h4>
+            
+        </div>
+            <div class="modal-body">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <input type="hidden" id="Id" value="0"/>
+                      <div class="form-group">
+            <label for="Email"  class="control-label col-sm-2"><!--{$word554}--></label>
+            <div class="col-sm-10">
+            <input type="text" id="Email" name="Email" class="required form-control"  /></div>
+                    </div>
+                </div>
+                <div id="mailingGroups" class="form-horizontal" role="form">
+                    <!--{section name=data loop=$MailingGroups}-->
+                              <div class="form-group">
+            <label for="MailingGroupName_<!--{$MailingGroups[data].ObjectId}-->"  class="control-label col-sm-2"><!--{$MailingGroups[data].MailingGroupName}--></label>
+            <div class="col-sm-10">
+            <input type="checkbox" id="MailingGroupName_<!--{$MailingGroups[data].ObjectId}-->" name="MailingGroupName_<!--{$MailingGroups[data].ObjectId}-->" value="<!--{$MailingGroups[data].ObjectId}-->" /></div>
+                    </div>
+                    
+                    <!--{/section}--> 
+                    
+            
+                </div>
+                
+                
+                
+            </div>
+                    <div class="modal-footer">
+                        
+            <button type="button" class="btn btn-primary" onclick="ShowLoading();SaveContact();CloseDialog('AddDialog');HideLoading();"><!--{$word555}--></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('AddDialog')"><!--{$word465}--></button>
+            
+        
+      </div>
+    </div>
+    </div>
+</div>

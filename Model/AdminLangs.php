@@ -1,0 +1,83 @@
+<?php
+namespace Model;
+use Dibi;
+use Types\RuleType;
+use Types\DataTableColumn;
+use Types\AlterTableMode;
+class AdminLangs  extends DatabaseTable{
+    public $LangName;
+    public $LangIdentificator;
+    //private static $_instance = null;
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->ObjectName = "AdminLangs";
+    }
+    /*public static function GetInstance()
+    {
+        self::$_instance = null;
+        if (self::$_instance == null)
+        {
+            self::$_instance = new static();
+        }
+        return self::$_instance;
+    }*/
+    
+    
+    
+    public function OnCreateTable() {
+        $colLangName = new DataTableColumn();
+        $colLangName->DefaultValue ="";
+        $colLangName->IsNull = false;
+        $colLangName->Length = 50;
+        $colLangName->Name ="LangName";
+        $colLangName->Type = "varchar";
+        $colLangName->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colLangName);
+        
+        $colLangIdentificator = new DataTableColumn();
+        $colLangIdentificator->DefaultValue ="";
+        $colLangIdentificator->IsNull = false;
+        $colLangIdentificator->Length = 50;
+        $colLangIdentificator->Name ="LangIdentificator";
+        $colLangIdentificator->Type = "varchar";
+        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colLangIdentificator);
+        
+        $deletedColumn = new DataTableColumn();
+        $deletedColumn->DefaultValue = 0;
+        $deletedColumn->Name = "IsSystem";
+        $deletedColumn->Type = "BOOLEAN";
+        $deletedColumn->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($deletedColumn);
+    }
+    
+
+    public function InsertDefaultData() {
+
+    }
+    
+    public function TableMigrate()
+    {
+        
+    }
+
+    
+
+    public function SetValidate($mode = false) {
+        $this->SetValidateRule("LangName", RuleType::$NoEmpty,$this->GetWord("word82"));
+        $this->SetValidateRule("LangIdentificator", RuleType::$NoEmpty,$this->GetWord("word83"));
+        $this->SetValidateRule("LangIdentificator", RuleType::$Unique,$this->GetWord("word84"));
+        $this->SetValidateRule("LangIdentificator", RuleType::$NoUpdate);
+        $this->SetValidateRule("LangIdentificator", RuleType::$ToUpper);
+        $this->SetCallModelFunction("WordGroups","AddColumnLang","", \Types\DatabaseActions::$Insert);
+        
+        $this->SetParametrsColumn("LangIdentificator");
+    }    
+    public function TableExportSettings()
+    {
+        
+    }
+
+}

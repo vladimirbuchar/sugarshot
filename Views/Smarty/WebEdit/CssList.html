@@ -1,0 +1,34 @@
+<div class="row">
+    <div class="col-md-12">
+        <ul id="FolderMenu">
+    <li class="btn btn-default disabled" id="createObject">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="CssEditor" Prefix="xadm" Text="word283" OnClick="CreateNewObject('WebEdit','CssEditor','/xadm','');return false;"/>
+
+    </li>
+    <li class="btn btn-default disabled" id="createLink"> 
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="CssEditor" Prefix="xadm" Text="word452" OnClick="LoadLinkDialogCss();return false;" DataToggle="modal" DataTarget="#LinkDialog"/>
+    </li>
+        <li  id="editObject" class="btn btn-default disabled dn">
+            <xWeb:Component Type="xLink" Controller="WebEdit" View="CssEditor" Prefix="xadm" Text="word284" OnClick="EditItem('WebEdit','CssEditor','/xadm');return false;"/>
+    </li>
+    <li class="btn btn-default disabled" id="deleteObject">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="CssEditor" Prefix="xadm" Text="word286" OnClick="DeleteDialog();return false;" DataToggle="modal" DataTarget="#DeleteDialog" />
+        
+        
+    </li>
+    
+</ul>
+
+        </div>
+</div>
+<xWeb:Component Type="AdminSearch" ContentType="css" />
+ 
+    
+
+<div id="html1">
+    <table class="tree">
+    <!--{$tree}-->
+  </table>
+</div>
+<xWeb:Component Type="AdminDeleteDialog" ContentType="css" />
+<xWeb:Component Type="AdminLinkDialog" ContentType="css" />

@@ -1,0 +1,307 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        LoadPage('<!--{$Data}-->');
+    });
+</script>
+<ul id="DomainMenu">
+    <li class="btn btn-default">  <a href="#" onclick="SaveTemplate(false);"> <!--{$word232}--></a></li>
+    <li class="btn btn-default"><a href="#" onclick="SaveTemplate(true);" ><!--{$word275}--></a></li>
+    <li class="btn btn-default"><a href="#" onclick="SaveTemplate(true); GoToBack(); return false;"><!--{$word771}--></a></li>
+    <li class="btn btn-default"><a href="#" onclick="SaveTemplate(false); GoToBack(); return false;"><!--{$word772}--></a></li>
+    <li class="btn btn-default"><a href=""><!--{$word233}--></a></li>
+    <li class="btn btn-default"><a href="" onclick="DeleteLangVersion(); return false;"><!--{$word886}--></a></li>    
+</ul>
+<div id="detail">
+
+
+    <ul class="nav nav-tabs">
+
+        <li class="active"> <a href="#tab-1" data-toggle="tab" aria-expanded="true"><!--{$word725}--></a></li>
+        <li> <a href="#tab-2" data-toggle="tab" aria-expanded="true"><!--{$word244}--></a></li>
+        <li> <a href="#tab-3"  data-toggle="tab" aria-expanded="true"><!--{$word501}--></a></li>
+        <li> <a href="#tab-4"  data-toggle="tab" aria-expanded="true"><!--{$word536}--></a></li>
+
+
+    </ul>
+    <div class="tab-content">
+        <div id="tab-1" class="tab-pane fade active in">
+            <br />
+
+            <div id="settingTemplate" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="Name" class="control-label col-sm-2"><!--{$word238}--></label>
+                    <div class="col-sm-10">
+                        <input type="text" id="Name" name="Name" class="required form-control" value="<!--{$Name}-->"/>
+                    </div>
+                </div>
+                <div class="form-group"><label for="SeoUrl"  class="control-label col-sm-2"><!--{$word239}--></label>
+                    <div class="col-sm-10">
+                        <input type="text" id="SeoUrl" name="SeoUrl" value="<!--{$SeoUrl}-->"  class="form-control"/></div>
+                </div>
+
+
+            </div>
+            <div class="form-horizontal" role="form" id="parametrs">
+                <div class="form-group">
+                    <label for="DatasourceType" class="control-label col-sm-2"><!--{$word567}--></label>
+                    <div class="col-sm-10">
+                        <select id="DatasourceType" name="DatasourceType" class="form-control">
+                            <option value="0"><!--{$word568}--></option>
+                            <option value="XmlImport"><!--{$word569}--></option>
+                            <option value="XmlExport"><!--{$word570}--></option>
+                            <option value="XmlExportUserItem"><!--{$word584}--></option>
+                            <option value="XmlImportUserItem"><!--{$word589}--></option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="form-group XmlExport XmlExportUserItem">
+                    <label for="DatasourceXmlStart" class="control-label col-sm-2"><!--{$word571}--></label>
+                    <div class="col-sm-10">
+                        <textarea id="DatasourceXmlStart" name="DatasourceXmlStart" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group XmlExport XmlExportUserItem">
+                    <label for="DatasourceXmlEnd" class="control-label col-sm-2"><!--{$word572}--></label>
+                    <div class="col-sm-10">
+                        <textarea id="DatasourceXmlEnd" name="DatasourceXmlEnd" class="form-control"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group XmlExport XmlExportUserItem">
+                    <label for="DatasourceXmlItem" class="control-label col-sm-2"><!--{$word573}--></label>
+                    <div class="col-sm-10">
+                        <div id="DataEditor"></div>
+                        <textarea id="DatasourceXmlItem" name="DatasourceXmlItem" class="form-control" style="display:none;"></textarea>
+                     
+                    </div>
+                </div>
+                <div class="form-group XmlExport XmlExportUserItem">
+                    <label  class="control-label col-sm-2"><!--{$word726}--></label>
+                    <div id="DomainItems" class="col-sm-10"></div>   
+                </div>
+
+                <div class="form-group XmlExport XmlExportUserItem">
+                    <label for="DatasourceXmlItemStart" class="control-label col-sm-2"><!--{$word574}--></label>
+                    <div class="col-sm-10">
+                        <textarea id="DatasourceXmlItemStart" name="DatasourceXmlItemStart" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group XmlExport XmlExportUserItem">
+                    <label for="DatasourceXmlItemEnd" class="control-label col-sm-2"><!--{$word575}--></label>
+                    <div class="col-sm-10">
+                        <textarea id="DatasourceXmlItemEnd" name="DatasourceXmlItemEnd" class="form-control"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group  XmlExportUserItem">
+                    <label for="DatasourceXmlSubItemStart" class="control-label col-sm-2"><!--{$word608}--></label>
+                    <div class="col-sm-10">
+                        <textarea id="DatasourceXmlSubItemStart" name="DatasourceXmlSubItemStart" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group  XmlExportUserItem">
+                    <label for="DatasourceXmlSubItemItemStart" class="control-label col-sm-2"><!--{$word611}--></label>
+                    <div class="col-sm-10">
+                        <textarea id="DatasourceXmlSubItemItemStart" name="DatasourceXmlSubItemItemStart" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group  XmlExportUserItem">
+                    <label for="DatasourceXmlSubItem" class="control-label col-sm-2"><!--{$word609}--></label>
+                    <div class="col-sm-10">
+                        <div id="DataSumItem"></div>
+                        <textarea id="DatasourceXmlSubItem" name="DatasourceXmlSubItem" class="form-control" style="display: none;"></textarea>
+                    </div>
+                </div>
+                                <div class="form-group  XmlExportUserItem">
+                    <label for="DatasourceXmlSubItemItemEnd" class="control-label col-sm-2"><!--{$word611}--></label>
+                    <div class="col-sm-10">
+                        <textarea id="DatasourceXmlSubItemItemEnd" name="DatasourceXmlSubItemItemEnd" class="form-control"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-group XmlExportUserItem">
+                    <label  class="control-label col-sm-2"><!--{$word726}--></label>
+                    <div id="DomainSubItems" class="col-sm-10"></div>   
+                </div>
+                                <div class="form-group  XmlExportUserItem">
+                    <label for="DatasourceXmlSubItemEnd" class="control-label col-sm-2"><!--{$word610}--></label>
+                    <div class="col-sm-10">
+                        <textarea id="DatasourceXmlSubItemEnd" name="DatasourceXmlSubItemEnd" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="form-group XmlImport XmlExport"><label for="Domain" class="control-label col-sm-2"><!--{$word273}--></label>
+                    <div class="col-sm-10">
+                        <select id="Domain" class="form-control">
+                            <option value="0">----</option>
+                            <!--{section name=data loop=$DomainList}-->
+                            <option value="<!--{$DomainList[data].Id}-->"><!--{$DomainList[data].DomainName}--></option>
+                            <!--{/section}--> 
+                        </select></div>
+                </div>
+                <div class="form-group XmlImport XmlImportUserItem">
+                    <label for="DatasourceXmlUrl" class="control-label col-sm-2"><!--{$word576}--></label>
+                    <div class="col-sm-10">
+                        <input type="text" id="DatasourceXmlUrl" name="DatasourceXmlUrl" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group XmlImport XmlImportUserItem"><label for="ImportMode" class="control-label col-sm-2"><!--{$word578}--></label>
+                    <div class="col-sm-10">
+                        <select id="ImportMode" class="form-control">
+                            <option value="InsertUpdate"><!--{$word582}--></option>
+                            <option value="DeleteInsert"><!--{$word579}--></option>
+                            <option value="Insert"><!--{$word580}--></option>
+                            <option value="Update"><!--{$word581}--></option>
+
+
+                        </select></div>
+                </div>
+                <div class="form-group XmlImport "><label for="ColumnTest" class="control-label col-sm-2"><!--{$word583}--></label>
+                    <div class="col-sm-10">
+                        <select id="ColumnTest" class="form-control">
+                            <option value="">----</option>
+
+
+
+                        </select></div>
+                </div>
+                <div class="form-group  XmlImportUserItem"><label for="ColumnTestUserImport" class="control-label col-sm-2"><!--{$word583}--></label>
+                    <div class="col-sm-10">
+                        <select id="ColumnTestUserImport" class="form-control">
+                            <option value="">----</option>
+
+
+
+                        </select></div>
+                </div>
+                <div class="form-group XmlExportUserItem XmlImportUserItem">
+                    <label for="DatasourceXmlUrl" class="control-label col-sm-2"><!--{$word585}--></label>
+                    <div class="col-sm-10">
+                        <input type="hidden" id="SelectedObject" name="SelectedObject" />
+                        <span id="relatedObjectName"></span>
+                        
+                        <a href="#" data-toggle="modal" data-target="#SelectJoinObjectDialog" class="btn btn-default" onclick="ShowJoinObject()"><!--{$word586}--></a> 
+                        <!--{$word587}--><!--{$word588}-->
+                        
+                        <div class="modal fade" id="SelectJoinObjectDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel"><!--{$word392}--></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="dialogComponent">
+                                        </div>
+
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddArticle(); CloseDialog('SelectJoinObjectDialog')"><!--{$word393}--></button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('SelectJoinObjectDialog')"><!--{$word394}--></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group XmlImportUserItem XmlImport">
+                   <label for="LastmportDate" class="control-label col-sm-2"><!--{$word774}--></label> 
+                   <div class="col-sm-10"><!--{$LastVisited}--></div>
+                </div>
+                
+                <div class="form-group  XmlImportUserItem XmlImport"><label class="control-label col-sm-2"></label>
+                    <div class="col-sm-10">
+                        <input type="button" value="<!--{$word598}-->" onclick="CallUrl()" class="btn btn-default"/>
+                        <input type="button" value="<!--{$word689}-->" onclick="CheckFile()" class="btn btn-default"/>
+                        </div>
+                </div>
+                <div class="form-group XmlExportUserItem XmlExport  "><label class="control-label col-sm-2"></label>
+                    <div class="col-sm-10">
+                        <input type="button" value="<!--{$word599}-->" onclick="XmlExport()" class="btn btn-default "/>
+                        <input type="button" value="<!--{$word601}-->" onclick="GenerateXmlItem()" class="btn btn-default"/>
+                        </div>
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+        <div id="tab-2" class="tab-pane fade">
+            <br />
+            <div id="userSecurity">
+                 <table class="table table-striped table-bordered table-hover">
+                <tr class="header">
+                    
+                    <th>&nbsp;</th>
+                        <th><!--{$word245}--></th>
+                        <th><!--{$word246}--></th>
+                        <th><!--{$word247}--></th>
+                        <th><!--{$word248}--></th>
+                        <th><!--{$word249}--></th>
+                </tr>
+                    <!--{section name=data loop=$GroupList}-->
+                    <tr>
+                        <td><!--{$GroupList[data].GroupName}--></td>
+                        <td><input type="checkbox" id="canRead_<!--{$GroupList[data].Id}-->"  class="canRead" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canread_checked}--> /></td>
+                        <td><input type="checkbox" id="canWrite_<!--{$GroupList[data].Id}-->"  class="canWrite" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canwrite_checked}--> /></td>
+                        <td><input type="checkbox" id="canDelete_<!--{$GroupList[data].Id}-->"  class="canDelete" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].candelete_checked}--> /></td>
+                        <td><input type="checkbox" id="canPublish_<!--{$GroupList[data].Id}-->" class="canPublish" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canpublish_checked}--> /></td>
+                        <td><input type="checkbox" id="canChangePrivileges_<!--{$GroupList[data].Id}-->"  class="canChangePrivileges" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canchangeprivileges_checked}--> /></td>
+                </tr>
+        <!--{/section}--> 
+                    
+                    </table>
+
+
+            </div>
+
+        </div>
+        <div id="tab-3" class="tab-pane fade">
+            <br />
+            <div class="form-horizontal" role="form">
+                <div class="form-group"><label for="OtherLang" class="control-label col-sm-2"><!--{$word502}--></label>
+                    <div class="col-sm-10">
+                        <select id="OtherLang" class="form-control">
+                            <option value="0">----</option>
+                            <!--{section name=data loop=$ItemLangList}-->
+                            <option value="<!--{$ItemLangList[data].Id}-->" <!--{$ItemLangList[data].Selected}-->> <!--{$ItemLangList[data].LangName}--></option>
+                            <!--{/section}--> 
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div id="tab-4" class="tab-pane fade">
+            <br /> 
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <td><!--{$word537}--></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <!--{section name=data loop=$HistoryList}-->
+                <tr>
+                    <td><!--{$HistoryList[data].Date}--></td>
+                    <td><a href="?versionId=<!--{$HistoryList[data].VersionId}-->"><!--{$word538}--></a>
+                    </td>
+                </tr>
+                <!--{/section}--> 
+
+            </table>
+        </div>
+
+
+
+
+
+    </div>
+</div>

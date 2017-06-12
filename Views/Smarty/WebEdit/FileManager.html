@@ -1,0 +1,102 @@
+
+ 
+<div class="row">
+    <div class="col-md-12">
+<ul id="FolderMenu">
+    <li class="btn btn-default disabled" id="createObject">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="FileFolder" Prefix="xadm" Text="word234" OnClick="CreateNewObject('WebEdit','FileFolder','/xadm','');return false;"/>
+        
+        
+    </li>
+    <li class="btn btn-default disabled" id="fileUpload">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="FileUploader" Prefix="xadm" Text="word314" OnClick="CreateNewObject('WebEdit','FileUploader','/xadm','');return false;"/>
+        
+    </li>
+    
+    <li class="btn btn-default disabled" id="filesUpload">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="FileUploader" Prefix="xadm" Text="word773" DataToggle="modal" DataTarget="#FilesUploadDialog" OnClick="return false;" />
+        
+    </li>
+    
+    
+    
+    <li class="btn btn-default disabled dn" id="editObject"> 
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="FileFolder" Prefix="xadm" Text="word271" OnClick="EditItem('WebEdit','FileFolder','/xadm');return false;"/>
+        
+    </li>
+    
+        <li class="btn btn-default disabled dn" id="copyObject"> 
+            <xWeb:Component Type="xLink" Controller="WebEdit" View="FileFolder" Prefix="xadm" Text="word315" OnClick="SetCopyMoveAction('copy');return false;" DataToggle="modal" DataTarget="#CopyMoveDialog" />
+        
+    </li>
+    <li class="btn btn-default disabled" id="moveObject"> 
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="FileFolder" Prefix="xadm" Text="word316" OnClick="SetCopyMoveAction('move');return false;" DataToggle="modal" DataTarget="#CopyMoveDialog" />
+    </li>
+    <li class="btn btn-default disabled" id="deleteObject"> 
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="FileFolder" Prefix="xadm" Text="word317" OnClick="DeleteDialog();return false;" DataToggle="modal" DataTarget="#DeleteDialog" />
+    </li>
+    
+</ul>
+</div>
+</div>
+<xWeb:Component Type="AdminSearch" ContentType="file" />
+<xWeb:Component Type="AdminDeleteDialog" ContentType="file" />
+
+
+<div class="modal fade" id="FilesUploadDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title SelectedItem"><!--{$word773}--></h4>
+            
+        </div>
+            <div class="modal-body">
+                <xWeb:Component Type="FileUploader"  Id="FileUploader" MultiUpload="true"/>
+               
+            </div>
+                    <div class="modal-footer">
+                        
+            <button type="button" class="btn btn-primary" onclick="UploadFiles();CloseDialog('FilesUploadDialog');ReloadTree('file');">Ano</button>
+            
+            
+        
+      </div>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CopyMoveDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title SelectedItem"><!--{$word320}--></h4>
+            
+        </div>
+            <div class="modal-body">
+             <xWeb:Component Type="SelectDialog" ShowFileRepositoryTab="true" SelectFirstTab="true" Id="copyItem"/>
+                
+                
+                
+            </div>
+                    <div class="modal-footer">
+                        
+            <button type="button" class="btn btn-primary" onclick="CopyMove();CloseDialog('CopyMoveDialog');ReloadTree('file');">Ano</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('CopyMoveDialog')">Ne</button>
+            
+        
+      </div>
+    </div>
+    </div>
+</div>
+
+
+
+<div id="html1">
+    
+    <table class="tree" id="folderTree">
+    <!--{$tree}-->
+  </table>
+    
+</div>

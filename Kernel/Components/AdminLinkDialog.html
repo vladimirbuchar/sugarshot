@@ -1,0 +1,29 @@
+<div class="modal fade" id="LinkDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title SelectedItem">{word463}</h4>
+
+            </div>
+            <div class="modal-body">
+                <div id="dialogComponentLink">
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" onclick="ShowLoading();
+                    CreateLink('{ContentType}');
+                    CloseDialog('LinkDialog');
+                    ReloadTree('{ContentType}');
+                    HideLoading();">{word464}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('LinkDialog')"><!--{$word465}--></button>
+
+
+            </div>
+        </div>
+    </div>
+</div>

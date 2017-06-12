@@ -1,0 +1,36 @@
+
+
+<!--{if $LoginError}-->
+<div class="alert alert-danger" role="alert">
+    <!--{$word12}-->
+</div>
+<!--{/if}-->
+<!--{if $IsBadLogin}-->
+<div class="alert alert-danger" role="alert">
+     <!--{$word321}-->
+</div>
+<!--{/if}-->
+
+
+<fieldset>
+                                <div class="form-group">
+                                    <input type="text" name="UserName" id="UserName" placeholder="<!--{$word1}-->" class="form-control" autofocus/>
+                                    
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <input type="password" name="UserPassowrd" id="userPasswprd" class="form-control" placeholder="<!--{$word2}-->" value=""/>
+                                </div>
+                                <div class="form-group">
+                                    <select id="userLang" class="form-control">
+                                        <!--{section name=data loop=$AdminLang}-->
+                                            <option value="<!--{$AdminLang[data].LangIdentificator}-->" <!--{$AdminLang[data].selected}-->><!--{$AdminLang[data].LangName}--></option>
+                                        <!--{/section}--> 
+                                    </select>
+                                </div>
+<div class="form-group">                                                                
+                                <input type="submit" value="<!--{$word6}-->" onclick="CallPhpFunction('UserLogin')" class="btn btn-lg btn-success btn-block"/> <br />
+</div>
+                            </fieldset>
+
+

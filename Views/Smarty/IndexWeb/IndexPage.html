@@ -1,0 +1,60 @@
+<!--{if $NormalPage}-->
+<!doctype html>
+    
+<head>
+    <!--{$pageHeader}-->
+    <link href="/Styles/Frontend/main.css" rel="stylesheet"  type="text/css" />
+    <link href="/Styles/Frontend/animate.css" rel="stylesheet"  type="text/css" />
+    <link href="/Styles/Frontend/responsive.css" rel="stylesheet"  type="text/css" />
+    <!--{section name=data loop=$CssStyles}-->
+    <!--{if $CssStyles[data].ContentType =="Css"}-->
+        <link href="/css/<!--{$langId}-->/<!--{$CssStyles[data].Id}-->/<!--{$CssStyles[data].Name}-->.css" rel="stylesheet"  type="text/css" />
+    <!--{/if}-->
+    <!--{if $CssStyles[data].ContentType =="CssExternalLink"}-->
+        <link href="<!--{$CssStyles[data].Name}-->" rel="stylesheet"  type="text/css" />
+    <!--{/if}-->
+    
+    <!--{/section}-->
+    
+    <!--{if $FrameworkMode == "jquery"}-->
+        <script type="text/javascript"  src="/Scripts/ExternalApi/jQuery.js"></script>
+        <script type="text/javascript"  src="/Scripts/Core.js"></script>
+        <script type="text/javascript" src="/Scripts/ExternalApi/validator.js"></script> 
+        <script type="text/javascript"  src="/Scripts/frontedScripts.js"></script>
+        
+        
+    <!--{/if}-->
+    <!--{section name=data loop=$JsScript}-->
+    <!--{if $JsScript[data].ContentType =="Javascript"}-->
+    <script type="text/javascript"  src="/js/<!--{$langId}-->/<!--{$JsScript[data].Id}-->/<!--{$JsScript[data].Name}-->.js" ></script>
+    <!--{/if}-->
+    <!--{if $JsScript[data].ContentType =="JsExternalLink"}-->
+    <script type="text/javascript"  src="<!--{$JsScript[data].Name}-->"></script>
+    <!--{/if}--> 
+    <!--{/section}--> 
+    <!--{if $ajaxLinks}--> 
+    <script type="text/javascript" src="/Scripts/AjaxLinks.js"></script>  
+    
+    
+    <!--{/if}-->
+    
+
+    
+    <headerCss/>
+    <headerScript/>
+    
+    
+    
+</head>
+<body class="{PAGECLASS}">
+    <div id="pageForm">   
+    <!--{/if}-->        
+    <input type="hidden" id="LangId" value="<!--{$langId}-->"/>
+    <input type="hidden" id="WebId"  value="<!--{$webId}-->"/>
+    <!--{$pageHtml}-->
+    <!--{if $NormalPage}-->
+    </div>
+    
+</body>
+</html>
+<!--{/if}-->

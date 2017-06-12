@@ -1,0 +1,30 @@
+{
+    "name": "filipsedivy/php-eet",
+    "description": "PHP knihovna pro elektronickou evidenci tržeb",
+    "homepage": "https://github.com/filipsedivy/PHP-EET",
+    "license": "GNU GPL 3",
+    "keywords": ["EET", "elektronická evidence tržeb", "etrzby.cz"],
+    "type": "library",
+    "time": "2016-09-03",
+    "support": {
+        "email": "mail@filipsedivy.cz",
+        "issues": "https://github.com/filipsedivy/PHP-EET/issues",
+        "source:": "https://github.com/filipsedivy/PHP-EET"
+    },
+    "authors": [
+        {
+            "name": "Filip Šedivý",
+            "email": "mail@filipsedivy.cz",
+            "homepage": "https://filipsedivy.cz",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "classmap": ["src/"]
+    },
+    "require": {
+        "php": ">=5.6.0",
+        "robrichards/wse-php": "2.0.0",
+        "ext-curl": "*"
+    }
+}

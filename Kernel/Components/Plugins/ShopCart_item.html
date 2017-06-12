@@ -1,0 +1,37 @@
+
+    <div class="row cartItem" id="product-{Id}{Specification}">
+        <div class="col-md-1 productImage">
+            <a href="{SeoUrl}" data-ajax="false"><img src="/<%GetSmallFile('{MainImage}')%>" class="img-responsive" alt="{Name}"></a>
+        </div>
+        <div class="col-md-3 productName">
+            <a href="{SeoUrl}"  data-ajax="false">{Name}   - {Color}  - {Specification}</a>
+        </div>
+        <div class="col-md-1 productPrice" id="{Id}{Specification}-productPrice">
+            <%Price('{Price}','cs_CZ','%.2n')%>
+        </div>
+        <!-- <div class="col-md-1 productPriceVat" id="{Id}{Specification}-productPriceVat">
+            <%PriceVat('{Price}','cs_CZ','%.2n','{Vat}')%>
+        </div>-->
+        
+        <div class="col-md-2 productCount">
+            <input type="number" value="{Count}" class="form-control noDatabase" id='{Id}{Specification}' data-role='none' min="1" />
+        </div>
+        
+        <div class="col-md-1 productPriceCount" id="{Id}{Specification}-productPriceCount">
+            <%PriceCount('{Price}','cs_CZ','%.2n','{Count}')%>
+        </div>
+        <!--<div class="col-md-1 productPriceVatCount" id="{Id}{Specification}-productPriceVatCount">
+            <%PriceVatCount('{Price}','cs_CZ','%.2n','{Vat}','{Count}')%>
+        </div>-->
+        
+        <div class="col-md-1 productRecount">
+            <a href="#" onclick="Recount('{Id}{Specification}')">
+            <i class="fa fa-refresh" aria-hidden="true"></i></a>
+        </div>
+        <div class="col-md-1 productDelete">
+            <a href="#" onclick="DeleteProduct('{Id}{Specification}')">
+            <i class="fa fa-times" aria-hidden="true"></i> 
+            </a>
+        </div>
+    </div> 
+    

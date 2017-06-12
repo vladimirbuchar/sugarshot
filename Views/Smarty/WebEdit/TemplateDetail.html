@@ -1,0 +1,168 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+    WriteXmlData('<!--{$ContentSettings}-->');
+    });
+    </script>
+
+ 
+
+<ul id="DomainMenu">
+    <li class="btn btn-default"><a href="#" onclick="SaveTemplate(false);"><!--{$word232}--></a></li>
+    <li class="btn btn-default"><a href="#" onclick="SaveTemplate(true);"><!--{$word275}--></a></li>
+    <li class="btn btn-default"><a href="#" onclick="SaveTemplate(true); GoToBack(); return false;"><!--{$word771}--></a></li>
+    <li class="btn btn-default"><a href="#" onclick="SaveTemplate(false); GoToBack(); return false;"><!--{$word772}--></a></li>
+    <li class="btn btn-default"><a href=""><!--{$word233}--></a></li>
+    <li class="btn btn-default"><a href="" onclick="DeleteLangVersion(); return false;"><!--{$word886}--></a></li>
+</ul>
+ <div id="detail">
+    
+    
+        <ul class="nav nav-tabs">
+            <li class="active"> <a href="#tab-1"  data-toggle="tab" aria-expanded="true"><!--{$word237}--></a></li>
+            <li> <a href="#tab-2"  data-toggle="tab" aria-expanded="true"><!--{$word244}--></a></li>
+            <li> <a href="#tab-3"  data-toggle="tab" aria-expanded="true"><!--{$word277}--></a></li>
+            <li> <a href="#tab-4"  data-toggle="tab" aria-expanded="true"><!--{$word501}--></a></li>
+            <li> <a href="#tab-5"  data-toggle="tab" aria-expanded="true"><!--{$word536}--></a></li>
+            
+        </ul>
+     <div class="tab-content">
+        <div id="tab-1" class="tab-pane fade active in">
+            <br />
+            <div class="adminForm">
+             <div id="settingTemplate" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="Name" class="control-label col-sm-2"><!--{$word238}--></label>
+                    <div class="col-sm-10">
+                    <input type="text" id="Name" name="Name" class="required form-control col-md-1" value="<!--{$Name}-->"/></div>
+                </div>
+                <div class="form-group"><label for="Identificator" class="control-label col-sm-2"><!--{$word243}--></label>
+                    <div class="col-sm-10">
+                    <input type="text" id="Identificator" name="Identificator" value="<!--{$Identificator}-->" class="form-control"/></div>
+                </div>
+                <div class="form-group"><label for="Template" class="control-label col-sm-2"><!--{$word274}--></label>
+                    <div class="col-sm-10">
+                <select id="Template" class="form-control">
+                        <option value="0">----</option>
+                        <!--{section name=data loop=$TemplateList}-->
+                        <option value="<!--{$TemplateList[data].Id}-->" <!--{$TemplateList[data].Selected}-->><!--{$TemplateList[data].Name}--></option>
+                        <!--{/section}--> 
+                </select></div></div>
+                <div class="form-group"><label for="Domain" class="control-label col-sm-2"><!--{$word273}--></label>
+                    <div class="col-sm-10">
+                <select id="Domain" class="form-control">
+                        <option value="0">----</option>
+                        <!--{section name=data loop=$DomainList}-->
+                        <option value="<!--{$DomainList[data].Id}-->" <!--{$DomainList[data].Selected}-->><!--{$DomainList[data].DomainName}--></option>
+                        <!--{/section}--> 
+                </select></div>
+                </div>
+                 <div class="form-group">
+                 <textarea id="Data" style="display: none;"><!--{$Data}--></textarea>
+                 <div class="col-sm-2 templateEditorLeftPanel">
+                     <h3><!--{$word594}--></h3>
+                     <a onclick='SetTextHtml("{Name}");return false;' href="#"><!--{$word738}--> (Name) </a>
+                     <br /><a onclick='SetTextHtml("{SeoUrl}");return false;' href="#"><!--{$word739}--> (SeoUrl) </a>
+                     <br /><br />
+                     <div id="domainItems">
+                     </div>
+                     <h3><!--{$word775}--></h3>
+                     <div id="templateSettings">
+                     <div class="row">
+                     <input type="checkbox" id="hideRelatedItems" /><label for="hideRelatedItems"><!--{$word776}--></label>
+                     </div>
+                     <div class="row">
+                     <input type="checkbox" id="hideMediaGallery" /><label for="hideMediaGallery"><!--{$word777}--></label>
+                     </div>
+                     <div class="row">
+                     <input type="checkbox" id="hideOthersObjects" /><label for="hideOthersObjects"><!--{$word778}--></label>
+                     </div>
+                     <div class="row">
+                     <input type="checkbox" id="hideAlernativeObjects" /><label for="hideAlernativeObjects"><!--{$word779}--></label>
+                     </div>
+                         </div>
+                 </div>
+                 <div id="DataEditor" class="col-sm-10"> </div>
+                 </div>
+            </div>
+            
+            
+            
+            </div>
+            
+        </div>
+        <div id="tab-2" class="tab-pane fade">
+            <br /> 
+            <div id="userSecurity">
+                 <table class="table table-striped table-bordered table-hover">
+                <tr class="header">
+                    
+                    <th>&nbsp;</th>
+                        <th><!--{$word245}--></th>
+                        <th><!--{$word246}--></th>
+                        <th><!--{$word247}--></th>
+                        <th><!--{$word248}--></th>
+                        <th><!--{$word249}--></th>
+                </tr>
+                    <!--{section name=data loop=$GroupList}-->
+                    <tr>
+                        <td><!--{$GroupList[data].GroupName}--></td>
+                        <td><input type="checkbox" id="canRead_<!--{$GroupList[data].Id}-->"  class="canRead" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canread_checked}--> /></td>
+                        <td><input type="checkbox" id="canWrite_<!--{$GroupList[data].Id}-->"  class="canWrite" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canwrite_checked}--> /></td>
+                        <td><input type="checkbox" id="canDelete_<!--{$GroupList[data].Id}-->"  class="canDelete" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].candelete_checked}--> /></td>
+                        <td><input type="checkbox" id="canPublish_<!--{$GroupList[data].Id}-->" class="canPublish" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canpublish_checked}--> /></td>
+                        <td><input type="checkbox" id="canChangePrivileges_<!--{$GroupList[data].Id}-->"  class="canChangePrivileges" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canchangeprivileges_checked}--> /></td>
+                </tr>
+        <!--{/section}--> 
+                    
+                    </table>
+                    
+                    
+                
+                </div>
+                
+            </div>
+        <div id="tab-3" class="tab-pane fade">
+            <br />
+            <div class="form-group">
+            <textarea id="TemplateHeader" name="TemplateHeader" rows="10" class="form-control">
+                <!--{$Header}-->
+            </textarea>
+            </div>
+        </div>
+         <div id="tab-4" class="tab-pane fade">
+            <br />
+            <div class="form-horizontal" role="form">
+                            <div class="form-group"><label for="OtherLang" class="control-label col-sm-2"><!--{$word502}--></label>
+                    <div class="col-sm-10">
+                        <select id="OtherLang" class="form-control">
+                        <option value="0">----</option>
+                        <!--{section name=data loop=$ItemLangList}-->
+                        <option value="<!--{$ItemLangList[data].Id}-->" <!--{$ItemLangList[data].Selected}-->> <!--{$ItemLangList[data].LangName}--></option>
+                        <!--{/section}--> 
+                </select>
+                    
+                </div>
+            </div>
+        </div>
+        
+        
+         
+    </div>
+         <div id="tab-5" class="tab-pane fade">
+            <br /> 
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <td><!--{$word537}--></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <!--{section name=data loop=$HistoryList}-->
+                <tr>
+                    <td><!--{$HistoryList[data].Date}--></td>
+                    <td><a href="?versionId=<!--{$HistoryList[data].VersionId}-->"><!--{$word538}--></a>
+                        </td>
+                </tr>
+                        <!--{/section}--> 
+                
+            </table>
+        </div>
+</div>

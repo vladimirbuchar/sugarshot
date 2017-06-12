@@ -1,0 +1,8 @@
+{
+    "require": {
+        "filipsedivy/php-eet": "^2.0",
+        "dibi/dibi": "^3.0",
+        "phpmailer/phpmailer": "^5.2",
+        "cosenary/instagram": "^2.3"
+    }
+}

@@ -1,0 +1,269 @@
+
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word22}--> </h4>
+      </div>
+        
+    
+<div class="modal-body">
+           <ul class="nav nav-tabs">
+               <li class="active"> <a href="#tab-1" data-toggle="tab" aria-expanded="true"><!--{$word23}--></a></li>
+               <li> <a href="#tab-2" data-toggle="tab" aria-expanded="true"><!--{$word356}--></a></li>   
+               <li> <a href="#tab-3" data-toggle="tab" aria-expanded="true"><!--{$word357}--></a></li>   
+               <li> <a href="#tab-4" data-toggle="tab" aria-expanded="true"><!--{$word358}--></a></li>   
+               <li> <a href="#tab-5" data-toggle="tab" aria-expanded="true"><!--{$word524}--></a></li>   
+               <li> <a href="#tab-6" data-toggle="tab" aria-expanded="true"><!--{$word528}--></a></li>   
+               <li> <a href="#tab-7" data-toggle="tab" aria-expanded="true"><!--{$word533}--></a></li>   
+            </ul>
+<div class="tabs tab-content">
+            <div id="tab-1" class="tab-pane fade active in">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <input type="hidden" name="Id" Id="Id" />
+                    <br /> 
+                    <div class="form-group"><label for="WebName" class="control-label col-sm-3 "><!--{$word25}--></label>
+                        <div class="col-sm-9">
+                        <input type="text" id="WebName" name="WebName" class="required form-control"/></div>
+                    </div>
+                    <div class="form-group"><label for="GenerateAjaxLink" class="control-label col-sm-3 "><!--{$word535}--></label>
+                        <div class="col-sm-9">
+                        <input type="checkbox" id="GenerateAjaxLink" name="GenerateAjaxLink" /></div>
+                    </div>
+                    <textarea id="WebPrivileges" class="dn"></textarea>
+                    <div class="form-group"><label for="DefaultFramework" class="control-label col-sm-3 "><!--{$word638}--></label>
+                        <div class="col-sm-9">
+                            <select id="DefaultFramework" class="form-control">
+                                <option value="NoFramework"><!--{$word639}--></option>
+                                <option value="jquery"><!--{$word640}--></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group"><label for="CookiesAccept" class="control-label col-sm-3 "><!--{$word760}--></label>
+                        <div class="col-sm-9">
+                        <input type="checkbox" id="CookiesAccept" name="CookiesAccept" /></div>
+                    </div>
+                    </div>    
+                    
+                    
+                
+            </div>
+    <div id="tab-2" class="tab-pane fade">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    
+                    <p><!--{$word359}--></p>
+                    <div class="form-group"><label for="SmallHeight" class="control-label col-sm-3 "><!--{$word360}--></label>
+                        <div class="col-sm-9">
+                        <input type="text" id="SmallHeight" name="SmallHeight" class="form-control"/></div>
+                    </div>
+                    <div class="form-group"><label for="SmallWidth" class="control-label col-sm-3 "><!--{$word361}--></label>
+                        <div class="col-sm-9">
+                        <input type="text" id="SmallWidth" name="SmallWidth" class="form-control"/></div>
+                    </div>
+                    
+                    <p><!--{$word362}--></p>
+                    <div class="form-group"><label for="MediumHeight" class="control-label col-sm-3 "><!--{$word360}--></label>
+                        <div class="col-sm-9">
+                        <input type="text" id="MediumHeight" name="MediumHeight" class="form-control"/></div>
+                    </div>
+                    <div class="form-group"><label for="MediumWidth" class="control-label col-sm-3 "><!--{$word361}--></label>
+                        <div class="col-sm-9">
+                        <input type="text" id="MediumWidth" name="MediumWidth" class="form-control"/></div>
+                    </div>
+                                        <p><!--{$word363}--></p>
+                    <div class="form-group"><label for="BigHeight" class="control-label col-sm-3 "><!--{$word360}--></label>
+                        <div class="col-sm-9">
+                        <input type="text" id="BigHeight" name="BigHeight" class="form-control"/></div>
+                    </div>
+                    <div class="form-group"><label for="BigWidth" class="control-label col-sm-3 "><!--{$word361}--></label>
+                        <div class="col-sm-9">
+                        <input type="text" id="BigWidth" name="BigWidth" class="form-control"/></div>
+                    </div>
+                    </div>    
+                    
+                    
+                
+            </div>
+    <div id="tab-3" class="tab-pane fade">
+        <br />
+        
+            <div  id="userSecurity" class="form-horizontal" role="form">
+                
+                    
+                     <table class="table table-striped table-bordered table-hover">
+                <tr class="header noClear">
+                    
+                    <th>&nbsp;</th>
+                        <th><!--{$word245}--></th>
+                        <th><!--{$word246}--></th>
+                        <th><!--{$word247}--></th>
+                        <th><!--{$word248}--></th>
+                        <th><!--{$word249}--></th>
+                </tr>
+                
+                    <!--{section name=data loop=$GroupList}-->
+                    <tr class="noClear">
+                        
+                        <td><!--{$GroupList[data].GroupName}--></td>
+                        <td><input type="checkbox"  class="canRead" ignore="ignoreDomainsave" value="<!--{$GroupList[data].Id}-->"   /></td>
+                        <td><input type="checkbox"  class="canWrite" ignore="ignoreDomainsave" value="<!--{$GroupList[data].Id}-->"  /></td>
+                        <td><input type="checkbox"  class="canDelete" ignore="ignoreDomainsave" value="<!--{$GroupList[data].Id}-->" /></td>
+                        <td><input type="checkbox"  class="canPublish" ignore="ignoreDomainsave" value="<!--{$GroupList[data].Id}-->" /></td>
+                        <td><input type="checkbox"  class="canChangePrivileges" ignore="ignoreDomainsave" value="<!--{$GroupList[data].Id}-->"/></td>
+                     </tr>
+        <!--{/section}--> 
+                    
+                    
+                
+                     </table>
+    </div>
+    </div>
+    <div id="tab-4" class="tab-pane fade">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    
+                    <br /> 
+                    <div class="form-group"><label for="AdminUserActive" class="control-label col-sm-3 "><!--{$word364}--></label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" id="AdminUserActive" name="AdminUserActive" /></div>
+                    </div>
+                    <div class="form-group"><label for="UserEmailActivate" class="control-label col-sm-3 "><!--{$word365}--></label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" id="UserEmailActivate" name="UserEmailActivate" ></div>
+                    </div>
+                    <div class="form-group"><label for="EmailUserLogin" class="control-label col-sm-3 "><!--{$word366}--></label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" id="EmailUserLogin" name="EmailUserLogin" /></div>
+                    </div>
+                    
+                    <div class="form-group"><label for="AfterLoginAction" class="control-label col-sm-3 "><!--{$word740}--></label>
+                        <div class="col-sm-9">
+                            <select id="AfterLoginAction" class="form-control" name="AfterLoginAction">
+                                <option value="gohomepage"><!--{$word741}--></option>
+                                <option value="staypage"><!--{$word742}--></option>
+                                <option value="gotourl"><!--{$word743}--></option>
+                            </select>
+                    </div>
+                    
+                    </div>    
+                    <div class="form-group"><label for="AfterLoginUrl" class="control-label col-sm-3 "><!--{$word744}--></label>
+                        <div class="col-sm-9">
+                            <input type="text" id="AfterLoginUrl" name="AfterLoginUrl" class="form-control" /></div>
+                    </div>
+                    <div class="form-group"><label for="SendInfoEmailToAdmin" class="control-label col-sm-3 "><!--{$word753}--></label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" id="SendInfoEmailToAdmin" name="SendInfoEmailToAdmin" /></div>
+                    </div>
+                    <div class="form-group"><label for="AdminInfoEmail" class="control-label col-sm-3 "><!--{$word754}--></label>
+                        <div class="col-sm-9">
+                            <input type="text" id="AdminInfoEmail" name="AdminInfoEmail" class="form-control" /></div>
+                    </div>
+                      <div class="form-group"><label for="AdmiInfoMailId" class="control-label col-sm-3 "><!--{$word756}--></label>
+                        <div class="col-sm-9">
+                            <select id="AdmiInfoMailId" name="AdmiInfoMailId"  class="form-control"> 
+                            <!--{section name=data loop=$MailListAdmin}-->
+                            <option value="<!--{$MailListAdmin[data].Id}-->"><!--{$MailListAdmin[data].Name}--></option>
+                            <!--{/section}--> 
+                        </select>
+                    </div>
+                          </div>
+                    <div class="form-group"><label for="SendInfoEmailToUser" class="control-label col-sm-3 "><!--{$word757}--></label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" id="SendInfoEmailToUser" name="SendInfoEmailToUser" /></div>
+                    </div>      
+                     <div class="form-group"><label for="UserInfoEmailFrom" class="control-label col-sm-3 "><!--{$word758}--></label>
+                        <div class="col-sm-9">
+                            <input type="text" id="UserInfoEmailFrom" name="UserInfoEmailFrom" class="form-control" /></div>
+                    </div>
+                    <div class="form-group"><label for="UserInfoMailId" class="control-label col-sm-3 "><!--{$word759}--></label>
+                        <div class="col-sm-9">
+                            <select id="UserInfoMailId" name="UserInfoMailId"  class="form-control"> 
+                            <!--{section name=data loop=$MailListAdmin}-->
+                            <option value="<!--{$MailListAdmin[data].Id}-->"><!--{$MailListAdmin[data].Name}--></option>
+                            <!--{/section}--> 
+                        </select>
+                    </div>
+                          </div>
+                          
+                    
+                    
+                
+            
+                </div>
+    </div>
+    <div id="tab-5" class="tab-pane fade">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    
+                    <br /> 
+                    <div class="form-group"><label for="BlockSendEmails" class="control-label col-sm-3 "><!--{$word525}--></label>
+                        <div class="col-sm-9">
+                        <input type="checkbox" id="BlockSendEmails" name="BlockSendEmails" /></div>
+                    </div>
+                    <div class="form-group"><label for="BlockAdmin" class="control-label col-sm-3 "><!--{$word526}--></label>
+                        <div class="col-sm-9">
+                        <input type="checkbox" id="BlockAdmin" name="BlockAdmin" /></div>
+                    </div>
+                    <div class="form-group"><label for="UseHttps" class="control-label col-sm-3 "><!--{$word527}--></label>
+                        <div class="col-sm-9">
+                        <input type="checkbox" id="UseHttps" name="UseHttps" /></div>
+                    </div>
+                    
+                    </div>    
+                    
+                    
+                
+            </div>
+    <div id="tab-6" class="tab-pane fade">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <div class="form-group"><label for="WebIpRestrictionAll" class="control-label col-sm-3 "><!--{$word529}--></label>
+                        <div class="col-sm-9">
+                        <input type="radio" id="WebIpRestrictionAll" name="WebIpRestriction" /></div>
+                    </div>
+                </div>
+        <div id="itemForm" class="form-horizontal" role="form">
+                    <div class="form-group"><label for="WebIpRestrictionAceptIp" class="control-label col-sm-3 "><!--{$word530}--></label>
+                        <div class="col-sm-9">
+                        <input type="radio" id="WebIpRestrictionAceptIp" name="WebIpRestriction" /></div>
+                    </div>
+                </div>
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <div class="form-group"><label for="WebIpRestrictionBlockIp" class="control-label col-sm-3 "><!--{$word531}--></label>
+                        <div class="col-sm-9">
+                        <input type="radio" id="WebIpRestrictionBlockIp" name="WebIpRestriction" /></div>
+                    </div>
+                </div>
+        <div id="itemForm" class="form-horizontal" role="form">
+                    <div class="form-group"><label for="WebIpAddress" class="control-label col-sm-3 "><!--{$word532}--></label>
+                        <div class="col-sm-9">
+                        <input type="text" id="WebIpAddress" name="WebIpAddress" class=" form-control"/></div>
+                    </div>
+                </div>
+    </div>
+    
+    <div id="tab-7" class="tab-pane fade">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <div class="form-group"><label for="AdminIpRestrictionAll" class="control-label col-sm-3 "><!--{$word529}--></label>
+                        <div class="col-sm-9">
+                        <input type="radio" id="AdminIpRestrictionAll" name="AdminIpRestriction" /></div>
+                    </div>
+                </div>
+        <div id="itemForm" class="form-horizontal" role="form">
+                    <div class="form-group"><label for="AdminIpRestrictionAceptIp" class="control-label col-sm-3 "><!--{$word530}--></label>
+                        <div class="col-sm-9">
+                        <input type="radio" id="AdminIpRestrictionAceptIp" name="AdminIpRestriction" /></div>
+                    </div>
+                </div>
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <div class="form-group"><label for="AdminIpRestrictionBlockIp" class="control-label col-sm-3 "><!--{$word531}--></label>
+                        <div class="col-sm-9">
+                        <input type="radio" id="AdminIpRestrictionBlockIp" name="AdminIpRestriction" /></div>
+                    </div>
+                </div>
+        <div id="itemForm" class="form-horizontal" role="form">
+                    <div class="form-group"><label for="AdminIpAddress" class="control-label col-sm-3 "><!--{$word532}--></label>
+                        <div class="col-sm-9">
+                        <input type="text" id="AdminIpAddress" name="AdminIpAddress" class=" form-control"/></div>
+                    </div>
+                </div>
+    </div>
+            
+        </div>
+        
+    </div>

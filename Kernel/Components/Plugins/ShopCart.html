@@ -1,0 +1,64 @@
+<input type="hidden" id="Currency" value="{Currency}" />
+<input type="hidden" id="PriceFormat" value="{PriceFormat}" />
+
+<div class="cart {ShowCart}" id="cart">
+    <div class="row cartHeader">
+        <div class="col-md-1 productImage">
+            &nbsp;
+        </div>
+        <div class="col-md-3 productName">
+            {word786}
+        </div>
+        <div class="col-md-1 productPrice">
+            {word787}
+        </div>
+        <!--<div class="col-md-1 productPriceVat">
+            {word788}
+        </div>-->
+        
+        <div class="col-md-2 productCount">
+            {word789}
+        </div>
+        
+        <div class="col-md-1 productPriceCount">
+            {word790}
+        </div>
+        <!--<div class="col-md-1 productPriceVatCount">
+            {word791}
+        </div>-->
+        
+        <div class="col-md-1 productRecount">
+            
+        </div>
+        <div class="col-md-1 productDelete">
+            
+        </div>
+    </div>
+    <div class="cartItems">
+        {ShopCart_item}
+    </div>
+    <div class="cartSumary">
+        <div class="row">
+            <div class="col-md-10">
+                {word793}
+            </div>
+            <div class="col-md-2" id="sumaPrice">
+                {ProductPriceFormated}
+            </div>
+                
+        </div>
+        <!--<div class="row">
+            <div class="col-md-10 ">
+                {word794}
+            </div>
+            <div class="col-md-2" id="sumaPriceVat">
+                {ProductPriceVatFormated}
+            </div>
+                
+        </div>-->
+    </div>
+</div>
+
+<div class="cart emptycart {EmptyCart}" id="emptycart"> 
+    <p>{word792} </p>
+</div>

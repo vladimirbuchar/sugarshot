@@ -1,0 +1,2130 @@
+<root>
+	<item>
+		<Id><![CDATA[1]]></Id>
+		<GroupName><![CDATA[word1]]></GroupName>
+		<WordCS><![CDATA[Uživatelské jméno]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[2]]></Id>
+		<GroupName><![CDATA[word2]]></GroupName>
+		<WordCS><![CDATA[Heslo]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[3]]></Id>
+		<GroupName><![CDATA[word3]]></GroupName>
+		<WordCS><![CDATA[Vyberte web]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[4]]></Id>
+		<GroupName><![CDATA[word4]]></GroupName>
+		<WordCS><![CDATA[Vyberte jazyk]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[5]]></Id>
+		<GroupName><![CDATA[word5]]></GroupName>
+		<WordCS><![CDATA[Přihlášení do systému]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[6]]></Id>
+		<GroupName><![CDATA[word6]]></GroupName>
+		<WordCS><![CDATA[Přihlásit se]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[7]]></Id>
+		<GroupName><![CDATA[word7]]></GroupName>
+		<WordCS><![CDATA[Není nainstalován žádný web. Instalaci webu můžete provést]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[8]]></Id>
+		<GroupName><![CDATA[word8]]></GroupName>
+		<WordCS><![CDATA[Vyberte web]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[9]]></Id>
+		<GroupName><![CDATA[word9]]></GroupName>
+		<WordCS><![CDATA[Vyberte ...]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[10]]></Id>
+		<GroupName><![CDATA[word10]]></GroupName>
+		<WordCS><![CDATA[Vyberte jazyk]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[11]]></Id>
+		<GroupName><![CDATA[word11]]></GroupName>
+		<WordCS><![CDATA[Není nainstalován žádný jazyk!]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[12]]></Id>
+		<GroupName><![CDATA[word12]]></GroupName>
+		<WordCS><![CDATA[Zadali jste špatné přihlašovací údaje]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[13]]></Id>
+		<GroupName><![CDATA[word13]]></GroupName>
+		<WordCS><![CDATA[Přidat jazyk administrace]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[14]]></Id>
+		<GroupName><![CDATA[word14]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[15]]></Id>
+		<GroupName><![CDATA[word15]]></GroupName>
+		<WordCS><![CDATA[Jméno jazyka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[16]]></Id>
+		<GroupName><![CDATA[word16]]></GroupName>
+		<WordCS><![CDATA[Identifikátor jazyka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[17]]></Id>
+		<GroupName><![CDATA[word17]]></GroupName>
+		<WordCS><![CDATA[Nastavení jazyků]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[18]]></Id>
+		<GroupName><![CDATA[word18]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[19]]></Id>
+		<GroupName><![CDATA[word19]]></GroupName>
+		<WordCS><![CDATA[Oprávnění editace]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[20]]></Id>
+		<GroupName><![CDATA[word20]]></GroupName>
+		<WordCS><![CDATA[Jméno jazyka:]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[21]]></Id>
+		<GroupName><![CDATA[word21]]></GroupName>
+		<WordCS><![CDATA[ROOT URL:]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[22]]></Id>
+		<GroupName><![CDATA[word22]]></GroupName>
+		<WordCS><![CDATA[Přidat web]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[23]]></Id>
+		<GroupName><![CDATA[word23]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[24]]></Id>
+		<GroupName><![CDATA[word24]]></GroupName>
+		<WordCS><![CDATA[Oprávnění editace]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[25]]></Id>
+		<GroupName><![CDATA[word25]]></GroupName>
+		<WordCS><![CDATA[Jméno webu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[26]]></Id>
+		<GroupName><![CDATA[word26]]></GroupName>
+		<WordCS><![CDATA[Editace slov administrace]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[27]]></Id>
+		<GroupName><![CDATA[word27]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[28]]></Id>
+		<GroupName><![CDATA[word28]]></GroupName>
+		<WordCS><![CDATA[Jméno skupiny slov]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[29]]></Id>
+		<GroupName><![CDATA[word29]]></GroupName>
+		<WordCS><![CDATA[Exportovat data]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[30]]></Id>
+		<GroupName><![CDATA[word30]]></GroupName>
+		<WordCS><![CDATA[Nastavení exportu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[31]]></Id>
+		<GroupName><![CDATA[word31]]></GroupName>
+		<WordCS><![CDATA[XML]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[32]]></Id>
+		<GroupName><![CDATA[word32]]></GroupName>
+		<WordCS><![CDATA[XLS]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[33]]></Id>
+		<GroupName><![CDATA[word33]]></GroupName>
+		<WordCS><![CDATA[Historie objektu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[34]]></Id>
+		<GroupName><![CDATA[word34]]></GroupName>
+		<WordCS><![CDATA[Akce]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[35]]></Id>
+		<GroupName><![CDATA[word35]]></GroupName>
+		<WordCS><![CDATA[Uživatel]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[36]]></Id>
+		<GroupName><![CDATA[word36]]></GroupName>
+		<WordCS><![CDATA[IP adresa]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[37]]></Id>
+		<GroupName><![CDATA[word37]]></GroupName>
+		<WordCS><![CDATA[Datum změny]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[38]]></Id>
+		<GroupName><![CDATA[word38]]></GroupName>
+		<WordCS><![CDATA[Data]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[39]]></Id>
+		<GroupName><![CDATA[word39]]></GroupName>
+		<WordCS><![CDATA[Obnovit verzi]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[40]]></Id>
+		<GroupName><![CDATA[word40]]></GroupName>
+		<WordCS><![CDATA[Obnovit verzi]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[41]]></Id>
+		<GroupName><![CDATA[word41]]></GroupName>
+		<WordCS><![CDATA[Importovat soubor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[42]]></Id>
+		<GroupName><![CDATA[word42]]></GroupName>
+		<WordCS><![CDATA[Nastavení importu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[43]]></Id>
+		<GroupName><![CDATA[word43]]></GroupName>
+		<WordCS><![CDATA[Možnosti importu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[44]]></Id>
+		<GroupName><![CDATA[word44]]></GroupName>
+		<WordCS><![CDATA[Smazat vše a vložit znovu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[45]]></Id>
+		<GroupName><![CDATA[word45]]></GroupName>
+		<WordCS><![CDATA[Pouze vložit nové záznamy]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[46]]></Id>
+		<GroupName><![CDATA[word46]]></GroupName>
+		<WordCS><![CDATA[Pouze aktualizovat stávající záznam]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[47]]></Id>
+		<GroupName><![CDATA[word47]]></GroupName>
+		<WordCS><![CDATA[Vložit nové záznamy a aktualizovat stávající záznamy]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[48]]></Id>
+		<GroupName><![CDATA[word48]]></GroupName>
+		<WordCS><![CDATA[Upravit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[49]]></Id>
+		<GroupName><![CDATA[word49]]></GroupName>
+		<WordCS><![CDATA[Odstranit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[50]]></Id>
+		<GroupName><![CDATA[word50]]></GroupName>
+		<WordCS><![CDATA[Opravdu si přeje odstranit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[51]]></Id>
+		<GroupName><![CDATA[word51]]></GroupName>
+		<WordCS><![CDATA[Nejsou dostupná žádná data]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[52]]></Id>
+		<GroupName><![CDATA[word52]]></GroupName>
+		<WordCS><![CDATA[Přidat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[53]]></Id>
+		<GroupName><![CDATA[word53]]></GroupName>
+		<WordCS><![CDATA[Odstranit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[54]]></Id>
+		<GroupName><![CDATA[word54]]></GroupName>
+		<WordCS><![CDATA[Opravdu si přejete provést zvolenou operaci]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[55]]></Id>
+		<GroupName><![CDATA[word55]]></GroupName>
+		<WordCS><![CDATA[Kopírovat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[56]]></Id>
+		<GroupName><![CDATA[word56]]></GroupName>
+		<WordCS><![CDATA[Kopírovat vybrané]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[57]]></Id>
+		<GroupName><![CDATA[word57]]></GroupName>
+		<WordCS><![CDATA[Opravdu si přejete zkopírovat vybrané položky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[58]]></Id>
+		<GroupName><![CDATA[word58]]></GroupName>
+		<WordCS><![CDATA[Exportovat vše]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[59]]></Id>
+		<GroupName><![CDATA[word59]]></GroupName>
+		<WordCS><![CDATA[Importovat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[60]]></Id>
+		<GroupName><![CDATA[word60]]></GroupName>
+		<WordCS><![CDATA[Vyhledat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[61]]></Id>
+		<GroupName><![CDATA[word61]]></GroupName>
+		<WordCS><![CDATA[Zrušit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[62]]></Id>
+		<GroupName><![CDATA[word62]]></GroupName>
+		<WordCS><![CDATA[Odstraněné položky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[63]]></Id>
+		<GroupName><![CDATA[word63]]></GroupName>
+		<WordCS><![CDATA[Zpět]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[64]]></Id>
+		<GroupName><![CDATA[word64]]></GroupName>
+		<WordCS><![CDATA[Obnovit položku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[65]]></Id>
+		<GroupName><![CDATA[word65]]></GroupName>
+		<WordCS><![CDATA[Opravdu si přejete obnovit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[66]]></Id>
+		<GroupName><![CDATA[word66]]></GroupName>
+		<WordCS><![CDATA[Obnovit vybrané]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[67]]></Id>
+		<GroupName><![CDATA[word67]]></GroupName>
+		<WordCS><![CDATA[Opravdu si přejete obnovit vybrané položky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[68]]></Id>
+		<GroupName><![CDATA[word68]]></GroupName>
+		<WordCS><![CDATA[Historie pložky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[69]]></Id>
+		<GroupName><![CDATA[word69]]></GroupName>
+		<WordCS><![CDATA[Editace webu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[70]]></Id>
+		<GroupName><![CDATA[word70]]></GroupName>
+		<WordCS><![CDATA[Website Admin]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[71]]></Id>
+		<GroupName><![CDATA[word71]]></GroupName>
+		<WordCS><![CDATA[Přihlášení do systému]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[72]]></Id>
+		<GroupName><![CDATA[word72]]></GroupName>
+		<WordCS><![CDATA[Výběr webu a jazyka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[73]]></Id>
+		<GroupName><![CDATA[word73]]></GroupName>
+		<WordCS><![CDATA[Seznam webů]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[74]]></Id>
+		<GroupName><![CDATA[word74]]></GroupName>
+		<WordCS><![CDATA[Web]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[75]]></Id>
+		<GroupName><![CDATA[word75]]></GroupName>
+		<WordCS><![CDATA[Seznam jazyků]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[76]]></Id>
+		<GroupName><![CDATA[word76]]></GroupName>
+		<WordCS><![CDATA[Jazyk]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[77]]></Id>
+		<GroupName><![CDATA[word77]]></GroupName>
+		<WordCS><![CDATA[Seznam  slov]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[78]]></Id>
+		<GroupName><![CDATA[word78]]></GroupName>
+		<WordCS><![CDATA[Jméno skupiny]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[79]]></Id>
+		<GroupName><![CDATA[word79]]></GroupName>
+		<WordCS><![CDATA[Povolené jazyky administrace]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[80]]></Id>
+		<GroupName><![CDATA[word80]]></GroupName>
+		<WordCS><![CDATA[Jméno jazyka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[81]]></Id>
+		<GroupName><![CDATA[word81]]></GroupName>
+		<WordCS><![CDATA[Identifikátor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[82]]></Id>
+		<GroupName><![CDATA[word82]]></GroupName>
+		<WordCS><![CDATA[Zadejte název jazyka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[83]]></Id>
+		<GroupName><![CDATA[word83]]></GroupName>
+		<WordCS><![CDATA[Zadejte identifikátor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[84]]></Id>
+		<GroupName><![CDATA[word84]]></GroupName>
+		<WordCS><![CDATA[Identifikátor již existuje]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[85]]></Id>
+		<GroupName><![CDATA[word85]]></GroupName>
+		<WordCS><![CDATA[Zadejte název jazyka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[86]]></Id>
+		<GroupName><![CDATA[word86]]></GroupName>
+		<WordCS><![CDATA[Zadejte ROOTURL]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[87]]></Id>
+		<GroupName><![CDATA[word87]]></GroupName>
+		<WordCS><![CDATA[URL již existuje]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[88]]></Id>
+		<GroupName><![CDATA[word88]]></GroupName>
+		<WordCS><![CDATA[Zadejte název webu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[89]]></Id>
+		<GroupName><![CDATA[word89]]></GroupName>
+		<WordCS><![CDATA[Web již existuje]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[90]]></Id>
+		<GroupName><![CDATA[word90]]></GroupName>
+		<WordCS><![CDATA[Zadejte název skupiny]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[91]]></Id>
+		<GroupName><![CDATA[word91]]></GroupName>
+		<WordCS><![CDATA[Skupina již existuje]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[92]]></Id>
+		<GroupName><![CDATA[word92]]></GroupName>
+		<WordCS><![CDATA[Skupina]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[93]]></Id>
+		<GroupName><![CDATA[word93]]></GroupName>
+		<WordCS><![CDATA[zde]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[94]]></Id>
+		<GroupName><![CDATA[word94]]></GroupName>
+		<WordCS><![CDATA[Nastavení administace]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[95]]></Id>
+		<GroupName><![CDATA[word95]]></GroupName>
+		<WordCS><![CDATA[Nastavení webů]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[96]]></Id>
+		<GroupName><![CDATA[word96]]></GroupName>
+		<WordCS><![CDATA[Nastavení jazyků]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[97]]></Id>
+		<GroupName><![CDATA[word97]]></GroupName>
+		<WordCS><![CDATA[Jazyky administrace]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[98]]></Id>
+		<GroupName><![CDATA[word98]]></GroupName>
+		<WordCS><![CDATA[Nastavení slov]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[99]]></Id>
+		<GroupName><![CDATA[word99]]></GroupName>
+		<WordCS><![CDATA[Odhlásit se]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[100]]></Id>
+		<GroupName><![CDATA[word100]]></GroupName>
+		<WordCS><![CDATA[Média]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[101]]></Id>
+		<GroupName><![CDATA[word101]]></GroupName>
+		<WordCS><![CDATA[Úložiště souborů]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[102]]></Id>
+		<GroupName><![CDATA[word102]]></GroupName>
+		<WordCS><![CDATA[Úložiště souborů]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[103]]></Id>
+		<GroupName><![CDATA[word103]]></GroupName>
+		<WordCS><![CDATA[Nová složka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[104]]></Id>
+		<GroupName><![CDATA[word104]]></GroupName>
+		<WordCS><![CDATA[Nahrát soubor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[105]]></Id>
+		<GroupName><![CDATA[word105]]></GroupName>
+		<WordCS><![CDATA[Stáhnout soubor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[106]]></Id>
+		<GroupName><![CDATA[word106]]></GroupName>
+		<WordCS><![CDATA[Zobrazit náhled]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[107]]></Id>
+		<GroupName><![CDATA[word107]]></GroupName>
+		<WordCS><![CDATA[Přesunout]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[108]]></Id>
+		<GroupName><![CDATA[word108]]></GroupName>
+		<WordCS><![CDATA[Kopírovat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[109]]></Id>
+		<GroupName><![CDATA[word109]]></GroupName>
+		<WordCS><![CDATA[Smazat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[110]]></Id>
+		<GroupName><![CDATA[word110]]></GroupName>
+		<WordCS><![CDATA[Vlastnosti]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[111]]></Id>
+		<GroupName><![CDATA[word111]]></GroupName>
+		<WordCS><![CDATA[Nová složka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[112]]></Id>
+		<GroupName><![CDATA[word112]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[113]]></Id>
+		<GroupName><![CDATA[word113]]></GroupName>
+		<WordCS><![CDATA[Přístupová práva]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[114]]></Id>
+		<GroupName><![CDATA[word114]]></GroupName>
+		<WordCS><![CDATA[Jméno složky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[115]]></Id>
+		<GroupName><![CDATA[word115]]></GroupName>
+		<WordCS><![CDATA[Nahrání souboru do úložiště]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[116]]></Id>
+		<GroupName><![CDATA[word116]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[117]]></Id>
+		<GroupName><![CDATA[word117]]></GroupName>
+		<WordCS><![CDATA[Přístupová práva]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[118]]></Id>
+		<GroupName><![CDATA[word118]]></GroupName>
+		<WordCS><![CDATA[Vyberte soubor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[119]]></Id>
+		<GroupName><![CDATA[word119]]></GroupName>
+		<WordCS><![CDATA[Aktualizace smazaných záznamů není povolena]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[120]]></Id>
+		<GroupName><![CDATA[word120]]></GroupName>
+		<WordCS><![CDATA[Není vybrán žádný objekt]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[121]]></Id>
+		<GroupName><![CDATA[word121]]></GroupName>
+		<WordCS><![CDATA[Přesně obsahuje]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[122]]></Id>
+		<GroupName><![CDATA[word122]]></GroupName>
+		<WordCS><![CDATA[Začíná]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[123]]></Id>
+		<GroupName><![CDATA[word123]]></GroupName>
+		<WordCS><![CDATA[Končí]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[124]]></Id>
+		<GroupName><![CDATA[word124]]></GroupName>
+		<WordCS><![CDATA[Obsahuje]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[125]]></Id>
+		<GroupName><![CDATA[word125]]></GroupName>
+		<WordCS><![CDATA[Neobsahuje přesně]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[126]]></Id>
+		<GroupName><![CDATA[word126]]></GroupName>
+		<WordCS><![CDATA[Nezačíná]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[127]]></Id>
+		<GroupName><![CDATA[word127]]></GroupName>
+		<WordCS><![CDATA[Nekončí]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[128]]></Id>
+		<GroupName><![CDATA[word128]]></GroupName>
+		<WordCS><![CDATA[Neobsahuje]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[129]]></Id>
+		<GroupName><![CDATA[word129]]></GroupName>
+		<WordCS><![CDATA[a zároveň]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[130]]></Id>
+		<GroupName><![CDATA[word130]]></GroupName>
+		<WordCS><![CDATA[nebo]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[131]]></Id>
+		<GroupName><![CDATA[word131]]></GroupName>
+		<WordCS><![CDATA[Moduly]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[132]]></Id>
+		<GroupName><![CDATA[word132]]></GroupName>
+		<WordCS><![CDATA[Přiřadit jazyk]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[133]]></Id>
+		<GroupName><![CDATA[word133]]></GroupName>
+		<WordCS><![CDATA[Nainstalované moduly]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[134]]></Id>
+		<GroupName><![CDATA[word134]]></GroupName>
+		<WordCS><![CDATA[Vybrat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[135]]></Id>
+		<GroupName><![CDATA[word135]]></GroupName>
+		<WordCS><![CDATA[Editace webu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[136]]></Id>
+		<GroupName><![CDATA[word136]]></GroupName>
+		<WordCS><![CDATA[Obsah webu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[137]]></Id>
+		<GroupName><![CDATA[word137]]></GroupName>
+		<WordCS><![CDATA[Šablony]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[138]]></Id>
+		<GroupName><![CDATA[word138]]></GroupName>
+		<WordCS><![CDATA[Editace šablon webu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[139]]></Id>
+		<GroupName><![CDATA[word139]]></GroupName>
+		<WordCS><![CDATA[Uživatelské účty]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[140]]></Id>
+		<GroupName><![CDATA[word140]]></GroupName>
+		<WordCS><![CDATA[Správa uživatelských účtů]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[141]]></Id>
+		<GroupName><![CDATA[word141]]></GroupName>
+		<WordCS><![CDATA[Uživatelské skupiny]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[142]]></Id>
+		<GroupName><![CDATA[word142]]></GroupName>
+		<WordCS><![CDATA[Správa uživatelských skupin]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[143]]></Id>
+		<GroupName><![CDATA[word143]]></GroupName>
+		<WordCS><![CDATA[Můj profil]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[144]]></Id>
+		<GroupName><![CDATA[word144]]></GroupName>
+		<WordCS><![CDATA[Editace mého profilu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[145]]></Id>
+		<GroupName><![CDATA[word145]]></GroupName>
+		<WordCS><![CDATA[Uživatelé]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[146]]></Id>
+		<GroupName><![CDATA[word146]]></GroupName>
+		<WordCS><![CDATA[Galerie]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[147]]></Id>
+		<GroupName><![CDATA[word147]]></GroupName>
+		<WordCS><![CDATA[Audio]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[148]]></Id>
+		<GroupName><![CDATA[word148]]></GroupName>
+		<WordCS><![CDATA[Video]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[149]]></Id>
+		<GroupName><![CDATA[word149]]></GroupName>
+		<WordCS><![CDATA[Content]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[150]]></Id>
+		<GroupName><![CDATA[word150]]></GroupName>
+		<WordCS><![CDATA[Zadejte jméno modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[151]]></Id>
+		<GroupName><![CDATA[word151]]></GroupName>
+		<WordCS><![CDATA[Zadejte skupinu modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[152]]></Id>
+		<GroupName><![CDATA[word152]]></GroupName>
+		<WordCS><![CDATA[Zadejte jméno modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[153]]></Id>
+		<GroupName><![CDATA[word153]]></GroupName>
+		<WordCS><![CDATA[Zobrazované jméno modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[154]]></Id>
+		<GroupName><![CDATA[word154]]></GroupName>
+		<WordCS><![CDATA[Skupina modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[155]]></Id>
+		<GroupName><![CDATA[word155]]></GroupName>
+		<WordCS><![CDATA[Jméno modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[156]]></Id>
+		<GroupName><![CDATA[word156]]></GroupName>
+		<WordCS><![CDATA[Přidat modul]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[157]]></Id>
+		<GroupName><![CDATA[word157]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[158]]></Id>
+		<GroupName><![CDATA[word158]]></GroupName>
+		<WordCS><![CDATA[Zobrazené jméno modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[159]]></Id>
+		<GroupName><![CDATA[word159]]></GroupName>
+		<WordCS><![CDATA[Skupina modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[160]]></Id>
+		<GroupName><![CDATA[word160]]></GroupName>
+		<WordCS><![CDATA[Jméno modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[161]]></Id>
+		<GroupName><![CDATA[word161]]></GroupName>
+		<WordCS><![CDATA[Přiřazené slovo]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[162]]></Id>
+		<GroupName><![CDATA[word162]]></GroupName>
+		<WordCS><![CDATA[Vyberte …]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[163]]></Id>
+		<GroupName><![CDATA[word163]]></GroupName>
+		<WordCS><![CDATA[Výběr webu a jazyka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[164]]></Id>
+		<GroupName><![CDATA[word164]]></GroupName>
+		<WordCS><![CDATA[Jméno skupiny]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[165]]></Id>
+		<GroupName><![CDATA[word165]]></GroupName>
+		<WordCS><![CDATA[Přidání skupiny]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[166]]></Id>
+		<GroupName><![CDATA[word166]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[167]]></Id>
+		<GroupName><![CDATA[word167]]></GroupName>
+		<WordCS><![CDATA[Jméno skupiny]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[168]]></Id>
+		<GroupName><![CDATA[word168]]></GroupName>
+		<WordCS><![CDATA[Identifikátor skupiny]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[169]]></Id>
+		<GroupName><![CDATA[word169]]></GroupName>
+		<WordCS><![CDATA[Systémová skupina]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[170]]></Id>
+		<GroupName><![CDATA[word170]]></GroupName>
+		<WordCS><![CDATA[Uživatelské jméno]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[171]]></Id>
+		<GroupName><![CDATA[word171]]></GroupName>
+		<WordCS><![CDATA[Jméno]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[172]]></Id>
+		<GroupName><![CDATA[word172]]></GroupName>
+		<WordCS><![CDATA[Příjmení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[173]]></Id>
+		<GroupName><![CDATA[word173]]></GroupName>
+		<WordCS><![CDATA[Email]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[174]]></Id>
+		<GroupName><![CDATA[word174]]></GroupName>
+		<WordCS><![CDATA[Přidání uživatele]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[175]]></Id>
+		<GroupName><![CDATA[word175]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[176]]></Id>
+		<GroupName><![CDATA[word176]]></GroupName>
+		<WordCS><![CDATA[Uživatelské jméno]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[177]]></Id>
+		<GroupName><![CDATA[word177]]></GroupName>
+		<WordCS><![CDATA[Jméno]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[178]]></Id>
+		<GroupName><![CDATA[word178]]></GroupName>
+		<WordCS><![CDATA[Příjmení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[179]]></Id>
+		<GroupName><![CDATA[word179]]></GroupName>
+		<WordCS><![CDATA[Email]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[180]]></Id>
+		<GroupName><![CDATA[word180]]></GroupName>
+		<WordCS><![CDATA[Heslo]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[181]]></Id>
+		<GroupName><![CDATA[word181]]></GroupName>
+		<WordCS><![CDATA[Hlavní skupina]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[182]]></Id>
+		<GroupName><![CDATA[word182]]></GroupName>
+		<WordCS><![CDATA[Povolené weby]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[183]]></Id>
+		<GroupName><![CDATA[word183]]></GroupName>
+		<WordCS><![CDATA[Povolené moduly]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[184]]></Id>
+		<GroupName><![CDATA[word184]]></GroupName>
+		<WordCS><![CDATA[Uživatelské číselníky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[185]]></Id>
+		<GroupName><![CDATA[word185]]></GroupName>
+		<WordCS><![CDATA[Zadejte jméno číselníku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[186]]></Id>
+		<GroupName><![CDATA[word186]]></GroupName>
+		<WordCS><![CDATA[Zadejte identifikátor číselníku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[187]]></Id>
+		<GroupName><![CDATA[word187]]></GroupName>
+		<WordCS><![CDATA[Identifikátor číselníku již existuje]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[188]]></Id>
+		<GroupName><![CDATA[word188]]></GroupName>
+		<WordCS><![CDATA[Uživatelské číselníky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[189]]></Id>
+		<GroupName><![CDATA[word189]]></GroupName>
+		<WordCS><![CDATA[Jméno číselníku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[190]]></Id>
+		<GroupName><![CDATA[word190]]></GroupName>
+		<WordCS><![CDATA[Identifikátor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[191]]></Id>
+		<GroupName><![CDATA[word191]]></GroupName>
+		<WordCS><![CDATA[Detail číselníku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[192]]></Id>
+		<GroupName><![CDATA[word192]]></GroupName>
+		<WordCS><![CDATA[Jméno číselníku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[193]]></Id>
+		<GroupName><![CDATA[word193]]></GroupName>
+		<WordCS><![CDATA[Identifikátor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[194]]></Id>
+		<GroupName><![CDATA[word194]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[195]]></Id>
+		<GroupName><![CDATA[word195]]></GroupName>
+		<WordCS><![CDATA[Položky číselníku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[196]]></Id>
+		<GroupName><![CDATA[word196]]></GroupName>
+		<WordCS><![CDATA[Přístup odepřen]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[197]]></Id>
+		<GroupName><![CDATA[word197]]></GroupName>
+		<WordCS><![CDATA[Nemáte přístup k tomuto modulu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[198]]></Id>
+		<GroupName><![CDATA[word198]]></GroupName>
+		<WordCS><![CDATA[Data číselníku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[199]]></Id>
+		<GroupName><![CDATA[word199]]></GroupName>
+		<WordCS><![CDATA[Název hodnoty]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[200]]></Id>
+		<GroupName><![CDATA[word200]]></GroupName>
+		<WordCS><![CDATA[Typ hodnoty]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[201]]></Id>
+		<GroupName><![CDATA[word201]]></GroupName>
+		<WordCS><![CDATA[Přidání položky do číselníku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[202]]></Id>
+		<GroupName><![CDATA[word202]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[203]]></Id>
+		<GroupName><![CDATA[word203]]></GroupName>
+		<WordCS><![CDATA[Zobrazované jméno]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[204]]></Id>
+		<GroupName><![CDATA[word204]]></GroupName>
+		<WordCS><![CDATA[Identifikátor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[205]]></Id>
+		<GroupName><![CDATA[word205]]></GroupName>
+		<WordCS><![CDATA[Typ položky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[206]]></Id>
+		<GroupName><![CDATA[word206]]></GroupName>
+		<WordCS><![CDATA[Zobrazit v administraci]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[207]]></Id>
+		<GroupName><![CDATA[word207]]></GroupName>
+		<WordCS><![CDATA[Zobrazit na webu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[208]]></Id>
+		<GroupName><![CDATA[word208]]></GroupName>
+		<WordCS><![CDATA[Výchozí hodnota]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[209]]></Id>
+		<GroupName><![CDATA[word209]]></GroupName>
+		<WordCS><![CDATA[Minimální délka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[210]]></Id>
+		<GroupName><![CDATA[word210]]></GroupName>
+		<WordCS><![CDATA[Maximální délka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[211]]></Id>
+		<GroupName><![CDATA[word211]]></GroupName>
+		<WordCS><![CDATA[Povinná položka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[212]]></Id>
+		<GroupName><![CDATA[word212]]></GroupName>
+		<WordCS><![CDATA[Textové pole]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[213]]></Id>
+		<GroupName><![CDATA[word213]]></GroupName>
+		<WordCS><![CDATA[Vyberte …]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[214]]></Id>
+		<GroupName><![CDATA[word214]]></GroupName>
+		<WordCS><![CDATA[Výběr M z N]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[215]]></Id>
+		<GroupName><![CDATA[word215]]></GroupName>
+		<WordCS><![CDATA[Výběr 1 z n]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[216]]></Id>
+		<GroupName><![CDATA[word216]]></GroupName>
+		<WordCS><![CDATA[Výběr barvy]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[217]]></Id>
+		<GroupName><![CDATA[word217]]></GroupName>
+		<WordCS><![CDATA[Email]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[218]]></Id>
+		<GroupName><![CDATA[word218]]></GroupName>
+		<WordCS><![CDATA[Soubor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[219]]></Id>
+		<GroupName><![CDATA[word219]]></GroupName>
+		<WordCS><![CDATA[Skryté pole]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[220]]></Id>
+		<GroupName><![CDATA[word220]]></GroupName>
+		<WordCS><![CDATA[Číslo]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[221]]></Id>
+		<GroupName><![CDATA[word221]]></GroupName>
+		<WordCS><![CDATA[Heslo]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[222]]></Id>
+		<GroupName><![CDATA[word222]]></GroupName>
+		<WordCS><![CDATA[Posuvník]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[223]]></Id>
+		<GroupName><![CDATA[word223]]></GroupName>
+		<WordCS><![CDATA[Vyhledávání]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[224]]></Id>
+		<GroupName><![CDATA[word224]]></GroupName>
+		<WordCS><![CDATA[Telefonní číslo]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[225]]></Id>
+		<GroupName><![CDATA[word225]]></GroupName>
+		<WordCS><![CDATA[Url adresa]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[226]]></Id>
+		<GroupName><![CDATA[word226]]></GroupName>
+		<WordCS><![CDATA[Můj profil]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[227]]></Id>
+		<GroupName><![CDATA[word227]]></GroupName>
+		<WordCS><![CDATA[Zadejte jméno položky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[228]]></Id>
+		<GroupName><![CDATA[word228]]></GroupName>
+		<WordCS><![CDATA[Zadejte identifikátor položky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[229]]></Id>
+		<GroupName><![CDATA[word229]]></GroupName>
+		<WordCS><![CDATA[Identifikátor musí být unikátní]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[230]]></Id>
+		<GroupName><![CDATA[word230]]></GroupName>
+		<WordCS><![CDATA[Zvolte typ položky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[231]]></Id>
+		<GroupName><![CDATA[word231]]></GroupName>
+		<WordCS><![CDATA[Hodnoty]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[232]]></Id>
+		<GroupName><![CDATA[word232]]></GroupName>
+		<WordCS><![CDATA[Uložit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[233]]></Id>
+		<GroupName><![CDATA[word233]]></GroupName>
+		<WordCS><![CDATA[Zahodit změny]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[234]]></Id>
+		<GroupName><![CDATA[word234]]></GroupName>
+		<WordCS><![CDATA[Složka]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[235]]></Id>
+		<GroupName><![CDATA[word235]]></GroupName>
+		<WordCS><![CDATA[Detail]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[236]]></Id>
+		<GroupName><![CDATA[word236]]></GroupName>
+		<WordCS><![CDATA[Detail objektu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[237]]></Id>
+		<GroupName><![CDATA[word237]]></GroupName>
+		<WordCS><![CDATA[Obecné nastavení]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[238]]></Id>
+		<GroupName><![CDATA[word238]]></GroupName>
+		<WordCS><![CDATA[Jméno objektu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[239]]></Id>
+		<GroupName><![CDATA[word239]]></GroupName>
+		<WordCS><![CDATA[SEO URL]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[240]]></Id>
+		<GroupName><![CDATA[word240]]></GroupName>
+		<WordCS><![CDATA[Přístupné přes SEO URL]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[241]]></Id>
+		<GroupName><![CDATA[word241]]></GroupName>
+		<WordCS><![CDATA[Přiřazená šablona]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[242]]></Id>
+		<GroupName><![CDATA[word242]]></GroupName>
+		<WordCS><![CDATA[Nezařazovat do vyhledávání]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[243]]></Id>
+		<GroupName><![CDATA[word243]]></GroupName>
+		<WordCS><![CDATA[Identifikátor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[244]]></Id>
+		<GroupName><![CDATA[word244]]></GroupName>
+		<WordCS><![CDATA[Oprávnění]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[245]]></Id>
+		<GroupName><![CDATA[word245]]></GroupName>
+		<WordCS><![CDATA[Číst]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[246]]></Id>
+		<GroupName><![CDATA[word246]]></GroupName>
+		<WordCS><![CDATA[Editovat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[247]]></Id>
+		<GroupName><![CDATA[word247]]></GroupName>
+		<WordCS><![CDATA[Mazat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[248]]></Id>
+		<GroupName><![CDATA[word248]]></GroupName>
+		<WordCS><![CDATA[Publikace]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[249]]></Id>
+		<GroupName><![CDATA[word249]]></GroupName>
+		<WordCS><![CDATA[Změna práv]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[250]]></Id>
+		<GroupName><![CDATA[word250]]></GroupName>
+		<WordCS><![CDATA[Související položky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[251]]></Id>
+		<GroupName><![CDATA[word251]]></GroupName>
+		<WordCS><![CDATA[Diskuze]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[252]]></Id>
+		<GroupName><![CDATA[word252]]></GroupName>
+		<WordCS><![CDATA[Media galerie]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[253]]></Id>
+		<GroupName><![CDATA[word253]]></GroupName>
+		<WordCS><![CDATA[Možnosti fotogalerie]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[254]]></Id>
+		<GroupName><![CDATA[word254]]></GroupName>
+		<WordCS><![CDATA[Článek má vlastní fotogalerii]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[255]]></Id>
+		<GroupName><![CDATA[word255]]></GroupName>
+		<WordCS><![CDATA[Zkopírovat galerii z jiné článku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[256]]></Id>
+		<GroupName><![CDATA[word256]]></GroupName>
+		<WordCS><![CDATA[Používat galerii z jiného článku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[257]]></Id>
+		<GroupName><![CDATA[word257]]></GroupName>
+		<WordCS><![CDATA[Možnosti diskuze]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[258]]></Id>
+		<GroupName><![CDATA[word258]]></GroupName>
+		<WordCS><![CDATA[Nepoužívat diskuzi]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[259]]></Id>
+		<GroupName><![CDATA[word259]]></GroupName>
+		<WordCS><![CDATA[Článek má vlastní diskuzi]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[260]]></Id>
+		<GroupName><![CDATA[word260]]></GroupName>
+		<WordCS><![CDATA[Zkopírovat diskuzi z jiného článku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[261]]></Id>
+		<GroupName><![CDATA[word261]]></GroupName>
+		<WordCS><![CDATA[Připojit diskuzi z jiného článku]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[262]]></Id>
+		<GroupName><![CDATA[word262]]></GroupName>
+		<WordCS><![CDATA[Připojit fotografii]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[263]]></Id>
+		<GroupName><![CDATA[word263]]></GroupName>
+		<WordCS><![CDATA[Připojit video]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[264]]></Id>
+		<GroupName><![CDATA[word264]]></GroupName>
+		<WordCS><![CDATA[Připojit audio soubor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[265]]></Id>
+		<GroupName><![CDATA[word265]]></GroupName>
+		<WordCS><![CDATA[Připojit soubor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[266]]></Id>
+		<GroupName><![CDATA[word266]]></GroupName>
+		<WordCS><![CDATA[Galerii lze připojit pouze k uloženému objektu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[267]]></Id>
+		<GroupName><![CDATA[word267]]></GroupName>
+		<WordCS><![CDATA[Diskuzi lze připojit pouze k uloženému objektu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[268]]></Id>
+		<GroupName><![CDATA[word268]]></GroupName>
+		<WordCS><![CDATA[Přidat novou šablonu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[269]]></Id>
+		<GroupName><![CDATA[word269]]></GroupName>
+		<WordCS><![CDATA[Editace šablony]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[270]]></Id>
+		<GroupName><![CDATA[word270]]></GroupName>
+		<WordCS><![CDATA[Html editor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[271]]></Id>
+		<GroupName><![CDATA[word271]]></GroupName>
+		<WordCS><![CDATA[Upravit šablonu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[272]]></Id>
+		<GroupName><![CDATA[word272]]></GroupName>
+		<WordCS><![CDATA[Smazat šablonu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[273]]></Id>
+		<GroupName><![CDATA[word273]]></GroupName>
+		<WordCS><![CDATA[Připojený číselník]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[274]]></Id>
+		<GroupName><![CDATA[word274]]></GroupName>
+		<WordCS><![CDATA[Nadřazená šablona]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[275]]></Id>
+		<GroupName><![CDATA[word275]]></GroupName>
+		<WordCS><![CDATA[Uložit a publikovat]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[276]]></Id>
+		<GroupName><![CDATA[word276]]></GroupName>
+		<WordCS><![CDATA[Opravdu si přejete odstranit šablonu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[277]]></Id>
+		<GroupName><![CDATA[word277]]></GroupName>
+		<WordCS><![CDATA[Hlavička]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[278]]></Id>
+		<GroupName><![CDATA[word278]]></GroupName>
+		<WordCS><![CDATA[Titulek stránky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[279]]></Id>
+		<GroupName><![CDATA[word279]]></GroupName>
+		<WordCS><![CDATA[Klíčová slova]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[280]]></Id>
+		<GroupName><![CDATA[word280]]></GroupName>
+		<WordCS><![CDATA[Popis stránky]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[281]]></Id>
+		<GroupName><![CDATA[word281]]></GroupName>
+		<WordCS><![CDATA[Kategorie stránek]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[282]]></Id>
+		<GroupName><![CDATA[word282]]></GroupName>
+		<WordCS><![CDATA[CSS styly]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[283]]></Id>
+		<GroupName><![CDATA[word283]]></GroupName>
+		<WordCS><![CDATA[Nový css styl]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[284]]></Id>
+		<GroupName><![CDATA[word284]]></GroupName>
+		<WordCS><![CDATA[Upravit css]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[285]]></Id>
+		<GroupName><![CDATA[word285]]></GroupName>
+		<WordCS><![CDATA[Opravdu si přejete odstranit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[286]]></Id>
+		<GroupName><![CDATA[word286]]></GroupName>
+		<WordCS><![CDATA[Odstranit css]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[287]]></Id>
+		<GroupName><![CDATA[word287]]></GroupName>
+		<WordCS><![CDATA[CSS webu]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[288]]></Id>
+		<GroupName><![CDATA[word288]]></GroupName>
+		<WordCS><![CDATA[CSS editor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[289]]></Id>
+		<GroupName><![CDATA[word289]]></GroupName>
+		<WordCS><![CDATA[Zdrojový kód]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[290]]></Id>
+		<GroupName><![CDATA[word290]]></GroupName>
+		<WordCS><![CDATA[Zobrazovat od]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[291]]></Id>
+		<GroupName><![CDATA[word291]]></GroupName>
+		<WordCS><![CDATA[Zobrazovat do]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[292]]></Id>
+		<GroupName><![CDATA[word292]]></GroupName>
+		<WordCS><![CDATA[Parametry]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[293]]></Id>
+		<GroupName><![CDATA[word293]]></GroupName>
+		<WordCS><![CDATA[Víceřádkový text]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[294]]></Id>
+		<GroupName><![CDATA[word294]]></GroupName>
+		<WordCS><![CDATA[Html editor]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[295]]></Id>
+		<GroupName><![CDATA[word295]]></GroupName>
+		<WordCS><![CDATA[Kalendář]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[296]]></Id>
+		<GroupName><![CDATA[word296]]></GroupName>
+		<WordCS><![CDATA[Hodnoty]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[297]]></Id>
+		<GroupName><![CDATA[word297]]></GroupName>
+		<WordCS><![CDATA[Nová možnost]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[298]]></Id>
+		<GroupName><![CDATA[word298]]></GroupName>
+		<WordCS><![CDATA[Editovat možnost]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[299]]></Id>
+		<GroupName><![CDATA[word299]]></GroupName>
+		<WordCS><![CDATA[Smazat možnost]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[300]]></Id>
+		<GroupName><![CDATA[word300]]></GroupName>
+		<WordCS><![CDATA[Hodnota]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[301]]></Id>
+		<GroupName><![CDATA[word301]]></GroupName>
+		<WordCS><![CDATA[Zobrazovaný text]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[302]]></Id>
+		<GroupName><![CDATA[word302]]></GroupName>
+		<WordCS><![CDATA[Uložit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[303]]></Id>
+		<GroupName><![CDATA[word303]]></GroupName>
+		<WordCS><![CDATA[Zrušit]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+	<item>
+		<Id><![CDATA[304]]></Id>
+		<GroupName><![CDATA[word304]]></GroupName>
+		<WordCS><![CDATA[Opravdu si přejte smazat?]]></WordCS>
+		<WordEN><![CDATA[]]></WordEN>
+		<WordSK><![CDATA[]]></WordSK>
+	</item>
+</root>

@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12">
+<ul id="FolderMenu">
+    <li class="btn btn-default disabled" id="createObject">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSourceDetail" Prefix="xadm" Text="word562" OnClick="CreateNewObject('WebEdit','DataSourceDetail','/xadm','');return false;"/>        
+        
+    </li>
+        
+        <li  id="editObject" class="btn btn-default disabled dn">
+            <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSourceDetail" Prefix="xadm" Text="word563" OnClick="EditItem('WebEdit','DataSourceDetail','/xadm');return false;"/>
+        
+    </li>
+    <li class="btn btn-default disabled" id="deleteObject">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSourceDetail" Prefix="xadm" Text="word564" OnClick="DeleteDialog();return false;" DataToggle="modal" DataTarget="#DeleteDialog" />
+    </li>
+    
+</ul>
+        </div>
+</div>
+<xWeb:Component Type="AdminSearch" ContentType="datasource" />
+ 
+<div id="html1">
+    <table class="tree">
+    <!--{$tree}-->
+  </table>
+</div>
+<xWeb:Component Type="AdminDeleteDialog" ContentType="datasource" />
+ 

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title><!--{$word69}--></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--{foreach from=$styles key=keyout item=itemout}-->
+            <link rel="stylesheet" type="text/css" href="<!--{$itemout}-->?version={VERSION}" >
+         <!--{/foreach}-->
+         <link rel="stylesheet" type="text/css" href="/Styles/jquery.datetimepicker.css?version={VERSION}" >
+         <link rel="stylesheet" type="text/css" href="/Styles/jquery.treegrid.css?version={VERSION}" >
+             <!-- Bootstrap Core CSS --> 
+             
+    <link  href="/Styles/Bootsrap/css/bootstrap.min.css?version={VERSION}" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/Styles/metisMenu/metisMenu.min.css?version={VERSION}" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="/Styles/Admin/timeline.css?version={VERSION}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/Styles/Admin/sb-admin-2.css?version={VERSION}" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="/Styles/morrisjs/morris.css?version={VERSION}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/Styles/font-awesome/css/font-awesome.min.css?version={VERSION}" rel="stylesheet" type="text/css">
+    <link  href="/Styles/jsTree/style.min.css?version={VERSION}"  rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+       <!-- jQuery -->
+    <script src="/Scripts/ExternalApi/jQuery.js?version={VERSION}"></script>
+    <script src="/Scripts/ExternalApi/js.cookie.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/Scripts/ExternalApi/Bootsrap/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/Scripts/ExternalApi/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="/Scripts/ExternalApi/raphael/raphael-min.js?version={VERSION}"></script>
+    <script type="text/javascript" src="/Scripts/ExternalApi/jquery.treegrid.js?version={VERSION}"></script>
+    
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/Scripts/ExternalApi/sb-admin-2.js?version={VERSION}"></script>
+    <script type="text/javascript" src="/Scripts/Core.js?version={VERSION}" ></script>
+    <script type="text/javascript" src="/Scripts/ExternalApi/jquery-ui.min.js?version={VERSION}" ></script>
+    
+    <script type="text/javascript" src="/Scripts/ExternalApi/jquery.datetimepicker.js?version={VERSION}" ></script>
+    <script type="text/javascript" src="/Scripts/ExternalApi/jquery.doubletap.js?version={VERSION}" ></script>
+    
+         <!--{foreach from=$scripts key=keyout item=itemout}-->
+            <script type="text/javascript" src="<!--{$itemout}-->?version={VERSION}" ></script>
+         <!--{/foreach}-->
+         <!--{$LeftMenuSettings}-->
+         <script type="text/javascript">
+             setInterval(function(){
+                 var isLogged = CallPhpFunctionAjax("Templates","IsLoginUser","POST",null);
+                 if (isLogged == "1" || isLogged == 1)
+                 {
+                     
+                 }
+                 else 
+                 {
+                     Refresh();
+                 }
+             },600000);
+             </script>
+             <!--{if $ExitQuestion}-->
+             <script type="text/javascript">
+                 var ignoreExitQuestion = false;
+                 window.onbeforeunload = function (e) {
+                 if (!ignoreExitQuestion)   
+                 {
+                var message = "",
+                e = e || window.event;
+                // For IE and Firefox
+                  if (e) {
+                    e.returnValue = message;
+                }
+                // For Safari
+                return message;
+            }
+                };
+                 </script>
+                 <!--{/if}-->
+                 <headerScript/>
+        
+    </head>
+    <body>
+        <div id="loadingPanel" class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <img src="/Images/loading.gif" />
+                </div>
+            </div>
+        </div>
+        <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand"><!--{$word70}--></a>
+                <span class="navbar-brand"><!--{$UserName}--> </span>
+                
+                    <div class="navbar-brand">
+                    <select id="userLang" class="form-control langSelectTop">
+                        <!--{section name=data loop=$AdminLang}-->
+                            <option value="<!--{$AdminLang[data].LangIdentificator}-->" <!--{$AdminLang[data].selected}-->><!--{$AdminLang[data].LangName}--></option>
+                            <!--{/section}--> 
+                    </select>
+                    </div>
+                
+                
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+               
+                
+                
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <xWeb:Component Type="xLink" Controller="UsersItem" View="MyProfile" Prefix="xadm" Text="word143" />
+                            
+                            
+                        </li>
+                        
+                        <li class="divider"></li>
+                        <li>
+                            <xWeb:Component Type="xLink" Controller="Admin" View="Logout" Prefix="xadm" Text="word99" />
+                        </li>
+                        
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        
+                        <li>
+                            <xWeb:Component Type="xLink" Controller="Admin" View="SelectLang" Prefix="xadm" Text="word382" />
+                        </li>
+                        <li class="contentMenu">
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> <!--{$word149}--><span class="fa arrow"></span></a>
+		<ul class="nav nav-second-level">
+                    
+			<li class="contentMenuWeb">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="Tree" Prefix="xadm" Text="word136" />
+                        </li>
+			<li class="contentMenuTemplate">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="TemplateEditor" Prefix="xadm" Text="word137" />
+                        </li>
+                        
+                        <li class="contentMenuCss">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="CssList" Prefix="xadm" Text="word282" />
+                        </li>
+                        <li class="contentMenuJs">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="JsList" Prefix="xadm" Text="word383" />
+                        </li>
+                        
+                        <li class="contentMenuFormsList">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="FormsList" Prefix="xadm" Text="word384" />
+                        </li>
+                        <li class="contentMenuMailList">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="MailList" Prefix="xadm" Text="word385" />
+                            </li>
+                        <li class="contentMenuSendMailList">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="SendMailList" Prefix="xadm" Text="word386" />
+                        </li>
+                          <li class="contentMenuMailing">
+                              <xWeb:Component Type="xLink" Controller="WebEdit" View="Mailing" Prefix="xadm" Text="word544" />
+                            </li>
+                        <li class="contentMenuFileRepository">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="FileManager" Prefix="xadm" Text="word101" />
+                        </li>
+                        <li class="contentMenuNoPublish">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="NoPublishItems" Prefix="xadm" Text="word539" />                                  
+                        </li>
+                        <li class="contentMenuTrash">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="Trash" Prefix="xadm" Text="word499" />
+                        </li>
+                        <li class="contentMenuDatasource">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSource" Prefix="xadm" Text="word561" />
+                        </li>
+                        <li class="contentMenuInqury">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="InquryList" Prefix="xadm" Text="word613" />
+                       </li>
+                       <li class="contentMenuDiscusionList">
+                            <xWeb:Component Type="xLink" Controller="WebEdit" View="DiscusionList" Prefix="xadm" Text="word251" />
+                       </li>
+			
+                  </ul>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> <!--{$word145}--><span class="fa arrow"></span></a>
+                            
+		<ul class="nav nav-second-level">
+			<li>
+                            <xWeb:Component Type="xLink" Controller="UsersItem" View="UserList" Prefix="xadm" Text="word139" />
+                        </li>
+			<li>
+                            <xWeb:Component Type="xLink" Controller="UsersItem" View="UserGroup" Prefix="xadm" Text="word141" />
+                        </li>
+			<li>
+                            <xWeb:Component Type="xLink" Controller="UsersItem" View="MyProfile" Prefix="xadm" Text="word143" />
+                        </li>
+		</ul>
+                            </li>
+                            
+                            
+                            
+                                
+                                
+                                <li class="settingsmenu">
+                                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> <!--{$word94}--><span class="fa arrow"></span></a>
+                                    
+		<ul class="nav nav-second-level">
+                    <li>
+                        <xWeb:Component Type="xLink" Controller="Settings" View="WebList" Prefix="xadm" Text="word95" />
+                    </li>
+                    <li>
+                        <xWeb:Component Type="xLink" Controller="Settings" View="LangList" Prefix="xadm" Text="word96" />
+                    </li>
+                    <li>
+                        <xWeb:Component Type="xLink" Controller="Settings" View="CopyLang" Prefix="xadm" Text="word506" />
+                        
+                    </li>
+                    <li>
+                        <xWeb:Component Type="xLink" Controller="Settings" View="AdminLangs" Prefix="xadm" Text="word97" />
+                    </li>
+                    <li>
+                        <xWeb:Component Type="xLink" Controller="Settings" View="Words" Prefix="xadm" Text="word98" />
+                    </li>
+                    <li>
+                        <xWeb:Component Type="xLink" Controller="Settings" View="Modules" Prefix="xadm" Text="word131" />
+                    </li>
+                    
+                        <li class="settingsmenuUserDomain">
+                            <xWeb:Component Type="xLink" Controller="Settings" View="UserDomain" Prefix="xadm" Text="word184" />
+                    </li>
+                    <li class="developerTools">
+                        <xWeb:Component Type="xLink" Controller="Settings" View="DeveloperTools" Prefix="xadm" Text="word387" />
+                    </li>
+                    <li class="logView">
+                        <xWeb:Component Type="xLink" Controller="Settings" View="LogView" Prefix="xadm" Text="word595" />
+                    </li>
+                    <li class="CleanDatabase">
+                        <xWeb:Component Type="xLink" Controller="Settings" View="CleanDatabase" Prefix="xadm" Text="word641" />
+                    </li>
+                    <li class="CacheManager">
+                        <xWeb:Component Type="xLink" Controller="Settings" View="CronManager" Prefix="xadm" Text="word856" />
+                    </li>
+			
+		</ul>
+                                    </li>
+                        
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <!--{if $CanShowState}-->
+            <div class="row page-header">
+                <div class="col-lg-11 ">
+                    <h1><!--{$stateTitle}--> </h1>
+                </div>
+                <div class="col-lg-1 backStateButton">
+                    <a href="#" class="btn btn-default" onclick="GoToBack()"><!--{$word466}--></a>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            
+            
+            <form id="mainForm" name="mainForm" enctype="multipart/form-data" method="post" action="">
+                
+                <input type="hidden" id="phpFunction" name="phpFunction" />
+                <input type="hidden" id="WebId" value="<!--{$webId}-->"/>
+                <input type="hidden" id="LangId" value="<!--{$langId}-->"/>
+                <input type="hidden" id="ObjectId" value="<!--{$objectId}-->"/>
+                <input type="hidden" id="ParentId" value="<!--{$parentid}-->"/>
+                <input type="hidden" id="IsFrontEnd" value="<!--{$isFrontEnd}-->"/>
+                <!--{include file=$stateName}-->
+            </form>
+            <!--{else}-->
+                        <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"><!--{$word196}--></h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            
+            <form id="mainForm" name="mainForm" enctype="multipart/form-data" method="post" action="">
+                <input type="hidden" id="phpFunction" name="phpFunction" />
+                <input type="hidden" id="WebId" value="<!--{$webId}-->"/>
+                <input type="hidden" id="LangId" value="<!--{$langId}-->"/>
+                <input type="hidden" id="ObjectId" value="<!--{$objectId}-->"/>
+                <input type="hidden" id="ParentId" value="<!--{$parentid}-->"/>
+                <!--{$word197}-->
+            </form>
+            <!--{/if}-->
+            
+            
+            
+            
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+        
+        
+        
+        
+        
+        
+        
+	
+	
+	
+	 
+	 
+        
+        
+        
+        
+        
+    </body>
+</html>

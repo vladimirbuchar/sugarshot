@@ -1,0 +1,432 @@
+
+<script type="text/javascript">
+$(document).ready(function(){
+    GetRelatedArticle();
+    GetGalleryItems();
+    ShowSesttingGallery('<!--{$GallerySettings}-->'); 
+    GetAlternativeItem();
+    LoadDomainItems('<!--{$TemplateId}-->','<!--{$Data}-->','<!--{$CanWrite}-->');
+}); 
+</script>
+ 
+<ul id="DomainMenu">
+    <li class="btn btn-default"><a href="#" onclick="Save(false,true); return false;"><!--{$word232}--></a></li>
+    <li class="btn btn-default"><a href="#" onclick="Save(true,true); return false;"><!--{$word389}--></a></li>
+    <li class="btn btn-default"><a href="#" onclick="Save(true,true); GoToBack(); return false;"><!--{$word771}--></a></li>
+    <li class="btn btn-default"><a href="#" onclick="Save(false,true); GoToBack(); return false;"><!--{$word772}--></a></li>
+    <li class="btn btn-default"><a href=""><!--{$word233}--></a></li>
+    <li class="btn btn-default"><a href="" onclick="ShowPreview(); return false;"><!--{$word519}--></a></li>
+    <li class="btn btn-default"><a href="" onclick="DeleteLangVersion(); return false;"><!--{$word886}--></a></li>
+</ul>
+<div id="detail">
+    <input type="hidden"  value="<!--{$id}-->" id="objectid" />
+    
+         <ul class="nav nav-tabs">
+            <li id="liTab1" class="active"> <a href="#tab-1"  data-toggle="tab" aria-expanded="true"><!--{$word237}--></a></li>
+            <li id="liTab2"> <a href="#tab-2" data-toggle="tab" aria-expanded="true" ><!--{$word764}--></a></li>
+            <li id="liTab3"> <a href="#tab-3" data-toggle="tab" aria-expanded="true"><!--{$word244}--></a></li>
+            <li id="liTab4"> <a href="#tab-4" data-toggle="tab" aria-expanded="true"><!--{$word250}--></a></li>
+            <li id="liTab6"> <a href="#tab-6" data-toggle="tab" aria-expanded="true"><!--{$word252}--></a></li>
+            <li id="liTab7"> <a href="#tab-7" data-toggle="tab" aria-expanded="true"><!--{$word390}--></a></li>
+            <li id="liTab8"> <a href="#tab-8"  data-toggle="tab" aria-expanded="true"><!--{$word501}--></a></li>
+            <li id="liTab9"> <a href="#tab-9"  data-toggle="tab" aria-expanded="true"><!--{$word536}--></a></li>
+            <li id="liTab10"> <a href="#tab-10"  data-toggle="tab" aria-expanded="true"><!--{$word679}--></a></li>
+        </ul>
+    <div class="tab-content">
+        <div id="tab-1" class="tab-pane fade active in">
+            <br /> 
+            <div class="adminForm">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <div class="form-group">
+            <label for="NameObject"  class="control-label col-sm-2"><!--{$word238}--></label>
+            <div class="col-sm-10">
+            <input type="text" id="NameObject" name="NameObject" class="required form-control"  value="<!--{$Name}-->" /></div>
+                    </div>
+            <div class="form-group"><label for="SeoUrl"  class="control-label col-sm-2"><!--{$word239}--></label>
+                <div class="col-sm-10">
+                <input type="text" id="SeoUrl" name="SeoUrl" value="<!--{$SeoUrl}-->"  class="form-control"/></div>
+            </div>
+            
+            <div class="form-group"><label for="AvailableOverSeoUrl"  class="control-label col-sm-2"><!--{$word240}--></label>
+                <div class="col-sm-10">
+                <input type="checkbox" id="AvailableOverSeoUrl" name="AvailableOverSeoUrl" <!--{$AvailableOverSeoUrl}--> /></div>
+            </div>
+            
+            <div class="form-group"><label for="Template"  class="control-label col-sm-2"><!--{$word241}--></label>
+                <div class="col-sm-10">
+                    <input type="hidden" id="lastTemplate" value="<!--{$TemplateId}-->" />
+                    <select id="Template"  class="form-control">
+                            <option value="">----</option>
+                    <!--{section name=data loop=$TemplateList}-->
+                            <option value="<!--{$TemplateList[data].Id}-->" <!--{$TemplateList[data].Selected}-->><!--{$TemplateList[data].Name}--></option>
+                            <!--{/section}--> 
+                </select></div>
+            </div>
+            
+            <div class="form-group"><label for="NoIncludeSearch"  class="control-label col-sm-2"><!--{$word242}--></label>
+                <div class="col-sm-10">
+                <input type="checkbox" id="NoIncludeSearch" name="NoIncludeSearch" <!--{$NoIncludeSearch}-->  /></div>
+            </div>
+            <div class="form-group"><label for="Identificator"  class="control-label col-sm-2"><!--{$word243}--></label>
+                <div class="col-sm-10">
+                <input type="text" id="Identificator" name="Identificator" value="<!--{$Identificator}-->" class="form-control" /></div>
+            </div>
+            
+            <div class="form-group"><label for="ActiveFrom"  class="control-label col-sm-2"><!--{$word290}--></label>
+                <div class="col-sm-10">
+                <input type="text" id="ActiveFrom" name="ActiveFrom" value="<!--{$ActiveFrom}-->" class="form-control"/></div>
+            </div>
+            
+            <div class="form-group"><label for="ActiveTo"  class="control-label col-sm-2"><!--{$word291}--></label>
+                <div class="col-sm-10">
+                <input type="text" id="ActiveTo" name="ActiveTo" value="<!--{$ActiveTo}-->" class="form-control" /></div>
+            </div>                    
+            <div class="form-group"><label for="NoChild"  class="control-label col-sm-2"><!--{$word520}--></label>
+                <div class="col-sm-10">
+                <input type="checkbox" id="NoChild" name="NoChild" <!--{$NoChild}-->  /></div>
+            </div>        
+            <div class="form-group"><label for="UseTemplateInChild"  class="control-label col-sm-2"><!--{$word521}--></label>
+                <div class="col-sm-10">
+                <input type="checkbox" id="UseTemplateInChild" name="UseTemplateInChild" <!--{$UseTemplateInChild}-->  /></div>
+                </div>
+                    <div class="form-group"><label for="CopyDataToChild"  class="control-label col-sm-2"><!--{$word597}--></label>
+                <div class="col-sm-10">
+                <input type="checkbox" id="CopyDataToChild" name="CopyDataToChild" <!--{$CopyDataToChild}-->  /></div>
+                </div>
+            
+                    <div class="form-group"><label for="ChildTemplate"  class="control-label col-sm-2"><!--{$word596}--></label>
+                <div class="col-sm-10">
+                <select id="ChildTemplate"  class="form-control">
+                            <option value="0">----</option>
+                    <!--{section name=data loop=$TemplateList}-->
+                            <option value="<!--{$TemplateList[data].Id}-->" <!--{$TemplateList[data].SelectedChild}-->><!--{$TemplateList[data].Name}--></option>
+                            <!--{/section}--> 
+                </select>
+                </div>
+            </div> 
+                    
+            
+            
+            <div class="form-group dn"><label for="ActivatePager"  class="control-label col-sm-2"><!--{$word673}--></label>
+                <div class="col-sm-10">
+                <input type="checkbox" id="ActivatePager" name="ActivatePager"  <!--{$ActivatePager}-->  /></div>
+            </div>
+            <div class="form-group dn"><label for="FirstItemLoadPager"  class="control-label col-sm-2"><!--{$word674}--></label>
+                <div class="col-sm-10">
+                    <input type="text" id="FirstItemLoadPager" name="FirstItemLoadPager" value="<!--{$FirstItemLoadPager}-->" class="form-control" /></div>
+            </div>
+                    <div class="form-group dn"><label for="NextItemLoadPager"  class="control-label col-sm-2"><!--{$word675}--></label>
+                <div class="col-sm-10">
+                    <input type="text" id="NextItemLoadPager" name="NextItemLoadPager" value="<!--{$NextItemLoadPager}-->" class="form-control" /></div>
+            </div>
+                    <div class="form-group dn"><label for="NoLoadSubitems"  class="control-label col-sm-2"><!--{$word699}--></label>
+                <div class="col-sm-10"> 
+                    <input type="checkbox" id="NoLoadSubitems" name="NoLoadSubitems"  <!--{$NoLoadSubitems}-->  /></div>
+            </div>
+                    <div class="form-group"><label for="SaveToCache"  class="control-label col-sm-2"><!--{$word854}--></label>
+                <div class="col-sm-10"> 
+                    <input type="checkbox" id="SaveToCache" name="SaveToCache"  <!--{$SaveToCache}-->  /></div>
+            </div>
+                                <div class="form-group "><label for="Sort"  class="control-label col-sm-2"><!--{$word449}--></label>
+                <div class="col-sm-10">
+                <input type="text" id="Sort" name="Sort"  value="<!--{$Sort}-->" class="form-control" /></div>
+            </div>
+
+                    
+             
+                </div>
+                                    
+               </div> 
+            
+            
+            
+            
+        </div>
+        <div id="tab-2" class="tab-pane fade">
+            <br /> 
+            <div id="parametrs" class="form-horizontal" role="form">
+                
+            </div>
+        </div>
+        <div id="tab-3" class="tab-pane fade">
+            <br />
+            <div id="userSecurity">
+                <table class="table table-striped table-bordered table-hover">
+                <tr class="header">
+                    
+                    <th>&nbsp;</th>
+                        <th><!--{$word245}--></th>
+                        <th><!--{$word246}--></th>
+                        <th><!--{$word247}--></th>
+                        <th><!--{$word248}--></th>
+                        <th><!--{$word249}--></th>
+                </tr>
+                    <!--{section name=data loop=$GroupList}-->
+                    <tr>
+                        <td><!--{$GroupList[data].GroupName}--></td>
+                        <td><input type="checkbox" id="canRead_<!--{$GroupList[data].Id}-->"  class="canRead" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canread_checked}--> /></td>
+                        <td><input type="checkbox" id="canWrite_<!--{$GroupList[data].Id}-->"  class="canWrite" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canwrite_checked}--> /></td>
+                        <td><input type="checkbox" id="canDelete_<!--{$GroupList[data].Id}-->"  class="canDelete" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].candelete_checked}--> /></td>
+                        <td><input type="checkbox" id="canPublish_<!--{$GroupList[data].Id}-->" class="canPublish" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canpublish_checked}--> /></td>
+                        <td><input type="checkbox" id="canChangePrivileges_<!--{$GroupList[data].Id}-->"  class="canChangePrivileges" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canchangeprivileges_checked}--> /></td>
+                </tr>
+        <!--{/section}--> 
+                    
+                    </table>
+                
+                </div>
+                </div>
+                
+            
+        <div id="tab-4"  class="tab-pane fade">
+            <br />
+            <a href="#" data-toggle="modal" data-target="#SelectArticleDialog" class="btn btn-default" onclick="ShowAddReletedDocuments()"><!--{$word391}--></a>
+            <br />
+            <br />
+            <table id="reletedObjectTable" class="table table-striped table-bordered table-hover">
+                
+            </table>
+            <div class="modal fade" id="SelectArticleDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word392}--></h4>
+      </div>
+            <div class="modal-body">
+                <div id="dialogComponent">
+                </div>
+                    
+                     
+                
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddArticle('document');CloseDialog('SelectArticleDialog')"><!--{$word393}--></button>
+             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('SelectArticleDialog')"><!--{$word394}--></button>
+            </div>
+            </div>
+    </div>
+</div>
+            
+            
+        </div>
+        
+        <div id="tab-6"  class="tab-pane fade">
+            <br />
+            
+            <div id="itemForm" class="form-horizontal" role="form">
+                <label for="Name"  class="control-label col-sm-2"><!--{$word253}--></label>
+            <div class="col-sm-8">
+            <select id="mediaGallerySettings" class="form-control">
+                            <option value="0" <!--{$mediaGallerySettings0}-->><!--{$word397}--></option>    
+                            <option value="1" <!--{$mediaGallerySettings1}-->><!--{$word254}--></option>    
+                            <option value="2" <!--{$mediaGallerySettings2}-->><!--{$word255}--></option>
+                            <option value="3" <!--{$mediaGallerySettings3}-->><!--{$word256}--></option>
+                </select>
+                    </div>
+            <div class="col-sm-2">
+                <a href="#" data-toggle="modal" data-target="#SelectGalleryDialog" id="AddFromRepository" class="btn btn-default" onclick="AddGalleryFromRepository()"><!--{$word398}--></a>
+                <a href="#" data-toggle="modal" data-target="#SelectGalleryArticleDialog" id="AddFromArticle" class="btn btn-default" onclick="AddGalleryFromArticle()"><!--{$word399}--></a>
+                <xWeb:Component Type="xLink" CssClass="btn btn-default" Controller="WebEdit" View="FileUploader" Prefix="xadm" Text="word885" DataToggle="modal" DataTarget="#FilesUploadDialog" OnClick="return false;"  Id="UploadFile"/>
+                <div class="modal fade" id="FilesUploadDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title SelectedItem"><!--{$word773}--></h4>
+            
+        </div>
+            <div class="modal-body">
+                <xWeb:Component Type="FileUploader"  Id="FileUploader" MultiUpload="true"/>
+               
+            </div>
+                    <div class="modal-footer">
+                        
+            <button type="button" class="btn btn-primary" onclick="UploadFiles();CloseDialog('FilesUploadDialog');ReloadTree('file');">Ano</button>
+            
+            
+        
+      </div>
+    </div>
+    </div>
+</div>
+            </div>
+                
+            </div>
+            <br /> 
+            <br /> 
+            <div class="clear"></div>
+                
+                <table id="galleryObjectTable" class="table table-striped table-bordered table-hover">
+                
+            </table>
+                            <div class="modal fade" id="SelectGalleryDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word402}--></h4>
+      </div>
+            <div class="modal-body">
+                <div id ="dialogComponentGallery"></div>
+                    
+                     
+                
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddArticle(SetMode());CloseDialog('SelectGalleryDialog')"><!--{$word400}--></button>
+             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('SelectGalleryDialog')"><!--{$word401}--></button>
+            </div>
+            </div>
+    </div>
+</div>
+                
+    <div class="modal fade" id="SelectGalleryArticleDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word402}--></h4>
+      </div>
+            <div class="modal-body">
+                <div id="dialogComponentArticleGallery"></div>
+                    
+                     
+                
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddArticle(SetMode());CloseDialog('SelectGalleryArticleDialog')"><!--{$word403}--></button>
+             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('SelectGalleryArticleDialog')"><!--{$word404}--></button>
+            </div>
+            </div>
+    </div>
+</div>
+            
+            
+        </div>
+                <div id="tab-7"  class="tab-pane fade">
+                    <br />
+            <div class="form-horizontal" role="form">
+                <div class="form-group">
+                <label for="0"  class="control-label col-sm-2"><!--{$word405}--></label>
+            
+            <div class="col-sm-10">
+            <select id="formSettings" class="form-control">
+                <option value="0"><!--{$word406}--></option>
+                <!--{section name=data loop=$FormList}-->
+                
+                            <option value="<!--{$FormList[data].Id}-->" <!--{$FormList[data].selected}-->><!--{$FormList[data].Name}--></option>
+                            <!--{/section}--> 
+                </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                <label for="Inquery"  class="control-label col-sm-2"><!--{$word684}--></label>
+            
+            <div class="col-sm-10">
+            <select id="Inquery" class="form-control">
+                <option value="0"><!--{$word406}--></option>
+                <!--{section name=data loop=$InqueryList}-->
+                        <option value="<!--{$InqueryList[data].Id}-->" <!--{$InqueryList[data].selected}-->><!--{$InqueryList[data].Name}--></option>
+                            <!--{/section}--> 
+                </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                <label for="Discusion"  class="control-label col-sm-2"><!--{$word251}--></label>
+            
+            <div class="col-sm-10">
+            <select id="Discusion" class="form-control">
+                <option value="0"><!--{$word406}--></option>
+                <!--{section name=data loop=$DiscusionList}-->
+                        <option value="<!--{$DiscusionList[data].Id}-->" <!--{$DiscusionList[data].selected}-->><!--{$DiscusionList[data].Name}--></option>
+                            <!--{/section}--> 
+                </select>
+                    </div>
+                </div>
+            
+                </div>
+                    </div>
+         <div id="tab-8" class="tab-pane fade">
+            <br />
+            <div class="form-horizontal" role="form">
+                            <div class="form-group"><label for="OtherLang" class="control-label col-sm-2"><!--{$word502}--></label>
+                    <div class="col-sm-10">
+                        <select id="OtherLang" class="form-control">
+                        <option value="0">----</option>
+                        <!--{section name=data loop=$ItemLangList}-->
+                        <option value="<!--{$ItemLangList[data].Id}-->" <!--{$ItemLangList[data].Selected}-->> <!--{$ItemLangList[data].LangName}--></option>
+                        <!--{/section}--> 
+                </select>
+                    
+                </div>
+            </div>
+        </div>
+        
+        
+         
+    </div>
+        <div id="tab-9" class="tab-pane fade">
+            <br /> 
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <td><!--{$word537}--></td>
+                    <td>&nbsp;</td>
+                </tr>
+                <!--{section name=data loop=$HistoryList}-->
+                <tr>
+                    <td><!--{$HistoryList[data].Date}--></td>
+                    <td><a href="?versionId=<!--{$HistoryList[data].VersionId}-->"><!--{$word538}--></a>
+                        </td>
+                </tr>
+                        <!--{/section}--> 
+                
+            </table>
+        </div>
+        <div id="tab-10" class="tab-pane fade">
+            <br /> 
+            <a href="#" data-toggle="modal" data-target="#AlternativeContent" id="AddAlternativeContent" class="btn btn-default" onclick="AlternativeContent()"><!--{$word682}--></a>
+            <br />
+            <table class="table table-striped table-bordered table-hover" id="alternativeItems">
+            
+            </table>
+            <div class="modal fade" id="AlternativeContent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word683}--></h4>
+      </div>
+            <div class="modal-body">
+                  <div class="form-group"><label for="AlternativeItemUserGroup" class="control-label col-sm-2"><!--{$word680}--></label>
+                    <div class="col-sm-10">
+                        <select id="AlternativeItemUserGroup" class="form-control">
+                        <option value="0">----</option>
+                        <!--{section name=data loop=$GroupList}-->
+                            <option value="<!--{$GroupList[data].Id}-->"><!--{$GroupList[data].GroupName}--></option>
+                        <!--{/section}--> 
+                        
+                </select>
+                    
+                </div>
+            </div>
+                <div id ="dialogComponentAlternativeContent"></div>
+                    
+                     
+                
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="SaveAlternativeItem();CloseDialog('AlternativeContent')"><!--{$word400}--></button>
+             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('AlternativeContent');"><!--{$word401}--></button>
+            </div>
+            </div>
+    </div>
+</div>
+        </div>
+    </div>
+</div>

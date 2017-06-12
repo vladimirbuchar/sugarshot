@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-12">
+<ul id="FolderMenu">
+    <li class="btn btn-default disabled" id="createObject">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="MailingDetail" Prefix="xadm" Text="word545" OnClick="CreateNewObject('WebEdit','MailingDetail','/xadm','');return false;"/>
+        
+    </li>
+    <li  id="editObject" class="btn btn-default disabled dn">
+            <xWeb:Component Type="xLink" Controller="WebEdit" View="MailingDetail" Prefix="xadm" Text="word546" OnClick="EditItem('WebEdit','MailingDetail','/xadm');return false;"/>
+    </li>
+    <li class="btn btn-default disabled" id="deleteObject">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="MailingDetail" Prefix="xadm" Text="word547" OnClick="DeleteDialog();return false;" DataToggle="modal" DataTarget="#DeleteDialog" />
+    </li>
+        <li class="btn btn-default" id="mailingContacts">
+            <xWeb:Component Type="xLink" Controller="Settings" View="MailingContacts" Prefix="xadm" Text="word551" />
+    </li>
+    
+</ul>
+        </div>
+</div>
+<xWeb:Component Type="AdminSearch" ContentType="mailing" />
+
+ 
+ 
+<div id="html1">
+    <table class="tree">
+    <!--{$tree}-->
+  </table>
+</div>
+<xWeb:Component Type="AdminDeleteDialog" ContentType="mailing" />

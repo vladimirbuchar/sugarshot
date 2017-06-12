@@ -1,0 +1,16 @@
+
+<table class="table table-striped table-bordered table-hover">
+    <!--{section name=data loop=$items}-->
+    <tr id="row_<!--{$items[data].ContentId}-->">
+            <td><!--{$items[data].Name}--></td>
+            <td><a href="#" onclick="PublishItem('<!--{$items[data].ContentId}-->')"><!--{$word540}--></a></td>
+            <td><a href="#" onclick="EditItem('<!--{$items[data].ContentType}-->','<!--{$items[data].ContentId}-->')"><!--{$word541}--></a></td>
+            <!--{if $items[data].ContentType == 'UserItem'}-->
+            <td><a href="#" onclick="ShowPreview('<!--{$items[data].ContentId}-->')"><!--{$word542}--></a></td>
+               <!--{else}-->
+               <td><!--{$word542}--></td>
+            <!--{/if}-->
+    </tr>
+                            <!--{/section}--> 
+    
+</table>

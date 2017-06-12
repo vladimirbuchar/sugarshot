@@ -1,0 +1,67 @@
+{AddDiscusionItem}
+<p>{DiscusionTitle}</p>
+<div id="discusionItems">
+{DiscusionItems}                
+</div>
+{OpenLink}
+<input type="hidden" id="DiscusionId"  value="{DiscusionId}" /> 
+<div class="modal fade" id="AddDiscusionItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{word412}</h4>
+      </div>
+            <div class="modal-body">
+                 <div id="itemForm" class="form-horizontal" role="form">
+                <input type="hidden" name="Id" Id="Id" />
+                <input type="hidden" name="ParentIdDiscusion" Id="ParentIdDiscusion" />
+                <div class="form-group"><label for="Subject" class="control-label col-sm-2">{word413}</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="SubjectDiscusion" name="SubjectDiscusion" class="form-control"/></div>
+                </div>
+                <div class="form-group"><label for="UserFullName" class="control-label col-sm-2">{word414}</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="ShowUserName" name="ShowUserName" class="form-control noClear" value="{UserFullName}" {EditUserName}/></div>
+                </div>
+                <div class="form-group"><label for="Text" class="control-label col-sm-2">{word415}</label>
+                    <div class="col-sm-10">
+                        <textarea id="TextDiscusion" name="TextDiscusion" class="form-control"></textarea></div>
+                </div>
+            </div>    
+                    
+                     
+                
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="AddDiscusionItem();CloseDialog('AddDiscusionItem')">{word416}</button>
+             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('AddDiscusionItem')">{word417}</button>
+            </div>
+            </div>
+    </div>
+</div>
+            
+ <div class="modal fade" id="HistoryDiscusionItem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{word418}</h4>
+      </div>
+            <div class="modal-body">
+                <table id="itemDiscusionHistory" class="table table-striped table-bordered table-hover">
+                    
+                </table>
+                    
+                     
+                
+                
+            </div>
+            <div class="modal-footer">
+            
+             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('HistoryDiscusionItem')">{word417}</button>
+            </div>
+            </div>
+    </div>
+</div>           

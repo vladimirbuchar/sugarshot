@@ -1,0 +1,67 @@
+<ul id="DomainMenu">
+    <li class="btn btn-default"><a href="#" onclick="Save(); return false;"><!--{$word389}--></a></li>
+    <li class="btn btn-default"><a href=""><!--{$word233}--></a></li>
+    <li class="btn btn-default"><a href="" onclick="DeleteLangVersion(); return false;"><!--{$word886}--></a></li>
+    
+</ul>
+<div id="detail">
+    
+    
+         <ul class="nav nav-tabs">
+            <li class="active"> <a href="#tab-1"  data-toggle="tab" aria-expanded="true"><!--{$word237}--></a></li>
+            <li> <a href="#tab-2" data-toggle="tab" aria-expanded="true"><!--{$word244}--></a></li>
+            
+        </ul>
+    <div class="tab-content">
+        <div id="tab-1" class="tab-pane fade active in">
+            <br />
+            <div id="itemForm">
+            <div class="form-group" >
+            <label for="NameObject"  class="control-label col-sm-2"><!--{$word238}--></label>
+            <div class="col-sm-10">
+            <input type="text" id="NameObject" name="NameObject" class="required form-control"  value="<!--{$Name}-->" /></div>
+                    </div>
+                </div>
+            <!--{$Discusion}-->
+            
+         
+            
+            
+            
+            
+        </div>
+        <div id="tab-2" class="tab-pane fade">
+            <br />
+            <div id="userSecurity">
+                <table class="table table-striped table-bordered table-hover">
+                <tr class="header">
+                    
+                    <th>&nbsp;</th>
+                        <th><!--{$word245}--></th>
+                        <th><!--{$word246}--></th>
+                        <th><!--{$word247}--></th>
+                        <th><!--{$word248}--></th>
+                        <th><!--{$word249}--></th>
+                </tr>
+                    <!--{section name=data loop=$GroupList}-->
+                    <tr>
+                        <td><!--{$GroupList[data].GroupName}--></td>
+                        <td><input type="checkbox" id="canRead_<!--{$GroupList[data].Id}-->"  class="canRead" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canread_checked}--> /></td>
+                        <td><input type="checkbox" id="canWrite_<!--{$GroupList[data].Id}-->"  class="canWrite" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canwrite_checked}--> /></td>
+                        <td><input type="checkbox" id="canDelete_<!--{$GroupList[data].Id}-->"  class="canDelete" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].candelete_checked}--> /></td>
+                        <td><input type="checkbox" id="canPublish_<!--{$GroupList[data].Id}-->" class="canPublish" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canpublish_checked}--> /></td>
+                        <td><input type="checkbox" id="canChangePrivileges_<!--{$GroupList[data].Id}-->"  class="canChangePrivileges" value="<!--{$GroupList[data].Id}-->"  <!--{$GroupList[data].canchangeprivileges_checked}--> /></td>
+                </tr>
+        <!--{/section}--> 
+                    
+                    </table>
+                
+                </div>
+                </div>
+                
+            
+        
+        
+        
+    </div>
+</div>

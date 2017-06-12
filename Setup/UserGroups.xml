@@ -1,0 +1,34 @@
+<root>
+	<item>
+		<Id><![CDATA[1]]></Id>
+		<Deleted><![CDATA[0]]></Deleted>
+		<GroupName><![CDATA[system]]></GroupName>
+		<IsSystemGroup><![CDATA[1]]></IsSystemGroup>
+		<GroupIdentificator><![CDATA[system]]></GroupIdentificator>
+		<IsSystem><![CDATA[0]]></IsSystem>
+	</item>
+	<item>
+		<Id><![CDATA[2]]></Id>
+		<Deleted><![CDATA[0]]></Deleted>
+		<GroupName><![CDATA[anonymous]]></GroupName>
+		<IsSystemGroup><![CDATA[1]]></IsSystemGroup>
+		<GroupIdentificator><![CDATA[anonymous]]></GroupIdentificator>
+		<IsSystem><![CDATA[0]]></IsSystem>
+	</item>
+	<item>
+		<Id><![CDATA[4]]></Id>
+		<Deleted><![CDATA[0]]></Deleted>
+		<GroupName><![CDATA[Registrovaný uživatel]]></GroupName>
+		<IsSystemGroup><![CDATA[1]]></IsSystemGroup>
+		<GroupIdentificator><![CDATA[RegisteredUser]]></GroupIdentificator>
+		<IsSystem><![CDATA[0]]></IsSystem>
+	</item>
+	<item>
+		<Id><![CDATA[11]]></Id>
+		<Deleted><![CDATA[0]]></Deleted>
+		<GroupName><![CDATA[Administrátor]]></GroupName>
+		<IsSystemGroup><![CDATA[1]]></IsSystemGroup>
+		<GroupIdentificator><![CDATA[Administrators]]></GroupIdentificator>
+		<IsSystem><![CDATA[]]></IsSystem>
+	</item>
+</root>

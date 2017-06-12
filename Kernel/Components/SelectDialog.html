@@ -1,0 +1,114 @@
+<script type="text/javascript">
+   
+    
+    
+    
+    /** smazat**/
+    var lastActive = 1;
+   
+
+    
+    function SetLastActiveTab(index)
+    {
+        if (index == 1 || index ==2 || index== 3 || index==4 || index == 5)
+            lastActive = index;
+        
+            
+    }
+    
+    function SetFirstTab()
+    {
+        
+        $("#tabList li:first").addClass("active");
+        $(".tab-content div:first").addClass("active");
+        $(".tab-content div:first").addClass("in");
+    }
+    
+    
+    
+    
+    
+    
+    
+</script>
+<ul class="nav nav-tabs" id="tabList">
+    <li id="{DialogId}liTab1" class="{tab1} {tab1activateUl}" > <a href="#{DialogId}tab-1"  data-toggle="tab" aria-expanded="true" onclick="SetLastActiveTab(1)" >{word308}</a></li>
+    <li id="{DialogId}liTab2" class="{tab2} {tab2activateUl}"> <a href="#{DialogId}tab-2"  data-toggle="tab" aria-expanded="true" onclick="SetLastActiveTab(2)">{word309}</a></li>
+    <li id="{DialogId}liTab3" class="{tab3} {tab3activateUl}"> <a href="#{DialogId}tab-3"  data-toggle="tab" aria-expanded="true" onclick="SetLastActiveTab(3)">{word310}</a></li>
+    <li id="{DialogId}liTab4" class="{tab4} {tab4activateUl}"> <a href="#{DialogId}tab-4"  data-toggle="tab" aria-expanded="true" onclick="SetLastActiveTab(4)">{word311}</a></li>
+    <li id="{DialogId}liTab5" class="{tab5} {tab5activateUl}"> <a href="#{DialogId}tab-5"  data-toggle="tab" aria-expanded="true" onclick="SetLastActiveTab(5)">{word677}</a></li>
+    <li id="{DialogId}liTab6" class="{tab6} {tab6activateUl}"> <a href="#{DialogId}tab-6"  data-toggle="tab" aria-expanded="true" onclick="SetLastActiveTab(6)">{word723}</a></li>
+    
+</ul>
+<div class="tab-content">
+    
+    <div id="{DialogId}tab-1" class="tab-pane fade {tab1} {tab1activateDiv}">
+        <br />
+        {tree}
+        
+    </div>
+    
+    
+    <div id="{DialogId}tab-2" class="tab-pane fade {tab2} {tab2activateDiv}">
+        <br />
+        {treeFile}
+    </div>
+    
+    <div id="{DialogId}tab-3" class="tab-pane fade {tab3} {tab3activateDiv}">
+        <br />
+        <div id="itemForm" class="form-horizontal" role="form">
+            <div class="form-group">
+                 <label for="{DialogId}Name"  class="control-label col-sm-2">{word312}</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="{DialogId}Name" name="{DialogId}Name" class=" form-control" />
+                    </div>
+           </div>
+            
+            <div class="form-group"><label for="{DialogId}Url"  class="control-label col-sm-2">{word313}</label>
+                <div class="col-sm-10">
+                <input type="text" id="{DialogId}Url" name="{DialogId}Url"  class=" form-control" /></div>
+            </div>
+            
+                    
+                </div>
+
+    </div>
+    
+    
+    
+    <div id="{DialogId}tab-4" class="tab-pane fade {tab4} {tab4activateDiv}">
+        <br />
+        {treeForm}
+    </div>
+    
+        <div id="{DialogId}tab-5" class="tab-pane fade {tab5} {tab5activateDiv}">
+            <br />
+             <div id="itemForm" class="form-horizontal" role="form">
+            <div class="form-group">
+                 <label for="{DialogId}NameJsAction"  class="control-label col-sm-2">{word312}</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="{DialogId}JsActionName" name="{DialogId}NameJsAction" class=" form-control" />
+                    </div>
+           </div>
+            
+            <div class="form-group"><label for="{DialogId}JsAction"  class="control-label col-sm-2">{word678}</label>
+                <div class="col-sm-10">
+                <input type="text" id="{DialogId}JsAction" name="{DialogId}JsAction"  class=" form-control" /></div>
+            </div>
+            
+                    
+                </div>
+        </div>
+     
+        <div id="{DialogId}tab-6" class="tab-pane fade {tab6} {tab6activateDiv}">
+             <div id="{DialogId}privilegesForm" class="form-horizontal" role="form">
+                 {security}
+                </div>
+        </div>
+    
+    
+    
+    
+</div>
+
+

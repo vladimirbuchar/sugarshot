@@ -1,0 +1,246 @@
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word201}--> </h4>
+      </div>
+    
+        
+    <div class="modal-body">
+        
+            <ul class="nav nav-tabs">
+                <li class="active"> <a href="#tab-1" data-toggle="tab" aria-expanded="true"><!--{$word202}--></a></li>
+                
+            </ul>
+        <div class="tabs tab-content" class="tab-pane fade active in">
+            <div id="tab-1" >
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <br />
+                    <input type="hidden" name="Id" Id="Id" />
+                    <input type="hidden" name="DomainId" Id="DomainId"  value="<!--{$DomainId}-->" class="noClear"/>
+                    <div class="form-group"><label for="ShowName" class="control-label col-sm-4"><!--{$word203}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="ShowName" name="ShowName" class="required form-control" /></div>
+                    </div>
+                    <div class="form-group">
+                    <label for="ConnectedWord" class="control-label col-sm-4"><!--{$word161}--></label>
+                    <div class="col-sm-8">
+                        <select id="ConnectedWord" class="noDatabase form-control">
+                            <option value=""><!--{$word162}--></option>
+                            <!--{section name=data loop=$WordList}-->
+                                <option value="<&#33;--{$<!--{$WordList[data].GroupName}-->}-->"><!--{$WordList[data].ShowLang}--></option>
+                            <!--{/section}--> 
+                        </select>
+                    </div>
+                    </div>
+                    
+                    <div class="form-group"><label for="Identificator" class="control-label col-sm-4"><!--{$word204}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="Identificator" name="Identificator" class="required form-control"/></div>
+                    </div>
+                    
+                    <div class="form-group"><label for="Type" class="control-label col-sm-4"><!--{$word205}--></label>
+                    <div class="col-sm-8">
+                        <select id="Type" name="Type" class="required form-control">
+                            <option value=""><!--{$word213}--></option>
+                            <option value="textbox"><!--{$word212}--></option>
+                            <option value="color"><!--{$word216}--></option>
+                            <option value="email"><!--{$word217}--></option>
+                            <option value="file"><!--{$word218}--></option>
+                            <option value="hidden"><!--{$word219}--></option>
+                            <option value="number"><!--{$word220}--></option>
+                            <option value="password"><!--{$word221}--></option>
+                            <option value="search"><!--{$word223}--></option>
+                            <option value="tel"><!--{$word224}--></option>
+                            <option value="url"><!--{$word225}--></option>
+                            <option value="textarea"><!--{$word293}--></option>
+                            <option value="html"><!--{$word294}--></option>
+                            <option value="range"><!--{$word222}--></option>
+                            <option value="calendar"><!--{$word295}--></option>
+                           <option value="checkbox"><!--{$word214}--></option>
+                            <option value="radio"><!--{$word215}--></option>
+                            <option value="domainData"><!--{$word348}--></option>
+                            <option value="checkboxOneItem"><!--{$word810}--></option>
+                            
+                            
+                            
+                            
+                             
+                        </select>
+                    </div>
+                        
+                    </div>
+                    
+                    <div class="form-group ShowInAdmin"><label for="ShowInAdmin" class="control-label col-sm-4"><!--{$word206}--></label>
+                        <div class="col-sm-6">
+                        <input type="checkbox" id="ShowInAdmin" name="ShowInAdmin" class=""/></div>
+                    </div>
+                    <div class="form-group ShowInAdminReadOnly"><label for="ShowInAdminReadOnly" class="control-label col-sm-4"><!--{$word349}--></label>
+                        <div class="col-sm-6">
+                        <input type="checkbox" id="ShowInAdminReadOnly" name="ShowInAdminReadOnly" class=""/></div>
+                    </div>
+                    
+                    
+                    <div class="form-group ShowInWeb"><label for="ShowInWeb" class="control-label col-sm-4"><!--{$word207}--></label>
+                        <div class="col-sm-6">
+                            <input type="checkbox" id="ShowInWeb" name="ShowInWeb" class=""/></div></div>
+                            <div class="form-group ShowInWebReadOnly"><label for="ShowInWebReadOnly" class="control-label col-sm-4"><!--{$word350}--></label>
+                        <div class="col-sm-6">
+                            <input type="checkbox" id="ShowInWebReadOnly" name="ShowInWebReadOnly" class=""/></div></div>
+                    
+                    <div class="form-group DefaultValue"><label for="DefaultValue" class="control-label col-sm-4"><!--{$word208}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="DefaultValue" name="DefaultValue" class=" form-control" /></div>
+                    </div>
+                    
+                    <div class="form-group MaxLength"><label for="MaxLength" class="control-label col-sm-4"><!--{$word210}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="MaxLength" name="MaxLength" class="form-control"/></div>
+                    </div>
+                    <div class="form-group MinLength"><label for="MinLength" class="control-label col-sm-4"><!--{$word209}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="MinLength" name="MinLength"  class="form-control"/></div>
+                    </div>
+                    <div class="form-group Validate"><label for="Validate" class="control-label col-sm-4"><!--{$word351}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="Validate" name="Validate"  class="form-control"/></div>
+                    </div>
+                    <div class="form-group CssClass"><label for="CssClass" class="control-label col-sm-4"><!--{$word352}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="CssClass" name="CssClass"  class="form-control"/></div>
+                    </div>
+                    <div class="form-group MoreHtmlAtribut"><label for="CssClass" class="control-label col-sm-4"><!--{$word353}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="MoreHtmlAtribut" name="MoreHtmlAtribut"  class="form-control"/></div>
+                    </div>
+                    <div class="form-group Required"><label for="Required" class="control-label col-sm-4"><!--{$word211}--></label>
+                        <div class="col-sm-8">
+                        <input type="checkbox" id="Required" name="Required" /></div>
+                    </div>
+                    <div class="form-group NoUpdate"><label for="NoUpdate" class="control-label col-sm-4"><!--{$word511}--></label>
+                        <div class="col-sm-8">
+                        <input type="checkbox" id="NoUpdate" name="NoUpdate" /></div>
+                    </div>
+                    <div class="form-group XmlSettings"><label for="XmlSettings" class="control-label col-sm-4"><!--{$word577}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="XmlSettings" name="XmlSettings" class="form-control"/></div>
+                    </div>
+                    <div class="form-group UniqueValue"><label for="UniqueValue" class="control-label col-sm-4"><!--{$word354}--></label>
+                        <div class="col-sm-8">
+                        <input type="checkbox" id="UniqueValue" name="UniqueValue" /></div>
+                    </div>
+                    <div class="form-group AddCDATA"><label for="AddCDATA" class="control-label col-sm-4"><!--{$word600}--></label>
+                        <div class="col-sm-8">
+                        <input type="checkbox" id="AddCDATA" name="AddCDATA" /></div>
+                    </div>
+                    <div class="form-group ShowOnlyDetail"><label for="ShowOnlyDetail" class="control-label col-sm-4"><!--{$word602}--></label>
+                        <div class="col-sm-8">
+                        <input type="checkbox" id="ShowOnlyDetail" name="ShowOnlyDetail" /></div>
+                    </div>
+                    <div class="form-group Autocomplete"><label for="Autocomplete" class="control-label col-sm-4"><!--{$word671}--></label>
+                        <div class="col-sm-8">
+                        <input type="checkbox" id="Autocomplete" name="Autocomplete" /></div>
+                    </div>
+                    <div class="form-group AddToSort"><label for="AddToSort" class="control-label col-sm-4"><!--{$word672}--></label>
+                        <div class="col-sm-8">
+                        <input type="checkbox" id="AddToSort" name="AddToSort" /></div>
+                    </div>
+                    <div class="form-group Domain"><label for="Domain" class="control-label col-sm-4"><!--{$word355}--></label>
+                    <div class="col-sm-8">
+                        <select id="Domain" name="Domain" class="required form-control">
+                            <option value=""><!--{$word213}--></option>
+                            <!--{section name=data loop=$UserDomainList}-->
+                            <option value="<!--{$UserDomainList[data].Id}-->"><!--{$UserDomainList[data].DomainName}--></option>
+                            <!--{/section}--> 
+                            
+                            
+                            
+                             
+                        </select>
+                    </div>
+                        
+                    </div>
+                    <div class="form-group DomainSettings"><label for="DomainSettings" class="control-label col-sm-4"><!--{$word631}--></label>
+                        <div class="col-sm-8">
+                        <select id="DomainSettings" name="DomainSettings" class="form-control" >
+                            <option value="standard"><!--{$word632}--></option>
+                            <option value="1n"><!--{$word633}--></option>
+                            <option value="mn"><!--{$word634}--></option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="form-group OnChangeEvent">
+                        <label for="OnChangeEvent" class="control-label col-sm-4"><!--{$word796}--></label>
+                        <div class="col-sm-8">
+                            <input type="text" id="OnChangeEvent" name="OnChangeEvent" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group FiltrSettings"><label for="FiltrSettings" class="control-label col-sm-4"><!--{$word654}--></label>
+                        <div class="col-sm-8">
+                        <select id="FiltrSettings" name="FiltrSettings" class="form-control" >
+                            <option value="HideInFiltr"><!--{$word655}--></option>
+                            <option value="ValueList"><!--{$word656}--></option>
+                            <option value="SearchInput"><!--{$word657}--></option>
+                            <option value="StartLike"><!--{$word658}--></option>
+                            <option value="EndLike"><!--{$word659}--></option>
+                            <option value="Like"><!--{$word660}--></option>
+                            <option value="SelectMN"><!--{$word661}--></option>
+                            <option value="<"><!--{$word662}--></option>
+                            <option value="<="><!--{$word663}--></option>
+                            <option value=">="><!--{$word664}--></option>
+                            <option value=">"><!--{$word665}--></option>
+                            <option value="Select1N"><!--{$word666}--></option>
+                            
+                            
+                        </select>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="values form-group">
+                        <label class="control-label col-sm-4"><!--{$word296}--></label>
+                        
+                    <div class="col-sm-4">
+                                <input  type="button" value="<!--{$word297}-->" class="noDatabase form-control noClear" onclick="CreateNewRow();"/>
+                    </div>
+                    </div>
+                    <div class="values form-group">
+                        <table id="ValueList" writefunction="WriteRow" class="table table-striped table-bordered table-hover">
+                            <tr class="noDatabase header noClear">
+                                <th><!--{$word300}--></th>
+                                <th><!--{$word301}--></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            <tr class="newItemRow dn noDatabase noClear">
+                                <td><input type="text" id="itemValue" class="noDatabase form-control" /></td>
+                                <td>
+                                    <select id="itemText" class="noDatabase form-control">
+                                        <option value=""><!--{$word162}--></option>
+                                        <!--{section name=data loop=$WordList}-->
+                                        <option value="<!--{$WordList[data].GroupName}-->"><!--{$WordList[data].ShowLang}--></option>
+                                        <!--{/section}--> 
+                                    </select>
+                                    </td>
+                                <td class="noDatabase">
+                                    <button onclick="SaveRow();return false;" class="noDatabase btn btn-default">
+                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                    </button>
+                               </td>
+                                <td class="noDatabase">
+                                    <button onclick="CancelNewRow();return false;" class="noDatabase btn btn-default">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                        
+                    </div>
+                    
+                    </div>
+                    <p class="clear"></p>
+                
+            </div>
+            
+        </div>
+        
+    </div>

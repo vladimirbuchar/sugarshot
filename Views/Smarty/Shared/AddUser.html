@@ -1,0 +1,124 @@
+
+
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word174}--> </h4>
+      </div>
+
+<div class="modal-body">
+        <ul class="nav nav-tabs">
+            
+                <li class="active"> <a href="#tab-1" data-toggle="tab" aria-expanded="true"><!--{$word175}--></a></li>
+                <li> <a href="#tab-2" data-toggle="tab" aria-expanded="true"> <!--{$word338}--></a></li>
+                <li> <a href="#tab-3" data-toggle="tab" aria-expanded="true"> <!--{$word339}--></a></li>
+                <li> <a href="#tab-4" data-toggle="tab" aria-expanded="true"> <!--{$word688}--></a></li>
+                
+                
+            </ul>
+    
+    <div class="tabs tab-content">
+            <div id="tab-1" class="tab-pane fade in active  ">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <br />
+                    <input type="hidden" name="Id" Id="Id" />
+                    <div class="form-group">
+                        <label for="UserName" class="control-label col-sm-4"><!--{$word176}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="UserName" name="UserName" class="required form-control"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="passwordGroup">
+                        <label for="Password" class="control-label col-sm-4"><!--{$word180}--></label>
+                        <div class="col-sm-8">
+                        <input type="password" id="UserPassword"  name="Password" class="required form-control" value=""/>
+                        </div>
+                        </div>
+                    <div class="form-group">
+                        <label for="FirstName" class="control-label col-sm-4"><!--{$word177}--></label>
+                        <div class="col-sm-8">
+                        <input type="text" id="FirstName" name="FirstName" class="required form-control"/>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                    <label for="LastName" class="control-label col-sm-4"><!--{$word178}--></label>
+                    <div class="col-sm-8">
+                        <input type="text" id="LastName" name="LastName" class="required form-control"/></div></div>
+                    
+                    <div class="form-group"><label for="UserEmail" class="control-label col-sm-4"><!--{$word179}--></label>
+                        <div class="col-sm-8">
+                            <input type="text" id="UserEmail" name="UserEmail" class="required form-control"/></div></div>
+                    
+                     <div class="form-group"><label for="MainUserGroup" class="control-label col-sm-4"><!--{$word181}--></label>
+                        <div class="col-sm-8">
+                            <select id="MainUserGroup" class="form-control">
+                                    <option value=""><!--{$word340}--></option>
+                                    <!--{section name=data loop=$SystemUserGroups}-->
+                                        <option value="<!--{$SystemUserGroups[data].Id}-->"><!--{$SystemUserGroups[data].GroupName}--></option>
+                            <!--{/section}--> 
+                        
+                            </select></div></div>
+                    <div class="form-group">
+                    <label for="IsActive" class="control-label col-sm-4"><!--{$word341}--></label>
+                    <div class="col-sm-8">
+                        <input type="checkbox" id="IsActive" name="IsActive" /></div></div>
+                    <div class="form-group">
+                    <label for="DefaultLang" class="control-label col-sm-4"><!--{$word497}--></label>
+                    <div class="col-sm-8">
+                        <select id="DefaultLang" class="form-control">
+                            <option value=""><!--{$word498}--></option>
+                            <!--{section name=data loop=$AdminLangs}-->
+                                        <option value="<!--{$AdminLangs[data].LangIdentificator}-->"><!--{$AdminLangs[data].LangName}--></option>
+                            <!--{/section}--> 
+                            
+                        </select></div></div>    
+                    </div>
+                    <p class="clear"></p>
+                
+            </div>
+            <div id="tab-2" class="tab-pane fade">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <br />
+                    <div class="form-group">
+                    <label for="BlockDiscusion" class="control-label col-sm-8"><!--{$word342}--></label>
+                    <div class="col-sm-4">
+                        <input type="checkbox" id="BlockDiscusion" name="BlockDiscusion" /></div></div>
+                </div>
+                 
+                
+            </div>
+        <div id="tab-3" class="tab-pane fade">
+            <div class="form-horizontal" role="form">
+                    <br />
+                    <div class="form-group">
+                    <label for="PassowordChange1" class="control-label col-sm-4"><!--{$word343}--></label>
+                    <div class="col-sm-8">
+                        <input type="password" id="PassowordChange1" name="PassowordChange1" class="form-control"/></div></div>
+                                            <div class="form-group">
+                    <label for="PassowordChange2" class="control-label col-sm-4"><!--{$word344}--></label>
+                    <div class="col-sm-8">
+                        <input type="password" id="PassowordChange2" name="PassowordChange2"  class="form-control"/></div></div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                            <input type="button" value="<!--{$word345}-->" onclick="PasswordChange()" class="btn btn-default noClear"/>
+                            </div>
+                        </div>
+                        
+                </div>
+        </div>
+        <div id="tab-4" class="tab-pane fade">
+            <div class="form-horizontal" role="form">
+                    <br />
+                    <div id="OtherGroups">
+                    <!--{section name=data loop=$NoSystemUserGroups}-->
+                    <div class="form-group">
+                     <label for="group_<!--{$NoSystemUserGroups[data].Id}-->" class="control-label col-sm-4"> <!--{$NoSystemUserGroups[data].GroupName}--></label> <input type="checkbox" id="group_<!--{$NoSystemUserGroups[data].Id}-->" class="col-md-1" value="<!--{$NoSystemUserGroups[data].Id}-->"/>
+                    </div>
+                            <!--{/section}--> 
+                            </div>
+            </div>
+        </div>
+
+        </div>
+    </div>

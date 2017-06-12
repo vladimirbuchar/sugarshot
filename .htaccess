@@ -1,0 +1,80 @@
+RewriteCond %{HTTPS} off
+# First rewrite to HTTPS:
+# Don't put www. here. If it is already there it will be included, if not
+# the subsequent rule will catch it.
+RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Now, rewrite any request to the wrong domain to use www.
+# [NC] is a case-insensitive match
+RewriteCond %{HTTP_HOST} !^www\. [NC]
+RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#admin login
+
+RewriteRule   xswadmin\/   /index.php?Template=AdminNoLogin&View=AdminLogin&Controller=Login
+#admin 
+RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1&webid=$3 [QSA]
+RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1&webid=$4&langid=$5&objectid=$6&parentid=$7&param=$3 [QSA]
+RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1&param=$3&webid=$4&langid=$5 [QSA]
+RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1&webid=$3&langid=$4&objectid=$5&parentid=$6 [QSA]
+RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1&webid=$3&langid=$4&objectid=$5 [QSA]
+RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1&webid=$3&langid=$4 [QSA]
+RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1&param=$3 [QSA]
+RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1 [QSA]
+#admin without template
+#RewriteRule   xadmNT\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]$   /index.php?Template=AdminLoginSmallTemplate&View=$2&Controller=$1
+#RewriteRule   xadmNT\/([A-Za-z0-9]*)[\/]([A-Za-z0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=AdminLoginSmallTemplate&View=$2&Controller=$1&langid=$3
+#RewriteRule   xadmNT\/([A-Za-z0-9]*)[\/]([A-Za-z0-9]*)[\/]([0-9]*)[\/]([A-Za-z0-9|]*)[\/]$   /index.php?Template=AdminLoginSmallTemplate&View=$2&Controller=$1&langid=$3&params=$4
+
+#RewriteRule   xadmHTML\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]$   /index.php?Template=HtmlEditorTemplate&View=$2&Controller=$1
+#RewriteRule   xadmHTML\/([A-Za-z0-9]*)[\/]([A-Za-z0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=HtmlEditorTemplate&View=$2&Controller=$1&langid=$3
+#RewriteRule   xadmHTML\/([A-Za-z0-9]*)[\/]([A-Za-z0-9]*)[\/]([0-9]*)[\/]([A-Za-z0-9|]*)[\/]$   /index.php?Template=HtmlEditorTemplate&View=$2&Controller=$1&langid=$3&params=$4
+
+#ajax
+RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([A-Za-z0-9]*)[\/]([A-Za-z]*)[\/] /index.php?ajax=ajax&Controller=$1&functionName=$2&paramsMode=$3&webid=$4&langid=$5&objectid=$6&param1=$7&isFrontEnd=$8 [QSA]
+RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([A-Za-z0-9]*)[\/] /index.php?ajax=ajax&Controller=$1&functionName=$2&paramsMode=$3&webid=$4&langid=$5&objectid=$6&param1=$7 [QSA]
+RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/] /index.php?ajax=ajax&Controller=$1&functionName=$2&paramsMode=$3&webid=$4&langid=$5&objectid=$6 [QSA]
+RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/] /index.php?ajax=ajax&Controller=$1&functionName=$2&paramsMode=$3&webid=$4&langid=$5 [QSA]
+RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/] /index.php?ajax=ajax&Controller=$1&functionName=$2&paramsMode=$3&webid=$4 [QSA]
+RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/] /index.php?ajax=ajax&Controller=$1&functionName=$2&paramsMode=$3 [QSA]
+
+# ohers 
+
+RewriteRule   fileupload[\/]([0-9]*)[\/] /index.php?fileUpload=true&webid=$1
+#RewriteRule   fileupload[\/]  /index.php?fileUpload=true
+RewriteRule   filesupload[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/] /index.php?multiuaploadfiles=true&langId=$1&parentId=$2&webid=$3
+RewriteRule   fileexplorer[\/] /index.php?fileExplorer=true
+RewriteRule   renderhtml[\/]([0-9]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&id=$1&renderHtml=TRUE
+#RewriteRule   download[\/]([0-9]*)[\/] /index.php?download=true&ObjectId=$1
+RewriteRule   css[\/]([0-9]*)[\/]([0-9]*)[\/]([A-Za-z]*)\.css /index.php?css=true&id=$2&name=$3&langId=$1
+RewriteRule   xml[\/]([A-Za-z]{2,3})[\/]([A-Za-z0-9\-]*)\.xml /index.php?xml=true&SeoUrl=$2&lang=$1
+RewriteRule   xml[\/]([A-Za-z0-9\-]*)\.xml /index.php?xml=true&SeoUrl=$1
+RewriteRule   xmldownload[\/]([A-Za-z]{2,3})[\/]([A-Za-z0-9\-]*)\.xml /index.php?xmldownload=true&SeoUrl=$2&lang=$1
+RewriteRule   xmldownload[\/]([A-Za-z0-9\-]*)\.xml /index.php?xmldownload=true&SeoUrl=$1
+RewriteRule   xmlimport[\/]([A-Za-z]{2,3})[\/]([A-Za-z0-9\-]*)[\/] /index.php?xmlimport=true&SeoUrl=$2&lang=$1 [QSA]
+RewriteRule   xmlimport[\/]([A-Za-z0-9\-]*)[\/] /index.php?xmlimport=true&SeoUrl=$1 [QSA]
+RewriteRule   checkxml[\/]([A-Za-z]{2,3})[\/]([A-Za-z0-9\-]*)[\/] /index.php?checkxmlimport=true&SeoUrl=$2&lang=$1 [QSA]
+RewriteRule   checkxml[\/]([A-Za-z0-9\-]*)[\/] /index.php?checkxmlimport=true&SeoUrl=$1 [QSA]
+RewriteRule   testing[\/]([A-Za-z0-9_\-]*)[\/] /index.php?test=true&ClassName=$1 [QSA]
+RewriteRule   runalltest[\/] /index.php?runalltest=true [QSA]
+RewriteRule   js[\/]([0-9]*)[\/]([0-9]*)[\/]([A-Za-z]*)\.js /index.php?js=true&id=$2&name=$3&langId=$1
+RewriteRule   img[\/](([A-Za-z0-9])*\.([A-Za-z])*) /res/$1
+RewriteRule   data[\/](([A-Za-z0-9])*\.([A-Za-z])*) /res/$1
+RewriteRule   jsinternal[\/](([A-Za-z0-9\.])*\.([A-Za-z])*) /Scripts/$1
+RewriteRule   timers[\/]([A-Za-z0-9_\-]*)[\/] /index.php?timers=true&timerName=$1 [QSA]
+RewriteRule   setup[\/] /index.php?setup=true [QSA]
+RewriteRule   updatemodel[\/] /index.php?updatemodel=true [QSA]
+RewriteRule   longrequest[\/] /index.php?longrequest=true&name=$1&value=$2 [QSA]
+RewriteRule   runalltimers[\/] /index.php?runalltimers=true [QSA]
+RewriteRule   caching[\/] /index.php?caching=true [QSA]
+
+
+
+# frontend  
+#with lang 
+RewriteRule   ^([A-Za-z]{2,3})[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&lang=$1 [QSA]
+RewriteRule   ^([A-Za-z]{2,3})[\/]([A-Za-z0-9\-]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&seourl=$2&lang=$1  [QSA]
+RewriteRule   ^([A-Za-z]{2,3})[\/]([A-Za-z0-9\-]*)[\/]([A-Za-z0-9=]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&seourl=$2&param1=$3&lang=$1 [QSA]
+
+# none lang 
+RewriteRule   ^([A-Za-z0-9\-]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&seourl=$1 [QSA]
+RewriteRule   preview[\/]([A-Za-z0-9\-]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&seourl=$1&preview=true [QSA]
+RewriteRule   ^([A-Za-z0-9\-]*)[\/]([A-Za-z0-9=]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&seourl=$1&param1=$2 [QSA]

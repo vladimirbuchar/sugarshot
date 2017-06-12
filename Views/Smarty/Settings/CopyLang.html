@@ -1,0 +1,31 @@
+
+<div id="SettingCopy" class="form-horizontal" role="form">
+    <div class="form-group">
+                    <label for="SourceLang" class="control-label col-sm-3"><!--{$word507}--></label>
+                    <div class="col-sm-9">
+                        <select id="SourceLang" class="form-control">
+                            <!--{section name=data loop=$LangList}-->
+                            <option value="<!--{$LangList[data].Id}-->" ><!--{$LangList[data].LangName}--></option>
+                            <!--{/section}--> 
+                            
+                        </select>
+                </div>
+    </div>
+    <div class="form-group">
+                    <label for="DestinationLang" class="control-label col-sm-3"><!--{$word508}--></label>
+                    <div class="col-sm-9">
+                        <select id="DestinationLang" class="form-control">
+                            <!--{section name=data loop=$LangList}-->
+                            <option value="<!--{$LangList[data].Id}-->" ><!--{$LangList[data].LangName}--></option>
+                            <!--{/section}--> 
+                            
+                        </select>
+                </div>
+    </div>
+ 
+    
+    <div class="col-sm-1 ">
+        <div class="form-group"><input type="button" id="StartExport" name="StartExport" class="form-control" Value="<!--{$word509}-->" /></div>
+    </div>
+    
+</div>

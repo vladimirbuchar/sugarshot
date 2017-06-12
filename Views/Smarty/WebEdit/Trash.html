@@ -1,0 +1,15 @@
+
+<table class="table table-striped table-bordered table-hover">
+<!--{section name=data loop=$trash}-->
+<tr id="<!--{$trash[data].Id}-->">
+    <td>
+        <!--{$trash[data].Name}-->
+    </td>
+    <td>
+        <a href="#" onclick="Recovery('<!--{$trash[data].Id}-->')"><!--{$word500}--></a>
+    </td>
+    
+</tr>
+                            
+<!--{/section}--> 
+</table>

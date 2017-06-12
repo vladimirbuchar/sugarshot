@@ -1,0 +1,306 @@
+<!--{$Table}-->
+
+<div class="modal fade" id="ImportDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word41}--></h4>
+      </div>
+            <div class="modal-body">
+                <div class="form-horizontal" role="form">
+                    
+                    <input type="file" id="fileUpload" />
+                    <p><!--{$word43}--></p>
+                    <div class="form-group"><label for="deleteAndInsert" class="control-label col-sm-6"><!--{$word44}--></label>
+                        <div class="col-sm-6">
+                        <input type="radio" id="deleteAndInsert" name="importSettings"  class="importSettings" value="deleteAndInsert"/></div>
+                    </div>
+                    <div class="form-group"><label for="insert" class="control-label col-sm-6"><!--{$word45}--></label>
+                        <div class="col-sm-6">
+                        <input type="radio" id="insert" name="importSettings"  class="importSettings" value="insert"/></div>
+                    </div>
+                    <div class="form-group"><label for="update" class="control-label col-sm-6"><!--{$word46}--></label>
+                        <div class="col-sm-6">
+                        <input type="radio" id="update" name="importSettings"  class="importSettings" value="update"/></div>
+                    </div>
+                    <div class="form-group"><label for="updateInsert" class="control-label col-sm-6"><!--{$word47}--></label>
+                        <div class="col-sm-6">
+                        <input type="radio" id="updateInsert" name="importSettings"  class="importSettings" value="updateInsert"/></div>
+                    </div>
+                    
+                    
+                </div>
+                
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ShowLoading();Import('<!--{$ImportServerFunction}-->','<!--{$ControllerName}-->','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('ImportDialog');HideLoading();"><!--{$word368}--></button>
+             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('ImportDialog')"><!--{$word369}--></button>
+            </div>
+            </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ExportDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word29}--></h4>
+      </div>
+            <div class="modal-body">
+            
+            
+                <div id="ExportTabs" class="form-horizontal" role="form">
+                    
+                    <div class="form-group"><label for="ExportTypeXml" class="control-label col-sm-2"><!--{$word31}--></label>
+                        <div class="col-sm-10">
+                        <input type="radio" id="ExportTypeXml" name="ExportType" class="ExportType" value="xml"/></div>
+                    </div>
+                    <div class="form-group"><label for="ExportTypeXLS" class="control-label col-sm-2"><!--{$word32}--></label>
+                        <div class="col-sm-10">
+                        <input type="radio" id="ExportTypeXLS" name="ExportType"  class="ExportType" value="xls"/></div>
+                    </div>
+                    </div>
+                    
+                
+            
+            
+            
+                
+            </div>
+            <div class="modal-footer">
+            
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ShowLoading();ExportData('<!--{$ExportAllServerAction}-->','<!--{$ControllerName}-->','<!--{$ModelName}-->');CloseDialog('ExportDialog');HideLoading();"><!--{$word370}--></button>
+             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('ExportDialog')"><!--{$word369}--></button>
+        
+      </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+<div class="modal fade" id="HistoryDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word33}--> </h4>
+      </div>
+        <div class="modal-body">
+            <table id="HistoryObject">
+            <tr>
+                <td><!--{$word34}--></td>
+                <td><!--{$word35}--></td>
+                <td><!--{$word36}--></td>
+                <td><!--{$word37}--></td>
+                <td><!--{$word38}--></td>
+                <td><!--{$word39}--></td>
+            </tr>
+            <tr class="historyTemplate dn">
+                <td>{Action}</td>
+                <td>{UserId}</td>
+                <td>{IP}</td>
+                <td>{CreateDate}</td>
+                <td>{OldData}</td>
+                
+                <td><a href="#" onclick="ShowLoading();RecoveryItemFromHistory('{Id}','<!--{$ControllerName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('HistoryDialog');HideLoading();"><!--{$word40}--></a></td>
+                
+            </tr>
+        </table>
+        </div>
+        
+        
+        <div class="modal-footer">
+            
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('HistoryDialog')"><!--{$word369}--></button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="AddItemDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <!--{include file=$AddDialog}-->
+        <div class="modal-footer">
+            <!--{if !empty($ViewName)}-->
+            <button type="button" class="btn btn-primary" onclick="if (SaveItem('<!--{$JoinAddDialogId}-->','<!--{$ControllerName}-->','<!--{$AddAction}-->','<!--{$ModelName}-->')){ ShowLoading(); <!--{$AddScriptAction}--> GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ViewName}-->',undefined,undefined);CloseDialog('<!--{$JoinAddDialogId}-->');HideLoading();}"><!--{$word371}--></button>
+            <!--{else}-->
+            <button type="button" class="btn btn-primary" onclick="if (SaveItem('<!--{$JoinAddDialogId}-->','<!--{$ControllerName}-->','<!--{$AddAction}-->','<!--{$ModelName}-->')){ShowLoading(); <!--{$AddScriptAction}--> GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('<!--{$JoinAddDialogId}-->');HideLoading();}"><!--{$word371}--></button>
+            <!--{/if}-->
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('<!--{$JoinAddDialogId}-->')"><!--{$word369}--></button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="DeleteDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" ><!--{$word372}--></h4>
+        </div>
+            <div class="modal-body">
+                <!--{$DeleteMessage}--> <span id="deleteName"></span>
+                <input type="hidden" id="deleteId" />
+                
+                
+            </div>
+                    <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="ShowLoading();DeleteDomianItem('<!--{$ControllerName}-->','<!--{$DeleteAction}-->',$('#deleteId').val(),'<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('DeleteDialog'); HideLoading();"><!--{$word373}--></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('DeleteDialog')"><!--{$word374}--></button>
+        
+      </div>
+    </div>
+    </div>
+</div>
+    
+<div class="modal fade" id="MultiDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title SelectedItem dn"><!--{$word375}--></h4>
+            <h4 class="modal-title NoSelectedItem dn"><!--{$word376}--></h4>
+        </div>
+            <div class="modal-body">
+                 <div class=" SelectedItem dn">
+                    <!--{$MultiDeleteQuestion}--> 
+                 </div>
+                <div class="NoSelectedItem dn">
+                    <!--{$NoObjectSelect}-->
+                </div>
+                
+                
+            </div>
+                    <div class="modal-footer">
+                        <div class=" SelectedItem dn">
+            <button type="button" class="btn btn-primary" onclick="ShowLoading();DeleteSelectItem('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','<!--{$DeleteAction}-->','row-','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiDelete');HideLoading();"><!--{$word373}--></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiDelete')"><!--{$word374}--></button>
+                        </div>
+                        <div class="NoSelectedItem dn">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiDelete')"><!--{$word369}--></button>
+                </div>
+        
+      </div>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="RecoveryDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" ><!--{$word377}--></h4>
+        </div>
+            <div class="modal-body">
+                <!--{$RecoveryQuestion}--> <span id="recoveryName"></span>
+                <input type="hidden" id="recoveryId" />
+                
+                
+            </div>
+                    <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="ShowLoading();Recovery('<!--{$ControllerName}-->','<!--{$RecoveryServerAction}-->',$('#recoveryId').val(),'<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('RecoveryDialog');HideLoading();"><!--{$word373}--></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('RecoveryDialog')"><!--{$word374}--></button>
+        
+      </div>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MultiRecovery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title SelectedItem dn"><!--{$word378}--></h4>
+            <h4 class="modal-title NoSelectedItem dn"><!--{$word379}--></h4>
+        </div>
+            <div class="modal-body">
+                 <div class=" SelectedItem dn">
+                    <!--{$RecoveryMultiItemText}--> 
+                 </div>
+                <div class="NoSelectedItem dn">
+                    <!--{$NoObjectSelect}-->
+                </div>
+                
+                
+            </div>
+                    <div class="modal-footer">
+                        <div class=" SelectedItem dn">
+            <button type="button" class="btn btn-primary" onclick="ShowLoading();RecoveryMultiSelect('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','<!--{$RecoveryServerAction}-->','row-','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-',,'<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiRecovery');HideLoading();"><!--{$word373}--></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiRecovery')"><!--{$word374}--></button>
+                        </div>
+                        <div class="NoSelectedItem dn">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiRecovery')"><!--{$word369}--></button>
+                </div>
+        
+      </div>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="CopyDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" ><!--{$word380}--></h4>
+        </div>
+            <div class="modal-body">
+                <!--{$CopyItemText}--> <span id="copyName"></span>
+                <input type="hidden" id="copyId" />
+                
+                
+            </div>
+                    <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="ShowLoading();CopyRow($('#copyId').val(),'<!--{$ControllerName}-->','<!--{$CopyServerAction}-->','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('CopyDialog'); HideLoading();"><!--{$word381}--></button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('CopyDialog')"><!--{$word369}--></button>
+        
+      </div>
+    </div>
+    </div>
+</div>
+
+<div class="modal fade" id="MultiCopyDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title SelectedItem dn">Vytvoření kopie</h4>
+            <h4 class="modal-title NoSelectedItem dn">Nic není vybráno</h4>
+        </div>
+            <div class="modal-body">
+                <div class=" SelectedItem dn">
+                    <!--{$ShowCopySelectedQuestion}--> 
+                 </div>
+                <div class="NoSelectedItem dn">
+                    <!--{$NoObjectSelect}-->
+                </div>
+                
+                
+                
+            </div>
+                    <div class="modal-footer">
+                        <div class="SelectedItem dn">
+            <button type="button" class="btn btn-primary" onclick="ShowLoading();MultiCopy('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','row-','<!--{$CopyServerAction}-->','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiCopyDialog');HideLoading();">Ano</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiCopyDialog')"><!--{$word369}--></button>
+            </div>
+                        <div class="NoSelectedItem dn">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiCopyDialog')"><!--{$word369}--></button>
+                        </div>
+        
+      </div>
+    </div>
+    </div>
+</div>

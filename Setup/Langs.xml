@@ -1,0 +1,14 @@
+<root>
+	<item>
+		<Id><![CDATA[17]]></Id>
+		<Deleted><![CDATA[0]]></Deleted>
+		<WebId><![CDATA[67]]></WebId>
+		<LangName><![CDATA[Češtinacz]]></LangName>
+		<RootUrl><![CDATA[localhost]]></RootUrl>
+		<Title><![CDATA[Redakční systém xWeb]]></Title>
+		<Keywords><![CDATA[keyword]]></Keywords>
+		<Description><![CDATA[description]]></Description>
+		<CategoryPage><![CDATA[category]]></CategoryPage>
+		<IsSystem><![CDATA[]]></IsSystem>
+	</item>
+</root>

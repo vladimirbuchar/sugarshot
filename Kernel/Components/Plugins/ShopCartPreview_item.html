@@ -1,0 +1,30 @@
+
+    <div class="row cartItem" id="preview-product-{Id}{Specification}">
+        <div class="col-md-1 productImage">
+            <a href="{SeoUrl}" data-ajax="false"><img src="/<%GetSmallFile('{MainImage}')%>" class="img-responsive" alt="{Name}"></a>
+        </div>
+        <div class="col-md-3 productName">
+            <a href="{SeoUrl}"  data-ajax="false">{Name} - {Color} -  {Specification}</a>
+        </div>
+        <div class="col-md-1 productPrice" id="preview-{Id}{Specification}-productPrice">
+            <%Price('{Price}','cs_CZ','%.2n')%>
+        </div>
+        <!-- <div class="col-md-1 productPriceVat" id="preview-{Id}{Specification}-productPriceVat">
+            <%PriceVat('{Price}','cs_CZ','%.2n','{Vat}')%>
+        </div>-->
+        
+        <div class="col-md-2 productCount" id="preview-product-{Id}{Specification}-Count">
+            {Count}
+        </div>
+        
+        <div class="col-md-1 productPriceCount" id="preview-{Id}{Specification}-productPriceCount">
+            <%PriceCount('{Price}','cs_CZ','%.2n','{Count}')%>
+        </div>
+        <!-- <div class="col-md-1 productPriceVatCount" id="preview-{Id}{Specification}-productPriceVatCount">
+            <%PriceVatCount('{Price}','cs_CZ','%.2n','{Vat}','{Count}')%>
+        </div>-->
+        
+        
+        
+    </div>
+    

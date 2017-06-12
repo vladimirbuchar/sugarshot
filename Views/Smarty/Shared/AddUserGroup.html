@@ -1,0 +1,131 @@
+<script type="text/javascript">
+    function OnLoadItemDetail()
+    {
+        var name = $("#GroupName").val();
+        $("#ConnectedWord").val(name);
+    }
+    </script>
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><!--{$word165}--> </h4>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs">
+            <li class="active"> <a href="#tab-1"  data-toggle="tab" aria-expanded="true"><!--{$word166}--></a></li>
+            <li> <a href="#tab-2" data-toggle="tab" aria-expanded="true"><!--{$word182}--></a></li>
+            <li> <a href="#tab-3" data-toggle="tab" aria-expanded="true"><!--{$word183}--></a></li>
+            
+        </ul>
+          <div class="tabs tab-content">
+            
+            <div id="tab-1" class="tab-pane fade active in">
+                <div id="itemForm" class="form-horizontal" role="form">
+                    <input type="hidden" name="Id" Id="Id" />
+                    <br />
+                    <div class="form-group">
+                    <label for="GroupName" class="control-label col-sm-4"> <!--{$word167}--></label>
+                                <div class="col-sm-8">
+                    <input type="text" id="GroupName" name="GroupName" class="required form-control"/>
+                                </div>
+                    </div>
+                    <div class="form-group">
+                    <label for="ConnectedWord" class="control-label col-sm-4"><!--{$word161}--></label>
+                    <div class="col-sm-8">
+                        <select id="ConnectedWord" class="noDatabase form-control">
+                            <option value=""><!--{$word162}--></option>
+                            <!--{section name=data loop=$WordList}-->
+                                <option value="<&#33;--{$<!--{$WordList[data].GroupName}-->}-->"><!--{$WordList[data].ShowLang}--></option>
+                            <!--{/section}--> 
+                        </select>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                    <label for="GroupIdentificator" class="control-label col-sm-4"><!--{$word168}--></label>
+                                <div class="col-sm-8">
+                    <input type="text" id="GroupIdentificator" name="GroupIdentificator" class="form-control" /></div>
+                    </div>
+                    
+                    <div class="form-group">
+                    <label for="IsSystemGroup" class="control-label col-sm-4"><!--{$word169}--></label>
+                                <div class="col-sm-8">
+                    <input type="checkbox" id="IsSystemGroup" name="IsSystemGroup" /></div>
+                    </div>
+                    
+                    <div class="form-group">
+                    <label for="UserDefaultState" class="control-label col-sm-4"><!--{$word603}--></label>
+                                <div class="col-sm-8">
+                                    <select id="UserDefaultState" class="form-control">
+                                        <option value=""><!--{$word604}--></option>
+                                        <option value="WebEdit#Tree"><!--{$word136}--></option>
+                                        <option value="WebEdit#TemplateEditor"><!--{$word137}--></option>
+                                        <option value="WebEdit#CssList"><!--{$word282}--></option>
+                                        <option value="WebEdit#JsList"><!--{$word383}--></option>
+                                        <option value="WebEdit#FormsList"><!--{$word384}--></option>
+                                        <option value="WebEdit#SedMailList"><!--{$word386}--></option>
+                                        <option value="WebEdit#Mailing"><!--{$word544}--></option>
+                                        <option value="FilerepositoryManger#FileManager"><!--{$word101}--></option>
+                                        <option value="WebEdit#NoPublishItems"><!--{$word539}--></option>
+                                        <option value="WebEdit#Trash"><!--{$word499}--></option>
+                                        <option value="WebEdit#DataSource"><!--{$word561}--></option>
+                                        <option value="UsersItem#UserList"><!--{$word139}--></option>
+                                        <option value="UsersItem#UserGroup"><!--{$word141}--></option>
+                                        <option value="UsersItem#MyProfile"><!--{$word143}--></option>
+                                        
+                                        <option value="Settings#WebList"><!--{$word95}--></option>
+                                        <option value="Settings#LangList"><!--{$word96}--></option>
+                                        <option value="Settings#CopyLang"><!--{$word506}--></option>
+                                        <option value="Settings#AdminLangs"><!--{$word97}--></option>
+                                        <option value="Settings#Words"><!--{$word98}--></option>
+                                        <option value="Settings#Modules"><!--{$word131}--></option>
+                                        <option value="Settings#UserDomain"><!--{$word184}--></option>
+                                        <option value="Settings#DeveloperTools"><!--{$word387}--></option>
+                                        <option value="Settings#LogView"><!--{$word595}--></option>
+                                        
+                                        
+                                    </select>
+                    </div>
+                    
+                    </div>
+                    
+                
+            </div>
+                 </div>
+            <div id="tab-2" class="tab-pane fade">
+                <br />
+                                <div id="webList" class="form-horizontal" role="form">
+
+                <!--{section name=data loop=$WebsList}-->
+                    
+                    <div class="form-group"><label for="web-<!--{$WebsList[data].Id}-->" class="control-label col-sm-4"><!--{$WebsList[data].WebName}--></label>
+                                    <div class="col-sm-8">
+                        <input type="checkbox" id="web-<!--{$WebsList[data].Id}-->" name="web-<!--{$WebsList[data].Id}-->" value="<!--{$WebsList[data].Id}-->" class="domainRadioButton UserWebId" ItemName="UserWebId" /></div>
+                    </div>
+                    <!--{/section}--> 
+                    </div>
+                
+            </div>
+            <div id="tab-3" class="tab-pane fade">
+                <div id="moduleList" class="form-horizontal scrollPanel" role="form">
+<br />
+                <!--{section name=data loop=$ModulesList}-->
+                    <div class="form-group">
+                    <label for="module-<!--{$ModulesList[data].Id}-->" class="control-label col-sm-4"><!--{$ModulesList[data].ModuleName}--></label>
+                                <div class="col-sm-8">
+                    <input type="checkbox" id="module-<!--{$ModulesList[data].Id}-->" name="module-<!--{$ModulesList[data].Id}-->" class="arrayItem ModuleId" value="<!--{$ModulesList[data].Id}-->"  ItemName="ModuleId" /></div>
+                    </div>
+                    <!--{/section}--> 
+                    </div>
+                    
+        
+        
+            </div>
+            
+       
+          
+          
+          
+          
+      </div>
+      </div>
+      
+    

@@ -1,0 +1,16 @@
+ <div class="col-md-3 col-sm-6 col-xs-12 wow fadeIn">
+    <div class="product-wrapper">
+        <a href="{SeoUrl}" data-ajax="false" title="{Name} {Color}"> 
+            <div class="height400">
+            <img src="/<%GetSmallFile('{MainImage}')%>" class="img-responsive productlistimage" alt="{Name} {Color}" title="{Name} {Color}" />
+            </div>
+            
+        <div class="product-des">
+            <h4>{Name} <span class="<%HideIfIsEmpty('{Color}')%>">- {Color}</span></h4>
+            <br />
+            <span> <%PriceVat('{Price}','cs_CZ','%.2n','{Vat}')%></span>
+        </div> 
+        </a>
+    </div>
+</div>
+
