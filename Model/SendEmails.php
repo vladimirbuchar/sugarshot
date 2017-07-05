@@ -12,6 +12,8 @@ class SendEmails  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "SendEmails";
+        $this->SetSelectColums(array("MailId"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()

@@ -20,6 +20,8 @@ class ContentSecurity  extends DatabaseTable{
         
         $this->SaveHistory = FALSE;
         $this->ObjectName = "ContentSecurity";
+        $this->SetSelectColums(array("GroupId","SecurityType","ObjectId","Value"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()
@@ -68,12 +70,7 @@ class ContentSecurity  extends DatabaseTable{
         $colContentType->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colContentType);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);   
+        
  
     }
     

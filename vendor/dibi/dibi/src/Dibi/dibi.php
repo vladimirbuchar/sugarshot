@@ -173,7 +173,7 @@ class dibi
 	public static function query($args)
 	{
                 $args = func_get_args();
-		return self::getConnection()->query($args);
+                return self::getConnection()->query($args);
 	}
 
 

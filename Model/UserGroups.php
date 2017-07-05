@@ -17,6 +17,9 @@ class UserGroups  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "UserGroups";
+        $this->SetSelectColums(array("GroupName","IsSystemGroup","GroupIdentificator","UserDefaultState"));
+        $this->SetDefaultSelectColumns();
+        
     }
     /*
     public static function GetInstance()
@@ -143,12 +146,7 @@ class UserGroups  extends DatabaseTable{
         $colGroupIdentificator->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colGroupIdentificator);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+ 
     }
 
     public function InsertDefaultData() {

@@ -49,6 +49,10 @@ class Webs extends DatabaseTable {
         parent::__construct();
         $this->ObjectName = "Webs";
         $this->SaveHistory = false;
+        $this->SetSelectColums(array("WebName","SmallHeight","SmallWidth","MediumHeight","MediumWidth","BigHeight","BigWidth","WebPrivileges","AdminUserActive","UserEmailActivate","EmailUserLogin","BlockSendEmails",
+"BlockAdmin","UseHttps","WebIpRestrictionAll","WebIpRestrictionAceptIp","WebIpRestrictionBlockIp","WebIpAddress","AdminIpRestrictionAll","AdminIpRestrictionAceptIp","AdminIpRestrictionBlockIp",
+"AdminIpAddress","GenerateAjaxLink","DefaultFramework","AfterLoginUrl","SendInfoEmailToAdmin","AdminInfoEmail","AdmiInfoMailId","SendInfoEmailToUser","UserInfoEmailFrom","UserInfoMailId","CookiesAccept"));
+        $this->SetDefaultSelectColumns();
     }
     /**
     public static function GetInstance()
@@ -79,12 +83,7 @@ class Webs extends DatabaseTable {
         $colWebName->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colWebName);
 
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+     
 
         $colWebName = new DataTableColumn();
         $colWebName->DefaultValue = "";

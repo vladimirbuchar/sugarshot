@@ -19,6 +19,7 @@ class DomainItemSelectBox extends UserComponents{
         $selectBox->CssClass = $this->CssClass;
         $ud =  \Model\UserDomainsValues::GetInstance();
         $data = $ud->UserDomainItemsBySeoUrl($_GET["seourl"], self::$UserGroupId, $this->LangId, $this->WebId,$this->ValueIdetificator);
+        
         $option = new \HtmlComponents\Option();
         $option->Value="";
         $option->Html ="----";
@@ -32,9 +33,11 @@ class DomainItemSelectBox extends UserComponents{
             $type = $data[0]["Type"];
             if(!empty($xml))
             {
-                $xmlValueList = \Utils\ArrayUtils::XmlToArray($xml);
+                
+                $xmlValueList = \Utils\ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
                 $dataXml = \Utils\ArrayUtils::RemoveCData($dataXml);
-                $xmlData = \Utils\ArrayUtils::XmlToArray($dataXml);
+                $xmlData = \Utils\ArrayUtils::XmlToArray($dataXml,"SimpleXMLElement",LIBXML_NOCDATA);
+                
                 if (!empty($xmlValueList) && !empty($xmlData))
                 {
                     if (!empty($xmlValueList["item"]))
@@ -50,8 +53,10 @@ class DomainItemSelectBox extends UserComponents{
                     foreach ($xmlValueList as $value)
                     {
                         $itemId =$type."_".$value["itemValue"]."_".$id;
+                        
                         if (!empty($xmlData[$itemId]))
                         {
+                            
                             $count++;
                             $option = new \HtmlComponents\Option();
                             $option->Value = $value["itemValue"];

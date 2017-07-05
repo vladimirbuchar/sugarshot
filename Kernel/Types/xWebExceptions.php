@@ -5,6 +5,7 @@ class xWebExceptions {
     public  static $UploadPHPFile = "Upload PHP file!";
     public  static $SaveVersionError = "Save version error";
     public static $StateNotExists = "State no exist";
+    public static $NoUrlLangExists = "No url lang exists";
 }
 
 

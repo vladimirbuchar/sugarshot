@@ -23,6 +23,8 @@ class ObjectHistory  extends DatabaseTable{
         $this->SaveHistory = false;
         $this->ObjectName = "ObjectHistory";
         $this->MultiWeb = true;
+        $this->SetSelectColums(array("ObjectHistoryName","ObjectId","Action","UserId","IP","OldData","CreateDate","ActiveItem","UserName"));
+        $this->SetDefaultSelectColumns();
         
     }
     /*
@@ -165,12 +167,7 @@ class ObjectHistory  extends DatabaseTable{
         $colActiveItem->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colActiveItem);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+     
     }
     
 

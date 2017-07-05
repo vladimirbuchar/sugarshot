@@ -19,6 +19,7 @@ class SqlDatabase {
     public $TestQuery = false;
     protected $SelectColumns = array();
     
+    
     private $_sqlParams = array() ;
     private static $_utf8Set = true;
     private static $_instance = null;
@@ -65,10 +66,14 @@ class SqlDatabase {
         if (!empty($sort))
             $sort = " ORDER BY $sort";
         $col = "*";
+        if(empty($columns))
+            $columns = $this->SelectColumns;
         if (!empty($columns))
         {
             $col = implode(",",$columns);
         }
+        if(empty($col))
+            $col = "*";
         $query = "SELECT $col FROM " . $this->ObjectName . " $where $sort";
         if ($this->TestQuery)
         {
@@ -166,6 +171,8 @@ class SqlDatabase {
             $where = $where . " AND  $this->ParentColumn = " . $parentId;
         }
         $query = " SELECT ";
+        if(empty($columns))
+            $columns = $this->SelectColumns;
         if (empty($columns)) {
             $query .= " * ";
         } else {
@@ -407,8 +414,17 @@ class SqlDatabase {
         return $res[0]["MaxVal"];
     }
     
-    
-    
+    protected  function SetSelectColums($columns)
+    {
+        $this->SelectColumns = array_merge($this->SelectColumns,$columns);
+        
+    }
+
+
+
+
+
+
     protected function SetSqlParams($name,$value,$type)
     {
 //        $this->

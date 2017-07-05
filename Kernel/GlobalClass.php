@@ -133,7 +133,7 @@ class GlobalClass {
         
         
         
-
+        
 
         if (!self::$IsAjax) {
             
@@ -158,14 +158,19 @@ class GlobalClass {
                 if (empty(self::$_langInfo))
                     self::$_langInfo = self::$_lang->GetWebInfo($web);
                
-                if (!empty(self::$_langInfo)) {
+                if (!empty(self::$_langInfo)) 
+                {
+                    
+                    
+                        
                     $this->WebId = self::$_langInfo[0]["WebId"];
                     $this->LangId = self::$_langInfo[0]["Id"];
                     $this->PrepareWords(self::$_langInfo[0]["LangIdentificator"]);
                     self::$SelectLang = self::$_langInfo[0]["LangIdentificator"];
                 } else {
-                    $this->GoHome();
-                }
+                    http_response_code(404);
+                    throw \Types\xWebExceptions::$NoUrlLangExists;
+                } 
             }
         } else {
             if (!empty($_GET["webid"]))
@@ -173,7 +178,7 @@ class GlobalClass {
             if (!empty($_GET["langid"]))
                 $this->LangId = $_GET["langid"];
         }
-         
+
         self::$_web->SetWebInfo($this->WebId);
         if (!self::$IsAjax) {
             if ($this->IsFrontend) {
@@ -182,13 +187,14 @@ class GlobalClass {
                 $this->IpRestriction("admin");
             }
         }
+        
 
         $ar["ajaxLinks"] = self::$_web->AjaxLinkLoad();
         $ar["FrameworkMode"] = self::$_web->JavascriptFrameworkMode();
         self::$_javascriptFramework = $ar["FrameworkMode"];
 
         $this->SetTemplateDataArray($ar);
-
+        
         if (empty(self::$_javascriptFramework)) {
             self::$_javascriptFramework = self::$_web->JavascriptFrameworkMode($this->WebId);
         }
@@ -407,7 +413,7 @@ class GlobalClass {
             if (!$word->ColumnExists($langName))
             {
                 $lang = "CS";
-                $langName = "WordCS";
+                $langName = "Word".DEFAULT_LANG;
                 self::$SessionManager->SetSessionValue("AdminUserLang", "CS");
                 
             }

@@ -13,7 +13,8 @@ class UserDomainsGroups  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "UserDomainsGroups";
-        
+        $this->SetSelectColums(array("DomainId","GroupName"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()

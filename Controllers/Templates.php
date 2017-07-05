@@ -42,6 +42,8 @@ class Templates extends Controllers {
     public function Setup() {
 
         $this->IncludeState();
+        $this->GetAdminLangs();
+            
     }
 
     public function AdminLogin() {

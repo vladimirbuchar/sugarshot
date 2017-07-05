@@ -23,6 +23,8 @@ class Langs  extends DatabaseTable{
         $this->ObjectName = "Langs";
         $this->MultiWeb = true;
         $this->SaveHistory = true;
+        $this->SetSelectColums(array("LangName","RootUrl","Title","Keywords","Description","CategoryPage","LangIdentificator"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()
@@ -56,12 +58,15 @@ class Langs  extends DatabaseTable{
     public function GetRootUrl($langId)
     {
         $this->GetObjectById($langId,true);
+        if (!StringUtils::StartWidth($this->RootUrl, SERVER_PROTOCOL))
+        {
+            $this->RootUrl = SERVER_PROTOCOL.$this->RootUrl;
+        }
         return StringUtils::EndWith($this->RootUrl,"/") ? $this->RootUrl : $this->RootUrl."/";
     }
     
     public function GetWebInfo($web)
     {
-        
         if (self::$SessionManager->IsEmpty("WebInfo",$web))
         {
             $url[] = " RootUrl = '".SERVER_PROTOCOL.$web."'";
@@ -78,12 +83,10 @@ class Langs  extends DatabaseTable{
             $url[] = " RootUrl = '".$web."'";  
             $url[] = " RootUrl = '". StringUtils::RemoveString( $web,SERVER_PROTOCOL) ."'";  
             $url[] = " RootUrl = '".trim(StringUtils::RemoveString(StringUtils::RemoveLastChar($web),SERVER_PROTOCOL))."'";  
-            
             $where = implode(" OR ", $url);
             $res = $this->SelectByCondition($where);
+            $res = \Utils\ArrayUtils::ObjectToArray($res);
             self::$SessionManager->SetSessionValue("WebInfo",$res,$web);
-            
-            return $res;
         }
         return self::$SessionManager->GetSessionValue("WebInfo",$web);
         
@@ -135,12 +138,7 @@ class Langs  extends DatabaseTable{
         $colRootUrl->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colRootUrl);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        
         
         $colRootUrl = new DataTableColumn();
         $colRootUrl->DefaultValue ="";

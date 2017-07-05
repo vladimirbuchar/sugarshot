@@ -15,6 +15,9 @@ class Crons  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "Crons";
+        
+        $this->SetSelectColums(array("CronName","CronUrl","IsActive","IsRun","RunMode","LastRun"));
+        $this->SetDefaultSelectColumns();
     }
      
     

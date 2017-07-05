@@ -16,6 +16,8 @@ class ContentAlternative  extends DatabaseTable{
         $this->SaveHistory = FALSE;
         $this->ObjectName = "ContentAlternative";
         $this->MultiWeb= true;
+        $this->SetSelectColums(array("ContentId","AlternativeContentId","UserGroupId"));
+        $this->SetDefaultSelectColumns();
     }
     /*public static function GetInstance()
     {

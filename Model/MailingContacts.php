@@ -14,6 +14,8 @@ class MailingContacts  extends DatabaseTable{
         $this->ObjectName = "MailingContacts";
         $this->MultiLang = false;
         $this->MultiWeb = true;
+        $this->SetSelectColums(array("Email"));
+        $this->SetDefaultSelectColumns();
     }
     
     /*public static function GetInstance()

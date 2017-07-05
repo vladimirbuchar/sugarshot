@@ -33,7 +33,8 @@ class UserDomainsItems  extends DatabaseTable{
     public $Autocomplete;
     public $AddToSort;
     public $OnChangeEvent; 
-    //private static $_instance = null;
+    public $ValueForAllLangues; 
+    
     
     
     public function __construct()
@@ -41,6 +42,10 @@ class UserDomainsItems  extends DatabaseTable{
         parent::__construct();
         $this->ObjectName = "UserDomainsItems";
         $this->ParentColumn = "DomainId";
+        $this->SetSelectColums(array("DomainId","ShowName","Identificator","Type","ShowInAdmin","ShowInWeb","Required","DefaultValue","MaxLength","MinLength","ValueList","ShowInAdminReadOnly",
+"ShowInWebReadOnly","Validate","CssClass","MoreHtmlAtribut","Domain","UniqueValue","NoUpdate","XmlSettings","AddCDATA","ShowOnlyDetail",
+"DomainSettings","FiltrSettings","Autocomplete","AddToSort","OnChangeEvent","ValueForAllLangues"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()
@@ -293,12 +298,7 @@ class UserDomainsItems  extends DatabaseTable{
         $colDomainId->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colDomainId);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        
 
         $deletedColumn = new DataTableColumn();
         $deletedColumn->DefaultValue = 0;
@@ -372,6 +372,13 @@ class UserDomainsItems  extends DatabaseTable{
         $deletedColumn->Name = "OnChangeEvent";
         $deletedColumn->Type = "varchar";
         $deletedColumn->Length = 255;
+        $deletedColumn->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($deletedColumn);
+        
+                $deletedColumn = new DataTableColumn();
+        $deletedColumn->DefaultValue = 0;
+        $deletedColumn->Name = "ValueForAllLangues";
+        $deletedColumn->Type = "BOOLEAN";
         $deletedColumn->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($deletedColumn);
     }

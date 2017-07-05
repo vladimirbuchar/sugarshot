@@ -32,6 +32,7 @@ class Content  extends DatabaseTable{
     public $NoLoadSubItems;
     public $LastVisited;
     public $SaveToCache;
+    public $SortRule;
     //private static $_instance = null;
     public function __construct()
     {
@@ -39,6 +40,8 @@ class Content  extends DatabaseTable{
         $this->SaveHistory = FALSE;
         $this->ObjectName = "Content";
         $this->MultiWeb= true;
+        $this->SetSelectColums(array("ParentId","NoIncludeSearch","Identificator","DomainId","TemplateId","GalleryId","GallerySettings","DiscusionSettings","DiscusionId","Sort","UploadedFileType","FormId","NoChild","UseTemplateInChild","ChildTemplateId","CopyDataToChild","ActivatePager","FirstItemLoadPager","NextItemLoadPager","Owner","Inquery","NoLoadSubItems","LastVisited","SaveToCache","SortRule","ContentType"));
+        $this->SetDefaultSelectColumns();
     }
     /*public static function GetInstance()
     {
@@ -134,12 +137,7 @@ class Content  extends DatabaseTable{
         $colContentType->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colContentType);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        
         
         $deletedColumn = new DataTableColumn();
         $deletedColumn->DefaultValue = 0;
@@ -250,7 +248,14 @@ class Content  extends DatabaseTable{
         $colContentType->Type = "BOOLEAN";
         $colContentType->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colContentType);
-        //$this->CreteKey($keyName, $keyType, $keyColumns);
+        
+        $deletedColumn = new DataTableColumn();
+        $deletedColumn->DefaultValue = "";
+        $deletedColumn->Length = 50;
+        $deletedColumn->Name = "SortRule";
+        $deletedColumn->Type = "varchar";
+        $deletedColumn->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($deletedColumn);
         
     }
     

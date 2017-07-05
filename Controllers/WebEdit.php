@@ -501,15 +501,12 @@ class WebEdit extends AdminController {
         $mainData = array();
         if (empty($data[0]))
         {
-            
             $nextPosition = $this->GetLastPosition("UserItem", $_GET["parentid"]);
-            
-            $mainData = array("Name" => "", "SeoUrl" => "", "Identificator" => "", "ActiveTo" => "", "ActiveFrom" => "", "AvailableOverSeoUrl" => 1, "NoIncludeSearch" => 0, "TemplateId" => "", "Data" => "", "ButtonSendForm" => "", "SendAdminEmail" => "","NoChild"=>"","UseTemplateInChild"=>"","ChildTemplate"=>"","CopyDataToChild"=>"","ActivatePager"=>0,"FirstItemLoadPager"=>"","NextItemLoadPager"=>"","NoLoadSubItems"=>0,"DiscusionId"=>0,"SaveToCache"=>1,"Sort"=>$nextPosition);
+            $mainData = array("Name" => "", "SeoUrl" => "", "Identificator" => "", "ActiveTo" => "", "ActiveFrom" => "", "AvailableOverSeoUrl" => 1, "NoIncludeSearch" => 0, "TemplateId" => "", "Data" => "", "ButtonSendForm" => "", "SendAdminEmail" => "","NoChild"=>"","UseTemplateInChild"=>"","ChildTemplate"=>"","CopyDataToChild"=>"","ActivatePager"=>0,"FirstItemLoadPager"=>"","NextItemLoadPager"=>"","NoLoadSubItems"=>0,"DiscusionId"=>0,"SaveToCache"=>1,"Sort"=>$nextPosition,"SortRule"=>"Position");
         }
         else {
             $mainData = $data[0];
         }
-        
         if ($id == 0)
         {
             $parentDetail = $content->GetUserItemDetail($_GET["parentid"], self::$UserGroupId, $this->WebId, $this->LangId);
@@ -554,6 +551,11 @@ class WebEdit extends AdminController {
         $this->SetTemplateData("DiscusionSettings", !empty($mainData["DiscusionSettings"]) ? $mainData["DiscusionSettings"] : 0);
         $this->SetTemplateData("GallerySettings", !empty($mainData["GallerySettings"]) ? $mainData["GallerySettings"] : 0);
         $this->SetTemplateData("DiscusionId", empty($mainData["DiscusionId"])? 0: $mainData["DiscusionId"]);
+        
+        $this->SetTemplateData("SortRulePosition", $mainData["SortRule"] =="Postion" ? "selected =\"selected\"": "");
+        $this->SetTemplateData("SortRuleName", $mainData["SortRule"] =="Name" ? "selected =\"selected\"": "");
+        $this->SetTemplateData("SortRuleDate", $mainData["SortRule"] =="Date" ? "selected =\"selected\"": "");
+        
         
 
         
@@ -1055,9 +1057,9 @@ class WebEdit extends AdminController {
         $data = $ajaxParametrs["Parametrs"];
         unset($ajaxParametrs["Parametrs"]);
         if ($id == 0) {
-            $id = $content->CreateUserItem($ajaxParametrs["NameObject"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $_GET["langid"], $_GET["param1"], $privileges, $data,false, $ajaxParametrs["GallerySettings"], $ajaxParametrs["Discusion"] == 0 ? 0: 1, $ajaxParametrs["Discusion"], $ajaxParametrs["FormSettings"],$noChild,$useTemplateInChild,$ajaxParametrs["ChildTemplate"],$ajaxParametrs["CopyDataToChild"],$ajaxParametrs["ActivatePager"],$ajaxParametrs["FirstItemLoadPager"],$ajaxParametrs["NextItemLoadPager"],$ajaxParametrs["InquerySettings"],$ajaxParametrs["NoLoadSubitems"],$ajaxParametrs["SaveToCache"],$ajaxParametrs["Sort"]);
+            $id = $content->CreateUserItem($ajaxParametrs["NameObject"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $_GET["langid"], $_GET["param1"], $privileges, $data,false, $ajaxParametrs["GallerySettings"], $ajaxParametrs["Discusion"] == 0 ? 0: 1, $ajaxParametrs["Discusion"], $ajaxParametrs["FormSettings"],$noChild,$useTemplateInChild,$ajaxParametrs["ChildTemplate"],$ajaxParametrs["CopyDataToChild"],$ajaxParametrs["ActivatePager"],$ajaxParametrs["FirstItemLoadPager"],$ajaxParametrs["NextItemLoadPager"],$ajaxParametrs["InquerySettings"],$ajaxParametrs["NoLoadSubitems"],$ajaxParametrs["SaveToCache"],$ajaxParametrs["Sort"],$ajaxParametrs["SortRule"]);
         } else {
-            $id = $content->UpdateUserItem($id, $ajaxParametrs["NameObject"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $privileges, $data,$ajaxParametrs["GallerySettings"], $ajaxParametrs["Discusion"] == 0 ? 0: 1, $ajaxParametrs["Discusion"], $ajaxParametrs["FormSettings"],$noChild,$useTemplateInChild,$ajaxParametrs["ChildTemplate"],$ajaxParametrs["CopyDataToChild"],$ajaxParametrs["ActivatePager"],$ajaxParametrs["FirstItemLoadPager"],$ajaxParametrs["NextItemLoadPager"],$ajaxParametrs["InquerySettings"],$ajaxParametrs["NoLoadSubitems"],$ajaxParametrs["SaveToCache"],$ajaxParametrs["Sort"]);
+            $id = $content->UpdateUserItem($id, $ajaxParametrs["NameObject"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $privileges, $data,$ajaxParametrs["GallerySettings"], $ajaxParametrs["Discusion"] == 0 ? 0: 1, $ajaxParametrs["Discusion"], $ajaxParametrs["FormSettings"],$noChild,$useTemplateInChild,$ajaxParametrs["ChildTemplate"],$ajaxParametrs["CopyDataToChild"],$ajaxParametrs["ActivatePager"],$ajaxParametrs["FirstItemLoadPager"],$ajaxParametrs["NextItemLoadPager"],$ajaxParametrs["InquerySettings"],$ajaxParametrs["NoLoadSubitems"],$ajaxParametrs["SaveToCache"],$ajaxParametrs["Sort"],$ajaxParametrs["SortRule"]);
         }
         return $id;
     }

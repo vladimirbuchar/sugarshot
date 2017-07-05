@@ -12,6 +12,8 @@ class UserGroupsWeb  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "UserGroupsWeb";
+        $this->SetSelectColums(array("UserGroupId","UserWebId"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()
@@ -44,12 +46,7 @@ class UserGroupsWeb  extends DatabaseTable{
         $colWebId->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colWebId);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+         
     }
 
     public function InsertDefaultData() {

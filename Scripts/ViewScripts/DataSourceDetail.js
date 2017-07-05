@@ -74,7 +74,6 @@
             function AddArticle()
             {
                 var ObjectIdConnection = GetSelectTree("SelectXml");
-                alert(ObjectIdConnection);
                 $("#SelectedObject").val(ObjectIdConnection);
                 var name = CallPhpFunctionAjax("WebEdit", "GetSelectedObjectName", "POST", ObjectIdConnection);
                 $("#relatedObjectName").html(name);
@@ -134,6 +133,8 @@
                     WriteItem("DatasourceXmlSubItemEnd", $xml);
                     WriteItem("DatasourceXmlSubItemItemEnd", $xml);
                     WriteItem("DatasourceXmlSubItemItemStart", $xml);
+                    WriteItem("ExportConditions", $xml);
+                    WriteItem("ExportColumnConditions", $xml);
                     
             }
             function WriteItem(key, $xml)

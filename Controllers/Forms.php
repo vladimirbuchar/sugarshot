@@ -44,7 +44,7 @@ class Forms extends Controllers {
         $outArray["AfterSendFormAction"] = trim($xmlRow->AfterSendFormAction);
         $outArray["EndText"] = trim($xmlRow->EndText);
         
-        $outArray["RedirectUrl"] = SERVER_PROTOCOL. $url.trim($xmlRow->GoToPage);
+        $outArray["RedirectUrl"] =  $url.trim($xmlRow->GoToPage);
         $outArray["captchaImage"] = "";
                 
         if (!$state) {

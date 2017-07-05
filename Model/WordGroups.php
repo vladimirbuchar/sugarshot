@@ -50,12 +50,34 @@ class WordGroups  extends DatabaseTable{
         $colGroupName->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colGroupName);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        $colWordDefault = new DataTableColumn();
+        $colWordDefault ->DefaultValue ="";
+        $colWordDefault ->IsNull = true;
+        $colWordDefault ->Name ="Word".DEFAULT_LANG;
+        $colWordDefault ->Type = "TEXT";
+        $colWordDefault ->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWordDefault);
+        
+        $colWordDefault = new DataTableColumn();
+        $colWordDefault ->DefaultValue ="";
+        $colWordDefault ->IsNull = true;
+        $colWordDefault ->Name ="WordEN";
+        $colWordDefault ->Type = "TEXT";
+        $colWordDefault ->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWordDefault);
+        
+        $colWordDefault = new DataTableColumn();
+        $colWordDefault ->DefaultValue ="";
+        $colWordDefault ->IsNull = true;
+        $colWordDefault ->Name ="WordRU";
+        $colWordDefault ->Type = "TEXT";
+        $colWordDefault ->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWordDefault);
+            
+        
+        
+        
+        
         
     }
     

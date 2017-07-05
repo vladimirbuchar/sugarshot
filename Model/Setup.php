@@ -14,6 +14,8 @@ class Setup  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "Setup";
+        $this->SetSelectColums(array("VersionId","ShowVersionName"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()

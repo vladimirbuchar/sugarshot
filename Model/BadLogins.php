@@ -11,6 +11,8 @@ class BadLogins  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "BadLogins";
+        $this->SetSelectColums(array("DateEvent","UserName"));
+        $this->SetDefaultSelectColumns();
     }
     /*public static function GetInstance()
     {
@@ -33,12 +35,7 @@ class BadLogins  extends DatabaseTable{
         $colDateEvent->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colDateEvent);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        
         
         $deletedColumn = new DataTableColumn();
         $deletedColumn->Length = 255;
@@ -58,6 +55,7 @@ class BadLogins  extends DatabaseTable{
     }
     public function TableMigrate()
     {
+        
         
     }
     public function TableExportSettings()

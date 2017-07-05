@@ -17,6 +17,8 @@ class Cache  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "Cache";
+        $this->SetSelectColums(array("HtmlCache","SeoUrl","ObjectId","LangId","UserGroupId","CacheTime"));
+        $this->SetDefaultSelectColumns();
     }
     /*public static function GetInstance()
     {

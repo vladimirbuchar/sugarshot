@@ -13,6 +13,8 @@ class UserDomainsAutoComplete  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "UserDomainsAutoComplete";
+        $this->SetSelectColums(array("DomainItemId","Value"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()

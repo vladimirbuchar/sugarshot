@@ -24,6 +24,8 @@ class DiscusionItems  extends DatabaseTable{
         parent::__construct();
         $this->ObjectName = "DiscusionItems";
         $this->SaveHistory = false;
+        $this->SetSelectColums(array("SubjectDiscusion","TextDiscusion","UserId","ShowUserName","DateTime","UserIp","IsLast","VersionId","ParentIdDiscusion","DiscusionId"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()
@@ -201,12 +203,7 @@ class DiscusionItems  extends DatabaseTable{
         $colLangName->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colLangName);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+         
     }
     
 

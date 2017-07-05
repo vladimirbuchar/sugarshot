@@ -18,6 +18,8 @@ class UserDomainsValues  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "UserDomainsValues";
+        $this->SetSelectColums(array("DomainId","ItemId","ObjectId","Value"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()
@@ -239,22 +241,24 @@ class UserDomainsValues  extends DatabaseTable{
     
     public function GetDomainValue($DomainIdentifcator,$ObjectId)
     {
-        $res = dibi::query("SELECT * FROM DOMAINVALUE WHERE DomainIdentificator = %s AND ObjectId =%i",$DomainIdentifcator,$ObjectId)->fetchAll();
+        $res = dibi::query("SELECT ValueId,DomainIdentificator,ItemId,ObjectId,Value,DomainId,ItemIdentificator FROM DOMAINVALUE WHERE DomainIdentificator = %s AND ObjectId =%i",$DomainIdentifcator,$ObjectId)->fetchAll();
         return $res;
     }
     
     public function GetDomainValueConditon($domainIdentificator,$objectId = 0,$conditionColumn="",$conditionValue="")
     {
+        
+        
         if ($objectId == 0)
         {
             if (!empty($conditionColumn) && !empty($conditionValue))
             {
-                $res = dibi::query("SELECT * FROM DOMAINVALUE WHERE DomainIdentificator = %s  AND ItemIdentificator = %s AND Value =%s",$domainIdentificator,$conditionColumn,$conditionValue)->fetchAll();
+                $res = dibi::query("SELECT ValueId,DomainIdentificator,ItemId,ObjectId,Value,DomainId,ItemIdentificator FROM DOMAINVALUE WHERE DomainIdentificator = %s  AND ItemIdentificator = %s AND Value =%s",$domainIdentificator,$conditionColumn,$conditionValue)->fetchAll();
                 return $res;
             }
             else if (!empty($conditionColumn))
             {
-                $res = dibi::query("SELECT * FROM DOMAINVALUE WHERE DomainIdentificator = %s  AND ItemIdentificator = %s",$domainIdentificator,$conditionColumn)->fetchAll();
+                $res = dibi::query("SELECT ValueId,DomainIdentificator,ItemId,ObjectId,Value,DomainId,ItemIdentificator FROM DOMAINVALUE WHERE DomainIdentificator = %s  AND ItemIdentificator = %s",$domainIdentificator,$conditionColumn)->fetchAll();
                 return $res;   
             }
             return $this->GetDomainValueList($domainIdentificator);
@@ -263,12 +267,12 @@ class UserDomainsValues  extends DatabaseTable{
         {
             if (!empty($conditionColumn) && !empty($conditionValue))
             {
-                $res = dibi::query("SELECT * FROM DOMAINVALUE WHERE DomainIdentificator = %s  AND ItemIdentificator = %s AND Value =%s AND ObjectId =%i",$domainIdentificator,$conditionColumn,$conditionValue,$objectId)->fetchAll();
+                $res = dibi::query("SELECT ValueId,DomainIdentificator,ItemId,ObjectId,Value,DomainId,ItemIdentificator FROM DOMAINVALUE WHERE DomainIdentificator = %s  AND ItemIdentificator = %s AND Value =%s AND ObjectId =%i",$domainIdentificator,$conditionColumn,$conditionValue,$objectId)->fetchAll();
                 return $res;
             }
             else if (!empty($conditionColumn))
             {
-                $res = dibi::query("SELECT * FROM DOMAINVALUE WHERE DomainIdentificator = %s  AND ItemIdentificator = %s  AND ObjectId =%i",$domainIdentificator,$conditionColumn,$objectId)->fetchAll();
+                $res = dibi::query("SELECT ValueId,DomainIdentificator,ItemId,ObjectId,Value,DomainId,ItemIdentificator FROM DOMAINVALUE WHERE DomainIdentificator = %s  AND ItemIdentificator = %s  AND ObjectId =%i",$domainIdentificator,$conditionColumn,$objectId)->fetchAll();
                 return $res;
             }
             return $this->GetDomainValue($domainIdentificator,$objectId);
@@ -401,12 +405,7 @@ class UserDomainsValues  extends DatabaseTable{
         $colValue->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colValue);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+         
         
    
     }

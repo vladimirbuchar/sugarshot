@@ -17,6 +17,11 @@ class SendFormFunction
         return $this->_params[$key];
     }
     
+    protected function GetAllParametrs()
+    {
+        return $this->_params;
+    }
+    
     protected function SetResult($key,$value)
     {
         $this->_result[$key] = $value;

@@ -22,6 +22,8 @@ class Users  extends DatabaseTable{
         parent::__construct();
         $this->ObjectName = "Users";
         $this->SaveHistory = false;
+        $this->SetSelectColums(array("UserName","FirstName","LastName","UserEmail","BlockDiscusion","IsActive","DefaultLang"));
+        $this->SetDefaultSelectColumns();
         
     }
     
@@ -180,6 +182,7 @@ class Users  extends DatabaseTable{
             $this->IsBadLogin = true;
             return false;
         }
+        
         if (empty($userName) || empty($password)) 
         {
             $badLogins->AddBadLogin();
@@ -191,7 +194,10 @@ class Users  extends DatabaseTable{
             $res = dibi::query("SELECT * FROM LOGINUSERVIEW WHERE (UserName = %s  OR UserEmail = %s )AND UserPassword = %s",$userName,$userName,MD5(SHA1($password)))->fetchAll();    
         else 
             $res = dibi::query("SELECT * FROM LOGINUSERVIEW WHERE UserName = %s AND UserPassword = %s",$userName,MD5(SHA1($password)))->fetchAll();    
+        
+        
         if (empty($res)){
+            
             $badLogins->AddBadLogin();
             return FALSE;
         }
@@ -254,7 +260,7 @@ class Users  extends DatabaseTable{
             if ($this->IsLoginUser())
             {
                 $userId = $this->GetUserId();
-                $res = dibi::query("SELECT * FROM UsersInGroup WHERE UserId = %i AND IsMainGroup = 0",$userId)->fetchAll();
+                $res = dibi::query("SELECT GroupId FROM UsersInGroup WHERE UserId = %i AND IsMainGroup = 0",$userId)->fetchAll();
                 self::$SessionManager->SetSessionValue("OtherUserGroups",$res);
                 
                 return $res;
@@ -280,7 +286,8 @@ class Users  extends DatabaseTable{
         
         $userGroup =  UserGroups::GetInstance();
         $groupData = $userGroup->GetAnonymousGroup();
-        if($groupData->Id == self::$SessionManager->IsEmpty("UserGroupId"))
+        
+        if($groupData->Id == self::$SessionManager->GetSessionValue("UserGroupId"))
             return FALSE;
         return TRUE;   
         }
@@ -440,12 +447,7 @@ class Users  extends DatabaseTable{
         $colUserEmail->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colUserEmail);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+       
         
         $colUserEmail = new DataTableColumn();
         $colUserEmail->DefaultValue = false;

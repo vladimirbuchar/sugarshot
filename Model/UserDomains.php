@@ -19,6 +19,8 @@ class UserDomains  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "UserDomains";
+        $this->SetSelectColums(array("DomainName","DomainIdentificator","Template","Domain","EditValue","IsSystem","ShowNameInSubDomain"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()

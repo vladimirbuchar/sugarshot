@@ -20,6 +20,8 @@ class ContentData  extends DatabaseTable{
         $this->ObjectName = "ContentData";
         $this->MultiWeb= true;
         $this->MultiLang=true;
+        $this->SetSelectColums(array("ContentId","ItemName","Value","ValueNoHtml","ItemId"));
+        $this->SetDefaultSelectColumns();
     }
     /*public static function GetInstance()
     {

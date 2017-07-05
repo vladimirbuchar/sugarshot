@@ -13,6 +13,8 @@ class UserDomainsItemsInGroups  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "UserDomainsItemsInGroups";
+        $this->SetSelectColums(array("ItemId","GroupId"));
+        $this->SetDefaultSelectColumns();
         
     }
     /*

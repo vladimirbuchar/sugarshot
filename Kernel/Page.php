@@ -9,10 +9,11 @@ use Utils\Utils;
 use Types\xWebExceptions;
 use Model\ContentVersion;
 use Smarty;
+use Dibi;
 
 /** hlavní třída, která se volá jako první z indexu */
 class Page {
-
+        
     /** $controllerName - jméno použitého controlleru
      * $viewName - použité view
      * $templateName - templata
@@ -30,8 +31,6 @@ class Page {
     //endregion
     public static function PageLoad($controllerName, $viewName, $templateName) {
         try {
-            
-            
             // pokud je nějaká hodnota prázdná zkusíme nastavit defaultuní
             if (empty($templateName))
                 $templateName = DEFAULT_TEMPLATE_NAME;
@@ -418,7 +417,7 @@ class Page {
             $modelClass->CreateTable();
             $modelClass->OnCreateTable();
             $modelClass->SaveNewColums();
-            //$modelClass->TableMigrate();
+            $modelClass->TableMigrate();
             
             if ($modelClass->WasCreated)
                 $modelClass->InsertDefaultData();
@@ -491,11 +490,12 @@ class Page {
         return false;
     }
 
-    public static function StartUpdateModel() {
+    public static function StartUpdateModel($upadateModel  = false) {
         try{
             
+            
         // nejdříve zkontrolujeme a případně upteneme model
-        if (UPDATE_MODEL && Page::IsDeveloperIp() || !empty($_GET["updatemodel"])) {
+        if (UPDATE_MODEL && Page::IsDeveloperIp() || !empty($_GET["updatemodel"]) || $upadateModel) {
 
 
             // tabulky
@@ -626,7 +626,8 @@ class Page {
 
     public static function RenderXWebComponent($inHtml) {
         
-        preg_match_all("(<xWeb:Component(( )*[A-Za-z]*=\"[A-Za-z0-9\_\-/\;( )\',\#=\.]*\")*( )*/>)", $inHtml, $outArray);
+        preg_match_all("(<xWeb:Component(( )*[A-Za-z]*=\"[A-Za-z0-9\_\-/\;( )\',\#=\.><]*\")*( )*/>)", $inHtml, $outArray);
+        
         $inHtml = self::ReplaceComponent($outArray, $inHtml);
         return $inHtml;
     }
@@ -678,7 +679,7 @@ class Page {
             $obj = new RenderUserComponent();
             
             
-            preg_match_all("(([A-Za-z]*)=\"([A-Za-z0-9\_\-/\;( )\',\#=\.]*)\")", $replace, $itemArray);
+            preg_match_all("(([A-Za-z]*)=\"([A-Za-z0-9\_\-/\;( )\',\#=\.><]*)\")", $replace, $itemArray);
             
             for ($i = 0; $i < count($itemArray[1]); $i++) {
                 $obj->SetParametrs($itemArray[1][$i], $itemArray[2][$i]);
@@ -743,7 +744,7 @@ class Page {
         return TEMPLATEMODE == "Smarty";
     }
     
-    private static function CompressString($html)
+    public static function CompressString($html)
     {
         $html =  preg_replace('/\s+/', ' ',$html);
         $html =  preg_replace('/> </', '><',$html);
@@ -795,10 +796,51 @@ class Page {
         return $out[0]["HtmlCache"];
     }
     public static function IsLocalHost()
-    {
+    { 
         if (StringUtils::ContainsString(SERVER_NAME,"localhost") || StringUtils::EndWith(SERVER_NAME,".dev") || StringUtils::ContainsString(SERVER_NAME,".dev:")) {
             return true;
         }
         return false;
     }
+    
+    public static function GetConfigByDomain()
+    {
+        if (self::IsLocalHost())
+        {
+            if (Files::FileExists(ROOT_PATH."settings_localhost.php"))
+                {
+                    include_once ROOT_PATH."settings_localhost.php";
+                }
+        }
+        $serverUrl = SERVER_NAME;
+        $serverUrl = StringUtils::RemoveString(SERVER_NAME, SERVER_PROTOCOL);
+        $ar = explode(".", $serverUrl);
+        if (count($ar)  > 0)
+        {
+            if (!empty($ar[0]) && $ar[0] != "www")
+            {
+                if (!empty($ar[1]))
+                {
+                    if (Files::FileExists(ROOT_PATH."settings_".$ar[0]."_".$ar[1].".php"))
+                    {
+                        include_once ROOT_PATH."settings_".$ar[0]."_".$ar[1].".php";
+                        
+                    }
+                }
+                if (Files::FileExists(ROOT_PATH."settings_".$ar[0].".php"))
+                {
+                    include_once ROOT_PATH."settings_".$ar[0].".php";
+                }
+            }
+            if (!empty($ar[1]))
+            {
+                if (Files::FileExists(ROOT_PATH."settings_".$ar[1].".php"))
+                {
+                    include_once ROOT_PATH."settings_".$ar[1].".php";
+                }
+            }   
+        }   
+    }
+    
+
 }

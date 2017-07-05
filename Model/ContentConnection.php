@@ -20,6 +20,8 @@ class ContentConnection  extends DatabaseTable{
         $this->ObjectName = "ContentConnection";
         $this->MultiLang = false;
         $this->MultiWeb= true;
+        $this->SetSelectColums(array("ObjectId","ObjectIdConnected","ConnectedType","SettingConnection"));
+        $this->SetDefaultSelectColumns();
        
     }
     /*public static function GetInstance()
@@ -135,11 +137,11 @@ class ContentConnection  extends DatabaseTable{
         {
             if (empty($type))
             {
-                $res = dibi::query("SELECT * FROM CONNECTIONOBJECTS WHERE ObjectId = %i AND  (LangId = %i OR LangId =0 ) ",$objectId,$langId)->fetchAll();
+                $res = dibi::query("SELECT Name,Data,SeoUrl,ConnectedType,SettingConnection FROM CONNECTIONOBJECTS WHERE ObjectId = %i AND  (LangId = %i OR LangId =0 ) ",$objectId,$langId)->fetchAll();
             }
             else 
             {
-                $res = dibi::query("SELECT * FROM CONNECTIONOBJECTS WHERE ObjectId = %i AND (LangId = %i OR LangId =0 ) AND ($queryType)",$objectId,$langId)->fetchAll();
+                $res = dibi::query("SELECT Name,Data,SeoUrl,ConnectedType,SettingConnection FROM CONNECTIONOBJECTS WHERE ObjectId = %i AND (LangId = %i OR LangId =0 ) AND ($queryType)",$objectId,$langId)->fetchAll();
             }
                 
         }
@@ -204,12 +206,7 @@ class ContentConnection  extends DatabaseTable{
         $colContentType->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colContentType);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        
         
 
     }

@@ -881,6 +881,7 @@ class Forms extends GlobalClass {
         {
             $functions = explode(",", $SendFormAction);
         }
+        
         if (!empty($functions))
         {
             foreach ($functions as $function)

@@ -22,7 +22,7 @@ class DatabaseTable extends SqlDatabase{
     /** system object - dává se do každé tabulky*/
     public $IsSystem;
     
-    /** položka je dostupná v aktuální webu*/
+    /** položka je dostupná v aktuIální webu*/
     protected $MultiWeb = false;
     /**položka je dostupná ve všech jazycích daného webu*/ 
     protected $MultiLang = false;
@@ -62,6 +62,8 @@ class DatabaseTable extends SqlDatabase{
     public function __construct() {
         $this->IsTable = true;
         parent::__construct();
+        
+            
         
     }
     
@@ -240,9 +242,16 @@ class DatabaseTable extends SqlDatabase{
                 // INSERT 
                 $this->IsInsert = true;
                 $action = DatabaseActions::$Insert;
-                                 
-                    
-                dibi::query("INSERT INTO $this->ObjectName ", $data);
+                 unset($data["Id"]);
+                 try{
+                    dibi::query("INSERT INTO $this->ObjectName ", $data);
+                 }
+                 catch(Exception $e )
+                 {
+                      dibi::test("INSERT INTO $this->ObjectName ", $data);
+                     echo $e;;die();
+                 }
+                 
                 $id = dibi::getInsertId();
                 $parametrs["Id"] = $id;
             } else {
@@ -276,16 +285,6 @@ class DatabaseTable extends SqlDatabase{
             return 0;
         }
     }
-
-    
-    
-    // INSERT UPDATE KONEC
-    
-    
-    
-    
-    
-    
     // PRACE SE SLOUPCI Z DB 
     /** 
      * metoda pro vložení defaultních sloupců do db
@@ -401,7 +400,7 @@ class DatabaseTable extends SqlDatabase{
      * @param $columnName 
      */
     public function ColumnExists($columnName) {
-        $res = dibi::query("SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '".MYSQL_DATABASE."' AND  TABLE_NAME='$this->ObjectName' AND column_name='$columnName'")->fetchAll();
+        $res = dibi::query("SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '".SQL_DATABASE."' AND  TABLE_NAME='$this->ObjectName' AND column_name='$columnName'")->fetchAll();
         
         if (empty($res))
         {
@@ -464,8 +463,14 @@ class DatabaseTable extends SqlDatabase{
      * @param $setObject bool
      */
     public function GetObjectById($id,$setObject = false, $columns = array()) {
-        
-        $res = dibi::query("SELECT * FROM $this->ObjectName WHERE Id = %i", $id)->fetchAll();
+        if (empty($columns))
+            $columns = $this->SelectColumns;
+        $col = "*";
+        if (!empty($columns))
+        {
+            $col = implode(",", $columns);
+        }
+        $res = dibi::query("SELECT $col FROM $this->ObjectName WHERE Id = %i", $id)->fetchAll();
         $out = $this->GetFirstRow($res);
         if ($setObject && !empty($out))
         {
@@ -830,10 +835,26 @@ class DatabaseTable extends SqlDatabase{
      */
     protected function Setup($obj)
     {
-        $file = ROOT_PATH."Setup/".$this->ObjectName.".xml";
-        $xml = Files::ReadFile($file);
-        $this->AddFromXmlMore($xml,$obj);
+        $this->InitialDatabase($obj->ObjectName.".sql");
     }
+    private function  InitialDatabase($name)
+    {
+        $filePath = ROOT_PATH."Setup/$name";
+        if (Files::FileExists($filePath))
+        {
+            $sql = \Kernel\Files::ReadFile($filePath);
+            $sql = trim($sql);  
+            $this->QueryWithMysqli($sql);
+        }  
+    }
+    private  function QueryWithMysqli($query)
+    {
+        $con=mysqli_connect(SQL_SERVER,SQL_LOGIN,SQL_PASSWORD,SQL_DATABASE);
+        mysqli_query($con, "SET NAMES 'utf8'");
+        mysqli_query($con,$query);
+        mysqli_close($con);
+    }
+    
     /** insert row to table from xml 
      * @param  string  $xmlString  ml string 
      * param object $obj
@@ -860,5 +881,17 @@ class DatabaseTable extends SqlDatabase{
         if (empty($res)) return true;
         return false;
     }
+    protected function SetDefaultSelectColumns()
+    {
+        $selectComlums[] = "Id";
+        $selectComlums[] = "Deleted";
+        $selectComlums[] = "IsSystem";
+        if ($this->MultiLang)
+            $selectComlums[] = "LangId";
+        if ($this->MultiWeb)
+            $selectComlums[] = "WebId";
+        $this->SetSelectColums($selectComlums);
+    }
+            
             
 }

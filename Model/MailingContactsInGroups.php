@@ -15,6 +15,8 @@ class MailingContactsInGroups  extends DatabaseTable{
         $this->ObjectName = "MailingContactsInGroups";
         $this->MultiLang = false;
         $this->MultiWeb = true;
+        $this->SetSelectColums(array("ContactId","GroupId"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()

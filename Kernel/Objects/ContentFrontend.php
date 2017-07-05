@@ -11,7 +11,7 @@ class ContentFrontend extends Content {
     public $Id = 0;
     public $SeoUrl = "";
     public $DataSource = "";
-    public $CheckAlternativeContent = false;
+    public $CheckAlternativeContent = ENABLE_ALTERNATIVE_CONTENT;
     public $Limit = 0;
     public $Sort = "";
     public $LoadSubItems = false;
@@ -55,6 +55,7 @@ class ContentFrontend extends Content {
         $limit = $this->Limit == 0 ? "" : "LIMIT 0,$this->Limit";
 
         if (!empty($this->Sort)) {
+            
             $this->Sort = trim($this->Sort);
             if (StringUtils::StartWidth($this->Sort, "##")) {
                 $this->Sort = StringUtils::RemoveString($this->Sort, "##");
@@ -124,13 +125,13 @@ class ContentFrontend extends Content {
             
             if (empty($acceptTable))
             {
-                $res = dibi::query("SELECT DISTINCT child.*,parents.Identificator AS parentIdentificator FROM `FRONTENDDETAIL` AS parents "
+                $res = dibi::query("SELECT DISTINCT child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header,parents.Identificator AS parentIdentificator FROM `FRONTENDDETAIL` AS parents "
                         . " INNER JOIN FRONTENDDETAIL AS child ON parents.Id = child.ParentId AND $parentQuery AND (child.GroupId =%i OR (child.ContentType='link' )) AND child.WebId = %i AND child.LangId = %i $ignoreQuery $columns  "
                         . " $acceptTable  $sort $limit", $this->UserGroupId, $this->WebId, $this->LangId)->fetchAll();
             }
             else 
             {
-                $res = dibi::query("SELECT DISTINCT child.*,parents.Identificator AS parentIdentificator FROM `FRONTENDDETAIL` AS parents "
+                $res = dibi::query("SELECT DISTINCT child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header	,parents.Identificator AS parentIdentificator FROM `FRONTENDDETAIL` AS parents "
                         . " INNER JOIN FRONTENDDETAIL AS child ON parents.Id = child.ParentId AND $parentQuery AND (child.GroupId =%i OR (child.ContentType='link' )) AND child.WebId = %i AND child.LangId = %i $ignoreQuery $columns  "
                         . "LEFT JOIN  FRONTENDTEMPLATES ON child.TemplateId =  FRONTENDTEMPLATES.Id  AND FRONTENDTEMPLATES.WebId = %i AND FRONTENDTEMPLATES.LangId = %i AND FRONTENDTEMPLATES.GroupId = %i  "
                         . " $acceptTable  $sort $limit", $this->UserGroupId, $this->WebId, $this->LangId, $this->WebId, $this->LangId, $this->UserGroupId)->fetchAll();
@@ -147,7 +148,9 @@ class ContentFrontend extends Content {
             else if ($this->_mode == "SeoUrl")
                 $parentQuery .= "  SeoUrl =  '$this->SeoUrl' ";
             
-            $res = dibi::query("SELECT * FROM FRONTENDDETAIL WHERE  $parentQuery AND WebId = %i AND LangId = %i AND  (GroupId =%i OR (ContentType='link' )) ",   $this->WebId, $this->LangId,$this->UserGroupId)->fetchAll();
+            
+                
+            $res = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FRONTENDDETAIL WHERE  $parentQuery AND WebId = %i AND LangId = %i AND  (GroupId =%i OR (ContentType='link' )) ",   $this->WebId, $this->LangId,$this->UserGroupId)->fetchAll();
             return $res;
         }
         if ($this->AddParent) {
@@ -158,7 +161,7 @@ class ContentFrontend extends Content {
                 $parentQuery .= "  Identificator = '$this->DataSource' ";
             else if ($this->_mode == "SeoUrl")
                 $parentQuery .= "  SeoUrl =  '$this->SeoUrl' ";
-            $resParent = dibi::query("SELECT * FROM FRONTENDDETAIL WHERE $parentQuery  AND WebId = %i AND LangId = %i AND (GroupId =%i OR (ContentType='link' ))",   $this->WebId, $this->LangId,$this->UserGroupId)->fetchAll();
+            $resParent = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FRONTENDDETAIL WHERE $parentQuery  AND WebId = %i AND LangId = %i AND (GroupId =%i OR (ContentType='link' ))",   $this->WebId, $this->LangId,$this->UserGroupId)->fetchAll();
             $res = array_merge($resParent, $res);
         }
         $tmpLevel++;

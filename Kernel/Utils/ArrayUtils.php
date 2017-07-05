@@ -50,8 +50,8 @@ class ArrayUtils  {
         return $outString;
     }
 
-    public static function XmlToArray($xmlstring) {
-        $xml = simplexml_load_string($xmlstring);
+    public static function XmlToArray($xmlstring,$class_name="",$options=0) {
+        $xml = simplexml_load_string($xmlstring,$class_name, $options);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);
         return $array;
@@ -473,6 +473,43 @@ class ArrayUtils  {
         }
         return $data;
     }
+    
+    public static function GetChildToRoot($array, $childColumn)
+    {
+        $outArray = array();
+        foreach ($array as $row)
+        {
+            if (!empty($row[$childColumn]))
+            {
+                $child = $row[$childColumn];
+                unset($row[$childColumn]);
+                $outArray[] = $row;
+                $outArray = array_merge($outArray,self::GetChildToRoot($child,$childColumn));
+            }
+            else{
+                $outArray [] = $row;
+            }
+        }
+        return $outArray;
+    }
+    
+    public static function GetDataXmlValueToRow($array)
+    {
+        return array_map(function($row){
+            $row = ArrayUtils::ObjectToArray($row);
+            if (!empty($row["Data"]))
+            {
+                
+                $data = ArrayUtils::XmlToArray($row["Data"],"SimpleXMLElement",LIBXML_NOCDATA);
+                $row = array_merge($row,$data);
+                
+            }
+            return $row;
+        }, $array);
+    }
+    
+    
+    
             
             
 }

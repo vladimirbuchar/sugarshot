@@ -142,8 +142,11 @@ class Controllers extends GlobalClass{
     }
 
     protected function GetControllerName() {
+        
         if (empty($_GET["Controller"]))
+        {
             return DEFAULT_CONTROLER_NAME;
+        }
         return $_GET["Controller"];
     } 
 
@@ -213,8 +216,7 @@ class Controllers extends GlobalClass{
     }
 
     public function IsAjaxFunction($functionName) {
-        //print_r($this->_ajaxFunctions);
-        return in_array($functionName, $this->_ajaxFunctions);
+       return in_array($functionName, $this->_ajaxFunctions);
     }
 
     public function IsCommandFunction($functionName) {
@@ -563,6 +565,9 @@ class Controllers extends GlobalClass{
         if ($mustBeWebId)
             $this->MustBeWebId ($viewName);
     }
+    
+    
+            
     
     
     

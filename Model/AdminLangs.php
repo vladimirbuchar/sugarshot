@@ -13,6 +13,8 @@ class AdminLangs  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "AdminLangs";
+        $this->SetSelectColums(array("LangName","LangIdentificator"));
+        $this->SetDefaultSelectColumns();
     }
     /*public static function GetInstance()
     {
@@ -45,13 +47,8 @@ class AdminLangs  extends DatabaseTable{
         $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colLangIdentificator);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
     }
+        
     
 
     public function InsertDefaultData() {

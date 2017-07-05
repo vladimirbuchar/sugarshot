@@ -12,6 +12,8 @@ class UserGroupsModules  extends DatabaseTable{
     {
         parent::__construct();
         $this->ObjectName = "UserGroupsModules";
+        $this->SetSelectColums(array("UserGroupId","ModuleId"));
+        $this->SetDefaultSelectColumns();
     }
     /*
     public static function GetInstance()
@@ -54,12 +56,7 @@ class UserGroupsModules  extends DatabaseTable{
         $colModuleId->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colModuleId);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        
     }
 
     public function InsertDefaultData() {

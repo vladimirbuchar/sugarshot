@@ -18,6 +18,8 @@ class Modules  extends DatabaseTable{
         parent::__construct();
         $this->ObjectName = "Modules";
         $this->MultiWeb = true;
+        $this->SetSelectColums(array("ModuleName","ModuleControler","ModuleView"));
+        $this->SetDefaultSelectColumns();
         
     }
     /*
@@ -94,12 +96,7 @@ class Modules  extends DatabaseTable{
         $colModuleGroup->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colModuleGroup);
         
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "IsSystem";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        
     }
 
     public function InsertDefaultData() {

@@ -1,6 +1,7 @@
 <?php
 
 namespace Controller;
+use Dibi;
 
 class Setup extends PageController {
 
@@ -11,7 +12,7 @@ class Setup extends PageController {
     }
 
     public function Setup() {
-        
+        $this->SetStateTitle($this->GetWord("word887"));
         // create folders
         if (!\Kernel\Folders::FolderExists(LOG_PATH))
         {
@@ -44,5 +45,6 @@ class Setup extends PageController {
         }
         
     }
+    
 
 }

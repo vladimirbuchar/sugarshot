@@ -28,7 +28,9 @@ class UserDomainsAddiction  extends DatabaseTable{
     public function __construct()
     {
         parent::__construct();
-        $this->ObjectName = "UserDomainsAddiction";      
+        $this->ObjectName = "UserDomainsAddiction";     
+        $this->SetSelectColums(array("DomainId","AddictionName","Item1","Item1Value","ItemX","ItemXValue","ActionName","RuleName","Priority"," IsDomain1","DomainId1","ItemId1","IsDomainX","DomainIdX","ItemIdX"));
+        $this->SetDefaultSelectColumns();
         
     }
     /*

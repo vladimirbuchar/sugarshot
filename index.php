@@ -1,10 +1,42 @@
-<?php  
-    try{
-        //include_once './Kernel/ExternalApi/PHPMailer-master/class.phpmailer.php';
-        include_once './Kernel/ExternalApi/PHPExcel.php';
-        include_once './vendor/autoload.php';
-        include_once './vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
+<?php
+
+try{
+        session_start();
+        $now = time();
+        if (!empty($_SESSION["expired"]))
+        {
+            $expired = $_SESSION["expired"];
+            if ($now  > $expired)
+            {
+                session_unset();
+                session_destroy();
+                session_start();
+            }
+        }
+        else 
+        {
+            session_unset();
+            session_destroy();
+            session_start();
+        }
+        $_SESSION["expired"] = $now+900;
+        
+        
+        include './autoload.php';
+
+        include_once './settings_global.php';
+        \Kernel\Page::GetConfigByDomain();
         include_once './settings.php';
+            $options = array(
+            'driver'   => SQL_DRIVER,
+            'host'     => SQL_SERVER,
+            'username' => SQL_LOGIN,
+            'password' => SQL_PASSWORD,
+            'database' => SQL_DATABASE,
+            'charset'  => CHARSET    
+        );
+        
+        dibi::connect($options);
         
         $ajaxMode = (!empty($_GET["ajax"]) || !empty($_POST["ajax"]))? true: false;
         $fileUpload = (!empty($_GET["fileUpload"]) || !empty($_POST["fileUpload"]))? true: false;
@@ -24,6 +56,7 @@
         $updatemodel  = (!empty($_GET["updatemodel"]))? true:false;
         $setLongRequest = (!empty($_GET["longrequest"]))? true:false;
         $runalltimers = (!empty($_GET["runalltimers"]))? true:false;
+        
         if ($showPhpInfo)
         {
             phpinfo();
@@ -113,6 +146,7 @@
             $template = empty($_GET["Template"]) ?"":$_GET["Template"]; 
             if ($setup)
             {
+                \Kernel\Page::StartUpdateModel(true);
                 $controller = "Setup";
                 $view = "Setup";
                 $template = "Setup";
