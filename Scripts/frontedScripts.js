@@ -38,7 +38,7 @@ async function SendUserForm(formId)
     }
     if (out["AfterSendFormAction"] == "GoToPage")
     {
-	//window.location.href = out["RedirectUrl"];
+	window.location.href = out["RedirectUrl"];
     }   
 
     $(".formErrors").html("");

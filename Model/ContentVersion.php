@@ -403,7 +403,15 @@ class ContentVersion extends DatabaseTable {
                 $saveXml = "<items>";
                 foreach ($udpateData as $key => $value)
                 {
-                    \Dibi::query("UPDATE ContentData SET Value = %s, ValueNoHtml =%s WHERE ContentId = %i AND LangId =%i AND ItemName = %s",$value, strip_tags(html_entity_decode($value)),$contentId, $row["Id"], $key);
+                    $exists = \Dibi::query("SELECT ContentId FROM ContentData WHERE ContentId = %i AND LangId =%i AND ItemName = %s",$contentId, $row["Id"], $key)->fetchAll();
+                    if(empty($exists))
+                    {
+                        \Dibi::query("INSERT INTO ContentData SET Value = %s, ValueNoHtml =%s , ContentId = %i , LangId =%i ,ItemName = %s",$value, strip_tags(html_entity_decode($value)),$contentId, $row["Id"], $key);
+                    }
+                    else 
+                    {
+                        \Dibi::query("UPDATE ContentData SET Value = %s, ValueNoHtml =%s WHERE ContentId = %i AND LangId =%i AND ItemName = %s",$value, strip_tags(html_entity_decode($value)),$contentId, $row["Id"], $key);
+                    }
                     $dataAr[$key] = $value;
                 }
                 foreach ($dataAr as $key => $value)
@@ -1569,7 +1577,7 @@ class ContentVersion extends DatabaseTable {
         return $this->LoadFrontend($contentId, $usergroup, $langId, $webId);
     }
 
-    public function LoadFrontend($contentId, $usergroup, $langId, $webId, $limitChild = 0, $sort = "", $subItems = false, $ignoreActiveUrl = false, $addParent = false, $acceptItems = "", $ignoredId = "",$ignoreAlternativeItems = ENABLE_ALTERNATIVE_CONTENT,$where = "",$whereColumn = "") {
+    public function LoadFrontend($contentId, $usergroup, $langId, $webId, $limitChild = 0, $sort = "", $subItems = false, $ignoreActiveUrl = false, $addParent = false, $acceptItems = "", $ignoredId = "",$ignoreAlternativeItems = IGNORE_ALTERNATIVE_CONTENT,$where = "",$whereColumn = "") {
         if (!$ignoreAlternativeItems)
         {
             $alternativeTest = $this->GetAlternativeItems($contentId, $langId, $usergroup);
@@ -2737,7 +2745,7 @@ class ContentVersion extends DatabaseTable {
         return $res[0]["ContentId"];
     }
 
-    public function LoadFrontendFromSeoUrl($seourl, $usergroup, $langId, $webid, $limit = 0, $sort = "", $subitems = false, $ignoreActiveUrl = false, $acceptItems = "",$ignoreAlternativeItems =false,$where = "",$whereColumn = "") {
+    public function LoadFrontendFromSeoUrl($seourl, $usergroup, $langId, $webid, $limit = 0, $sort = "", $subitems = false, $ignoreActiveUrl = false, $acceptItems = "",$ignoreAlternativeItems =IGNORE_ALTERNATIVE_CONTENT,$where = "",$whereColumn = "") {
         $contentId = $this->GetIdBySeoUrl($seourl, $webid);
         return $this->LoadFrontend($contentId, $usergroup, $langId, $webid, $limit, $sort, $subitems, $ignoreActiveUrl,false, $acceptItems,"",$ignoreAlternativeItems,$where,$whereColumn);
     }

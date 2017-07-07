@@ -220,7 +220,6 @@ function XmlExport()
     SaveTemplate(true);
     var seoUrl = CallPhpFunctionAjax("WebEdit","CallDataSourceExport","POST",$("#ObjectId").val());
     window.open(seoUrl,"_blank");
-    //window.location.href = seoUrl;
 }
 
 function GenerateXmlItem()
@@ -245,8 +244,6 @@ function LoadDomainItems(id,type)
             var showName = data[i].ShowName;
             var Identificator = data[i].Identificator;
             html += "<a href='#' onclick='SetTextHtml(\"{"+Identificator+"}\");return false;'>"+showName+" ("+Identificator+") </a><br />";
-            
-            
         }
         $("#DomainItems").html(html)
     }

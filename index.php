@@ -1,5 +1,5 @@
 <?php
-
+ 
 try{
         session_start();
         $now = time();

@@ -43,6 +43,7 @@ class ArticleList extends UserComponents{
             $this->LoadUrl = $_GET["seourl"];
         //$childs = $this->GetDataSource();
         $childs = $content->LoadFrontendFromSeoUrl($this->LoadUrl, self::$UserGroupId, $this->LangId, $this->WebId,$this->LoadItemsCount,$this->SortQuery,$this->LoadAllSubitems,$this->IgnoreActiveUrl,"",true,$this->Where,$this->WhereColumns);
+        
         $this->IsEmptyComponent = empty($childs);
         if ($this->LoadItemsCount >= count($childs))
             $this->ShowPager = false;

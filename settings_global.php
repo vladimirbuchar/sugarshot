@@ -58,7 +58,7 @@ else
     GlobalSettings::DeclareConst("SERVER_NAME_LANG",SERVER_NAME);
 GlobalSettings::DeclareConst("DEFAULT_LANG", "CS");
 
-GlobalSettings::DeclareConst("ENABLE_ALTERNATIVE_CONTENT", FALSE);
+GlobalSettings::DeclareConst("IGNORE_ALTERNATIVE_CONTENT", TRUE);
 
 class GlobalSettings
 {
