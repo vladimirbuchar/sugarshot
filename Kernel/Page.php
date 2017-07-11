@@ -339,6 +339,7 @@ class Page {
             $systemData["USERLOGINCLASS"] = "userNoLogin";
             $systemData["USERFULLNAME"] = "";
             $systemData["USERNAME"] = "";
+            $systemData["SERVER_URL"] = SERVER_NAME_LANG;
             
 
             if (empty($_GET["lang"]))

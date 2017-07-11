@@ -1,17 +1,17 @@
 <div class="row">
     <div class="col-md-12">
 <ul id="FolderMenu">
-    <li class="btn btn-default disabled" id="createObject">
-        <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSourceDetail" Prefix="xadm" Text="word562" OnClick="CreateNewObject('WebEdit','DataSourceDetail','/xadm','');return false;"/>        
+    <li class="btn btn-default disabled" id="createObject" OnClick="CreateNewObject('WebEdit','DataSourceDetail','/xadm','');return false;">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSourceDetail" Prefix="xadm" Text="word562" />        
         
     </li>
         
-        <li  id="editObject" class="btn btn-default disabled dn">
-            <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSourceDetail" Prefix="xadm" Text="word563" OnClick="EditItem('WebEdit','DataSourceDetail','/xadm');return false;"/>
+        <li  id="editObject" class="btn btn-default disabled dn" OnClick="EditItem('WebEdit','DataSourceDetail','/xadm');return false;">
+            <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSourceDetail" Prefix="xadm" Text="word563" />
         
     </li>
-    <li class="btn btn-default disabled" id="deleteObject">
-        <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSourceDetail" Prefix="xadm" Text="word564" OnClick="DeleteDialog();return false;" DataToggle="modal" DataTarget="#DeleteDialog" />
+    <li class="btn btn-default disabled" id="deleteObject" OnClick="DeleteDialog();return false;">
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="DataSourceDetail" Prefix="xadm" Text="word564"  DataToggle="modal" DataTarget="#DeleteDialog" />
     </li>
     
 </ul>
