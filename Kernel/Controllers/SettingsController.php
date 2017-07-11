@@ -131,7 +131,6 @@ abstract class SettingsController extends AdminController {
     {
         self::$SessionManager->UnsetKey("where");
         $ajaxParametrs = $this->PrepareAjaxParametrs();
-        print_r($ajaxParametrs);
         if (empty($ajaxParametrs)) return;
         
         $sort = null;
