@@ -2863,6 +2863,7 @@ class ContentVersion extends DatabaseTable {
             }
             
         }
+        $this->UpdateMaterializedView("FrontendDetail");
         
     }
             

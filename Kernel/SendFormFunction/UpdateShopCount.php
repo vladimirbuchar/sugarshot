@@ -26,7 +26,6 @@ class UpdateShopCount extends \SendFormFunction\SendFormFunction
             
             $content->UpdateValue($id,"ProductStock",$productStock);
         }
-        
      }
              
     
