@@ -1061,6 +1061,14 @@ class WebEdit extends AdminController {
         } else {
             $id = $content->UpdateUserItem($id, $ajaxParametrs["NameObject"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $privileges, $data,$ajaxParametrs["GallerySettings"], $ajaxParametrs["Discusion"] == 0 ? 0: 1, $ajaxParametrs["Discusion"], $ajaxParametrs["FormSettings"],$noChild,$useTemplateInChild,$ajaxParametrs["ChildTemplate"],$ajaxParametrs["CopyDataToChild"],$ajaxParametrs["ActivatePager"],$ajaxParametrs["FirstItemLoadPager"],$ajaxParametrs["NextItemLoadPager"],$ajaxParametrs["InquerySettings"],$ajaxParametrs["NoLoadSubitems"],$ajaxParametrs["SaveToCache"],$ajaxParametrs["Sort"],$ajaxParametrs["SortRule"]);
         }
+        if ($ajaxParametrs["Publish"])
+        {
+            $canPublish = $content->HasPrivileges($id, \Types\PrivilegesType::$CanPublish);
+            if ($canPublish)
+            {
+                $content->UpdateMaterializedView("FrontendDetail");
+            }
+        }
         return $id;
     }
 

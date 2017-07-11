@@ -311,11 +311,11 @@ class ContentVersion extends DatabaseTable {
 
         if (!$this->SaveData($dataArray, $contentId)) {
             dibi::rollback();
-            return 0;
+            return $contentId;
         }
         if(!$this->UpdateItemInOtherLang($contentId,$templateId,$dataArray)) {
             dibi::rollback();
-            return 0;
+            return $contentId;
         }
         
         
@@ -1671,18 +1671,18 @@ class ContentVersion extends DatabaseTable {
        
 
         
-        $res = dibi::query("SELECT DISTINCT child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header	,parents.Identificator AS parentIdentificator FROM `FRONTENDDETAIL` AS parents "
-                        . " INNER JOIN FRONTENDDETAIL AS child ON parents.Id = child.ParentId  $loadByParents AND (child.GroupId =%i OR (child.ContentType='link' )) AND child.WebId = %i AND child.LangId = %i $ignoreQuery $columns  "
-                        . "LEFT JOIN  FRONTENDTEMPLATES ON child.TemplateId =  FRONTENDTEMPLATES.Id  AND FRONTENDTEMPLATES.WebId = %i AND FRONTENDTEMPLATES.LangId = %i AND FRONTENDTEMPLATES.GroupId = %i  "
-                        . " $acceptTable  $sort $limit", $usergroup, $webId, $langId, $webId, $langId, $usergroup)->fetchAll();
+        $res = dibi::query("SELECT DISTINCT child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header	,parents.Identificator AS parentIdentificator FROM `FrontendDetail_materialized` AS parents "
+                        . " INNER JOIN FrontendDetail_materialized AS child ON parents.Id = child.ParentId  $loadByParents AND (child.GroupId =%i OR (child.ContentType='link' ))  AND child.LangId = %i $ignoreQuery $columns  "
+                        . "LEFT JOIN  FRONTENDTEMPLATES ON child.TemplateId =  FRONTENDTEMPLATES.Id   AND FRONTENDTEMPLATES.LangId = %i AND FRONTENDTEMPLATES.GroupId = %i  "
+                        . " $acceptTable  $sort $limit", $usergroup, $langId, $langId, $usergroup)->fetchAll();
        
         
         if (empty($res) && !$subItems && !$ignoreActiveUrl) {
-                $res = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FRONTENDDETAIL WHERE  Id  = %i AND  (GroupId =%i OR (ContentType='link' )) AND WebId = %i AND LangId = %i", $contentId, $usergroup, $webId, $langId)->fetchAll();
+                $res = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FrontendDetail_materialized WHERE  Id  = %i AND  (GroupId =%i OR (ContentType='link' ))AND LangId = %i", $contentId, $usergroup, $langId)->fetchAll();
             return $res;
         }
         if ($addParent) {
-            $resParent = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FRONTENDDETAIL WHERE Id  = %i AND (GroupId =%i OR (ContentType='link' )) AND WebId = %i AND LangId = %i", $contentId, $usergroup, $webId, $langId)->fetchAll();
+            $resParent = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FrontendDetail_materialized WHERE Id  = %i AND (GroupId =%i OR (ContentType='link' ))  AND LangId = %i", $contentId, $usergroup, $langId)->fetchAll();
             $res = array_merge($resParent, $res);
         }
 
@@ -1701,8 +1701,8 @@ class ContentVersion extends DatabaseTable {
     }
 
     private function GetIdList($id, $usergroup, $langId, $subItems = false) {
-        $resChild = dibi::query("SELECT DISTINCT child.Id FROM `FRONTENDDETAIL` AS parents "
-                        . "INNER JOIN FRONTENDDETAIL AS child ON parents.Id = child.ParentId WHERE parents.Id = %i AND (child.GroupId =%i OR (child.ContentType='link' AND child.GroupId IS NULL))  AND child.LangId = %i", $id, $usergroup, $langId)->fetchAll();
+        $resChild = dibi::query("SELECT DISTINCT child.Id FROM `FrontendDetail_materialized` AS parents "
+                        . "INNER JOIN FrontendDetail_materialized AS child ON parents.Id = child.ParentId WHERE parents.Id = %i AND (child.GroupId =%i OR (child.ContentType='link' AND child.GroupId IS NULL))  AND child.LangId = %i", $id, $usergroup, $langId)->fetchAll();
         $out = $resChild;
 
         if ($subItems && !empty($resChild)) {
@@ -1875,6 +1875,7 @@ class ContentVersion extends DatabaseTable {
     }
 
     public function HasPrivileges($id, $privilegesName, $checkTree = false, $groupId = 0) {
+        try{
         $user = Users::GetInstance();
         if ($this->IsLink($id))
             return true;
@@ -1928,6 +1929,12 @@ class ContentVersion extends DatabaseTable {
         }
 
         return true;
+        }
+        catch (Exception $e)
+        
+        {
+            echo $e;die();
+        }
     }
 
     public function IsFolder($contentId) {
@@ -2258,7 +2265,7 @@ class ContentVersion extends DatabaseTable {
     }
 
     public function GetParentBySeoUrl($usergroup, $webId, $langId, $seoUrl, $level = 0, $idetificator = "") {
-        $res = dibi::query("SELECT Id, ParentId FROM FRONTENDDETAIL WHERE SeoUrl = %s AND  GroupId =%i AND WebId = %i AND LangId = %i  AND AvailableOverSeoUrl = 1 ", $seoUrl, $usergroup, $webId, $langId)->fetchAll();
+        $res = dibi::query("SELECT Id, ParentId FROM FrontendDetail_materialized WHERE SeoUrl = %s AND  GroupId =%i AND WebId = %i AND LangId = %i  AND AvailableOverSeoUrl = 1 ", $seoUrl, $usergroup, $webId, $langId)->fetchAll();
         $parentId = $res[0]["ParentId"];
         if ($this->IsFolder($parentId) || $level == 1)
             return $res[0]["Id"];
@@ -2341,7 +2348,7 @@ class ContentVersion extends DatabaseTable {
     public function GetArticleBySeoUrl($seoUrl, $usergroup, $langId, $webId, $preview = false, $subItems = false, $where = "", $colums = "", $sort = "", $limitLoad = "start") {
         $resChild = array();
         $res = array();
-        $tableName = !$preview ? "FRONTENDDETAIL" : "FRONTENDDETAILPREVIEW";
+        $tableName = !$preview ? "FrontendDetail_materialized" : "FRONTENDDETAILPREVIEW";
         $res = dibi::query("SELECT DISTINCT Date,Sort, SaveToCache,NoLoadSubItems,ActivatePager, FirstItemLoadPager, NextItemLoadPager,TemplateId,Id,Name,SeoUrl,Data,Header,ActiveFrom,ContentType,  
                 ActiveTo,NoIncludeSearch,Identificator,ParentId FROM $tableName WHERE SeoUrl = %s  AND GroupId =%i AND WebId = %i AND LangId = %i  AND AvailableOverSeoUrl = 1 ", $seoUrl, $usergroup, $webId, $langId)->fetchAll();
 
