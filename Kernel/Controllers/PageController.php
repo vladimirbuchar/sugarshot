@@ -127,8 +127,6 @@ abstract class PageController extends Controllers {
     { 
         try
         {
-            
-            //$cache = new Cache();
             $html ="";
             $content = ContentVersion::GetInstance();
             $preview = false;
