@@ -86,7 +86,6 @@ class ContentVersion extends DatabaseTable {
             
         dibi::begin();
         if ($this->IsLink($parentid) || (!$this->CanHaveChild($parentid) && ($contentType != ContentTypes::$FormStatistic && $contentType != ContentTypes::$SurveyAnswer) )) {
-            
             $parentid = $this->GetParent($parentid);
         }
         
@@ -1117,6 +1116,9 @@ class ContentVersion extends DatabaseTable {
     }
 
     public function GetDataSourceDetail($contentId, $groupId = 0, $webId = 0, $langId = 0, $versionId = 0) {
+        if ($langId == 0)
+            $langId = $_GET["langid"];
+        
         if ($versionId == 0) {
             $res = dibi::query("SELECT * FROM DATASOURCEDETAIL WHERE WebId = %i AND LangId = %i AND GroupId = %i AND Id = %i AND IsLast = 1", $webId, $langId, $groupId, $contentId)->fetchAll();
             return $res;
@@ -1399,7 +1401,9 @@ class ContentVersion extends DatabaseTable {
 
         if (trim($xml->DatasourceType) == "XmlImport") {
 
-            $data = simplexml_load_string($xmlContent);
+            $data = ArrayUtils::XmlToArray($xmlContent,"SimpleXMLElement",LIBXML_NOCDATA);
+            // $dataAr = ArrayUtils::GetAllChildToRoot($data);
+            //print_r($dataAr);die();
             $this->ImportXmlData($data, $domain, $mode, $testColumn);
         } else if (trim($xml->DatasourceType) == "XmlImportUserItem") {
             if ($mode == "DeleteInsert") {
@@ -1502,11 +1506,19 @@ class ContentVersion extends DatabaseTable {
             }
         }
     }
+    
+    private function PrepareXmlImport($array,$columns) {
+        $prepareArray = array();
+        print_r($array);die();
+        foreach ($array as $key => $value)
+        {
+            print_r($value);die();
+        }
+    }
 
     private function ImportXmlData($xml, $domain, $mode, $testColumn) {
 
-        /* echo $mode;
-          die(); */
+         
         if ($mode == "")
             return;
         $ud = \Model\UserDomainsItems::GetInstance();
@@ -1522,14 +1534,26 @@ class ContentVersion extends DatabaseTable {
         $prepareArray = array();
         $usedKeys = array();
         $maxItems = 0;
-
+        $xmlImportColumns = array();
+        foreach ($userDomain as $row)
+        {
+            if (!empty($row["XmlSettings"]))
+                $xmlImportColumns[] = $row["XmlSettings"];
+        }
+        $prepareArray = $this->PrepareXmlImport($xml, $xmlImportColumns);
+            
+        print_r($xmlImportColumns);die();
+        
+            
         foreach ($userDomain as $row) {
+            
             $xpath = $row["XmlSettings"];
-            $result = $xml->xpath($xpath);
+            $result = $xml[$xpath];
             $key = $row["Identificator"];
             if ($row["Id"] == $testColumn) {
                 $valueTest = $row["Identificator"];
             }
+            
             $usedKeys[] = $key;
             $addArray = array();
 
@@ -1883,12 +1907,15 @@ class ContentVersion extends DatabaseTable {
             $groupId = $user->GetUserGroupId();
         }
         if ($this->IsFolder($id)) {
+            
             $web = \Model\Webs::GetInstance();
             $web->GetObjectById($_GET["webid"], true);
             $xml = $web->WebPrivileges;
-            $ar = ArrayUtils::XmlToArray($xml);
+            
+            $ar = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
             if ($user->IsSystemUser())
                 return true;
+            
             foreach ($ar["item"] as $row) {
                 if ($row["UserGroup"] == $groupId && $row["PrivilegesName"] == $privilegesName && $row["Value"] == "true")
                     return true;
