@@ -546,7 +546,7 @@ class WebEdit extends AdminController {
         $this->SetTemplateData("SaveToCache", $mainData["SaveToCache"]== 1 ? 'checked= "checked"' : "");
         $this->SetTemplateData("FirstItemLoadPager", $mainData["FirstItemLoadPager"]);
         $this->SetTemplateData("NextItemLoadPager", $mainData["NextItemLoadPager"]);
-        $this->SetTemplateData("Data", str_replace("\n", "", $mainData["Data"]));
+        $this->SetTemplateData("Data", str_replace("'", '"', str_replace("\n", "", $mainData["Data"])) );
         $this->SetTemplateData("GalleryId", !empty($mainData["GalleryId"]) ? $mainData["GalleryId"] : 0);
         $this->SetTemplateData("DiscusionSettings", !empty($mainData["DiscusionSettings"]) ? $mainData["DiscusionSettings"] : 0);
         $this->SetTemplateData("GallerySettings", !empty($mainData["GallerySettings"]) ? $mainData["GallerySettings"] : 0);
