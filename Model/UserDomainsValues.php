@@ -348,7 +348,7 @@ class UserDomainsValues  extends DatabaseTable{
         {
             $itemIdentificator = " AND UserDomainsItems.Identificator = '$itemIdentificator' ";
         }
-        $tableName =  !$preview ? "FRONTENDDETAIL" : "FRONTENDDETAILPREVIEW";
+        $tableName =  !$preview ? "FrontendDetail_materialized" : "FRONTENDDETAILPREVIEW";
         $res = dibi::query("SELECT DISTINCT UserDomainsItems.*,$tableName.Data  FROM $tableName "
                 . "LEFT JOIN Content ON $tableName.TemplateId = Content.Id "
                 . "LEFT JOIN UserDomainsItems ON UserDomainsItems.DomainId = Content.DomainId AND UserDomainsItems.Deleted = 0 $itemIdentificator "

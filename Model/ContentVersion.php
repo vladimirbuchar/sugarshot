@@ -86,7 +86,6 @@ class ContentVersion extends DatabaseTable {
             
         dibi::begin();
         if ($this->IsLink($parentid) || (!$this->CanHaveChild($parentid) && ($contentType != ContentTypes::$FormStatistic && $contentType != ContentTypes::$SurveyAnswer) )) {
-            
             $parentid = $this->GetParent($parentid);
         }
         
@@ -311,11 +310,11 @@ class ContentVersion extends DatabaseTable {
 
         if (!$this->SaveData($dataArray, $contentId)) {
             dibi::rollback();
-            return 0;
+            return $contentId;
         }
         if(!$this->UpdateItemInOtherLang($contentId,$templateId,$dataArray)) {
             dibi::rollback();
-            return 0;
+            return $contentId;
         }
         
         
@@ -1117,6 +1116,9 @@ class ContentVersion extends DatabaseTable {
     }
 
     public function GetDataSourceDetail($contentId, $groupId = 0, $webId = 0, $langId = 0, $versionId = 0) {
+        if ($langId == 0)
+            $langId = $_GET["langid"];
+        
         if ($versionId == 0) {
             $res = dibi::query("SELECT * FROM DATASOURCEDETAIL WHERE WebId = %i AND LangId = %i AND GroupId = %i AND Id = %i AND IsLast = 1", $webId, $langId, $groupId, $contentId)->fetchAll();
             return $res;
@@ -1399,7 +1401,9 @@ class ContentVersion extends DatabaseTable {
 
         if (trim($xml->DatasourceType) == "XmlImport") {
 
-            $data = simplexml_load_string($xmlContent);
+            $data = ArrayUtils::XmlToArray($xmlContent,"SimpleXMLElement",LIBXML_NOCDATA);
+            // $dataAr = ArrayUtils::GetAllChildToRoot($data);
+            //print_r($dataAr);die();
             $this->ImportXmlData($data, $domain, $mode, $testColumn);
         } else if (trim($xml->DatasourceType) == "XmlImportUserItem") {
             if ($mode == "DeleteInsert") {
@@ -1502,11 +1506,19 @@ class ContentVersion extends DatabaseTable {
             }
         }
     }
+    
+    private function PrepareXmlImport($array,$columns) {
+        $prepareArray = array();
+        print_r($array);die();
+        foreach ($array as $key => $value)
+        {
+            print_r($value);die();
+        }
+    }
 
     private function ImportXmlData($xml, $domain, $mode, $testColumn) {
 
-        /* echo $mode;
-          die(); */
+         
         if ($mode == "")
             return;
         $ud = \Model\UserDomainsItems::GetInstance();
@@ -1522,14 +1534,26 @@ class ContentVersion extends DatabaseTable {
         $prepareArray = array();
         $usedKeys = array();
         $maxItems = 0;
-
+        $xmlImportColumns = array();
+        foreach ($userDomain as $row)
+        {
+            if (!empty($row["XmlSettings"]))
+                $xmlImportColumns[] = $row["XmlSettings"];
+        }
+        $prepareArray = $this->PrepareXmlImport($xml, $xmlImportColumns);
+            
+        print_r($xmlImportColumns);die();
+        
+            
         foreach ($userDomain as $row) {
+            
             $xpath = $row["XmlSettings"];
-            $result = $xml->xpath($xpath);
+            $result = $xml[$xpath];
             $key = $row["Identificator"];
             if ($row["Id"] == $testColumn) {
                 $valueTest = $row["Identificator"];
             }
+            
             $usedKeys[] = $key;
             $addArray = array();
 
@@ -1671,18 +1695,18 @@ class ContentVersion extends DatabaseTable {
        
 
         
-        $res = dibi::query("SELECT DISTINCT child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header	,parents.Identificator AS parentIdentificator FROM `FRONTENDDETAIL` AS parents "
-                        . " INNER JOIN FRONTENDDETAIL AS child ON parents.Id = child.ParentId  $loadByParents AND (child.GroupId =%i OR (child.ContentType='link' )) AND child.WebId = %i AND child.LangId = %i $ignoreQuery $columns  "
-                        . "LEFT JOIN  FRONTENDTEMPLATES ON child.TemplateId =  FRONTENDTEMPLATES.Id  AND FRONTENDTEMPLATES.WebId = %i AND FRONTENDTEMPLATES.LangId = %i AND FRONTENDTEMPLATES.GroupId = %i  "
-                        . " $acceptTable  $sort $limit", $usergroup, $webId, $langId, $webId, $langId, $usergroup)->fetchAll();
+        $res = dibi::query("SELECT DISTINCT child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header	,parents.Identificator AS parentIdentificator FROM `FrontendDetail_materialized` AS parents "
+                        . " INNER JOIN FrontendDetail_materialized AS child ON parents.Id = child.ParentId  $loadByParents AND (child.GroupId =%i OR (child.ContentType='link' ))  AND child.LangId = %i $ignoreQuery $columns  "
+                        . "LEFT JOIN  FRONTENDTEMPLATES ON child.TemplateId =  FRONTENDTEMPLATES.Id   AND FRONTENDTEMPLATES.LangId = %i AND FRONTENDTEMPLATES.GroupId = %i  "
+                        . " $acceptTable  $sort $limit", $usergroup, $langId, $langId, $usergroup)->fetchAll();
        
         
         if (empty($res) && !$subItems && !$ignoreActiveUrl) {
-                $res = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FRONTENDDETAIL WHERE  Id  = %i AND  (GroupId =%i OR (ContentType='link' )) AND WebId = %i AND LangId = %i", $contentId, $usergroup, $webId, $langId)->fetchAll();
+                $res = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FrontendDetail_materialized WHERE  Id  = %i AND  (GroupId =%i OR (ContentType='link' ))AND LangId = %i", $contentId, $usergroup, $langId)->fetchAll();
             return $res;
         }
         if ($addParent) {
-            $resParent = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FRONTENDDETAIL WHERE Id  = %i AND (GroupId =%i OR (ContentType='link' )) AND WebId = %i AND LangId = %i", $contentId, $usergroup, $webId, $langId)->fetchAll();
+            $resParent = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FrontendDetail_materialized WHERE Id  = %i AND (GroupId =%i OR (ContentType='link' ))  AND LangId = %i", $contentId, $usergroup, $langId)->fetchAll();
             $res = array_merge($resParent, $res);
         }
 
@@ -1701,8 +1725,8 @@ class ContentVersion extends DatabaseTable {
     }
 
     private function GetIdList($id, $usergroup, $langId, $subItems = false) {
-        $resChild = dibi::query("SELECT DISTINCT child.Id FROM `FRONTENDDETAIL` AS parents "
-                        . "INNER JOIN FRONTENDDETAIL AS child ON parents.Id = child.ParentId WHERE parents.Id = %i AND (child.GroupId =%i OR (child.ContentType='link' AND child.GroupId IS NULL))  AND child.LangId = %i", $id, $usergroup, $langId)->fetchAll();
+        $resChild = dibi::query("SELECT DISTINCT child.Id FROM `FrontendDetail_materialized` AS parents "
+                        . "INNER JOIN FrontendDetail_materialized AS child ON parents.Id = child.ParentId WHERE parents.Id = %i AND (child.GroupId =%i OR (child.ContentType='link' AND child.GroupId IS NULL))  AND child.LangId = %i", $id, $usergroup, $langId)->fetchAll();
         $out = $resChild;
 
         if ($subItems && !empty($resChild)) {
@@ -1875,6 +1899,7 @@ class ContentVersion extends DatabaseTable {
     }
 
     public function HasPrivileges($id, $privilegesName, $checkTree = false, $groupId = 0) {
+        try{
         $user = Users::GetInstance();
         if ($this->IsLink($id))
             return true;
@@ -1882,12 +1907,15 @@ class ContentVersion extends DatabaseTable {
             $groupId = $user->GetUserGroupId();
         }
         if ($this->IsFolder($id)) {
+            
             $web = \Model\Webs::GetInstance();
             $web->GetObjectById($_GET["webid"], true);
             $xml = $web->WebPrivileges;
-            $ar = ArrayUtils::XmlToArray($xml);
+            
+            $ar = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
             if ($user->IsSystemUser())
                 return true;
+            
             foreach ($ar["item"] as $row) {
                 if ($row["UserGroup"] == $groupId && $row["PrivilegesName"] == $privilegesName && $row["Value"] == "true")
                     return true;
@@ -1928,6 +1956,12 @@ class ContentVersion extends DatabaseTable {
         }
 
         return true;
+        }
+        catch (Exception $e)
+        
+        {
+            echo $e;die();
+        }
     }
 
     public function IsFolder($contentId) {
@@ -2258,7 +2292,7 @@ class ContentVersion extends DatabaseTable {
     }
 
     public function GetParentBySeoUrl($usergroup, $webId, $langId, $seoUrl, $level = 0, $idetificator = "") {
-        $res = dibi::query("SELECT Id, ParentId FROM FRONTENDDETAIL WHERE SeoUrl = %s AND  GroupId =%i AND WebId = %i AND LangId = %i  AND AvailableOverSeoUrl = 1 ", $seoUrl, $usergroup, $webId, $langId)->fetchAll();
+        $res = dibi::query("SELECT Id, ParentId FROM FrontendDetail_materialized WHERE SeoUrl = %s AND  GroupId =%i AND WebId = %i AND LangId = %i  AND AvailableOverSeoUrl = 1 ", $seoUrl, $usergroup, $webId, $langId)->fetchAll();
         $parentId = $res[0]["ParentId"];
         if ($this->IsFolder($parentId) || $level == 1)
             return $res[0]["Id"];
@@ -2341,7 +2375,7 @@ class ContentVersion extends DatabaseTable {
     public function GetArticleBySeoUrl($seoUrl, $usergroup, $langId, $webId, $preview = false, $subItems = false, $where = "", $colums = "", $sort = "", $limitLoad = "start") {
         $resChild = array();
         $res = array();
-        $tableName = !$preview ? "FRONTENDDETAIL" : "FRONTENDDETAILPREVIEW";
+        $tableName = !$preview ? "FrontendDetail_materialized" : "FRONTENDDETAILPREVIEW";
         $res = dibi::query("SELECT DISTINCT Date,Sort, SaveToCache,NoLoadSubItems,ActivatePager, FirstItemLoadPager, NextItemLoadPager,TemplateId,Id,Name,SeoUrl,Data,Header,ActiveFrom,ContentType,  
                 ActiveTo,NoIncludeSearch,Identificator,ParentId FROM $tableName WHERE SeoUrl = %s  AND GroupId =%i AND WebId = %i AND LangId = %i  AND AvailableOverSeoUrl = 1 ", $seoUrl, $usergroup, $webId, $langId)->fetchAll();
 
@@ -2856,6 +2890,7 @@ class ContentVersion extends DatabaseTable {
             }
             
         }
+        $this->UpdateMaterializedView("FrontendDetail");
         
     }
             

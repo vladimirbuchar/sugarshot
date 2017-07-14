@@ -892,6 +892,13 @@ class DatabaseTable extends SqlDatabase{
             $selectComlums[] = "WebId";
         $this->SetSelectColums($selectComlums);
     }
+    
+    public function UpdateMaterializedView($materializedView)
+    {
+        $className = "Model\\$materializedView";
+        $view = new $className();
+        $view->UpdateMaterializeView();
+    }
             
             
 }

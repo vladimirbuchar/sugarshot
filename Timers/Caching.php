@@ -7,7 +7,7 @@ class Caching extends Timers {
     }
     public function RunTimer()
     {
-        $res = dibi::query("SELECT * FROM FRONTENDDETAIL WHERE SaveToCache = 1")->fetchAll();
+        $res = dibi::query("SELECT * FROM FrontendDetail_materialized WHERE SaveToCache = 1")->fetchAll();
         
         $lang = \Model\Langs::GetInstance();
         $langUrls = array();

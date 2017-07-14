@@ -9,6 +9,7 @@ class DataTableColumn {
     public $IsAutoIncrement = false; 
     public $Key = "";
     public $Mode;
+
     public function __construct($name = "",$type="",$defaultValue="",$isnull = true, $length = 99999,$isautoincrement = false,$key = "")
     {   
         $this->Mode = AlterTableMode::$AddColumn;
@@ -19,6 +20,7 @@ class DataTableColumn {
         $this->Length = $length;
         $this->IsAutoIncrement = $isautoincrement;
         $this->Key = $key;
+
         
     }
 }
