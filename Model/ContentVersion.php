@@ -1368,6 +1368,7 @@ class ContentVersion extends DatabaseTable {
         $searchItemName = "";
         $useTemplateId = 0;
         if (trim($xml->DatasourceType) == "XmlImport") {
+            //$data = ArrayUtils::XmlToArray($xmlContent, $class_name, $options);
             $data = simplexml_load_string($xmlContent);
             $this->ImportXmlData($data, $domain, $mode, $testColumn);
         } else if (trim($xml->DatasourceType) == "XmlImportUserItem") {
@@ -1398,8 +1399,7 @@ class ContentVersion extends DatabaseTable {
 
 
         if (trim($xml->DatasourceType) == "XmlImport") {
-
-            $data = simplexml_load_string($xmlContent);
+            $data = ArrayUtils::XmlToArray($xmlContent ,"SimpleXMLElement",LIBXML_NOCDATA);
             $this->ImportXmlData($data, $domain, $mode, $testColumn);
         } else if (trim($xml->DatasourceType) == "XmlImportUserItem") {
             if ($mode == "DeleteInsert") {
@@ -1510,22 +1510,31 @@ class ContentVersion extends DatabaseTable {
         if ($mode == "")
             return;
         $ud = \Model\UserDomainsItems::GetInstance();
-
         $userDomain = $ud->GetUserDomainItemById($domain);
-
         $valueTest = "";
         $values = \Model\UserDomainsValues::GetInstance();
         if ($mode == "DeleteInsert") {
             $values->DeleteAllValues($domain);
             $mode = "Insert";
         }
+        $importColumns = array();
+        foreach ($userDomain as $row) {
+            $xpath = $row["XmlSettings"];
+            if (!empty($xpath))
+            {
+                $importColumns[] = $xpath;
+            }
+        }
+        print_r($xml);die();
+        
+        
         $prepareArray = array();
         $usedKeys = array();
         $maxItems = 0;
 
         foreach ($userDomain as $row) {
             $xpath = $row["XmlSettings"];
-            $result = $xml->xpath($xpath);
+            $result = $xml[$xpath];
             $key = $row["Identificator"];
             if ($row["Id"] == $testColumn) {
                 $valueTest = $row["Identificator"];
