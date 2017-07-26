@@ -477,6 +477,25 @@ class ArrayUtils  {
     public static function GetChildToRoot($array, $childColumn)
     {
         $outArray = array();
+        $isInt = true;
+        foreach ($array as $key => $value)
+        {
+            $isInt = is_int($key);
+            break;
+        }
+        if (!$isInt)
+        {
+            if (!empty($array[$childColumn]))
+            {
+                $child = $array[$childColumn];
+                unset($array[$childColumn]);
+                $array = self::GetChildToRoot(array_merge($outArray,$array[$childColumn]),$childColumn);
+            }
+                
+            return array($array);
+        }
+        
+        
         foreach ($array as $row)
         {
             if (!empty($row[$childColumn]))
@@ -487,9 +506,11 @@ class ArrayUtils  {
                 $outArray = array_merge($outArray,self::GetChildToRoot($child,$childColumn));
             }
             else{
+                
                 $outArray [] = $row;
             }
         }
+        
         return $outArray;
     }
     
@@ -505,7 +526,25 @@ class ArrayUtils  {
                 
             }
             return $row;
-        }, $array);
+        }, $array); 
+    }
+    public static function GetAllChildToRoot($array)
+    {
+        $outArray = array();
+        foreach ($array as $row){
+            foreach ($row as $key => $value)
+            {
+                if (is_array($value))
+                {
+                    $outArray = array_merge($outArray,self::GetAllChildToRoot($value));
+                }
+                else
+                {
+                    $outArray[$key][] = $value;
+                }
+            }
+        }
+        return $outArray;
     }
     
      

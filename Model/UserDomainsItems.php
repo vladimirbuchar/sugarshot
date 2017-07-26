@@ -34,6 +34,7 @@ class UserDomainsItems  extends DatabaseTable{
     public $AddToSort;
     public $OnChangeEvent; 
     public $ValueForAllLangues; 
+    public $GenerateHiddenInput;
     
     
     
@@ -44,7 +45,7 @@ class UserDomainsItems  extends DatabaseTable{
         $this->ParentColumn = "DomainId";
         $this->SetSelectColums(array("DomainId","ShowName","Identificator","Type","ShowInAdmin","ShowInWeb","Required","DefaultValue","MaxLength","MinLength","ValueList","ShowInAdminReadOnly",
 "ShowInWebReadOnly","Validate","CssClass","MoreHtmlAtribut","Domain","UniqueValue","NoUpdate","XmlSettings","AddCDATA","ShowOnlyDetail",
-"DomainSettings","FiltrSettings","Autocomplete","AddToSort","OnChangeEvent","ValueForAllLangues"));
+"DomainSettings","FiltrSettings","Autocomplete","AddToSort","OnChangeEvent","ValueForAllLangues,GenerateHiddenInput"));
         $this->SetDefaultSelectColumns();
     }
     /*
@@ -375,9 +376,16 @@ class UserDomainsItems  extends DatabaseTable{
         $deletedColumn->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($deletedColumn);
         
-                $deletedColumn = new DataTableColumn();
+        $deletedColumn = new DataTableColumn();
         $deletedColumn->DefaultValue = 0;
         $deletedColumn->Name = "ValueForAllLangues";
+        $deletedColumn->Type = "BOOLEAN";
+        $deletedColumn->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($deletedColumn);
+        //
+        $deletedColumn = new DataTableColumn();
+        $deletedColumn->DefaultValue = 0;
+        $deletedColumn->Name = "GenerateHiddenInput";
         $deletedColumn->Type = "BOOLEAN";
         $deletedColumn->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($deletedColumn);

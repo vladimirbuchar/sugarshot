@@ -13,13 +13,14 @@ class UserDomains  extends DatabaseTable{
     public $EditValue;
     public $IsSystem;
     public $ShowNameInSubDomain;
+    public $SaveHiddenColumn;
     //private static $_instance = null;
     
     public function __construct()
     {
         parent::__construct();
         $this->ObjectName = "UserDomains";
-        $this->SetSelectColums(array("DomainName","DomainIdentificator","Template","Domain","EditValue","IsSystem","ShowNameInSubDomain"));
+        $this->SetSelectColums(array("DomainName","DomainIdentificator","Template","Domain","EditValue","IsSystem","ShowNameInSubDomain","SaveHiddenColumn"));
         $this->SetDefaultSelectColumns();
     }
     /*
@@ -124,7 +125,15 @@ class UserDomains  extends DatabaseTable{
         $colDomainIdentificator->Type = "varchar";
         $colDomainIdentificator->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colDomainIdentificator);
-        
+        //
+                $colDomainIdentificator = new DataTableColumn();
+        $colDomainIdentificator->DefaultValue ="";
+        $colDomainIdentificator->IsNull = false;
+        $colDomainIdentificator->Length = 255;
+        $colDomainIdentificator->Name ="SaveHiddenColumn";
+        $colDomainIdentificator->Type = "varchar";
+        $colDomainIdentificator->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colDomainIdentificator);
         
     }
     

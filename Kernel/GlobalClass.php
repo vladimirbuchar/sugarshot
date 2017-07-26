@@ -75,7 +75,7 @@ class GlobalClass {
         }
         
         if (!self::$IsAjax) {
-            $this->IsFrontend = empty($_GET) || !empty($_GET["seourl"]) || !empty($_GET["renderHtml"]) || !empty($_GET["lang"] || !empty($_GET["caching"])) ? true : false;
+            $this->IsFrontend = empty($_GET) || !empty($_GET["seourl"]) || !empty($_GET["renderHtml"]) || !empty($_GET["lang"] || !empty($_GET["caching"]) || !empty($_GET["xml"])) ? true : false;
         } else {
             $this->IsFrontend = empty($_GET["isFrontEnd"]) ? true : $_GET["isFrontEnd"] == "false" ? false : true;
         }
@@ -112,7 +112,6 @@ class GlobalClass {
         $this->IsLogin = self::$User->IsLoginUser();
         if (self::$UserId == 0)
         {
-            
             self::$UserId = self::$User->GetUserId();
         }
         
@@ -157,7 +156,6 @@ class GlobalClass {
                 
                 if (empty(self::$_langInfo))
                     self::$_langInfo = self::$_lang->GetWebInfo($web);
-               
                 if (!empty(self::$_langInfo)) 
                 {
                     

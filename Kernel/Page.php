@@ -566,9 +566,11 @@ class Page {
     }
 
     public static function LoadXml() {
-        header('Content-type: application/xml');
+       header('Content-type: application/xml');
         $content = ContentVersion::GetInstance();
         $cssDetail = $content->GetFrontendXml($_GET["SeoUrl"]);
+        $cssDetail = self::RenderXWebComponent($cssDetail);
+        
         return $cssDetail;
     }
 
@@ -627,8 +629,7 @@ class Page {
 
     public static function RenderXWebComponent($inHtml) {
         
-        preg_match_all("(<xWeb:Component(( )*[A-Za-z]*=\"[A-Za-z0-9\_\-/\;( )\',\#=\.><]*\")*( )*/>)", $inHtml, $outArray);
-        
+        preg_match_all("(<xWeb:Component(( )*[A-Za-z]*=\"[\[\]!A-Za-z0-9\_\-/\;( )\',\#=\.><]*\")*( )*/>)", $inHtml, $outArray);
         $inHtml = self::ReplaceComponent($outArray, $inHtml);
         return $inHtml;
     }
@@ -674,13 +675,13 @@ class Page {
     private static function ReplaceComponent($outArray, $inHtml) {
         
         $componentString = array();
+        
         foreach ($outArray[0] as $row) {
             $itemArray = array();
             $replace = $row;
             $obj = new RenderUserComponent();
+            preg_match_all("(([\[\]!A-Za-z]*)=\"([A-Za-z0-9\_\-/\;( )\',\#=\.><!\[\]]*)\")", $replace, $itemArray);
             
-            
-            preg_match_all("(([A-Za-z]*)=\"([A-Za-z0-9\_\-/\;( )\',\#=\.><]*)\")", $replace, $itemArray);
             
             for ($i = 0; $i < count($itemArray[1]); $i++) {
                 $obj->SetParametrs($itemArray[1][$i], $itemArray[2][$i]);

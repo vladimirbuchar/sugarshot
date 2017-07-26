@@ -236,7 +236,6 @@ class Users  extends DatabaseTable{
     }
     public function GetFullUserName()
     {
-        
         if (!self::$SessionManager->IsEmpty("FullUserName"))
             return self::$SessionManager->GetSessionValue("FullUserName");
     }
@@ -244,8 +243,6 @@ class Users  extends DatabaseTable{
     {
         if (!self::$SessionManager->IsEmpty("UserGroupId"))
             return self::$SessionManager->GetSessionValue("UserGroupId");
-
-        
         $userGroup =  UserGroups::GetInstance();
         $groupData = $userGroup->GetUserGroupByIdeticator("anonymous");
         self::$SessionManager->SetSessionValue("UserGroupId", $groupData->Id);

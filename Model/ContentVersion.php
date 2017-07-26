@@ -89,8 +89,6 @@ class ContentVersion extends DatabaseTable {
             $parentid = $this->GetParent($parentid);
         }
         
-
-
         if (!$this->HasPrivileges($parentid, PrivilegesType::$CanWrite) && $testPrivileges) {
             dibi::rollback();
             return 0;
@@ -220,7 +218,7 @@ class ContentVersion extends DatabaseTable {
             $web = \Model\Webs::GetInstance();
             $web->GetObjectById(empty($_GET["webid"]) ? 0 : $_GET["webid"], true);
             $xml = $web->WebPrivileges;
-            $resXml = ArrayUtils::XmlToArray($xml);
+            $resXml = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
             $i = 0;
             foreach ($resXml["item"] as $row) {
                 $privileges[$i][0] = $row["PrivilegesName"];
@@ -511,7 +509,7 @@ class ContentVersion extends DatabaseTable {
             $arrayXml[0]["ObjectId"] = $objectId;
             $user = Users::GetInstance();
             $data = array();
-            //echo $objectId;die();
+            
             if ($linkType == LinkType::$Document)
                 $data = $this->GetUserItemDetail($objectId, $user->GetUserGroupId(), $_GET["webid"], $_GET["langid"]);
             else if ($linkType == LinkType::$Repository)
@@ -737,12 +735,14 @@ class ContentVersion extends DatabaseTable {
     }
 
     private function PrepareXmlFromArray($array, $mode = "standard") {
+        
         $xml = "";
+        
         if (!empty($array)) {
             $xml .= "<items>";
             if ($mode == "standard") {
                 for ($i = 0; $i < count($array); $i++) {
-                    if (!empty($array[$i][1])) {
+                    if (!empty($array[$i][1]) && !empty($array[$i][0])) {
                         $id = $array[$i][0];
                         if (StringUtils::EndWith($id, "__ishtmleditor__")) {
                             $id = StringUtils::RemoveString($id, "__ishtmleditor__");
@@ -779,6 +779,7 @@ class ContentVersion extends DatabaseTable {
 
     private function Security($privileges, $contentId, $setDefault = true) {
         try {
+            
             $security =  ContentSecurity::GetInstance();
             $user = UserGroups::GetInstance();
             $systemgroup = $user->GetUserGroupByIdeticator("system");
@@ -812,7 +813,7 @@ class ContentVersion extends DatabaseTable {
         }
     }
 
-    public function SetDefaultPrivileges($systemGroup) {
+    private function SetDefaultPrivileges($systemGroup) {
 
         $systemId = $systemGroup->Id;
         $priviles[0][0] = "canRead";
@@ -1228,6 +1229,8 @@ class ContentVersion extends DatabaseTable {
         $variantItem = trim($xml->DatasourceXmlSubItem);
         $exportCondition =    trim($xml->ExportConditions);   
         $exportColumnCondition = trim($xml->ExportColumnConditions);   
+        
+        
         if (trim($xml->DatasourceType) == "XmlExport") {
             $outXml .= $xmlStart;
             $domain = \Model\UserDomainsValues::GetInstance();
@@ -1266,12 +1269,6 @@ class ContentVersion extends DatabaseTable {
             $items = $domainItems->GetUserDomainItems($identificator);
             $items = ArrayUtils::ValueAsKey($items, "Identificator");
             
-            
-            
-                
-                
-                
-
             $outXml .= $xmlStart;
             foreach ($data as $row) {
                 $xmlTmp = $xmlItem;
@@ -1335,6 +1332,7 @@ class ContentVersion extends DatabaseTable {
                     }
                     $xmlTmp .= $variantsEnd;
                 }
+                //$xmlTmp = Kernel\Page::RenderXWebComponent($xmlTmp);    
                 $outXml .= $xmlTmp;
                 $outXml .= $xmlItemEnd;
             }
@@ -1343,7 +1341,7 @@ class ContentVersion extends DatabaseTable {
             $outXml = \Kernel\Page::CompressString($outXml);
             $outXml = str_replace("><", ">\n<", $outXml);
             $outXml = preg_replace('/^[ \t]*[\r\n]+/m', '', $outXml);
-
+            
             return $outXml;
         }
     }
@@ -1394,6 +1392,7 @@ class ContentVersion extends DatabaseTable {
         $testColumn = trim($xml->ColumnTest);
         $testColumnUserItem = trim($xml->ColumnTestUserImport);
         $xmlUserItem = trim($xml->SelectedObject);
+        $rootElement = trim($xml->RootElement);   
         $xmlContent = file_get_contents($xmlUrl);
         $searchItemName = "";
         $useTemplateId = 0;
@@ -1402,9 +1401,18 @@ class ContentVersion extends DatabaseTable {
         if (trim($xml->DatasourceType) == "XmlImport") {
 
             $data = ArrayUtils::XmlToArray($xmlContent,"SimpleXMLElement",LIBXML_NOCDATA);
-            // $dataAr = ArrayUtils::GetAllChildToRoot($data);
-            //print_r($dataAr);die();
-            $this->ImportXmlData($data, $domain, $mode, $testColumn);
+            if (!empty($data[$rootElement]))
+                $data = $data[$rootElement];
+            $newArray = array();
+            foreach ($data as $row)
+            {
+                $child = $row[$rootElement];
+                unset($row[$rootElement]);
+                $newArray[] = $row;
+                $childData = ArrayUtils::GetChildToRoot($child, $rootElement);
+                $newArray = array_merge($newArray,$childData);
+            }
+            $this->ImportXmlData($newArray, $domain, $mode, $testColumn);
         } else if (trim($xml->DatasourceType) == "XmlImportUserItem") {
             if ($mode == "DeleteInsert") {
                 $mode = "Insert";
@@ -1509,43 +1517,42 @@ class ContentVersion extends DatabaseTable {
     
     private function PrepareXmlImport($array,$columns) {
         $prepareArray = array();
-        print_r($array);die();
+        
         foreach ($array as $key => $value)
         {
-            print_r($value);die();
+            
         }
     }
 
-    private function ImportXmlData($xml, $domain, $mode, $testColumn) {
-
-         
+    private function ImportXmlData($prepareArray, $domain, $mode, $testColumn) {
+        
         if ($mode == "")
             return;
         $ud = \Model\UserDomainsItems::GetInstance();
-
+        /**
+         * @var \Model\UserDomains
+         *  
+         */
+        $udinfo = \Model\UserDomains::GetInstance();
+        $udinfo->GetObjectById($domain,true);
         $userDomain = $ud->GetUserDomainItemById($domain);
-
         $valueTest = "";
+        /** 
+         * @var \Model\UserDomainsValues
+         */
         $values = \Model\UserDomainsValues::GetInstance();
         if ($mode == "DeleteInsert") {
             $values->DeleteAllValues($domain);
             $mode = "Insert";
         }
-        $prepareArray = array();
-        $usedKeys = array();
-        $maxItems = 0;
+        /*$usedKeys = array();
         $xmlImportColumns = array();
         foreach ($userDomain as $row)
         {
             if (!empty($row["XmlSettings"]))
                 $xmlImportColumns[] = $row["XmlSettings"];
-        }
-        $prepareArray = $this->PrepareXmlImport($xml, $xmlImportColumns);
-            
-        print_r($xmlImportColumns);die();
-        
-            
-        foreach ($userDomain as $row) {
+        }*/
+        /*foreach ($userDomain as $row) {
             
             $xpath = $row["XmlSettings"];
             $result = $xml[$xpath];
@@ -1563,15 +1570,11 @@ class ContentVersion extends DatabaseTable {
             if (count($addArray) > $maxItems)
                 $maxItems = count($addArray);
             $prepareArray[$key] = $addArray;
-        }
-
-
-
-        for ($i = 0; $i < $maxItems; $i++) {
+        }*/
+        
+        foreach ($prepareArray as $row) {
             $saveData = array();
-            for ($y = 0; $y < count($usedKeys); $y++) {
-                $key = $usedKeys[$y];
-                $value = $prepareArray[$key][$i];
+            foreach ($row as $key => $value ) {
                 $saveData[$key] = $value;
             }
             $objectId = $values->GetObjectId($domain, $testColumn, $saveData[$valueTest]);
@@ -1579,11 +1582,10 @@ class ContentVersion extends DatabaseTable {
                 continue;
             if ($objectId == 0 && $mode == "Update")
                 continue;
-
+ 
             $saveData["Id"] = $objectId;
-            $saveData["DomainIdentificator"] = $row["DomainIdentificator"];
-
-            
+            $saveData["DomainIdentificator"] = $udinfo->DomainIdentificator;
+            $saveData["DomainId"] = $domain;
             $values->SaveUserDomainData($saveData);
         }
     }
@@ -1913,11 +1915,14 @@ class ContentVersion extends DatabaseTable {
             $xml = $web->WebPrivileges;
             
             $ar = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
+            
+            
             if ($user->IsSystemUser())
                 return true;
             
             foreach ($ar["item"] as $row) {
-                if ($row["UserGroup"] == $groupId && $row["PrivilegesName"] == $privilegesName && $row["Value"] == "true")
+
+                if ($row["UserGroup"] == $groupId && $row["PrivilegesName"] == $privilegesName  && ($row["Value"] == "true" || $row["Value"] == true))
                     return true;
             }
             return false;

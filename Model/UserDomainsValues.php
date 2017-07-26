@@ -199,13 +199,12 @@ class UserDomainsValues  extends DatabaseTable{
         unset($data["ModelName"]);
         foreach ($data as $key => $value)
         {
+            if (empty($items[$key]["Id"])) continue;
             $this->Id =  $this->SetId($domainId,$items[$key]["Id"],$objectId);
             $this->DomainId = $domainId;
-           
             $this->ObjectId = $objectId;
             $this->ItemId = $items[$key]["Id"];
             $this->Value = $value;
-            
             $this->SaveObject($this);   
         }
         return $objectId;
@@ -352,12 +351,22 @@ class UserDomainsValues  extends DatabaseTable{
         $res = dibi::query("SELECT DISTINCT UserDomainsItems.*,$tableName.Data  FROM $tableName "
                 . "LEFT JOIN Content ON $tableName.TemplateId = Content.Id "
                 . "LEFT JOIN UserDomainsItems ON UserDomainsItems.DomainId = Content.DomainId AND UserDomainsItems.Deleted = 0 $itemIdentificator "
-                
-                    
                 . "WHERE $tableName.SeoUrl = %s AND  $tableName.GroupId =%i AND $tableName.WebId = %i AND $tableName.LangId = %i AND  $tableName.AvailableOverSeoUrl = 1 ",$seoUrl, $usergroup, $webId, $langId)->fetchAll();
         return $res;
     }
-
+    public function UserDomainItemByObjectId($objectId, $usergroup, $langId, $webId, $itemIdentificator="",$preview = false)
+{
+        if (!empty($itemIdentificator))
+        {
+            $itemIdentificator = " AND UserDomainsItems.Identificator = '$itemIdentificator' ";
+        }
+        $tableName =  !$preview ? "FrontendDetail_materialized" : "FRONTENDDETAILPREVIEW";
+        $res = dibi::query("SELECT DISTINCT UserDomainsItems.*,$tableName.Data  FROM $tableName "
+                . "LEFT JOIN Content ON $tableName.TemplateId = Content.Id "
+                . "LEFT JOIN UserDomainsItems ON UserDomainsItems.DomainId = Content.DomainId AND UserDomainsItems.Deleted = 0 $itemIdentificator "
+                . "WHERE $tableName.Id = %i AND  $tableName.GroupId =%i AND $tableName.WebId = %i AND $tableName.LangId = %i AND  $tableName.AvailableOverSeoUrl = 1 ",$objectId, $usergroup, $webId, $langId)->fetchAll();
+        return $res;
+    }
 
 
 

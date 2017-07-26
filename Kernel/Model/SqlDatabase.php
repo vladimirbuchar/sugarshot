@@ -417,17 +417,11 @@ class SqlDatabase {
     protected  function SetSelectColums($columns)
     {
         $this->SelectColumns = array_merge($this->SelectColumns,$columns);
-        
     }
-
-
-
-
-
-
+    
     protected function SetSqlParams($name,$value,$type)
     {
-//        $this->
+ 
     }
     
 }

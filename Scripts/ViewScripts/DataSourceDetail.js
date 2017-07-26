@@ -135,6 +135,7 @@
                     WriteItem("DatasourceXmlSubItemItemStart", $xml);
                     WriteItem("ExportConditions", $xml);
                     WriteItem("ExportColumnConditions", $xml);
+                    WriteItem("RootElement", $xml);
                     
             }
             function WriteItem(key, $xml)

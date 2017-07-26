@@ -1788,6 +1788,7 @@ class WebEdit extends AdminController {
         {
             $data = $content->GetDataSourceDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->GetLastEditLangVersion());
         }
+        
         $domainId = 0;
         $templateId = 0;
         if ($id > 0 && empty($data)) {
@@ -1825,8 +1826,6 @@ class WebEdit extends AdminController {
         unset($ajaxParametrs["Privileges"]);
         $content = ContentVersion::GetInstance();
         $id = $ajaxParametrs["Id"];
-        
-        
         if ($id == 0) {
             $id = $content->CreateDataSource($ajaxParametrs["Name"], $privileges, $ajaxParametrs["SeoUrl"],$ajaxParametrs["Data"], $_GET["param1"], $_GET["langid"], $ajaxParametrs["Publish"]);
         } else

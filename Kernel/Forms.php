@@ -472,11 +472,12 @@ class Forms extends GlobalClass {
         if (!empty($data)) {
             $xml = simplexml_load_string($data);
         }
+        
         $itemHtml = "";
          
-        foreach ($domainItems as $dItem) {
+        foreach ($domainItems as $dItem) { 
             
-                
+                 
             $visible = FALSE;
             $readOnly = true;
             $autoComplecte = $dItem["Autocomplete"] == 1 ? true : false;
@@ -492,6 +493,7 @@ class Forms extends GlobalClass {
                 continue;
             }
             $itemHtml = "";
+            
             $value = $dItem["DefaultValue"];
             $valueKey = $dItem["Id"];
             $valueId = 0;
@@ -506,6 +508,7 @@ class Forms extends GlobalClass {
                     }
                 }
             }
+ 
             $divFormGroup = new Div();
             $divFormGroup->CssClass = "form-group addiction-".$dItem["Identificator"];
 
@@ -582,7 +585,10 @@ class Forms extends GlobalClass {
                             $itemHtml = str_replace("{".$resultSpanId."}", $span->RenderHtml(), $itemHtml);
                             
                           }
-                        }   
+                          
+                        }
+                        
+                        
                     }
                 //}
             }
@@ -764,7 +770,40 @@ class Forms extends GlobalClass {
                 
                 else if ($dItem["DomainSettings"] == "1n" || $dItem["DomainSettings"] == "mn")
                 {
-                    
+                    $generateHiddenInput = $dItem["GenerateHiddenInput"] == 1 || $dItem["GenerateHiddenInput"] == "1" ? true: false;
+                    if ($generateHiddenInput)
+                    {
+                        $domianHiddenInput = new HiddenInput();
+                        $domianHiddenInput->Id = $nDomain->DomainIdentificator;
+                        $domianHiddenInput->Value = $value;
+                        $itemHtml .= $domianHiddenInput->RenderHtml();
+                        if($this->IsJquery())
+                        {
+                            $itemHtml .= '<script type="text/javascript">';
+                            $itemHtml .= '$(document).ready(function(){';
+                            $itemHtml .= '$(".'.$nDomain->DomainIdentificator.'").click(function(){';
+                            $itemHtml .= 'var value = $(this).attr("data-'. strtolower($nDomain->SaveHiddenColumn).'");';
+                            //$itemHtml .= 'alert(value);';
+                            
+                            $itemHtml .= 'if (!IsUndefined(value)){';
+                            if ($dItem["DomainSettings"] == "1n")
+                            {
+                                $itemHtml .= '$("#'.$nDomain->DomainIdentificator.'").val(value);';
+                            }
+                            else 
+                            {
+                                
+                            
+                                
+                            }
+                            $itemHtml .= '}';
+                            $itemHtml .= '});';
+                            $itemHtml .= '});';
+                            $itemHtml .= '</script>';
+                            
+                            
+                        }
+                    }
                     
                     $labelMain = new Label();
                     $labelMain->Html = $dItem["ShowName"];

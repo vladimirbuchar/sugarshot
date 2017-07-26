@@ -41,6 +41,7 @@ $(document).ready(function(){
             $(".XmlSettings").show();
             $(".FiltrSettings").hide();
             $(".Autocomplete").hide();
+            $(".GenerateHiddenInput").hide();
             if (value == "")
                 {
                     $(".UniqueValue").hide();
@@ -275,6 +276,7 @@ $(document).ready(function(){
                 $(".Domain").show();
                 $(".XmlSettings").hide(); 
                 $(".DomainSettings").show();
+                $(".GenerateHiddenInput").show();
             }
         }
         
