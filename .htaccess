@@ -80,4 +80,5 @@ RewriteRule   ^([A-Za-z]{2,3})[\/]([A-Za-z0-9\-]*)[\/]([A-Za-z0-9=]*)[\/]$   /in
 # none lang 
 RewriteRule   ^([A-Za-z0-9\-]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&seourl=$1 [QSA]
 RewriteRule   preview[\/]([A-Za-z0-9\-]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&seourl=$1&preview=true [QSA]
+RewriteRule   iframe[\/]([A-Za-z0-9\-]*)[\/]$   /index.php?iframe=true&key=$1 [QSA]
 RewriteRule   ^([A-Za-z0-9\-]*)[\/]([A-Za-z0-9=]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&seourl=$1&param1=$2 [QSA]

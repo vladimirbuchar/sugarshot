@@ -56,12 +56,15 @@ try{
         $updatemodel  = (!empty($_GET["updatemodel"]))? true:false;
         $setLongRequest = (!empty($_GET["longrequest"]))? true:false;
         $runalltimers = (!empty($_GET["runalltimers"]))? true:false;
+        $iframe = (!empty($_GET["iframe"]))? true:false;
         
         if ($showPhpInfo)
         {
             phpinfo();
             return;
         }
+        
+    
         if ($updatemodel)
         {
             Kernel\Page::StartUpdateModel();
@@ -133,6 +136,10 @@ try{
         else if ($runalltimers)
         {
             Kernel\Page::RunAllTimers();
+        }
+        else if ($iframe)
+        {
+            echo \Kernel\Page::GetIframeHtml($_GET["key"]); 
         }
         else 
         {

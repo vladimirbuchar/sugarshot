@@ -376,6 +376,33 @@ class GlobalClass {
         return self::$UserGroupId;
     }
     
+    protected function CallUrl($url,$get="",$returnData = false)
+    {
+        if(!empty($get))
+        {
+            $url = $url.$get;
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $data = "";
+        if ($returnData)
+            $data = curl_exec($ch);
+        curl_close($ch);
+        if ($returnData)
+        {
+            return $data;
+        }
+    }
+    
+    public function GetIfrmaesHtml($key)
+    {
+        
+        
+        
+        
+    }
+    
     // WORDS - přesunout do PAGE.PHP
      protected function GetAutoLang() {
         $lang = self::$SessionManager->GetSessionValue("AdminUserLang");

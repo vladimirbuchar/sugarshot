@@ -1,87 +1,48 @@
 <?php
 namespace Components;
-use Utils\StringUtils;
-use HtmlComponents\Link;
+class IframeLoader extends UserComponents{
 
-class xLink extends UserComponents{
-
-    public $Controller;
-    public $View;
-    public $Prefix;
-    public $Text;
-    public $Param1;
-    public $Param2;
-    public $ObjectId = 0;
+    public $ExternalUrl;
+    public $ReplaceUrl="";
+    public $NewUrl="";
+    public $StyleUrl="";
+    public $AllowTransparency;
+    public $Frameborder;    
+    public $Scrolling;
+    public $Style;  
     
-    public $OnClick;
-    public $DataTarget;
-    public $DataToggle;
     public function __construct() {
         $this->IgnoreCache = true;
         parent::__construct();
         
-    }
+    } 
     public function GetComponentHtml() {
-        $class = "Controller\\".$this->Controller;
-        $control = new $class();
-        $control->LinkTestPrivileges = true;
-        if (!StringUtils::StartWidth($this->Prefix, "/") && !empty($this->Prefix))
-        {
-            $this->Prefix = "/".$this->Prefix;
-        }
-        $permition = $control->GetControllerPermition() && $control->GetViewPermition($this->View,$this->Controller);
         
-        if ($permition)
+        $html = file_get_contents($this->ExternalUrl);
+        if (!empty($this->ReplaceUrl) || !empty($this->NewUrl))
         {
-            $mustBeWebId = $control->MustBeWebId($this->View);
-            $mustBeLangId = $control->MustBeLangId($this->View);
-            if ((($mustBeWebId && !empty($this->WebId))|| (!$mustBeWebId)) && (($mustBeLangId && !empty($this->LangId))|| (!$mustBeLangId)))
-            {
-                
-                $aHref= new Link();
-                if (!empty($this->CssClass))
-                    $aHref->CssClass = $this->CssClass;
-                if (!empty($this->Id))
-                    $aHref->Id = $this->Id;
-                $aHref->Type="href";
-                $aHref->Html = $this->GetWord($this->Text);
-                //echo $aHref->Html;
-                if (!empty($this->DataTarget))
-                {
-                    $aHref->DataTarget = $this->DataTarget;
-                }
-                
-                if (!empty($this->DataToggle))
-                {
-                    $aHref->DataToggle = $this->DataToggle;
-                }
-                    
-                if (!empty($this->OnClick))
-                {
-                    $aHref->OnClick = $this->OnClick;
-                    return $aHref->RenderHtml($aHref);
-                }
-                $link = $this->Prefix."/".$this->Controller."/".$this->View."/";
-                
-                if (!empty($this->Param1))
-                    $link = $link.$this->Param1."/";
-                if (!empty($this->WebId))
-                    $link = $link.$this->WebId."/";
-                if (!empty($this->LangId))
-                    $link = $link.$this->LangId."/";
-                if (!empty($this->ObjectId))
-                    $link = $link.$this->ObjectId."/";
-                if (!empty($this->Param2))
-                    $link = $link.$this->Param2."/";
-                $aHref->Href = $link;
-                
-                return $aHref->RenderHtml($aHref);
-            }
+            $html = preg_replace("/(?<=<a href=(\"|'))[^\"']+(?=(\"|'))/",$this->NewUrl,$html);
         }
-        $span = new Link();
-        $span->Html = $this->GetWord($this->Text);
-        $span->Href="#";
-        return $span->RenderHtml();
+        if (!empty($this->StyleUrl))
+        {
+            $html = str_replace('<link rel="stylesheet" href="', '<link rel="stylesheet" href="'.$this->StyleUrl, $html);
+        }
+        if (!empty($this->StyleUrl))
+        {
+            
+            $html = str_replace('<script src="/', '<script src="'.$this->StyleUrl, $html);
+        }
+        
+        $key = \Utils\StringUtils::GenerateRandomString();
+        $_SESSION["iframe_$key"]= $html;
+        $iframe = new \HtmlComponents\Iframe();
+        $iframe->Src = SERVER_NAME_LANG."iframe/$key/";
+        $iframe->CssClass = $this->CssClass;
+        $iframe->frameborder = $this->Frameborder;
+        $iframe->AddAtrribut("AllowTransparency", $this->AllowTransparency);
+        $iframe->AddAtrribut("scrolling", $this->Scrolling);
+        $iframe->AddAtrribut("style", $this->Style);
+        return $iframe->RenderHtml();
         
         
     }
