@@ -36,7 +36,7 @@ class IframeLoader extends UserComponents{
         $key = \Utils\StringUtils::GenerateRandomString();
         $_SESSION["iframe_$key"]= $html;
         $iframe = new \HtmlComponents\Iframe();
-        $iframe->Src = SERVER_NAME_LANG."iframe/$key/";
+        $iframe->Src = SERVER_NAME."iframe/$key/";
         $iframe->CssClass = $this->CssClass;
         $iframe->frameborder = $this->Frameborder;
         $iframe->AddAtrribut("AllowTransparency", $this->AllowTransparency);
