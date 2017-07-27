@@ -3,8 +3,13 @@
 namespace TemplateFunction; 
 class TemplateFunction {
     protected static $Parametrs = array();
-    private static $_sessionManager = null;
+    /** 
+     * @var \Utils\SessionManager
+     */
+    protected static $SessionManager = null;
     
+    
+
     public static function SetParametrs($params)
     {
         self::$Parametrs = array();
@@ -18,11 +23,12 @@ class TemplateFunction {
     }
     protected static function GetWord($wordid)
     {
-        if (self::$_sessionManager == null)
-            self::$_sessionManager = new \Utils\SessionManager(\Utils\SessionManager::$WebMode);
-        $userLang =  self::$_sessionManager->GetSessionValue("AdminUserLang");
-        if (!self::$_sessionManager->IsEmpty("AdminWords$userLang"))
-            return self::$_sessionManager->GetSessionValue("AdminWords$userLang",$wordid);
+
+        if (self::$SessionManager == null)
+            self::$SessionManager = new \Utils\SessionManager(\Utils\SessionManager::$WebMode);        
+        $userLang =  self::$SessionManager->GetSessionValue("AdminUserLang");
+        if (!self::$SessionManager->IsEmpty("AdminWords$userLang"))
+            return self::$SessionManager->GetSessionValue("AdminWords$userLang",$wordid);
         return "";
         
     }

@@ -4,6 +4,7 @@ namespace SendFormFunction;
 class ClearCart extends \SendFormFunction\SendFormFunction
 {
     public function __construct() {
+        parent::__construct();
         $this->FunctionType = \Types\SendFormFunctionTypes::$After;
     }
 

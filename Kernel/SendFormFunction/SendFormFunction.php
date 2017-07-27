@@ -6,6 +6,16 @@ class SendFormFunction
     private $_result = array();
     protected $FunctionType;
     
+    /** 
+     * @var \Utils\SessionManager
+     */
+    protected static $SessionManager = null;
+   
+    public function __construct() {
+        if (self::$SessionManager == null)
+        self::$SessionManager = new \Utils\SessionManager();        
+    }
+    
     
     public function SetParameter($key,$value)
     {

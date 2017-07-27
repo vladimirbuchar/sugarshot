@@ -263,6 +263,22 @@ class Shop {
         self::$_sessionManager->UnsetKey("shop");
     }
     
+    public function GetShopSettings($value)
+    {
+        /** 
+         * @var \Model\UserDomainsValues
+         */
+        $udv = \Model\UserDomainsValues::GetInstance();
+        $values = $udv->GetDomainValueConditon("shopsettings",0,$value);
+        if (empty($values)) return "";
+        return $values[0]["Value"];
+        
+        
+        
+        
+    }
+    
+    
     
     
     

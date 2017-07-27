@@ -1174,11 +1174,11 @@ class Forms extends GlobalClass {
                 $templateId = $detail[0]["ChildTemplateId"] == 0 ? $detail[0]["TemplateId"] :$detail[0]["ChildTemplateId"];
                 if ($objectId == 0)
                 {
-                    $content->CreateUserItem($objectName,$objectName."-".self::$UserId , true, false, "", "", "", $templateId, true, $this->LangId, $saveTo, array(), $saveData, false);
+                    $objectId = $content->CreateUserItem($objectName,$objectName."-".self::$UserId , true, false, "", "", "", $templateId, true, $this->LangId, $saveTo, array(), $saveData, false);
                 }
                 else 
                 {
-                    $content->UpdateUserItem($objectId, $objectName, $objectName."-".self::$UserId, true, false, "", "", "", $templateId, true, array(), $saveData);
+                    $objectId = $content->UpdateUserItem($objectId, $objectName, $objectName."-".self::$UserId, true, false, "", "", "", $templateId, true, array(), $saveData);
                 }
             }
         }
@@ -1212,6 +1212,7 @@ class Forms extends GlobalClass {
                     $class->SetParameter("CaptchaTest",$captchaTest);
                     $class->SetParameter("SaveTo",$saveTo);
                     $class->SetParameter("SendFormAction",$SendFormAction);
+                    $class->SetParameter("ItemId",$objectId);
                     $class->CallFunction();
                     $result = $class->GetResult();
                     $sendAdminEmail = empty($result["AdminEmail"]) ? $sendAdminEmail : $result["AdminEmail"];

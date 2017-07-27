@@ -119,8 +119,16 @@ function xAutoLoader($className)
     {
         require_once $templateFunction.$className.".php";
     }
+    if (file_exists($templateFunction."Plugins/".$className.".php"))
+    {
+        require_once $templateFunction."Plugins/".$className.".php";
+    }
     if (file_exists($sendFormFunction.$className.".php"))
     {
         require_once $sendFormFunction.$className.".php";
+    }
+    if (file_exists($sendFormFunction."Plugins/".$className.".php"))
+    {
+        require_once $sendFormFunction."Plugins/".$className.".php";
     }
 }

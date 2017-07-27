@@ -4,6 +4,7 @@ namespace SendFormFunction;
 class SendCart extends \SendFormFunction\SendFormFunction
 {
     public function __construct() {
+        parent::__construct();
         $this->FunctionType = \Types\SendFormFunctionTypes::$Before;
     }
 

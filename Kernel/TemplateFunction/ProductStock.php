@@ -4,7 +4,9 @@ namespace TemplateFunction;
 class ProductStock extends \TemplateFunction\TemplateFunction {
     
     public static function CallFunction() {
+        
         $count = self::$Parametrs[0];
+        
         if (empty($count) || $count == 0) $count = -1;
         if ($count >= 5) // 5 and more
             return self::GetWord ("word801");
@@ -28,11 +30,7 @@ class ProductStock extends \TemplateFunction\TemplateFunction {
             return self::GetWord ("word808"); // na dotaz
         if ($count == -6)
             return self::GetWord ("word809"); // do 14ti dnu
-        return self::GetWord("word808");
-        
+        echo "sdsad";die();
+        return self::GetWord("word808");   
     }
-    
-    
-    
-    
 }
