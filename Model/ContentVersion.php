@@ -2653,6 +2653,14 @@ class ContentVersion extends DatabaseTable {
         $res = $this->GetFirstRow($this->SelectByCondition("ContentId = $id AND LangId = $langId AND IsLast = 1","",array("Name")));
         return $res["Name"];
     }
+    
+    public function GetNameObjectBySeoUrl($seoUrl, $langId) {
+        if (empty($seoUrl))
+            return "";
+        
+        $res = $this->GetFirstRow($this->SelectByCondition("SeoUrl = '$seoUrl' AND LangId = $langId AND IsLast = 1","",array("Name")));
+        return $res["Name"];
+    }
 
     public function GetUserItemDomainId($id) {
         $res = $this->GetFirstRow(dibi::query("SELECT Template.DomainId
@@ -2896,8 +2904,11 @@ class ContentVersion extends DatabaseTable {
             
         }
         $this->UpdateMaterializedView("FrontendDetail");
-        
     }
+    
+    
+    
+
             
            
 

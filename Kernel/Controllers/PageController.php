@@ -202,7 +202,6 @@ abstract class PageController extends Controllers {
     
     private function PrepareHeader($html)
     {
-        
         $replacedata = array();
         $lang =  Langs::GetInstance();
         $lgInfo = $lang->GetObjectById($this->LangId);
@@ -230,7 +229,9 @@ abstract class PageController extends Controllers {
                     }
                 }
             }
-            $replacedata["Name"] = $data[0]["Name"];
+            
+            $replacedata["Name"] = $contemt->GetNameObjectBySeoUrl($_GET["seourl"], $lgInfo->Id);
+            
             }       
         }
         
