@@ -108,6 +108,15 @@ class Webs extends ObjectManager{
             
         }   
     }
+    
+    public function GetRobotsTxt($webUrl)
+    {
+        $res = dibi::query("SELECT RobotsTxt FROM  Webs
+                LEFT JOIN Langs ON Langs.WebId = Webs.Id AND Langs.RootUrl =%s
+                ",$webUrl)->fetchAll();
+        return $res[0]["RobotsTxt"];
+        
+    }
             
     
     

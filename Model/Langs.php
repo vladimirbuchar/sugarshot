@@ -14,7 +14,7 @@ class Langs  extends DatabaseTable{
     public $Description;
     public $CategoryPage;
     public $LangIdentificator;
-//    private static $_instance = null;
+    
     
     
     public function __construct()
@@ -26,16 +26,7 @@ class Langs  extends DatabaseTable{
         $this->SetSelectColums(array("LangName","RootUrl","Title","Keywords","Description","CategoryPage","LangIdentificator"));
         $this->SetDefaultSelectColumns();
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
+    
     
     public function GetLangListByWeb($webid)
     {
@@ -148,6 +139,8 @@ class Langs  extends DatabaseTable{
         $colRootUrl->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colRootUrl);
     }
+    
+    
     
     public function CreateLangFolder($id)
     {

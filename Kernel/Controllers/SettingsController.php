@@ -58,6 +58,9 @@ abstract class SettingsController extends AdminController {
         
         $model = "Model\\".$ajaxParametrs["ModelName"];
         unset($ajaxParametrs["ModelName"]);
+        unset($ajaxParametrs["deleteId"]);
+        unset($ajaxParametrs["recoveryId"]);
+        unset($ajaxParametrs["copyId"]);
         $item =  $model::GetInstance();
         if (empty($ajaxParametrs["Id"]))
             $ajaxParametrs["Id"] = 0;

@@ -66,6 +66,7 @@ RewriteRule   updatemodel[\/] /index.php?updatemodel=true [QSA]
 RewriteRule   longrequest[\/] /index.php?longrequest=true&name=$1&value=$2 [QSA]
 RewriteRule   runalltimers[\/] /index.php?runalltimers=true [QSA]
 RewriteRule   caching[\/] /index.php?caching=true [QSA]
+RewriteRule   robots.txt /index.php?robots=true
 
 
 

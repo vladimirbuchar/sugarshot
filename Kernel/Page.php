@@ -856,4 +856,11 @@ class Page {
     {
         return $_SESSION["iframe_$key"];
     }
+    
+    public static function GetWebRobots()
+    {
+        $web = new \Objects\Webs();
+        $info = $web->GetRobotsTxt(SERVER_NAME_LANG);
+        return $info;
+    }
 }

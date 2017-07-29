@@ -129,7 +129,7 @@ class Settings extends SettingsController {
         $header = array();
         $header[] = new TableHeader($this->GetWord("word74"), "WebName", TableHeaderFiltrType::$Textbox);
         $table->Header = $header;
-        $table->HideColumns = array("Id", "Deleted", "IsSystem", "SmallHeight", "SmallWidth", "MediumHeight", "MediumWidth", "BigHeight", "BigWidth", "UserGroupId", "WebPrivileges", "AdminUserActive", "UserEmailActivate", "EmailUserLogin", "BlockSendEmails", "BlockAdmin", "UseHttps", "WebIpRestrictionAll", "WebIpRestrictionAceptIp", "WebIpRestrictionBlockIp", "WebIpAddress", "AdminIpRestrictionAll", "AdminIpRestrictionAceptIp", "AdminIpRestrictionBlockIp", "AdminIpAddress", "GenerateAjaxLink", "DefaultFramework", "AfterLoginUrl", "AfterLoginAction", "SendInfoEmailToAdmin", "AdminInfoEmail", "AdmiInfoMailId", "SendInfoEmailToUser", "UserInfoEmailFrom", "UserInfoMailId", "CookiesAccept");
+        $table->HideColumns = array("Id", "Deleted", "IsSystem", "SmallHeight", "SmallWidth", "MediumHeight", "MediumWidth", "BigHeight", "BigWidth", "UserGroupId", "WebPrivileges", "AdminUserActive", "UserEmailActivate", "EmailUserLogin", "BlockSendEmails", "BlockAdmin", "UseHttps", "WebIpRestrictionAll", "WebIpRestrictionAceptIp", "WebIpRestrictionBlockIp", "WebIpAddress", "AdminIpRestrictionAll", "AdminIpRestrictionAceptIp", "AdminIpRestrictionBlockIp", "AdminIpAddress", "GenerateAjaxLink", "DefaultFramework", "AfterLoginUrl", "AfterLoginAction", "SendInfoEmailToAdmin", "AdminInfoEmail", "AdmiInfoMailId", "SendInfoEmailToUser", "UserInfoEmailFrom", "UserInfoMailId", "CookiesAccept","RobotsTxt");
         $table->Data = $data;
         $table->ModelName = "Webs";
         $table->ViewName = "WEBSLIST";

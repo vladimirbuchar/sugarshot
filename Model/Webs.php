@@ -43,6 +43,7 @@ class Webs extends DatabaseTable {
     public $UserInfoEmailFrom;
     public $UserInfoMailId;
     public $CookiesAccept;
+    public $RobotsTxt;
     //private static $_instance = null;
 
     public function __construct() {
@@ -51,7 +52,7 @@ class Webs extends DatabaseTable {
         $this->SaveHistory = false;
         $this->SetSelectColums(array("WebName","SmallHeight","SmallWidth","MediumHeight","MediumWidth","BigHeight","BigWidth","WebPrivileges","AdminUserActive","UserEmailActivate","EmailUserLogin","BlockSendEmails",
 "BlockAdmin","UseHttps","WebIpRestrictionAll","WebIpRestrictionAceptIp","WebIpRestrictionBlockIp","WebIpAddress","AdminIpRestrictionAll","AdminIpRestrictionAceptIp","AdminIpRestrictionBlockIp",
-"AdminIpAddress","GenerateAjaxLink","DefaultFramework","AfterLoginUrl","SendInfoEmailToAdmin","AdminInfoEmail","AdmiInfoMailId","SendInfoEmailToUser","UserInfoEmailFrom","UserInfoMailId","CookiesAccept"));
+"AdminIpAddress","GenerateAjaxLink","DefaultFramework","AfterLoginUrl","SendInfoEmailToAdmin","AdminInfoEmail","AdmiInfoMailId","SendInfoEmailToUser","UserInfoEmailFrom","UserInfoMailId","CookiesAccept,RobotsTxt"));
         $this->SetDefaultSelectColumns();
     }
     /**
@@ -319,6 +320,14 @@ class Webs extends DatabaseTable {
         $colWebName->Type = "varchar";
         $colWebName->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colWebName);
+        //RobotsTxt
+        
+        $colWebName = new DataTableColumn();
+        $colWebName->DefaultValue = "";
+        $colWebName->Name = "RobotsTxt";
+        $colWebName->Type = "TEXT";
+        $colWebName->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWebName);
 
         
         //
@@ -340,5 +349,6 @@ class Webs extends DatabaseTable {
     {
         
     }
+    
 
 }

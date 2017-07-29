@@ -58,6 +58,7 @@ try{
         $setLongRequest = (!empty($_GET["longrequest"]))? true:false;
         $runalltimers = (!empty($_GET["runalltimers"]))? true:false;
         $iframe = (!empty($_GET["iframe"]))? true:false;
+        $robots = (!empty($_GET["robots"]))? true:false;
         
         if ($showPhpInfo)
         {
@@ -141,6 +142,10 @@ try{
         else if ($iframe)
         {
             echo \Kernel\Page::GetIframeHtml($_GET["key"]); 
+        }
+        else if ($robots)
+        {
+            echo \Kernel\Page::GetWebRobots();
         }
         else 
         {
