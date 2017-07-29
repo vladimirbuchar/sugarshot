@@ -639,7 +639,7 @@ class Page {
 
     public static function RenderXWebComponent($inHtml) {
         
-        preg_match_all("(<xWeb:Component(( )*[A-Za-z]*=\"[\[\]!\%:A-Za-z0-9\_\-/\;( )\',\#=\.><]*\")*( )*/>)", $inHtml, $outArray);
+        preg_match_all("(<xWeb:Component(( )*[A-Za-z]*=\"[\[\]!{}\%:A-Za-z0-9\_\-/\;( )\',\#=\.><]*\")*( )*/>)", $inHtml, $outArray);
         $inHtml = self::ReplaceComponent($outArray, $inHtml);
         return $inHtml;
     }
@@ -688,7 +688,7 @@ class Page {
             $itemArray = array();
             $replace = $row;
             $obj = new RenderUserComponent();
-            preg_match_all("(([\[\]!A-Za-z]*)=\"([A-Za-z0-9\%:\_\-/\;( )\',\#=\.><!\[\]]*)\")", $replace, $itemArray);
+            preg_match_all("(([\[\]!A-Za-z]*)=\"([A-Za-z0-9\%:{}\_\-/\;( )\',\#=\.><!\[\]]*)\")", $replace, $itemArray);
             
             
             for ($i = 0; $i < count($itemArray[1]); $i++) {

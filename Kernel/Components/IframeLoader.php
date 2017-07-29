@@ -10,6 +10,7 @@ class IframeLoader extends UserComponents{
     public $Frameborder;    
     public $Scrolling;
     public $Style;  
+    public $InsertStyle = "";
     
     public function __construct() {
         $this->IgnoreCache = true;
@@ -31,6 +32,15 @@ class IframeLoader extends UserComponents{
         {
             
             $html = str_replace('<script src="/', '<script src="'.$this->StyleUrl, $html);
+        }
+        
+        if (!empty($this->InsertStyle))
+        {
+            $css =array();
+            preg_match_all("/<link\b[^>]*>/is", $html, $css);
+            $css[0][] = '<style type= "text/css">'.$this->InsertStyle.'</style>';
+            $cssHtml = implode($css[0], "\n");
+            $html = preg_replace('/<link\b[^>]*>/is', "$cssHtml", $html);
         }
         
         $key = \Utils\StringUtils::GenerateRandomString();
