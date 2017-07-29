@@ -171,7 +171,7 @@ class ContentVersion extends DatabaseTable {
     public function Search($groupId, $langId, $searchString) {
         if (empty($searchString))
             return array();
-        return dibi::query("SELECT DISTINCT SearchValue, Name  FROM  SEARCHVIEW WHERE SSGroupId =%i AND LangId = %i AND  (SearchValue LIKE %~like~ OR Name LIKE %~like~) GROUP BY Id", $groupId, $langId, $searchString, $searchString)->fetchAll();
+        return dibi::query("SELECT DISTINCT SearchValue, Name,SeoUrl  FROM  SEARCHVIEW WHERE SSGroupId =%i AND LangId = %i AND  (SearchValue LIKE %~like~ OR Name LIKE %~like~) GROUP BY Id", $groupId, $langId, $searchString, $searchString)->fetchAll();
     }
 
     private function SaveData($data, $contentId, $langId = 0) {
