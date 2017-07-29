@@ -1,7 +1,7 @@
 <?php
  
 try{
-        error_reporting( E_ALL );
+        
         session_start();
         $now = time();
         if (!empty($_SESSION["expired"]))

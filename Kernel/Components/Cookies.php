@@ -2,13 +2,13 @@
 namespace Components;
 class Cookies extends UserComponents{
     
-    public $MoreInfoLink = "";
+    public $MoreInfoLink = "#";
     public function __construct() {
         
         $this->Type = "Cookies";
         $this->LoadHtml = true;
         $this->IgnoreCache = true;
-        if (self::$IsCookiesAccept)
+        if (!empty($_COOKIE["cookiesAccept"]))
         {
             $this->Visible= false;
         }
@@ -18,13 +18,14 @@ class Cookies extends UserComponents{
     
     public function GetComponentHtml()
     {
+        
         $this->SetUsedWords("word761");
         $this->SetUsedWords("word762");
         $this->SetUsedWords("word763");
         $this->SetReplaceString("externalLink", $this->MoreInfoLink);
-        if (empty($this->MoreInfoLink))
+        if (empty($this->MoreInfoLink)|| $this->MoreInfoLink =="#")
             $this->SetReplaceString ("HideMoreLink", "dn");
-        $this->AddMoreScript("/Scripts/jquery.cookie.js");
+        $this->AddMoreScript("/Scripts/ExternalApi/jquery.cookie.js");
         
     }
     

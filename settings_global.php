@@ -1,4 +1,6 @@
 <?php 
+setlocale(LC_ALL, "cs_CZ");
+date_default_timezone_set("Europe/Prague");
 
 $protocol = "http://";
 if ($_SERVER["HTTPS"] == "on")

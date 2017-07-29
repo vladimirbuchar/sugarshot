@@ -566,10 +566,20 @@ class Page {
     }
 
     public static function LoadXml() {
-       header('Content-type: application/xml');
+        header('Content-type: application/xml');
+        header("Content-length: 0");
         $content = ContentVersion::GetInstance();
         $cssDetail = $content->GetFrontendXml($_GET["SeoUrl"]);
         $cssDetail = self::RenderXWebComponent($cssDetail);
+        $cssDetail = str_replace("##%#","<%",$cssDetail);
+        $cssDetail = str_replace("#%##","%>",$cssDetail);
+        $cssDetail = str_replace( '##',"'",$cssDetail);
+        $outArray = array();
+        preg_match_all("(<%([A-Za-z0-9(),\"\'{}:])*%>)",$cssDetail , $outArray);
+        $cssDetail = self::RunTemplateFunction($cssDetail,$outArray);
+        $cssDetail = str_replace( '"<![CDATA[','"',$cssDetail);
+        $cssDetail = str_replace( ']]>"','"',$cssDetail);
+        
         
         return $cssDetail;
     }
@@ -644,19 +654,19 @@ class Page {
     private static function RunTemplateFunction($inHtml,$outArray)
     {
         if (!empty($outArray)) {
-  //          array_walk($outArray[0], function(&$tfunc,$key) use($inHtml) {
-//               $tfunction  = &$tfunc;
             foreach ($outArray[0] as $tfunction) {
                 $tmpString = $tfunction;
                 $tfunction = StringUtils::RemoveString($tfunction, "<%");
                 $tfunction = StringUtils::RemoveString($tfunction, ")%>");
                 $tfunction = trim($tfunction);
                 $ar = explode("(", $tfunction);
+                
                 $fHtml = "";
                 if (!empty($ar)) {
                     
                     $functionName = "TemplateFunction\\" . trim($ar[0]);
                     if (!empty($ar[1])) {
+                        
                         $params = explode("','", $ar[1]);
                         
                         $functionName::SetParametrs($params);
@@ -665,7 +675,6 @@ class Page {
                     $fHtml = $functionName::CallFunction();
                 }
                 $inHtml = str_replace($tmpString, $fHtml, html_entity_decode($inHtml));
-            //});
             }
         }
         return $inHtml;   

@@ -1806,7 +1806,8 @@ class WebEdit extends AdminController {
         $this->UserGroupList($data);
         $ar["Data"] =  StringUtils::RemoveString($ar["Data"], "\n");
         $ar["Data"] =  StringUtils::RemoveString($ar["Data"], "\r");
-        
+        $ar["Data"] = str_replace("<%", "##%#",$ar["Data"]);
+        $ar["Data"] = str_replace("%>", "#%##",$ar["Data"]);
         $this->SetTemplateDataArray($ar);
         $this->SetLangList($content, $id);
         $this->SetHistoryList($id);

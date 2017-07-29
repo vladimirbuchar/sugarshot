@@ -32,6 +32,14 @@ class Utils {
         $add = $now + ($minutes * 60);
         return date("Y-m-d H:i:s",$add);
     }
+    
+    public static function AddDays($days,$time ="")
+    {
+        if (empty($time))
+            return date('Y-m-d H:i', strtotime("+".$days." days"));
+        $out =  date('Y-m-d', strtotime("+".$days." days"));
+        return $out." ".$time;
+    }
     public static function GetActualYear()
     {
         return date("Y");    
