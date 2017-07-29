@@ -114,10 +114,71 @@ class Webs extends ObjectManager{
         $res = dibi::query("SELECT RobotsTxt FROM  Webs
                 LEFT JOIN Langs ON Langs.WebId = Webs.Id AND Langs.RootUrl =%s
                 ",$webUrl)->fetchAll();
-        return $res[0]["RobotsTxt"];
+        return $res[0]["RobotsTxt"];   
+    }
+    
+    public function GenerateSitemapXml($webUrl)
+    {
+        
+        $webInfo  = dibi::query("SELECT Webs.Id AS WebId, SiteMapStart,SiteMapEnd,SiteMapItemUrl,SiteMapItemImage,SiteMapItemVideo,SiteMapItemStart,SiteMapItemEnd FROM  Webs
+                LEFT JOIN Langs ON Langs.WebId = Webs.Id AND Langs.RootUrl =%s
+                ",$webUrl)->fetchAll();
+        
+        $template = $webInfo[0];
+        $lang = \Model\Langs::GetInstance();
+        $langList =$lang->GetLangListByWeb($template["WebId"]);
+        $langList = ArrayUtils::ValueAsKey($langList, "Id");
+        $userGroups = \Model\UserGroups::GetInstance();
+        $anonymous = $userGroups->GetAnonymousGroup();
+        $anonymous = ArrayUtils::ObjectToArray($anonymous);
+        $res = \dibi::query("SELECT * FROM FrontendDetail_materialized WHERE GroupId = %i And WebId = %i",$anonymous["Id"],$template["WebId"])->fetchAll();
+        $xml = $template["SiteMapStart"]."\n";   
+        
+        foreach ($res as $row)
+        {
+            $url = $template["SiteMapItemUrl"];
+            $image = $template["SiteMapItemImage"];
+            $video = $template["SiteMapItemVideo"];
+            $xmlItemTmp ="";
+            $xmlItemTmp = $template["SiteMapItemStart"]."\n";   
+            if (!empty($url))
+                $xmlItemTmp .= $url."\n";   
+            if (!empty($image))
+                $xmlItemTmp .= $image."\n";   
+            if (!empty($video))
+                $xmlItemTmp .= $video."\n";   
+            $xmlItemTmp .= $template["SiteMapItemEnd"]."\n";   
+            $landId = $row["LangId"];
+            $url = SERVER_PROTOCOL.$langList[$landId]["RootUrl"];
+            
+            foreach ($row as $key => $value)            
+            {
+                
+                if ($key == "Data")
+                {
+                    $ar = ArrayUtils::XmlToArray($value,"SimpleXMLElement",LIBXML_NOCDATA);
+                    foreach ($ar as $kar => $var)
+                    {
+                        $xmlItemTmp = str_replace("{".$kar."}", $var,$xmlItemTmp);
+                    }
+                }
+                else
+                {
+                    if ($key == "SeoUrl")
+                    {
+                        $value = $url."/".$value."/";
+                        $value  = str_replace('//', '/', $value);
+                    }
+                    $xmlItemTmp = str_replace("{".$key."}", $value,$xmlItemTmp);
+                }
+                
+            }
+            $xml .=$xmlItemTmp."\n";
+        }
+        
+        $xml .= $template["SiteMapEnd"]."\n";   
+        return $xml;
         
     }
-            
-    
     
 }

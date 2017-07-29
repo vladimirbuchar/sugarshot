@@ -59,6 +59,7 @@ try{
         $runalltimers = (!empty($_GET["runalltimers"]))? true:false;
         $iframe = (!empty($_GET["iframe"]))? true:false;
         $robots = (!empty($_GET["robots"]))? true:false;
+        $sitemap= (!empty($_GET["sitemap"]))? true:false;
         
         if ($showPhpInfo)
         {
@@ -146,6 +147,10 @@ try{
         else if ($robots)
         {
             echo \Kernel\Page::GetWebRobots();
+        }
+        else if ($sitemap)
+        {
+            echo \Kernel\Page::GetSitemap();
         }
         else 
         {

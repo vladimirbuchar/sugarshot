@@ -44,6 +44,13 @@ class Webs extends DatabaseTable {
     public $UserInfoMailId;
     public $CookiesAccept;
     public $RobotsTxt;
+    public $SiteMapStart;
+    public $SiteMapEnd;
+    public $SiteMapItemUrl;
+    public $SiteMapItemImage;
+    public $SiteMapItemVideo;
+    public $SiteMapItemStart;
+    public $SiteMapItemEnd;
     //private static $_instance = null;
 
     public function __construct() {
@@ -52,7 +59,9 @@ class Webs extends DatabaseTable {
         $this->SaveHistory = false;
         $this->SetSelectColums(array("WebName","SmallHeight","SmallWidth","MediumHeight","MediumWidth","BigHeight","BigWidth","WebPrivileges","AdminUserActive","UserEmailActivate","EmailUserLogin","BlockSendEmails",
 "BlockAdmin","UseHttps","WebIpRestrictionAll","WebIpRestrictionAceptIp","WebIpRestrictionBlockIp","WebIpAddress","AdminIpRestrictionAll","AdminIpRestrictionAceptIp","AdminIpRestrictionBlockIp",
-"AdminIpAddress","GenerateAjaxLink","DefaultFramework","AfterLoginUrl","SendInfoEmailToAdmin","AdminInfoEmail","AdmiInfoMailId","SendInfoEmailToUser","UserInfoEmailFrom","UserInfoMailId","CookiesAccept,RobotsTxt"));
+"AdminIpAddress","GenerateAjaxLink","DefaultFramework","AfterLoginUrl","SendInfoEmailToAdmin","AdminInfoEmail","AdmiInfoMailId","SendInfoEmailToUser","UserInfoEmailFrom","UserInfoMailId","CookiesAccept,RobotsTxt,
+            SiteMapStart,SiteMapEnd,SiteMapItemImage,SiteMapItemUrl,SiteMapItemVideo","SiteMapItemStart","SiteMapItemEnd"
+            ));
         $this->SetDefaultSelectColumns();
     }
     /**
@@ -330,7 +339,57 @@ class Webs extends DatabaseTable {
         $this->AddColumn($colWebName);
 
         
+        $colWebName = new DataTableColumn();
+        $colWebName->DefaultValue = "";
+        $colWebName->Name = "SiteMapStart";
+        $colWebName->Type = "TEXT";
+        $colWebName->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWebName);
+        
+        $colWebName = new DataTableColumn();
+        $colWebName->DefaultValue = "";
+        $colWebName->Name = "SiteMapEnd";
+        $colWebName->Type = "TEXT";
+        $colWebName->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWebName);
+        
+        $colWebName = new DataTableColumn();
+        $colWebName->DefaultValue = "";
+        $colWebName->Name = "SiteMapItemImage";
+        $colWebName->Type = "TEXT";
+        $colWebName->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWebName);
+        
+        $colWebName = new DataTableColumn();
+        $colWebName->DefaultValue = "";
+        $colWebName->Name = "SiteMapItemVideo";
+        $colWebName->Type = "TEXT";
+        $colWebName->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWebName);
+        
+        $colWebName = new DataTableColumn();
+        $colWebName->DefaultValue = "";
+        $colWebName->Name = "SiteMapItemUrl";
+        $colWebName->Type = "TEXT";
+        $colWebName->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWebName);
+        
+        
+        
         //
+        $colWebName = new DataTableColumn();
+        $colWebName->DefaultValue = "";
+        $colWebName->Name = "SiteMapItemStart";
+        $colWebName->Type = "TEXT";
+        $colWebName->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWebName);
+        
+        $colWebName = new DataTableColumn();
+        $colWebName->DefaultValue = "";
+        $colWebName->Name = "SiteMapItemEnd";
+        $colWebName->Type = "TEXT";
+        $colWebName->Mode = AlterTableMode::$AddColumn;
+        $this->AddColumn($colWebName);
     }
 
     public function InsertDefaultData() {

@@ -863,4 +863,13 @@ class Page {
         $info = $web->GetRobotsTxt(SERVER_NAME_LANG);
         return $info;
     }
+    
+    public static function GetSitemap()
+    {
+        header('Content-type: application/xml');
+        header("Content-length: 0");
+        $web = new \Objects\Webs();
+        $info = $web->GenerateSitemapXml(SERVER_NAME_LANG);
+        return $info;
+    }
 }
