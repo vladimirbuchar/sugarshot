@@ -101,6 +101,7 @@ class Table extends UserComponents {
     public $SpecialLinks= array();
     public $WebIdColumn = "";
     public $ViewName = "";
+    public $ViewNameClass = "";
     public $Mode = "table"; // div or table 
     public $AceptEmptyData = false;
     public $ScrollClass ="";

@@ -100,8 +100,10 @@ class UserDomainsItems  extends DatabaseTable{
     
     public function  GetUserDomainItemById($id,$mode = "")
     {
+        
         if ($mode == "")
         {
+            
             $res = dibi::query("SELECT DISTINCT  * FROM ITEMSINDOMAIN WHERE DomainId = %i  ",$id)->fetchAll();
             return $res;
         }

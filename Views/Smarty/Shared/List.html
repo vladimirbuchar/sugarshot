@@ -127,8 +127,8 @@
     <div class="modal-content">
         <!--{include file=$AddDialog}-->
         <div class="modal-footer">
-            <!--{if !empty($ViewName)}-->
-            <button type="button" class="btn btn-primary" onclick="if (SaveItem('<!--{$JoinAddDialogId}-->','<!--{$ControllerName}-->','<!--{$AddAction}-->','<!--{$ModelName}-->')){ ShowLoading(); <!--{$AddScriptAction}--> GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ViewName}-->',undefined,undefined);CloseDialog('<!--{$JoinAddDialogId}-->');HideLoading();}"><!--{$word371}--></button>
+            <!--{if !empty($ViewNameClass)}-->
+            <button type="button" class="btn btn-primary" onclick="if (SaveItem('<!--{$JoinAddDialogId}-->','<!--{$ControllerName}-->','<!--{$AddAction}-->','<!--{$ModelName}-->')){ ShowLoading(); <!--{$AddScriptAction}--> GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ViewNameClass}-->',undefined,undefined);CloseDialog('<!--{$JoinAddDialogId}-->');HideLoading();}"><!--{$word371}--></button>
             <!--{else}-->
             <button type="button" class="btn btn-primary" onclick="if (SaveItem('<!--{$JoinAddDialogId}-->','<!--{$ControllerName}-->','<!--{$AddAction}-->','<!--{$ModelName}-->')){ShowLoading(); <!--{$AddScriptAction}--> GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('<!--{$JoinAddDialogId}-->');HideLoading();}"><!--{$word371}--></button>
             <!--{/if}-->

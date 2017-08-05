@@ -133,6 +133,7 @@ class Settings extends SettingsController {
         $table->Data = $data;
         $table->ModelName = "Webs";
         $table->ViewName = "WEBSLIST";
+        $table->ViewNameClass="WebsList";
         $table->AddDialog = "./AddWeb.html";
         $table->ColName = "WebName";
         $table->IdColumn = "Id";

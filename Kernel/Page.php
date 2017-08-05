@@ -103,8 +103,14 @@ class Page {
                     $out = $controller->$functionName();
                 }
                 if ($mode == "get" || $mode == "post" || $mode == "postobject" || $mode == "getobject" || $mode =="postjson" || $mode =="longrequest") {
-                    echo self::RenderXWebComponent($out);
+                    $out =  self::RenderXWebComponent($out);
+                    $out = preg_replace('({[A-Za-z0-9\-]*})', "", $out);
+                    
+                    echo $out;
+                    
                 } else if ($mode == "json" || $mode == "jsonobject" || $mode == "longrequestjson") {
+                    /*$out =  self::RenderXWebComponent($out); NE!!
+                    $out = preg_replace('({[A-Za-z0-9\-]*})', "", $out);*/
                     echo json_encode($out);
                 }
             }

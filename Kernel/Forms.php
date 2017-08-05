@@ -1331,6 +1331,7 @@ class Forms extends GlobalClass {
     public function GetFormStatistic($id, $templateId, $renderHtml = true) {
         $content = \Model\ContentVersion::GetInstance();
         $formStatistic = $content->GetFormStatistic($id, $this->LangId, $this->WebId);
+          
         $autoColumn = array();
         $autoColumn["Id"] = "Id záznamu";
         $autoColumn["UserIp"] = "IP adresa";
@@ -1394,6 +1395,7 @@ class Forms extends GlobalClass {
                     try{
                         $xml->addChild("Id", $row["Id"]);
                         $row = array_merge($row,ArrayUtils::ObjectToArray($xml)); 
+                        $row["Data"] = $xml->asXML();
                     }
                     catch (Exception $ex)
                     {
@@ -1410,7 +1412,9 @@ class Forms extends GlobalClass {
         {
             echo $e;die();
         }
-      //  print_r($formStatistic);die();
+        
+        $formStatistic = ArrayUtils::SortArray($formStatistic, "Id", SORT_DESC);
+      
         if ($renderHtml)
             return ArrayUtils::XmlToHtmlTable($formStatistic, "Data", $ignored, $header,false,"",true,"Id","scrollTable1200");
         return $formStatistic;
@@ -1707,6 +1711,7 @@ class Forms extends GlobalClass {
         }
         if (!empty($data->OtherText))
             $header["OtherItem"] = $data->OtherText;
+        
         return ArrayUtils::XmlToHtmlTable($formStatistic, "Data", array(), $header);
     }
     
@@ -1720,52 +1725,56 @@ class Forms extends GlobalClass {
         $userDomainItems = \Model\UserDomainsItems::GetInstance();
         $content = \Model\ContentVersion::GetInstance();
         $parent = $content->GetParent($id);
-        
-        /*$domainsItems = array();
-        foreach ($data as $row)
-        {
-            if ($row["Type"] =="domainData" && ($row["DomainSettings"] =="1n" || $row["DomainSettings"] =="mn"))
-            {
-                $identificator = $row["Identificator"];
-                $domainsItems[$identificator] = $row["Domain"];
-            }
-            if ($row["ShowOnlyDetail"] == 1)
-            {
-                $ignored[] = $row["Identificator"];
-                if ($row["Type"] == "domainData")
-                {
-                    
-                    $ud = new UserDomains();
-                    $ud->GetObjectById($row["Domain"],true);
-                    $ignored[] = trim($ud->DomainIdentificator);
-                    
-                }
-            }
-        }*/
-        
-        
         $data = $content->GetFromStatisticDetail($id,$this->LangId);
         $ignored = array("DomainIdentificator","ActiveStep");
         $formDetail = $content->GetFormDetail($parent,self::$UserGroupId,$this->WebId,$this->LangId);
-        $domainSettings = $userDomainItems->GetUserDomainItems($userDomainItems->GetUserDomainByTemplateId($formDetail[0]["TemplateId"]));
-        $header = array();
-        foreach ($domainSettings as $row)
+        $xml = "";
+        $html ="";
+        if(!empty($formDetail[0]["Data"]))
+            $xml = $formDetail[0]["Data"];
+        $dataTemplate = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
+        $detailTemplate = $dataTemplate["DetailStatisticTemplate"];
+        if (empty($detailTemplate))
         {
-            if ($row["Type"] =="domainData" && ($row["DomainSettings"] =="1n" || $row["DomainSettings"] =="mn"))
+            $domainSettings = $userDomainItems->GetUserDomainItems($userDomainItems->GetUserDomainByTemplateId($formDetail[0]["TemplateId"]));
+            $header = array();
+            foreach ($domainSettings as $row)
             {
-                $id = $row["Domain"];
-                $ud = \Model\UserDomains::GetInstance();
-                $info = $ud->GetObjectById($id);
-                $key = $info["DomainIdentificator"];
-                $val = $info["DomainName"];
-                $header[$key] = $val;
+                if ($row["Type"] =="domainData" && ($row["DomainSettings"] =="1n" || $row["DomainSettings"] =="mn"))
+                {
+                    $id = $row["Domain"];
+                    $ud = \Model\UserDomains::GetInstance();
+                    $info = $ud->GetObjectById($id);
+                    $key = $info["DomainIdentificator"];
+                    $val = $info["DomainName"];
+                    $header[$key] = $val;
+                }
             }
+            $header = array_merge($header,$this->GetHeader($formDetail[0]["TemplateId"],true));
+            $html = ArrayUtils::GetItemDetail($data,"Data",$ignored,$header);
+            
         }
-        
-        //print_r($domainSettings);
-        $header = array_merge($header,$this->GetHeader($formDetail[0]["TemplateId"],true));
-        
-        $html = ArrayUtils::GetItemDetail($data,"Data",$ignored,$header);
+        else 
+        {
+            $template = $content->GetTemplateDetail(self::$UserGroupId, $this->WebId, $this->LangId, $detailTemplate, 0);
+            if (!empty($template))
+            {
+                $html = $template[0]["Data"];
+                $dataDetail = ArrayUtils::XmlToArray($data[0]["Data"],"SimpleXMLElement",LIBXML_NOCDATA);
+                $dataDetail["Id"] = $id;
+                $html = $this->ReplaceStatisticDetail($dataDetail,$html);
+            }
+            
+        }
+        return $html;
+    }
+    private function ReplaceStatisticDetail($array,$html)
+    {
+       foreach ($array as $key =>$value)
+        {
+            $html = str_replace("{".$key."}", $value, $html);
+            
+        }
         return $html;
     }
 }

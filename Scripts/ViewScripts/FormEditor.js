@@ -162,6 +162,7 @@ function AddSource()
                 WriteItem("SaveTo", $xml);
                 WriteItem("ObjectName", $xml);
                 WriteItem("SendFormAction", $xml);
+                WriteItem("DetailStatisticTemplate", $xml);
                 var saveTo = $("#SaveTo").val();
                 if (saveTo != "")
                 {
@@ -248,5 +249,27 @@ ShowLoading();
 {
     var html = CallPhpFunctionAjax("WebEdit", "GetTreeLinkDialogAddLinkForm", "POST", null);
     $("#dialogComponentLink2").html(html);
+}
+
+function SaveFormItemDetail(id,formItemId)
+{
+    var params = new Array();
+    var ar1 = new Array();
+    ar1[0] = "Id";
+    ar1[1] = id;
+    params[0] = ar1;
+    
+    var ar2 = new Array();
+    ar2[0] = "ItemId";
+    ar2[1] = formItemId;
+    params[1] = ar2;
+    
+    var ar3 = new Array();
+    ar3[0] = "ItemValue";
+    ar3[1] = $("#"+formItemId).val();
+    params[2] = ar3;
+    
+    CallPhpFunctionAjax("WebEdit", "UpdateFormStatisticItem", "POST",params);
+    
 }
 

@@ -25,6 +25,24 @@ class SendCart extends \SendFormFunction\SendFormFunction
          $pos = count($saveData);
          $saveData[$pos][0] = "DataItems";
          $saveData[$pos][1] = $xml;
+         $sumaPrices =  $shop->GetSumaPrice(null, null);
+         $productPrices =  $shop->GetShopPrice(null, null);
+         
+         $pos++;
+         $saveData[$pos][0] = "ProductPrice";
+         $saveData[$pos][1] = $productPrices["ProductPrice"];
+         
+         $pos++;
+         $saveData[$pos][0] = "ProductPriceVat";
+         $saveData[$pos][1] = $productPrices["ProductPriceVat"];
+         
+         $pos++;
+         $saveData[$pos][0] = "SumaPrice";
+         $saveData[$pos][1] = $sumaPrices["Price"];
+         
+         $pos++;
+         $saveData[$pos][0] = "SumaPriceVat";
+         $saveData[$pos][1] = $sumaPrices["PriceVat"];
          $this->SetResult("SaveData", $saveData);
      }
              

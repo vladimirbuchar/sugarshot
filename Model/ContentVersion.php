@@ -2906,6 +2906,22 @@ class ContentVersion extends DatabaseTable {
         $this->UpdateMaterializedView("FrontendDetail");
     }
     
+    public function UpdateFormStatisticItem($contentId,$key,$value)
+    {
+        $res = $this->SelectByCondition("ContentId = $contentId AND IsLast = 1 ","","Data");
+        $xml =$res[0]["Data"];
+        $info = simplexml_load_string($xml);
+        print_r($info);die();
+        
+        
+        echo $info->asXML();die();
+        \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND IsLast = 1",$info->asXML(), $contentId);
+        //$dataAr = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
+        
+        
+        
+    }
+    
     
     
 

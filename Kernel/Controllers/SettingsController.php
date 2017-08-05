@@ -141,7 +141,7 @@ abstract class SettingsController extends AdminController {
         $saveToSession = true;
         if (!empty($ajaxParametrs["SortColumn"]) && !empty($ajaxParametrs["SortType"]))
             $sort = new SortDatabase ($ajaxParametrs["SortType"], $ajaxParametrs["SortColumn"]);
-            $modelName =  "Model\\".$ajaxParametrs["ModelName"];
+        $modelName =  "Model\\".$ajaxParametrs["ModelName"];
         $sessionId = $ajaxParametrs["ModelName"];
         $model = new $modelName();
         if (!empty($ajaxParametrs["SaveFiltrSortToSession"]))

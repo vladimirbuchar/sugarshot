@@ -152,6 +152,7 @@ class WebEdit extends AdminController {
             $this->SetAjaxFunction("SaveEmail", array("system", "Administrators"));
             $this->SetAjaxFunction("GetRootId",array("system", "Administrators"));
             $this->SetAjaxFunction("DeleteLangVersion",array("system", "Administrators"));
+            $this->SetAjaxFunction("UpdateFormStatisticItem",array("system", "Administrators"));
         }
         
     }
@@ -1856,7 +1857,7 @@ class WebEdit extends AdminController {
     public function GetDomainItems()
     {
         $domainId = $_GET["params"];
-        $udi = UserDomainsItems::GetInstance();
+        $udi = \Model\UserDomainsItems::GetInstance();
         $res = $udi->GetUserDomainItemById($domainId);
         return $res;
     }
@@ -2230,6 +2231,14 @@ class WebEdit extends AdminController {
         /** @var \Model\Content */
         $content = \Model\Content::GetInstance(); 
         return $content->GetMaxValue("Sort","ContentType = '$contentType' AND ParentId = $parentId AND Sort <> 99999  AND Deleted = 0")+1;
+        
+    }
+    
+    public function UpdateFormStatisticItem()
+    {
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
+        $content = \Model\ContentVersion::GetInstance(); 
+        $content->UpdateFormStatisticItem($ajaxParametrs["Id"],$ajaxParametrs["ItemId"],$ajaxParametrs["ItemValue"]);
         
     }
             
