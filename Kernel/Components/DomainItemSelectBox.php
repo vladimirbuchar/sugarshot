@@ -20,6 +20,7 @@ class DomainItemSelectBox extends UserComponents {
     }
 
     public function GetComponentHtml() {
+
         $selectBox = new \HtmlComponents\Select();
         $selectBox->DataRole = "none";
         $selectBox->Id = $this->SelectId;
@@ -77,6 +78,7 @@ class DomainItemSelectBox extends UserComponents {
             }
         }
         else{
+            $this->SelectedValue = \Utils\ArrayUtils::RemoveCData($this->SelectedValue);
             if (empty($this->SelectedValue) || $this->SelectedValue == "{". $this->SelectId."}")
                 $this->SelectedValue = $this->DefalutSelectedValue;
             

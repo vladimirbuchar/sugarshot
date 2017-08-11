@@ -13,6 +13,18 @@ function AddToCart(productId, validateItem, errorMessage)
         }
       }
     }
+    var productCount = $("#ProductCount-"+productId).val();
+    var productMax = $("#ProductCount-"+productId).data("max");
+    if (productCount > productMax)
+    {
+        productCount = productMax;
+        $("#ProductCount-"+productId).val(productCount);
+    }
+    if (productCount < 1)
+    {
+        productCount = 1;
+        $("#ProductCount-"+productId).val(productCount);
+    }
     
     var params = new Array();
     var ar1 = new Array();
@@ -22,13 +34,12 @@ function AddToCart(productId, validateItem, errorMessage)
     
     var ar2 = new Array();
     ar2[0] = "Count";
-    ar2[1] = $("#ProductCount-"+productId).val();
+    ar2[1] = productCount;
     params[1] = ar2;
     var ar3 = new Array();
     ar3[0] = "SelectVariant";
     ar3[1] = validValue;
     params[2] = ar3;
     CallPhpFunctionAjax("Shop","AddProductToCart","POST",params);
-    //window.location.href = cartUrl;
     return true;
 }

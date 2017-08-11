@@ -39,10 +39,14 @@ class SendCart extends \SendFormFunction\SendFormFunction
          $pos++;
          $saveData[$pos][0] = "SumaPrice";
          $saveData[$pos][1] = $sumaPrices["Price"];
-         
          $pos++;
          $saveData[$pos][0] = "SumaPriceVat";
          $saveData[$pos][1] = $sumaPrices["PriceVat"];
+         
+         $pos++;
+         $saveData[$pos][0] = "OrderStatus";
+         $saveData[$pos][1] = "new";
+         
          $this->SetResult("SaveData", $saveData);
      }
              

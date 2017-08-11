@@ -13,7 +13,18 @@ $(document).ready(function(){
 });
 function Recount(productId)
 {
-    
+    var productCount = $("#"+productId).val();
+    var productMax = $("#"+productId).data("max");
+    if (productCount > productMax)
+    {
+        productCount = productMax;
+        $("#"+productId).val(productCount);
+    }
+    if (productCount < 1)
+    {
+        productCount = 1;
+        $("#"+productId).val(productCount);
+    }
     var params = new Array();
     var ar1 = new Array();
     ar1[0] = "ProductId";
@@ -22,7 +33,7 @@ function Recount(productId)
     
     var ar2 = new Array();
     ar2[0] = "Count";
-    ar2[1] = $("#"+productId).val();
+    ar2[1] = productCount;
     params[1] = ar2;
     
     var ar3 = new Array();

@@ -12,7 +12,7 @@ class Shop {
         if (self::$_sessionManager == null)
             self::$_sessionManager = new \Utils\SessionManager(\Utils\SessionManager::$WebMode);
     }
-    public function AddProductToCart($productId,$groupId, $webId, $langId,$count,$priceColumn= "Price",  $vatColumn ="Vat",$specification ="")
+    public function AddProductToCart($productId,$groupId, $webId, $langId,$count,$priceColumn= "Price",  $vatColumn ="Vat",$specification ="",$stockColumn = "ProductStock")
     {
         $products = $this->GetCart();
         $productInfo = array();
@@ -26,6 +26,7 @@ class Shop {
             }
         }
         if ($count < 1) $count = 1;
+        
         if (empty($productInfo))
         {
             $productInfo = $this->GetProductInfo($productId, $groupId, $webId, $langId);
@@ -38,7 +39,11 @@ class Shop {
         
         $price = trim($xml[0]->$priceColumn);
         $vat = trim($xml[0]->$vatColumn);
-        
+        $productStock = trim($xml[0]->$stockColumn);
+        if ($count > $productStock)
+        {
+            $count = $productStock;
+        }
         $prices = $this->GetAllPrice($price, $vat, $count);
         $productInfo = array_merge($productInfo,$prices);
         $productInfo["Price"] = $price;
@@ -76,6 +81,7 @@ class Shop {
     {
         $products = $this->GetCart();
         $product = $products[$productId];
+        
         
         if(!empty($product))
         {
