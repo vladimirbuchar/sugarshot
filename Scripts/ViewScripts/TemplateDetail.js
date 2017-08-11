@@ -34,10 +34,6 @@ function LoadDomainItems(domainValue)
         outHtml += "<a href='#' onclick='SetTextHtml(\"{"+Identificator+"_label}\");return false;'>"+showName+" - label  </a><br />";
         outHtml += "<a href='#' onclick='SetTextHtml(\"{"+Identificator+"_result}\");return false;'>"+showName+" - result  </a><br />";
         outHtml += "<br />";
-        
-        //var formGroupHtml = '<div class=\"form-group\"><label for=\"{'+Identificator+'}\" class=\"control-label col-md-3\">{'+Identificator+'_label}:</label><div class=\"col-md-9\">{'+Identificator+'}</div></div>';
-        
-        //outHtml += "<a href='#' onclick='SetTextHtml(\"" +formGroupHtml +"\");return false;'>"+showName+" - pole formuláře  </a><br />";
     }
     $("#domainItems").html(outHtml);
 }

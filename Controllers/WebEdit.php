@@ -1859,6 +1859,7 @@ class WebEdit extends AdminController {
         $domainId = $_GET["params"];
         $udi = \Model\UserDomainsItems::GetInstance();
         $res = $udi->GetUserDomainItemById($domainId);
+//        print_r($res);die();
         return $res;
     }
     public function CallDataSourceImport()

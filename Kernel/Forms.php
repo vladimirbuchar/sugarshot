@@ -1323,11 +1323,6 @@ class Forms extends GlobalClass {
         return $ar;
     }
             
-    
-    
-    
-    
-
     public function GetFormStatistic($id, $templateId, $renderHtml = true) {
         $content = \Model\ContentVersion::GetInstance();
         $formStatistic = $content->GetFormStatistic($id, $this->LangId, $this->WebId);
