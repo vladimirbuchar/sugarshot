@@ -171,7 +171,7 @@ class ArrayUtils  {
                             $value = trim($xmlLoad->$item);
                         else 
                         {
-//                            echo $item."<br>";
+                            $value = $row[$item];
                         }
                         if (empty($value)) $value = "&nbsp;";
                         $td = new HtmlTableTd();

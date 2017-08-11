@@ -1340,6 +1340,7 @@ class Forms extends GlobalClass {
         
         $autoColumn[] = "&nbsp;";
         $header = $this->GetHeader($templateId,false,$autoColumn);
+        
         $userDomainItems = \Model\UserDomainsItems::GetInstance();
         $data = $userDomainItems->GetUserDomainItems($userDomainItems->GetUserDomainByTemplateId($templateId));
         $ignored = array("DomainIdentificator","ActiveStep","UserId");
@@ -1414,6 +1415,7 @@ class Forms extends GlobalClass {
         }
         
         $formStatistic = ArrayUtils::SortArray($formStatistic, "Id", SORT_DESC);
+        
       
         if ($renderHtml)
             return ArrayUtils::XmlToHtmlTable($formStatistic, "Data", $ignored, $header,false,"",true,"Id","scrollTable1200");
