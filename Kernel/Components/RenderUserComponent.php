@@ -1,5 +1,6 @@
 <?php
 namespace Kernel; 
+use Utils\Files;
 
 class RenderUserComponent{
     private $_type;

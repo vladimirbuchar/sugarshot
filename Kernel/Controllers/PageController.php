@@ -5,7 +5,7 @@ use Model\ContentVersion;
 use Model\Langs;
 use Model\Cache;
 use Types\ContentTypes;
-use Kernel\Forms;
+use Utils\Forms;
 abstract class PageController extends Controllers {
     
     public function PageController() {

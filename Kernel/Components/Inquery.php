@@ -1,7 +1,7 @@
 <?php
 namespace Components;
 use Model\ContentVersion;
-use Kernel\Forms;
+use Utils\Forms;
 class Inquery extends UserComponents{
     
     public function __construct() {

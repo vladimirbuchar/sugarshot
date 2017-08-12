@@ -2,7 +2,7 @@
 namespace Components;
 use Kernel\GlobalClass; 
 use Types\CacheTimeType;
-use Kernel\Files;
+use Utils\Files;
 use Utils\Utils;
 use Utils\ArrayUtils;
 use Utils\StringUtils;

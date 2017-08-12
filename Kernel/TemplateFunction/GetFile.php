@@ -15,9 +15,9 @@ class GetFile extends TemplateFunction {
             return $noImage;
         }
         
-        if (!\Kernel\Files::FileExists(ROOT_PATH.$file))
+        if (!\Utils\Files::FileExists(ROOT_PATH.$file))
         {
-            if (\Kernel\Files::FileExists(ROOT_PATH.$oldFile))
+            if (\Utils\Files::FileExists(ROOT_PATH.$oldFile))
             {
                 return $oldFile;
             }

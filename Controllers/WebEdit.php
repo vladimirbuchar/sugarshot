@@ -685,7 +685,7 @@ class WebEdit extends AdminController {
         $this->SetTemplateData("NoIncludeSearch", $mainData["NoIncludeSearch"] == 1 ? 'checked= "checked"' : "");
         $this->SetTemplateData("TemplateId", $mainData["TemplateId"]);
         $this->SetTemplateData("Data", str_replace("\n", "", $mainData["Data"]));
-        $form = new \Kernel\Forms();
+        $form = new \Utils\Forms();
         $templateId = $mainData["TemplateId"];
         $htmlFormStatistic = $form->GetFormStatistic($id,$templateId);
         $this->SetTemplateData("FormStatistic", $htmlFormStatistic);
@@ -1314,7 +1314,7 @@ class WebEdit extends AdminController {
             $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
         if (empty($ajaxParametrs))
             return;
-        $conObj =  ContentConnection::GetInstance();
+        $conObj =  new \Objects\Content();
         $conObj->CreateConnection($ajaxParametrs["ObjectId"], $ajaxParametrs["ObjectIdConnection"], $ajaxParametrs["Mode"], $ajaxParametrs["Data"]);
     }
 
@@ -1326,7 +1326,7 @@ class WebEdit extends AdminController {
             $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
         if (empty($ajaxParametrs))
             return;
-        $conObj = ContentConnection::GetInstance();
+        $conObj = new \Objects\Content();
         return $conObj->GetRelatedObject($ajaxParametrs["ObjectId"], $_GET["langid"], $ajaxParametrs["ObjectType"]);
     }
 
@@ -1475,7 +1475,7 @@ class WebEdit extends AdminController {
     
     private function CreateConnectionGalleryLang($id,$sourceLang)
     {
-        $content = ContentConnection::GetInstance();
+        $content = new \Objects\Content();
         $data = $content->GetRelatedObject($id, $sourceLang);
         //print_r($data);
         
@@ -1986,7 +1986,7 @@ class WebEdit extends AdminController {
         $this->SetTemplateDataArray($ar);
         $this->SetLangList($content,$id);
         $this->SetHistoryList($id);
-        $form = new \Kernel\Forms();
+        $form = new \Utils\Forms();
         $htmlStatistic = $form->GenerateSurveyStatistic($id);
         $this->SetTemplateData("Statistic", $htmlStatistic);
     }
@@ -2018,7 +2018,7 @@ class WebEdit extends AdminController {
         $objectId = $params["ObjectId"];
         $userGroup = $params["UserGroup"];
         $alternativeItemId = $params["AlternativeItem"];
-        $alternativeItem =  ContentAlternative::GetInstance();
+        $alternativeItem =  new \Objects\Content();
         $alternativeItem->SaveAlternativeItem($objectId, $userGroup, $alternativeItemId);
     }
     
@@ -2031,7 +2031,7 @@ class WebEdit extends AdminController {
    public function GetFormItemDetail()
    {
        $id = $_GET["params"];
-       $form = new \Kernel\Forms();
+       $form = new \Utils\Forms();
        return $form->GetFormItemDetail($id);
    }
    

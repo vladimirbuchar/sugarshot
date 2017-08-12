@@ -1,5 +1,5 @@
 <?php
-
+namespace Kernel;
 class Tests {
     protected $Result;
     private $_startTime;

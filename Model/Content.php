@@ -43,18 +43,7 @@ class Content  extends DatabaseTable{
         $this->SetSelectColums(array("ParentId","NoIncludeSearch","Identificator","DomainId","TemplateId","GalleryId","GallerySettings","DiscusionSettings","DiscusionId","Sort","UploadedFileType","FormId","NoChild","UseTemplateInChild","ChildTemplateId","CopyDataToChild","ActivatePager","FirstItemLoadPager","NextItemLoadPager","Owner","Inquery","NoLoadSubItems","LastVisited","SaveToCache","SortRule","ContentType"));
         $this->SetDefaultSelectColumns();
     }
-    /*public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
-    
-    
-    
+ 
     public function OnCreateTable() {
         $colContentType = new DataTableColumn();
         $colContentType->DefaultValue ="";

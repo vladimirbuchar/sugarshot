@@ -14,7 +14,7 @@ class RelatedArticles extends UserComponents{
     }     
     public function PrepareDatasource()
     {
-        $contentConnection =  \Model\ContentConnection::GetInstance();
+        $contentConnection = new \Objects\Content();
         $content =  \Model\ContentVersion::GetInstance();
         $id = $content->GetIdGalleryBySeoUrl($_GET["seourl"], $this->LangId, $this->WebId);
         return $contentConnection->GetRelatedObject($id, $this->LangId,"document");

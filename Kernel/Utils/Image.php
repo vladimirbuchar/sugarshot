@@ -1,6 +1,7 @@
 <?php
 
-namespace Kernel;
+namespace Utils;
+use Utils\Files;
 class Image {
     public function Resizer($img, $newfilename, $w, $h) {
         

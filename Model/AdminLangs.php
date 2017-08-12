@@ -16,18 +16,7 @@ class AdminLangs  extends DatabaseTable{
         $this->SetSelectColums(array("LangName","LangIdentificator"));
         $this->SetDefaultSelectColumns();
     }
-    /*public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
-    
-    
-    
+
     public function OnCreateTable() {
         $colLangName = new DataTableColumn();
         $colLangName->DefaultValue ="";

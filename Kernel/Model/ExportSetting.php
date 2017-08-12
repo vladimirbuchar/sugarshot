@@ -75,8 +75,8 @@ class ExportSetting extends GlobalClass{
         $this->GetExportByModel("ContentVersion");
         $this->GetExportByModel("DiscusionItems");
         $zipFolder = TEMP_EXPORT_PATH.$this->_folderName."/";
-        \Kernel\Folders::CreateFolder($zipFolder, "res");
-        \Kernel\Folders::CopyFolder(RES_PATH, $zipFolder."res");
+        \Utils\Folders::CreateFolder($zipFolder, "res");
+        \Utils\Folders::CopyFolder(RES_PATH, $zipFolder."res");
         
     }
     

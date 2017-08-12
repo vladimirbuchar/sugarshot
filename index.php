@@ -84,11 +84,11 @@ try{
         }
         else if ($fileUpload)
         {
-            echo \Kernel\Files::FileUpload();
+            echo \Utils\Files::FileUpload();
         }
         else if ($fileExplorer)
         {
-            echo \Kernel\Folders::FileExplorer();
+            echo \Utils\Folders::FileExplorer();
         }
         else if ($iscss)
         {
@@ -130,7 +130,7 @@ try{
         }
         else if ($multiuaploadfiles)
         {
-            echo Kernel\Files::UploadFiles();
+            echo Utils\Files::UploadFiles();
         }
         else if ($setLongRequest)
         {

@@ -20,7 +20,7 @@ class Form extends UserComponents{
             $id = $content->GetFormIdBySeoUrl($_GET["seourl"], $this->LangId, $this->WebId);
         if ($id == 0)
             $this->IsEmptyComponent  =true;
-        $form = new \Kernel\Forms(); 
+        $form = new \Utils\Forms(); 
         return $form->GenerateFrontEndForm($id,0);
     }
     

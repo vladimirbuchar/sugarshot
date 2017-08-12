@@ -1,6 +1,6 @@
 <?php
 namespace Controller;
-use Kernel\Files;
+use Utils\Files;
 use Kernel\GlobalClass;
 use Model\Langs;
 use Model\AdminLangs;

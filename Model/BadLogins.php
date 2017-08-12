@@ -14,15 +14,7 @@ class BadLogins  extends DatabaseTable{
         $this->SetSelectColums(array("DateEvent","UserName"));
         $this->SetDefaultSelectColumns();
     }
-    /*public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
+    
     
     
     

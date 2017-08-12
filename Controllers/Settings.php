@@ -9,7 +9,7 @@ use Model\ContentVersion;
 use Model\UserGroups;
 use Model\Langs;
 use Model\AdminLangs;
-use Kernel\Files;
+use Utils\Files;
 use Types\TableHeaderFiltrType;
 use Model\UserDomains;
 use Model\UserDomainsItems;
@@ -700,7 +700,7 @@ class Settings extends SettingsController {
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         $files = array();
         $folderName = \Utils\StringUtils::GenerateRandomString();
-        \Kernel\Folders::CreateFolder(TEMP_EXPORT_PATH, $folderName);
+        \Utils\Folders::CreateFolder(TEMP_EXPORT_PATH, $folderName);
         foreach ($ajaxParametrs as $key => $value) {
             if ($value == 1) {
                 $ex = new ExportSetting($key, $folderName);

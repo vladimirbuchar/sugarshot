@@ -13,7 +13,7 @@ class ResultForm extends UserComponents{
     {
         $content = \Model\ContentVersion::GetInstance();
         $id = $content->GetIdByIdentificator($this->DataSource);
-        $form = new \Kernel\Forms(); 
+        $form = new \Utils\Forms(); 
         //return $form->GenerateFrontEndForm($id, 0, "", true);
     }
     

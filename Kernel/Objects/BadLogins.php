@@ -17,7 +17,11 @@ class BadLogins extends ObjectManager{
     }
     public function GetBadsLogins()
     {
-        $res = dibi::query("SELECT COUNT(*) countBadLogins FROM `BadLogins` WHERE TIMEDIFF(NOW(),DateEvent) <= '00:15:00'")->fetchAll();
+        /** 
+         * @var \Model\BadLogins 
+         */
+        $model =  \Model\BadLogins::GetInstance();
+        $res = $model->GetCount("countBadLogins","TIMEDIFF(NOW(),DateEvent) <= '00:15:00'");
         if (empty($res)) return 0;
         return $res[0]["countBadLogins"];
     }

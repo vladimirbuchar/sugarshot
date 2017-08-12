@@ -21,7 +21,7 @@ use Types\LinkType;
 use Utils\Mail;
 use Utils\Utils;
 use Kernel;
-use Kernel\Image;
+use Utils\Image;
 
 class ContentVersion extends DatabaseTable {
 
@@ -2221,7 +2221,7 @@ class ContentVersion extends DatabaseTable {
             $connectionObjects = dibi::query("SELECT * FROM CONNECTIONOBJECTS WHERE ObjectId = %i AND  (LangId = %i OR LangId =0 ) ", $sourceId, $langId)->fetchAll();
             $data = $copyData["Data"];
             $destinationId = $this->CreateUserItem($copyData["Name"], "", $copyData["AvailableOverSeoUrl"] == 1 || $copyData["AvailableOverSeoUrl"] == "1" ? true : false, $copyData["NoIncludeSearch"] == 1 || $copyData["NoIncludeSearch"] == "1" ? true : false, "", $copyData["ActiveFrom"], $copyData["ActiveTo"], $copyData["TemplateId"], false, $langId, $destinationId, array(), $data, true, $copyData["GallerySettings"], 3, $copyData["DiscusionId"], $copyData["FormId"], false);
-            $contentConnection = ContentConnection::GetInstance();
+            $contentConnection = new \Objects\Content();
             foreach ($connectionObjects as $obj) {
                 $contentConnection->CreateConnection($destinationId, $obj["ObjectIdConnected"], $obj["ConnectedType"], $obj["SettingConnection"]);
             }

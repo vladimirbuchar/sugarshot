@@ -289,7 +289,7 @@ class Users  extends DatabaseTable{
         return TRUE;   
         }
         catch(Exception $ex){
-            \Kernel\Files::WriteLogFile($ex);
+            \Utils\Files::WriteLogFile($ex);
             return false;
         }
     }

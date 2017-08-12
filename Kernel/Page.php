@@ -10,7 +10,8 @@ use Types\xWebExceptions;
 use Model\ContentVersion;
 use Smarty;
 use Dibi;
-
+use Utils\Files;
+use Utils\Folders;
 /** hlavní třída, která se volá jako první z indexu */
 class Page {
         

@@ -34,7 +34,7 @@ class Forms extends Controllers {
 
         $xml = simplexml_load_string($data);
         $xmlRow = $xml[0];
-        $form = new \Kernel\Forms();
+        $form = new \Utils\Forms();
         $lang = \Model\Langs::GetInstance();
         $url = $lang->GetRootUrl($_GET["langid"]);
         
@@ -72,7 +72,7 @@ class Forms extends Controllers {
         $content =  ContentVersion::GetInstance();
         $form = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         $data = $form[0]["Data"];
-        $form = new \Kernel\Forms();
+        $form = new \Utils\Forms();
         $outArray["Errors"] = array();
         if (!$form->ValidateForm($formDataTmp)) {
             $outArray["Errors"] = $form->GetError();
@@ -91,7 +91,7 @@ class Forms extends Controllers {
         $xml = simplexml_load_string($data);
         $xmlRow = $xml[0];
         if (trim($xmlRow->UseCaptcha) == "1") {
-            $form = new \Kernel\Forms();
+            $form = new \Utils\Forms();
             return $form->GenerateCaptcha($id);
         }
     }

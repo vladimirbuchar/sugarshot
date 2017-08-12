@@ -13,7 +13,7 @@ class ItemForm extends UserComponents{
     }     
     public function GetComponentHtml()
     {
-        $form = new \Kernel\Forms(); 
+        $form = new \Utils\Forms(); 
         $form->ShowElementId = $this->ElementId;
         $form->ShowLabel = false; 
         return $form->GetUserDomain($this->DomainIdentificator,  0, true,  "",  false,  "","", 0,$this->Result);

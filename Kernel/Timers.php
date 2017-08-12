@@ -1,5 +1,5 @@
 <?php
-
+namespace Kernel;
 class Timers {
     protected $TimerName ="";
     

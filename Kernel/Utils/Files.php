@@ -1,6 +1,6 @@
 <?php
 
-namespace Kernel;
+namespace Utils;
 
 use Utils\Utils;
 use PHPExcel_IOFactory;

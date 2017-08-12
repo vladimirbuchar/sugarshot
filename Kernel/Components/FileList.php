@@ -16,7 +16,7 @@ class FileList extends UserComponents{
     public function PrepareDatasource()
     {
         /** @var \Model\ContentConnection */
-        $contentConnection = \Model\ContentConnection::GetInstance();
+        $contentConnection = new \Objects\Content();
         $content = \Model\ContentVersion::GetInstance();
         $id = $content->GetIdGalleryBySeoUrl($_GET["seourl"], $this->LangId, $this->WebId);
         $data =  $contentConnection->GetRelatedObject($id, $this->LangId,$this->FileType);

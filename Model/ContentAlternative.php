@@ -9,7 +9,6 @@ class ContentAlternative  extends DatabaseTable{
     public $ContentId;
     public $AlternativeContentId;
     public $UserGroupId;
-    //private static $_instance = null;
     public function __construct()
     {
         parent::__construct();
@@ -19,27 +18,6 @@ class ContentAlternative  extends DatabaseTable{
         $this->SetSelectColums(array("ContentId","AlternativeContentId","UserGroupId"));
         $this->SetDefaultSelectColumns();
     }
-    /*public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
-    
-    public function SaveAlternativeItem($objectId,$userGroupId,$alternativeItemId)
-    {
-        $this->DeleteByCondition("ContentId = $objectId AND UserGroupId = $userGroupId", true, false);
-        $this->ContentId = $objectId;
-        $this->UserGroupId = $userGroupId;
-        $this->AlternativeContentId = $alternativeItemId;
-        $this->SaveObject();
-    }
-    
-    
-    
     
     public function OnCreateTable() {
         $colContentType = new DataTableColumn();

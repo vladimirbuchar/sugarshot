@@ -1,5 +1,6 @@
 <?php
-namespace Kernel; 
+namespace Utils; 
+use Utils\Files;
 /** třída pro práci se složkami
  * @author  Vladimír Buchar
  */

@@ -2,7 +2,7 @@
 namespace Model;
 use Types\ExportSettings;
 use Utils\ArrayUtils;
-use Kernel\Files;
+use Utils\Files;
 use Dibi;
 use PHPExcel;
 use PHPExcel_IOFactory;
@@ -59,7 +59,7 @@ class SqlDatabase {
     
      
 
-    public function SelectByCondition($where="", $sort ="", $columns = array()) {
+    public function SelectByCondition($where="", $sort ="", $columns = array(),$params = array()) {
         try{
         if (!empty($where))
             $where = " WHERE $where";
@@ -77,9 +77,9 @@ class SqlDatabase {
         $query = "SELECT $col FROM " . $this->ObjectName . " $where $sort";
         if ($this->TestQuery)
         {
-            \dibi::test($query);
+            \dibi::test($query);die();
         }
-        return \dibi::query($query)->fetchAll();
+        return $this->SelectQuery($query,$params);
         }
         catch (Exception $ex)
         {
@@ -404,7 +404,6 @@ class SqlDatabase {
     public function GetMaxValue($columnName,$condition = "")
     {
         $where = "";
-        
         if (!empty($condition))
         {
             $where =  " WHERE $condition";
@@ -412,6 +411,17 @@ class SqlDatabase {
         $res = dibi::query("SELECT MAX($columnName) AS MaxVal FROM ".$this->ObjectName.$where)->fetchAll();
         if (empty($res)) return 0;
         return $res[0]["MaxVal"];
+    }
+    
+    public function GetCount($columnName ="",$condition="")
+    {
+        $where = "";
+        if (!empty($condition))
+        {
+            $where =  " WHERE $condition";
+        }
+        $query = "SELECT COUNT(*) $columnName FROM $this->ObjectName $where";
+        return $this->SelectQuery($query);
     }
     
     protected  function SetSelectColums($columns)
@@ -423,5 +433,22 @@ class SqlDatabase {
     {
  
     }
+    
+    protected function SelectQuery($query,$params = array())
+    {
+        return \dibi::query($query,$params)->fetchAll();
+    }
+    
+    public function TransactionBegin()
+    {
+        \dibi::begin();
+    }
+    
+    public function TransactionEnd()
+    {
+        \dibi::commit();
+    }
+    
+    
     
 }

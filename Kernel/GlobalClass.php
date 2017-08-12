@@ -8,7 +8,7 @@ use Model\Langs;
 use Model\UserDomainsValues;
 use Model\WordGroups;
 use Utils\Utils;
-use Kernel\Forms;
+use Utils\Forms;
 
 class GlobalClass {
 
