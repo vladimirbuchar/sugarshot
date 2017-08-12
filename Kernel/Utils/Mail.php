@@ -7,7 +7,7 @@ class Mail extends GlobalClass{
     {
         if (empty($from) || empty($to) || $idDocument == 0) 
             return;
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $parentid = $content->GetLangRoot($this->LangId);
         $contentMail = $content->CreateSendMail($this->LangId,$parentid,$data,$idDocument,$this->WebId,self::$UserGroupId,$from,$to);
         $this->Send($from, $to, $contentMail["Name"], $contentMail["Html"],$contentMail["MailId"],$mailAttachments);
@@ -62,7 +62,7 @@ class Mail extends GlobalClass{
     
     public function SendEmailById($mailId)
     {
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $data = $content->GetSendMailDetail($this->WebId, $this->LangId,$mailId);    
         
         $xml = $data[0]["Data"];

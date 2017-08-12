@@ -49,7 +49,7 @@ class SelectDialog extends UserComponents{
         $this->SetUsedWords("word678");
         $this->SetReplaceString("tree", "");
         $this->SetReplaceString("DialogId", $this->Id);
-        $contentVersion =  \Model\ContentVersion::GetInstance();
+        $contentVersion =  new \Objects\Content();
         
         if ($this->ShowUserItemsTab)
         {

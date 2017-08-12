@@ -12,12 +12,10 @@ class SearchResult extends UserComponents{
     }     
     public function PrepareDatasource()
     {
-        $content =  \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $searchString = base64_decode($_GET["param1"]);
-        
         $this->SetReplaceString("searchWord", $searchString);
         $outSearch = $content->Search(self::$UserGroupId,$this->LangId, $searchString);
-        
         return $outSearch;
     }
     public function GetComponentHtml()

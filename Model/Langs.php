@@ -144,7 +144,7 @@ class Langs  extends DatabaseTable{
     
     public function CreateLangFolder($id)
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $obj = $this->GetObjectById($id);
         
         $folderId = $content->GetIdByIdentificator("langfolder",$_GET["webid"]);

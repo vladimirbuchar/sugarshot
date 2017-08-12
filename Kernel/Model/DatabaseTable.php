@@ -615,7 +615,7 @@ class DatabaseTable extends SqlDatabase{
      * @param $rule pravidlo 
      * @param $errorMessage chybová hláška 
      */
-    protected function SetValidateRule($column, $rule, $errorMessage="") {
+    public function SetValidateRule($column, $rule, $errorMessage="") {
         
         $this->_columnValidate[] = $column;
         // seourl se musí provést jako první 

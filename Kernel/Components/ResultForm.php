@@ -11,7 +11,7 @@ class ResultForm extends UserComponents{
     }     
     public function GetComponentHtml()
     {
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $id = $content->GetIdByIdentificator($this->DataSource);
         $form = new \Utils\Forms(); 
         //return $form->GenerateFrontEndForm($id, 0, "", true);

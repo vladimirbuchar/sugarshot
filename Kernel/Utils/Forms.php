@@ -34,7 +34,7 @@ class Forms extends GlobalClass {
         
         $this->ShowElementId = $showElementId;
         
-        $contentVersion =  \Model\ContentVersion::GetInstance();
+        $contentVersion =  new \Objects\Content();
         $data = $contentVersion->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         
         if (empty($data))
@@ -151,7 +151,7 @@ class Forms extends GlobalClass {
         $objectId->Value = 0;
         if ($editId > 0) 
         {
-            $userdata =  \Model\ContentVersion::GetInstance();
+            $userdata =  new \Objects\Content();
             $dataUser = $userdata->GetUserItemDetail($editId, self::$UserGroupId, $this->WebId, $this->LangId);
             $editData = $dataUser[0]["Data"];
             $nameObject = $dataUser[0]["Name"];
@@ -1051,7 +1051,7 @@ class Forms extends GlobalClass {
             return false;
         }
         
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $mail = new Mail();
         $userEmail = "";
         
@@ -1168,7 +1168,7 @@ class Forms extends GlobalClass {
             }            
             
             
-            $content = \Model\ContentVersion::GetInstance();
+            $content = new \Objects\Content();
             $detail = $content->GetUserItemDetail($saveTo, self::$UserGroupId, $this->WebId, $this->LangId);
             if (!empty($detail))
             {
@@ -1325,7 +1325,7 @@ class Forms extends GlobalClass {
     }
             
     public function GetFormStatistic($id, $templateId, $renderHtml = true) {
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $formStatistic = $content->GetFormStatistic($id, $this->LangId, $this->WebId);
           
         $autoColumn = array();
@@ -1585,7 +1585,7 @@ class Forms extends GlobalClass {
     }
     private function AddFormAttachment($formId,$saveData)
     {
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $formDetail = $content->GetFormDetail($formId, self::$UserGroupId, $this->WebId, $this->LangId);
         $xmlString = $formDetail[0]["Data"];
         $xml = simplexml_load_string($xmlString);
@@ -1616,7 +1616,7 @@ class Forms extends GlobalClass {
     }
     public function GenerateInqueryForm($id)
     {
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $surveyDetail = $content->GetInqueryDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         if (count($surveyDetail) > 0)
         {
@@ -1695,7 +1695,7 @@ class Forms extends GlobalClass {
     }
     public function GenerateSurveyStatistic($id)
     {
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $formStatistic = $content->GetSurveyStatistic($id, $this->LangId, $this->WebId);
         $surveyDetail = $content->GetInqueryDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         $xmlstring =empty($surveyDetail)?"":$surveyDetail[0]["Data"];
@@ -1721,7 +1721,7 @@ class Forms extends GlobalClass {
     public function GetFormItemDetail($id)
     {
         $userDomainItems = \Model\UserDomainsItems::GetInstance();
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $parent = $content->GetParent($id);
         $data = $content->GetFromStatisticDetail($id,$this->LangId);
         $ignored = array("DomainIdentificator","ActiveStep");

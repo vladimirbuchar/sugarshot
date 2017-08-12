@@ -11,7 +11,7 @@ class UserArticles extends UserComponents{
     
     public function GetComponentHtml($obj)
     {
-        $content =  \Model\ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $content->GetIdByIdentificator($this->DataSource);
         $data = $content->GetUserItemDetail($id, self::$UserGroupId, $this->WebId, $this->LangId,0,true);
         $userDomains = \Model\UserDomainsItems::GetInstance();

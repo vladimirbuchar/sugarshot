@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-use Model\ContentVersion;
+
 use Model\DiscusionItems;
 use HtmlComponents\Div;
 use Types\DiscusionsMode;
@@ -35,8 +35,8 @@ class Discusion extends UserComponents{
     public function GetComponentHtml()
     {
         
-        $contentVersion = ContentVersion::GetInstance();
-        $discusion = DiscusionItems::GetInstance();
+        $contentVersion = new \Objects\Content();
+        $discusion = new \Objects\Discusion();
         $this->SetUsedWords("word412");
         $this->SetUsedWords("word413");
         $this->SetUsedWords("word414");

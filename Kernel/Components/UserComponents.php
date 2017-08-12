@@ -139,7 +139,7 @@ class  UserComponents extends GlobalClass {
     {
         if (!empty($this->Template))
         {
-            $content =  \Model\ContentVersion::GetInstance();
+            $content =  new \Objects\Content();
             $template = $content->LoadTemplateByIdentificator($this->Template, self::$UserGroupId, $this->LangId, $this->WebId);
             if (!empty($template))
                 $this->RenderHtml = $template["data"];
@@ -164,7 +164,7 @@ class  UserComponents extends GlobalClass {
         if (!empty($this->ItemTemplate))
         {
             
-            $content = \Model\ContentVersion::GetInstance();
+            $content = new \Objects\Content();
             $template = $content->LoadTemplateByIdentificator($this->ItemTemplate, self::$UserGroupId, $this->LangId, $this->WebId);
             $this->ItemHtml = $template["data"];
         }
@@ -288,7 +288,7 @@ class  UserComponents extends GlobalClass {
         
         if (empty($template) && !empty($data[0]["TemplateId"])) {
             
-            $content =  \Model\ContentVersion::GetInstance();
+            $content =  new \Objects\Content();
             $template = $content->LoadTemplateById($data[0]["TemplateId"], self::$UserGroupId, $this->LangId, $this->WebId);
             if(!empty($template))
             {

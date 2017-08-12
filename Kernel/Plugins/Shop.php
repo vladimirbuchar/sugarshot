@@ -59,7 +59,7 @@ class Shop {
     
     private function GetProductInfo($productId,$groupId,$webId, $langId)
     {
-        $content =  \Model\ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $productInfo = $content->GetUserItemDetail ($productId,$groupId,$webId, $langId,0,true);
         if (!empty($productInfo))
         {

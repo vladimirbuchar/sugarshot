@@ -269,13 +269,13 @@ class Filtr extends UserComponents{
     
     private function  GetMinValue($parentId)
     {
-        $content =  \Model\ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         return $content->SetFiltr($this->LangId,$parentId,"Price",  FiltrModes::$MinMax);
         
     }
     private function GetDistinctValues($parentId,$columnName)
     {
-        $content =  \Model\ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         return $content->SetFiltr($this->LangId,$parentId,$columnName,  FiltrModes::$DistinctValues);
     }
     

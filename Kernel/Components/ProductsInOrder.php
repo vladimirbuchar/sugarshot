@@ -12,7 +12,7 @@ class ProductsInOrder extends UserComponents{
     public function GetComponentHtml()
     {
         $html = "";
-        $forms = new \Model\ContentVersion();
+        $forms = new \Objects\Content();
         $data = $forms->GetFromStatisticDetail($_GET["params"],$this->LangId);
         $dataXml= \Utils\ArrayUtils::XmlToArray($data[0]["Data"],"SimpleXMLElement",LIBXML_NOCDATA);
         $shopCart = array();

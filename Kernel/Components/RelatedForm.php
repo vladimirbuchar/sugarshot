@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-use Model\ContentVersion;
+
 use Utils\Forms;
 class RelatedForm extends UserComponents{
     
@@ -11,7 +11,7 @@ class RelatedForm extends UserComponents{
     }     
     public function GetComponentHtml()
     {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $content->GetFormIdBySeoUrl($_GET["seourl"], $this->LangId, $this->WebId);
         
         $form = new Forms();

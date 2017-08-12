@@ -18,7 +18,7 @@ class AddToCart extends UserComponents{
     }
     
     public function GetComponentHtml() {
-        $content =  \Model\ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         if ($this->ProductId == 0)
         {
             $this->ProductId = $content->GetIdBySeoUrl($_GET["seourl"], $this->WebId);

@@ -5,7 +5,7 @@ namespace Controller;
 use Model\DiscusionItems;
 use Model\UsersInGroup;
 use Utils\StringUtils;
-use Model\ContentVersion;
+
 
 class Forms extends Controllers {
 
@@ -28,7 +28,7 @@ class Forms extends Controllers {
         $formData = $this->PrepareDomains($formData);
         $formDataTmp = $this->PrepareAjaxParametrs($formData);
         $id = $ajaxParametrs["FormId"];
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $form = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         $data = $form[0]["Data"];
 
@@ -69,7 +69,7 @@ class Forms extends Controllers {
         $formData = $this->PrepareDomains($formData);
         $formDataTmp = $this->PrepareAjaxParametrs($formData);
         $id = $ajaxParametrs["FormId"];
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $form = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         $data = $form[0]["Data"];
         $form = new \Utils\Forms();
@@ -85,7 +85,7 @@ class Forms extends Controllers {
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["Id"];
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $form = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         $data = $form[0]["Data"];
         $xml = simplexml_load_string($data);

@@ -476,7 +476,7 @@ class Users  extends DatabaseTable{
     
     private function GenerateLinkActivate($userPassword,$userEmail,$id,$userName)
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $userActivationId=  $content->GetIdByIdentificator("userActivation");
         $userActivation = $content->GetUserItemDetail($userActivationId, $this->GetUserGroupId(), $this->GetActualWeb(), $this->GetLangIdByWebUrl());
         if (count($userActivation) > 0)

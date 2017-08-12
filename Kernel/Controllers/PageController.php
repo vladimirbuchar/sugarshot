@@ -1,7 +1,7 @@
 <?php
 namespace Controller;
 use Utils\StringUtils;
-use Model\ContentVersion;
+
 use Model\Langs;
 use Model\Cache;
 use Types\ContentTypes;
@@ -13,7 +13,7 @@ abstract class PageController extends Controllers {
     }
     protected function LoadPageByIndentificator($identificator)
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         
         $template = $content->LoadTemplateByIdentificator($identificator,self::$UserGroupId,$this->LangId,$this->WebId);
         
@@ -25,7 +25,7 @@ abstract class PageController extends Controllers {
         $preparedTemplate = "";
         if ($loadTemplate)
         {
-            $content = ContentVersion::GetInstance();
+            $content = new \Objects\Content();
             $template = $content->LoadTemplateById($id,self::$UserGroupId,$this->LangId,$this->WebId);
             $preparedTemplate = $this->PreparePage($template);
         }
@@ -118,7 +118,7 @@ abstract class PageController extends Controllers {
     
     public function LoadTemplate($id = 0)
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $template = $content->LoadTemplateById($id, self::$UserGroupId, $this->LangId, $this->WebId);
         return $template["data"];
     }
@@ -128,7 +128,7 @@ abstract class PageController extends Controllers {
         try
         {
             $html ="";
-            $content = ContentVersion::GetInstance();
+            $content = new \Objects\Content();
             $preview = false;
             if (!empty($_GET["preview"]))
             {
@@ -193,7 +193,7 @@ abstract class PageController extends Controllers {
     
     protected function RenderSendEmail($id)
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $out = $content->RenderSendEmail ($id,$this->LangId,$this->WebId);
         $template = new Content();
         $template->GetObjectById($out[0]["TemplateId"],true);
@@ -211,7 +211,7 @@ abstract class PageController extends Controllers {
         $replacedata["categorypage"] = $lgInfo->CategoryPage;
         if (!empty($_GET["seourl"]))
         {
-            $contemt =  new \Model\ContentVersion();
+            $contemt =  new \Objects\Content();
             $data = $contemt->LoadFrontendFromSeoUrl($_GET["seourl"], self::$UserGroupId, $this->LangId, $this->WebId);
             if (!empty($data))
             {
@@ -250,14 +250,14 @@ abstract class PageController extends Controllers {
     }
     protected function RenderCss()
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $cssList = $content->GetCssList(self::$UserGroupId,$this->LangId,true);
         return $cssList;   
     }
     
     protected function RenderJs()
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $cssList = $content->GetJsList(self::$UserGroupId,$this->LangId,true);
         return $cssList;   
     }

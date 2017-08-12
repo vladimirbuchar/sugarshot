@@ -1,7 +1,7 @@
 <?php
 
 namespace Objects;
-class Users extends ObjectManager{
+class Langs extends ObjectManager{
     public function __construct() {
         parent::__construct();
     }

@@ -143,7 +143,7 @@ class Settings extends SettingsController {
         $table->ShowHistoryButton = false;
         $table->ShowExportAllButton = false;
         $table->AddScriptAction = "SavePrivileges();";
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $mailList = $content->GetMailList(self::$UserGroupId, $this->LangId, true, "", "Name ASC");
         $this->SetTemplateData("MailListAdmin", $mailList);
 
@@ -692,7 +692,7 @@ class Settings extends SettingsController {
             return;
         $source = $ajaxParametrs["SourceLang"];
         $dest = $ajaxParametrs["DestinationLang"];
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $content->CopyLang($source, $dest);
     }
 

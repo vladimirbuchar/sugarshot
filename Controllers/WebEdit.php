@@ -1,9 +1,9 @@
 <?php 
 namespace Controller;
-use Model\ContentVersion;
+
 use Model\Langs;
 use Model\UserGroups;
-use Model\ContentSecurity;
+
 use Model\UserDomainsItems;
 use Model\UserDomains;
 use Utils\ArrayUtils;
@@ -162,7 +162,7 @@ class WebEdit extends AdminController {
         $ajaxParametrs = $this->PrepareAjaxParametrs(); 
         
             
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $linkId = empty($ajaxParametrs["LinkId"]) ? 0 :$ajaxParametrs["LinkId"];
         $objectLinkId = empty($ajaxParametrs["ObjectLinkId"]) ? 0 :$ajaxParametrs["ObjectLinkId"];
         $linkInfo = empty($ajaxParametrs["LinkInfo"]) ? array() :$ajaxParametrs["LinkInfo"];
@@ -182,7 +182,7 @@ class WebEdit extends AdminController {
     public function GetSeoUrlById()
     {
         $ajaxParametrs = $this->PrepareAjaxParametrs(); 
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $data = $content->GetUserItemDetail($ajaxParametrs["Id"],self::$UserGroupId,$this->WebId,$this->LangId);
         $seoUrl = $data[0]["SeoUrl"];
         $seoUrl =  StringUtils::StartWidth($seoUrl, "/") ? $seoUrl:"/".$seoUrl;
@@ -200,7 +200,7 @@ class WebEdit extends AdminController {
     public function Tree() {
         
         $this->SetStateTitle($this->GetWord("word135"));
-        $contentVersion =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $tree = $contentVersion->GetTree($_GET["langid"]);
         $html = $contentVersion->CreateHtml($tree);
         $this->SetTemplateData("tree", $html);
@@ -296,7 +296,7 @@ class WebEdit extends AdminController {
     }
 
     public function CreateTreeCss($search ="") {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $cssList = $content->GetCssList(self::$User->GetUserGroupId(),$this->LangId,false,$search);
         $html = $content->CreateHtml($cssList);
         return $html;
@@ -304,27 +304,27 @@ class WebEdit extends AdminController {
     
     public function CreateTreeDiscusion($search ="") {
         
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $cssList = $content->GetDiscusionList(self::$User->GetUserGroupId(),$this->LangId,false,$search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
 
     public function CreateTreeForms($search="") {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $cssList = $content->GetFormsList(self::$User->GetUserGroupId(),$this->LangId,false,$search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
     public function CreateTreeMailing($search="") {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $cssList = $content->GetMailingList(self::$User->GetUserGroupId(),$this->LangId,false,$search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
 
     public function CreateTreeMail($search="") {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $cssList = $content->GetMailList(self::$User->GetUserGroupId(), $this->LangId,false,$search);
         $html = $content->CreateHtml($cssList);
         return $html;
@@ -332,7 +332,7 @@ class WebEdit extends AdminController {
     
     public function CreateTreeSendMail()
     {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $data = $content->GetSendMailList($this->WebId, $this->LangId);
         
         $header = array();
@@ -345,7 +345,7 @@ class WebEdit extends AdminController {
     }
     public function CreateTreeTrash()
     {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $data = $content->GetDeletedObjects($this->WebId, $this->LangId);
         return $data;
     } 
@@ -353,14 +353,14 @@ class WebEdit extends AdminController {
             
 
     public function CreateTreeJs($search="") {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $cssList = $content->GetJsList(self::$User->GetUserGroupId(),$this->LangId,false,$search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
 
     public function CreateTree($search = "") {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $templatesList = $content->GetTemplateList(self::$User->GetUserGroupId(), $this->LangId,false,false,$search,"Name ASC");
         
         if (empty($templatesList))
@@ -380,7 +380,7 @@ class WebEdit extends AdminController {
         $this->SetStateTitle($this->GetWord("word236"));
         $this->SetLeftMenu("contentMenu", "contentMenuFileRepository");
         $this->SetUserGroupList();
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $this->GetObjectId();
 
 
@@ -426,7 +426,7 @@ class WebEdit extends AdminController {
         if (empty($ajaxParametrs))
             return;
 
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         return $content->GetArticleDiscusion($id);
     }
@@ -437,7 +437,7 @@ class WebEdit extends AdminController {
         $userGroup = UserGroups::GetInstance();
         $userGroupList = $userGroup->GetUserGroups(array("system"));
         $this->SetTemplateData("GroupList", $userGroupList);
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         if (empty($_GET["id"])) { 
             $this->SetTemplateData("id", 0);
             $this->SetTemplateData("IsNew", TRUE);
@@ -480,7 +480,7 @@ class WebEdit extends AdminController {
         $this->SetStateTitle($this->GetWord("word236"));
         $this->SetLeftMenu("contentMenu", "contentMenuWeb");
         $id = $this->GetObjectId();
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         
         $data = $content->GetUserItemDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId,$this->GetVersionId());
         $createLangVersion = false;
@@ -638,7 +638,7 @@ class WebEdit extends AdminController {
         
         $this->SetLeftMenu("contentMenu", "contentMenuFormsList");
         $this->SetUserGroupList();
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $this->GetObjectId();
         
        
@@ -704,7 +704,7 @@ class WebEdit extends AdminController {
         $userGroup = UserGroups::GetInstance();
         $userGroupList = $userGroup->GetUserGroups(array("system"));
         $this->SetTemplateData("GroupList", $userGroupList);
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $this->GetObjectId();
         $data = $content->GetMailDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId,$this->GetVersionId());
         if (empty($data))
@@ -762,7 +762,7 @@ class WebEdit extends AdminController {
        $this->AddScript("/Scripts/ExternalApi/css-hint.js");
         $this->SetLeftMenu("contentMenu", "contentMenuCss"); 
         $id =  $this->GetObjectId();
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $data = $content->GetCssDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId,$this->GetVersionId());
         if (empty($data))
             $data = $content->GetCssDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->GetLastEditLangVersion());
@@ -798,7 +798,7 @@ class WebEdit extends AdminController {
         $this->AddScript("/Scripts/ExternalApi/javascript.js");
         $this->AddScript("/Scripts/ExternalApi/javascript-hint.js");
         $id =  $this->GetObjectId();
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $data = $content->GetJsDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId,$this->GetVersionId());
         if (empty($data))
         {
@@ -838,7 +838,7 @@ class WebEdit extends AdminController {
         $this->SetLeftMenu("contentMenu", "contentMenuTemplate");
 
         $id = $this->GetObjectId();
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $data = $content->GetTemplateDetail(self::$UserGroupId, $this->WebId, $this->LangId,$id, $this->GetVersionId());
         if (empty($data))
         {
@@ -896,7 +896,7 @@ class WebEdit extends AdminController {
         
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         $templateSettings = $ajaxParametrs["TemplateSettings"];
         if ($id == 0)
@@ -916,7 +916,7 @@ class WebEdit extends AdminController {
             return;
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
 
         $id = $ajaxParametrs["Id"];
 
@@ -937,7 +937,7 @@ class WebEdit extends AdminController {
             return;
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $ajaxParametrs["Id"];
 
         if ($id == 0) {
@@ -956,7 +956,7 @@ class WebEdit extends AdminController {
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["Id"];
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         return $content->DeleteItem($id) ? "TRUE" : "FALSE";
     }
     
@@ -965,7 +965,7 @@ class WebEdit extends AdminController {
         $ajaxParametrs = array();
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         $id = $ajaxParametrs["Id"];
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $content->RecoveryItem($id);
     }
             
@@ -1053,7 +1053,7 @@ class WebEdit extends AdminController {
         $useTemplateInChild = $ajaxParametrs["UseTemplateInChild"] == "1" || $ajaxParametrs["UseTemplateInChild"] == 1 ? true: false;
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         $data = $ajaxParametrs["Parametrs"];
         unset($ajaxParametrs["Parametrs"]);
@@ -1084,7 +1084,7 @@ class WebEdit extends AdminController {
             return;
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         $data = $ajaxParametrs["Parametrs"];
 
@@ -1108,7 +1108,7 @@ class WebEdit extends AdminController {
             return;
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $ajaxParametrs["Id"];
 
         if ($id == 0) {
@@ -1124,7 +1124,7 @@ class WebEdit extends AdminController {
         
         if (empty($ajaxParametrs))
             return;
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         
         $templateId = $ajaxParametrs["Id"];
         $domain = UserDomainsItems::GetInstance();
@@ -1169,7 +1169,7 @@ class WebEdit extends AdminController {
             return;
         $identificator = $ajaxParametrs["Identifcator"];
         $data = "";
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         if (!empty($ajaxParametrs["ObjectId"]))
         {
             $objectId  = $ajaxParametrs["ObjectId"];
@@ -1203,7 +1203,7 @@ class WebEdit extends AdminController {
         $sourceId = $ajaxParametrs["sourceId"];
 
         $destinationId = $ajaxParametrs["destinationId"];
-        $contentVersion =  ContentVersion::GetInstance();
+        $contentVersion =  new \Objects\Content();
         return $contentVersion->Move($sourceId, $destinationId) ? "TRUE" : "FALSE";
     }
 
@@ -1221,7 +1221,7 @@ class WebEdit extends AdminController {
         $sourceId = $ajaxParametrs["sourceId"];
 
         $destinationId = $ajaxParametrs["destinationId"];
-        $contentVersion =  ContentVersion::GetInstance();
+        $contentVersion =  new \Objects\Content();
         return $contentVersion->Copy($_GET["langid"], $_GET["webid"], $sourceId, $destinationId) ? "TRUE" : "FALSE";
     }
 
@@ -1231,7 +1231,7 @@ class WebEdit extends AdminController {
         $this->SetLeftMenu("contentMenu","contentMenuFileRepository");
         $this->SetStateTitle($this->GetWord("word236"));
         $this->SetUserGroupList();
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $this->GetObjectId();    
         $data = $content->GetFileFolderDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId,$this->GetVersionId());
         if (empty($data))
@@ -1275,7 +1275,7 @@ class WebEdit extends AdminController {
             return;
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         if ($id == 0) {
             $id = $content->CreateFileFolder($ajaxParametrs["Name"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $_GET["langid"], $_GET["param1"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $privileges);
@@ -1295,7 +1295,7 @@ class WebEdit extends AdminController {
             return;
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         $data = $ajaxParametrs["Parametrs"];
         if ($id == 0) {
@@ -1385,7 +1385,7 @@ class WebEdit extends AdminController {
     }
 
     private function CanWriteParent($parentId) {
-        $contentSecurity =  ContentSecurity::GetInstance();
+        $contentSecurity =  new \Objects\Content();
         
         return $contentSecurity->CanPrivileges($parentId, self::$UserGroupId, "canWrite");
     }
@@ -1430,7 +1430,7 @@ class WebEdit extends AdminController {
     {
         if ($templateId == 0)
             return;
-        $content = ContentVersion::GetInstance();
+        $content = new  \Objects\Content();
         if (!$content->ItemExistsInLang($templateId, $this->LangId))
         {
             $templateData = $content->GetTemplateDetail(self::$UserGroupId, $this->WebId, $sourceLangId, $templateId);
@@ -1447,7 +1447,7 @@ class WebEdit extends AdminController {
     {
         if ($id == 0)
             return;
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         if (!$content->ItemExistsInLang($id, $this->LangId))
         {
             $userItem = $content->GetUserItemDetail($id, self::$UserGroupId, $this->WebId, $sourceLang);
@@ -1464,7 +1464,7 @@ class WebEdit extends AdminController {
     {
         if ($id == 0)
             return;
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         if (!$content->ItemExistsInLang($id, $this->LangId))
         {
             $userItem = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $sourceLang);
@@ -1510,7 +1510,7 @@ class WebEdit extends AdminController {
         switch ($type)
         {
             case "useritem":
-                $contentVersion = ContentVersion::GetInstance();
+                $contentVersion = new \Objects\Content();
                 $tree = $contentVersion->GetTree($this->LangId,0,$search);
                 $html = $contentVersion->CreateHtml($tree);
                 break;
@@ -1542,7 +1542,7 @@ class WebEdit extends AdminController {
                 $html = $this->CreateTreeDiscusion($search);
                 break;
             case "file":
-                $contentVersion =  ContentVersion::GetInstance();
+                $contentVersion =  new \Objects\Content();
                 $tree = $contentVersion->GetFileTree($this->LangId,0,$search);
                 $html = $contentVersion->CreateHtml($tree);
                 break;
@@ -1557,7 +1557,7 @@ class WebEdit extends AdminController {
         $id = $_POST["params"];
         $lang = Langs::GetInstance();
         $lang->GetObjectById($this->LangId,true);
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $detail = $content->GetUserItemDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         return $lang->RootUrl."preview/".$detail[0]["SeoUrl"]."/";        
     }
@@ -1567,7 +1567,7 @@ class WebEdit extends AdminController {
         if (empty($ajaxParametrs))
             return;
         /** @var \Model\ContentVersion */
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $mode = $ajaxParametrs["Mode"];
         $id = $ajaxParametrs["Id"];
         $contentType = $ajaxParametrs["ContentType"];
@@ -1577,7 +1577,7 @@ class WebEdit extends AdminController {
     public function GetLinkDetail()
     {
         $id = $_GET["params"];
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $res =  $content->GetLinkDetail($id,$this->WebId,$this->LangId);
         $xml = $res[0]["Data"];
         $ar = ArrayUtils::XmlToArray($xml);
@@ -1596,14 +1596,14 @@ class WebEdit extends AdminController {
     public function NoPublishItems()
     {
         $this->SetStateTitle($this->GetWord("word539"));
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $items = $content->GetNoPublishItems($this->LangId);
         $this->SetTemplateData("items", $items);
     }
     public function PublishItem()
     {
         $id = $_POST["params"];
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         return $content->PublishItem($id,$this->LangId)? "true":"false";
     }
     public function MailingDetail()
@@ -1612,7 +1612,7 @@ class WebEdit extends AdminController {
         $this->SetStateTitle($this->GetWord("word236"));
         $this->SetLeftMenu("contentMenu", "contentMenuMailing");
         $this->SetUserGroupList();
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $id = $this->GetObjectId();
         
         $data = $content->GetMailingDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId,$this->GetVersionId());
@@ -1667,7 +1667,7 @@ class WebEdit extends AdminController {
             return;
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
 
         if ($id == 0) {
@@ -1749,7 +1749,7 @@ class WebEdit extends AdminController {
         $emailid = $ajaxParametrs["Email"];
         $mailingGroupId = $ajaxParametrs["MailingGroup"];
         $from = $ajaxParametrs["MailSender"];
-        $mailing = ContentVersion::GetInstance();
+        $mailing = new \Objects\Content();
         $mailing->SendMailing($id,self::$UserGroupId,$this->WebId,$this->LangId,$emailid,$mailingGroupId,$from);
         
     }
@@ -1761,7 +1761,7 @@ class WebEdit extends AdminController {
         
     }
     public function CreateTreeDataSource($search ="") {
-        $content = new ContentVersion();
+        $content = new \Objects\Content();
         $cssList = $content->GetDataSourceList(self::$User->GetUserGroupId(),$this->LangId,false,$search);
         $html = $content->CreateHtml($cssList);
         return $html;
@@ -1783,7 +1783,7 @@ class WebEdit extends AdminController {
         $this->AddScript("/Scripts/ExternalApi/htmlmixed/htmlmixed.js");
         $templateData = array();
         $id = $this->GetObjectId();
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $data = $content->GetDataSourceDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId,$this->GetVersionId());
         if (empty($data))
         {
@@ -1826,7 +1826,7 @@ class WebEdit extends AdminController {
         }
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         if ($id == 0) {
             $id = $content->CreateDataSource($ajaxParametrs["Name"], $privileges, $ajaxParametrs["SeoUrl"],$ajaxParametrs["Data"], $_GET["param1"], $_GET["langid"], $ajaxParametrs["Publish"]);
@@ -1844,13 +1844,13 @@ class WebEdit extends AdminController {
     }
     public function GetSelectedObjectName()
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         return $content->GetNameObject($_POST["params"], $this->LangId);
     }
     
     public function GetDomainIdByUserItemId()
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         return $content->GetUserItemDomainId($_POST["params"]);
     }
     
@@ -1864,7 +1864,7 @@ class WebEdit extends AdminController {
     }
     public function CallDataSourceImport()
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $data = array();
         $rootUrl = $this->GetRoorUrl();
         $data = $content->GetDataSourceDetail($_POST["params"], self::$UserGroupId, $this->WebId, $this->LangId);
@@ -1876,7 +1876,7 @@ class WebEdit extends AdminController {
     public function CheckFile()
     {
         
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $data = array();
         $rootUrl = $this->GetRoorUrl();
         $data = $content->GetDataSourceDetail($_POST["params"], self::$UserGroupId, $this->WebId, $this->LangId);
@@ -1886,7 +1886,7 @@ class WebEdit extends AdminController {
     }
     public function CallDataSourceExport()
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $data = $content->GetDataSourceDetail($_POST["params"], self::$UserGroupId, $this->WebId, $this->LangId);
         $rooturl = $this->GetRoorUrl()."xmldownload/";
         return $rooturl.$data[0]["SeoUrl"].".xml";
@@ -1900,7 +1900,7 @@ class WebEdit extends AdminController {
         $type = $ajaxParametrs["Type"];
         $id = $ajaxParametrs["Id"];
         
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $data = array();
         switch ($type)
         {
@@ -1943,7 +1943,7 @@ class WebEdit extends AdminController {
     }
     public function GenerateXmlItem()
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $data = $content->GenerateXmlItem($_POST["params"],$this->LangId,self::$UserGroupId,$this->WebId);
         return $data;   
     }
@@ -1956,7 +1956,7 @@ class WebEdit extends AdminController {
     }
     
     public function CreateTreeInqury($search ="") {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $cssList = $content->GetInquryList(self::$User->GetUserGroupId(),$this->LangId,false,$search);
         $html = $content->CreateHtml($cssList);
         return $html;
@@ -1968,7 +1968,7 @@ class WebEdit extends AdminController {
         $this->SetStateTitle($this->GetWord("word615"));
         $this->SetLeftMenu("contentMenu", "contentMenuInqury");
         $id =  $this->GetObjectId(); 
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $data = $content->GetInqueryDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId,$this->GetVersionId());
         if (empty($data))
             $data = $content->GetInqueryDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->GetLastEditLangVersion());
@@ -2002,7 +2002,7 @@ class WebEdit extends AdminController {
             return;
         $privileges = $ajaxParametrs["Privileges"]; 
         unset($ajaxParametrs["Privileges"]);
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         if ($id == 0) {
             $id = $content->CreateInquery($ajaxParametrs["Name"], $privileges, $ajaxParametrs["Data"], $_GET["param1"], $_GET["langid"], $ajaxParametrs["Publish"]);
@@ -2024,7 +2024,7 @@ class WebEdit extends AdminController {
     
    public function GetAlternativeItem()
    {
-       $content = ContentVersion::GetInstance();
+       $content = new \Objects\Content();
        return $content->GetAlternativeItems($_GET["params"],$this->LangId);
    }
    
@@ -2065,13 +2065,13 @@ class WebEdit extends AdminController {
     }
     private function SetHistoryList($id)
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $history = $content->GetObjectHistoryList($id, $this->WebId, $this->LangId);
         $this->SetTemplateData("HistoryList", $history);
     }
     private function SetInqueryList($inqueryId )
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $inguery = $content->GetInquryList(self::$UserGroupId,  $this->LangId, true,"","Name collate utf8_czech_ci");
         foreach ($inguery as $row) {
             $row["selected"] = "";
@@ -2086,7 +2086,7 @@ class WebEdit extends AdminController {
     
     private function SetDiscusionList($connId)
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $inguery = $content->GetDiscusionList(self::$UserGroupId,  $this->LangId, true,"","Name collate utf8_czech_ci");
         foreach ($inguery as $row) {
             $row["selected"] = "";
@@ -2100,7 +2100,7 @@ class WebEdit extends AdminController {
     }
     private function SetFormList($formId)
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $formList = $content->GetFormsList(self::$UserGroupId,  $this->LangId, true,"","Name collate utf8_czech_ci");
         foreach ($formList as $row) {
             $row["selected"] = "";
@@ -2141,7 +2141,7 @@ class WebEdit extends AdminController {
     }
     private function SetTemplateList($templateId,$childTemplateId)
     {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $templateList = $content->GetTemplateList(self::$UserGroupId,$this->LangId, true, false,"","Name collate utf8_czech_ci");
         foreach ($templateList as $row) {
             $row["Selected"] = "";
@@ -2183,7 +2183,7 @@ class WebEdit extends AdminController {
             return;
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $id = $ajaxParametrs["ObjectId"];
         if ($id == 0)
         {
@@ -2198,7 +2198,7 @@ class WebEdit extends AdminController {
     public function FileManager()
     {
         $this->SetStateTitle($this->GetWord("word102"));
-        $contentVersion =  ContentVersion::GetInstance();
+        $contentVersion =  new \Objects\Content();
         $tree = $contentVersion->GetFileTree($_GET["langid"]);
         $html = $contentVersion->CreateHtml($tree);
         $this->SetTemplateData("tree", $html);
@@ -2210,7 +2210,7 @@ class WebEdit extends AdminController {
         /** @var 
           \Model\ContentVersion
          */ 
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $folderId = $content->GetIdByIdentificator("langfolder",$_GET["webid"]);
         return $folderId;
         
@@ -2222,7 +2222,7 @@ class WebEdit extends AdminController {
           \Model\ContentVersion
          */ 
        
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $content->DeleteLangVersion($_GET["params"],$_GET["langid"]);
         
     }
@@ -2238,7 +2238,7 @@ class WebEdit extends AdminController {
     public function UpdateFormStatisticItem()
     {
         $ajaxParametrs = $this->PrepareAjaxParametrs();
-        $content = \Model\ContentVersion::GetInstance(); 
+        $content = new \Objects\Content();
         $content->UpdateFormStatisticItem($ajaxParametrs["Id"],$ajaxParametrs["ItemId"],$ajaxParametrs["ItemValue"]);
         
     }

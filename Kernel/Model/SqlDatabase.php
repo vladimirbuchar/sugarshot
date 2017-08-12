@@ -448,6 +448,11 @@ class SqlDatabase {
     {
         \dibi::commit();
     }
+    public function RollbackTransaction()
+    {
+        \dibi::rollback();
+    }
+    
     
     
     

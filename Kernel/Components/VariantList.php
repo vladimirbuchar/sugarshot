@@ -18,7 +18,7 @@ class VariantList extends UserComponents{
     
     public function GetComponentHtml()
     {
-        $content =  \Model\ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         if (!empty($_GET["seourl"])) 
             $this->LoadUrl = $_GET["seourl"];
         $childs = $content->LoadFrontendFromSeoUrl($this->LoadUrl, self::$UserGroupId, $this->LangId, $this->WebId,0,"",true,true);

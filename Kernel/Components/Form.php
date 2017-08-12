@@ -11,7 +11,7 @@ class Form extends UserComponents{
     }     
     public function GetComponentHtml()
     {
-        $content =  \Model\ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = 0;
         //$content->GetFormIdBySeoUrl($seourl, $langid, $webid)
         if (!empty($this->DataSource))

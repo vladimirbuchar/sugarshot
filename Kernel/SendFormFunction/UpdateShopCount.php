@@ -12,7 +12,7 @@ class UpdateShopCount extends \SendFormFunction\SendFormFunction
      {
         $shop = new \xweb_plugins\Shop();
         $cart = $shop->GetCart();
-        $content = \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         
         foreach ($cart  as $row)
         {

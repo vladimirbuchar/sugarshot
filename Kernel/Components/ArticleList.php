@@ -35,7 +35,7 @@ class ArticleList extends UserComponents{
     
     public function GetComponentHtml()
     {
-        $content =  \Model\ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $pagerHtml = "";
         $sortHtml = "";
         $filtrHtml = "";

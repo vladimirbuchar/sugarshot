@@ -194,7 +194,7 @@ class ContentFrontend extends Content {
                 if ($row["ContentType"] == ContentTypes::$Link) {
                     $xml = $row["Data"];
                     $ar = ArrayUtils::XmlToArray($xml);
-                    $contentLink = \Model\ContentVersion::GetInstance();
+                    $contentLink = new \Objects\Content();
                     if ($ar["item"]["LinkType"] == LinkType::$Document)
                     {
                         $linkInfo = $contentLink->GetUserItemDetail($ar["item"]["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId,0,true);

@@ -50,7 +50,7 @@ class Menu extends UserComponents{
             if ($row["ContentType"] == ContentTypes::$Link) {
                 $xml = $row["Data"];
                 $ar = ArrayUtils::XmlToArray($xml);
-                $contentLink =  \Model\ContentVersion::GetInstance();
+                $contentLink =  new \Objects\Content();
                 if ($ar["item"]["LinkType"] == LinkType::$Document || $ar["item"]["LinkType"] == LinkType::$Form)
                 {
                     $link->Href = "/".$lang.$row["SeoUrl"];
@@ -113,7 +113,7 @@ class Menu extends UserComponents{
         
     }
     public function GetComponentHtml(){
-        $content =  \Model\ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $contentId = $content->GetIdByIdentificator($this->MainParent,$this->WebId);
         //$data = $content->LoadFrontend($contentId, self::$UserGroupId, $this->LangId, $this->WebId, 0, "", true, FALSE, FALSE, $this->AcceptUserTeplates, "",true);
         $data = $this->GetDataSource($contentId);

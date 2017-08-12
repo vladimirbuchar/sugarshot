@@ -12,7 +12,7 @@ class Inquery extends UserComponents{
     }     
     public function GetComponentHtml()
     {
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         $id = $content->GetSurveyId($_GET["seourl"], $this->LangId, $this->WebId);
         $form = new Forms();
         return $form->GenerateInqueryForm($id);

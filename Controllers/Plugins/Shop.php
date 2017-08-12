@@ -5,7 +5,7 @@ namespace Controller;
 use Model\DiscusionItems;
 use Model\UsersInGroup;
 use Utils\StringUtils;
-use Model\ContentVersion;
+
 
 class Shop extends Controllers {
 

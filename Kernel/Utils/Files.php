@@ -105,7 +105,7 @@ class Files {
 
     public static function UploadFiles() {
         $filePath = self::FileUpload();
-        $content =  \Model\ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         //$data="<items><FileUpload><![CDATA[$filePath]]></FileUpload></items>";
         $data[0][0] = "FileUpload";
         $data[0][1] = "$filePath";

@@ -7,7 +7,7 @@ use Controller\Templates;
 use Model\Users;
 use Utils\Utils;
 use Types\xWebExceptions;
-use Model\ContentVersion;
+
 use Smarty;
 use Dibi;
 use Utils\Files;
@@ -562,20 +562,20 @@ class Page {
 
     public static function LoadCss() {
         header("Content-type: text/css");
-        $content =  ContentVersion::GetInstance();
+        $content =  new \Objects\Content();
         return  self::CompressString($content->GetFrontendCss($_GET["id"], $_GET["langId"]));
     }
 
     public static function LoadJs() {
         header("Content-type: text/javascript");
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         return  self::CompressString($content->GetFrontendJs($_GET["id"], $_GET["langId"]));
     }
 
     public static function LoadXml() {
         header('Content-type: application/xml');
         header("Content-length: 0");
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $cssDetail = $content->GetFrontendXml($_GET["SeoUrl"]);
         $cssDetail = self::RenderXWebComponent($cssDetail);
         $cssDetail = str_replace("##%#","<%",$cssDetail);
@@ -592,17 +592,17 @@ class Page {
     }
 
     public static function XmlImport() {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $content->XmlImport($_GET["SeoUrl"]);
     }
 
     public static function CheckXmlImport() {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $content->CheckXml($_GET["SeoUrl"]);
     }
 
     public static function XmlDownload() {
-        $content = ContentVersion::GetInstance();
+        $content = new \Objects\Content();
         $content->XmlDownload($_GET["SeoUrl"]);
     }
 
