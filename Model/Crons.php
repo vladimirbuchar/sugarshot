@@ -28,7 +28,7 @@ class Crons extends DatabaseTable {
         $colLangName->DefaultValue = "";
         $colLangName->Name = "CronName";
         $colLangName->Type = "varchar";
-        $colLangIdentificator->Length = 255;
+        $colLangName->Length = 255;
         $colLangName->Mode = AlterTableMode::$AddColumn;
         $this->AddColumn($colLangName);
 
@@ -73,7 +73,7 @@ class Crons extends DatabaseTable {
     }
 
     public function InsertDefaultData() {
-        
+        $this->Setup($this);
     }
 
     public function SetValidate($mode = false) {

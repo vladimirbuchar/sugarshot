@@ -1,3 +1,5 @@
-INSERT INTO `AdminLangs` (`Id`, `Deleted`, `IsSystem`, `LangName`, `LangIdentificator`) VALUES (1, 0, 0, 'Čeština', 'CS'),
+INSERT INTO `AdminLangs` (`Id`, `Deleted`, `IsSystem`, `LangName`, `LangIdentificator`) VALUES
+(1, 0, 0, 'Čeština', 'CS'),
 (6, 0, 0, 'Angličtina', 'EN'),
-(8, 0, 0, 'Ruština', 'RU');
+(7, 0, 0, 'Slovenština', 'SK'),
+(8, 0, NULL, 'Ruština', 'RU');

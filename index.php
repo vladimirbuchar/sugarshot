@@ -1,6 +1,8 @@
 <?php
  
 try{
+
+
         
         session_start();
         $now = time();
@@ -28,16 +30,8 @@ try{
         include_once './settings_global.php';
         \Kernel\Page::GetConfigByDomain();
         include_once './settings.php';
-            $options = array(
-            'driver'   => SQL_DRIVER,
-            'host'     => SQL_SERVER,
-            'username' => SQL_LOGIN,
-            'password' => SQL_PASSWORD,
-            'database' => SQL_DATABASE,
-            'charset'  => CHARSET    
-        );
         
-        dibi::connect($options);
+            
         
         $ajaxMode = (!empty($_GET["ajax"]) || !empty($_POST["ajax"]))? true: false;
         $fileUpload = (!empty($_GET["fileUpload"]) || !empty($_POST["fileUpload"]))? true: false;
@@ -60,7 +54,33 @@ try{
         $iframe = (!empty($_GET["iframe"]))? true:false;
         $robots = (!empty($_GET["robots"]))? true:false;
         $sitemap= (!empty($_GET["sitemap"]))? true:false;
-        
+        if ($updatemodel)
+        {
+            
+            $options = array(
+                'driver'   => SQL_DRIVER,
+                'host'     => SQL_SERVER,
+                'username' => SQL_LOGIN,
+                'password' => SQL_PASSWORD,
+                'database' => "",
+                'charset'  => CHARSET    
+            );
+            \dibi::connect($options);
+            \dibi::query("CREATE DATABASE IF NOT EXISTS ". SQL_DATABASE);
+            \dibi::query("USE ".SQL_DATABASE);
+        }
+        else 
+        {
+            $options = array(
+                'driver'   => SQL_DRIVER,
+                'host'     => SQL_SERVER,
+                'username' => SQL_LOGIN,
+                'password' => SQL_PASSWORD,
+                'database' => SQL_DATABASE,
+                'charset'  => CHARSET    
+            );
+            dibi::connect($options);
+        }
         if ($showPhpInfo)
         {
             phpinfo();
@@ -70,6 +90,7 @@ try{
     
         if ($updatemodel)
         {
+           
             Kernel\Page::StartUpdateModel();
             return;
         }

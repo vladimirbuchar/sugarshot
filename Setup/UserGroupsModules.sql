@@ -1,4 +1,4 @@
-INSERT INTO `UserGroupsModules` VALUES
+INSERT INTO `UserGroupsModules` (`Id`, `Deleted`, `IsSystem`, `UserGroupId`, `ModuleId`) VALUES
 (440, 0, 0, 9, 6),
 (441, 0, 0, 9, 7),
 (442, 0, 0, 9, 8),

@@ -1,4 +1,4 @@
-INSERT INTO `Modules` VALUES
+INSERT INTO `Modules` (`Id`, `Deleted`, `IsSystem`, `WebId`, `ModuleName`, `ModuleControler`, `ModuleView`) VALUES
 (6, 0, 0, 0, '<!--{$word143}-->', 'UsersItem', 'MyProfile'),
 (7, 0, 0, 0, '<!--{$word136}-->', 'WebEdit', 'Tree'),
 (8, 0, 0, 0, '<!--{$word137}-->', 'WebEdit', 'TemplateEditor'),

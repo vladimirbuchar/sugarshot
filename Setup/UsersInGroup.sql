@@ -1,4 +1,4 @@
-INSERT INTO `UsersInGroup` VALUES
+INSERT INTO `UsersInGroup` (`Id`, `Deleted`, `IsSystem`, `UserId`, `GroupId`, `IsMainGroup`) VALUES
 (21, 0, 0, 0, 4, 1),
 (22, 0, 0, 0, 4, 1),
 (25, 0, 0, 3, 4, 1),

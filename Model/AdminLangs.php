@@ -40,7 +40,7 @@ class AdminLangs extends DatabaseTable {
     }
 
     public function InsertDefaultData() {
-        
+        $this->Setup($this);
     }
 
     public function TableMigrate() {

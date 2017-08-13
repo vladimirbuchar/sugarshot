@@ -504,8 +504,8 @@ class Page {
             
         // nejdříve zkontrolujeme a případně upteneme model
         if (UPDATE_MODEL && Page::IsDeveloperIp() || !empty($_GET["updatemodel"]) || $upadateModel) {
-
-
+            
+            
             // tabulky
             $folderContent = Folders::GetObjectsInFolder(MODEL_PATH, true);
             $folderContent = \Utils\ArrayUtils::GetColumnsvalue($folderContent, "Name");
@@ -814,7 +814,7 @@ class Page {
     }
     public static function IsLocalHost()
     { 
-        if (StringUtils::ContainsString(SERVER_NAME,"localhost") || StringUtils::EndWith(SERVER_NAME,".dev") || StringUtils::ContainsString(SERVER_NAME,".dev:")) {
+        if (StringUtils::ContainsString(SERVER_NAME,"localhost")  || StringUtils::ContainsString(SERVER_NAME,".dev:")) {
             return true;
         }
         return false;
@@ -824,10 +824,12 @@ class Page {
     {
         if (self::IsLocalHost())
         {
+            
             if (Files::FileExists(ROOT_PATH."settings_localhost.php"))
                 {
                     include_once ROOT_PATH."settings_localhost.php";
                 }
+                return;
         }
         $serverUrl = SERVER_NAME;
         $serverUrl = StringUtils::RemoveString(SERVER_NAME, SERVER_PROTOCOL);

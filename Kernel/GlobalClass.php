@@ -74,6 +74,7 @@ class GlobalClass {
                 self::$IsAjax = TRUE;
         }
         
+        
         if (!self::$IsAjax) {
             $this->IsFrontend = empty($_GET) || !empty($_GET["seourl"]) || !empty($_GET["renderHtml"]) || !empty($_GET["lang"] || !empty($_GET["caching"]) || !empty($_GET["xml"])) ? true : false;
         } else {

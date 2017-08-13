@@ -249,7 +249,7 @@ class Content extends DatabaseTable {
     }
 
     public function InsertDefaultData() {
-        
+        $this->Setup($this);
     }
 
     public function SetValidate($mode = false) {

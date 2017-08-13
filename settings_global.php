@@ -3,9 +3,12 @@ setlocale(LC_ALL, "cs_CZ");
 date_default_timezone_set("Europe/Prague");
 
 $protocol = "http://";
-if ($_SERVER["HTTPS"] == "on")
+if (!empty($_SERVER["HTTPS"]))
 {
-    $protocol = "https://";
+    if ($_SERVER["HTTPS"] == "on")
+    {
+        $protocol = "https://";
+    }
 }
 GlobalSettings::DeclareConst("SERVER_PROTOCOL", $protocol);
 GlobalSettings::DeclareConst("HTTP_HOST",$_SERVER["HTTP_HOST"]);

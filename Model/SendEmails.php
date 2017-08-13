@@ -41,7 +41,7 @@ class SendEmails  extends DatabaseTable{
     
 
     public function InsertDefaultData() {
-        
+        $this->Setup($this);
     }
 
     

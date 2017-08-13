@@ -50,7 +50,7 @@ class UserGroupsWeb  extends DatabaseTable{
     }
 
     public function InsertDefaultData() {
-        //$this->Setup($this);
+        $this->Setup($this);
     }
 
     

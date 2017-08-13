@@ -359,7 +359,7 @@ class DatabaseTable extends SqlDatabase{
             $defaultValue = ($isValidDefault) ? "DEFAULT " . $row->DefaultValue : ""; 
             
             // typ sloupce
-            if ($row->Type == "INTEGER") {
+            if ($row->Type == "INTEGER" ||$row->Type == "varchar" ) {
                 if ($row->Length >= 255)
                     $row->Length = 255;
             }
@@ -840,9 +840,10 @@ class DatabaseTable extends SqlDatabase{
     private function  InitialDatabase($name)
     {
         $filePath = ROOT_PATH."Setup/$name";
+        
         if (Files::FileExists($filePath))
         {
-            $sql = \Kernel\Files::ReadFile($filePath);
+            $sql = \Utils\Files::ReadFile($filePath);
             $sql = trim($sql);  
             $this->QueryWithMysqli($sql);
         }  
