@@ -203,7 +203,7 @@ class Content extends ObjectManager {
         
         /** @var  \Model\Content */
         $content = Content::GetInstance();
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         $userId = $user->GetUserId();
         $content->ContentType = $contentType;
         $content->Sort = $sort;
@@ -362,7 +362,7 @@ class Content extends ObjectManager {
         }
 
         $content = Content::GetInstance();
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         $userId = $user->GetUserId();
         $content->GetObjectById($contentId, true);
 
@@ -431,7 +431,7 @@ class Content extends ObjectManager {
      private function UpdateItemInOtherLang($contentId,$templateId,$dataArray)
     {
         
-        $udi = UserDomainsItems::GetInstance();
+        $udi = new \Objects\UserDomains();
         $domainIden = $udi->GetUserDomainByTemplateId($templateId);
         $values = $udi->GetUserDomainItemByIdentificator($domainIden);
         $multiLangValue = array_filter($values,function($row){ 
@@ -612,7 +612,7 @@ class Content extends ObjectManager {
             $linkInfo[1][0] = "ObjectId";
             $linkInfo[1][1] = $objectId;
             $arrayXml[0]["ObjectId"] = $objectId;
-            $user = Users::GetInstance();
+            $user = new \Objects\Users();
             $data = array();
             
             if ($linkType == LinkType::$Document)
@@ -807,7 +807,7 @@ class Content extends ObjectManager {
     }
     
     public function CreateFormStatisticItem($lang, $parentid, $data) {
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         $ar1 = array();
         $ar1[0] = "UserIp";
         $ar1[1] = Utils::GetIp();
@@ -889,7 +889,7 @@ class Content extends ObjectManager {
         try {
             
             $security =  ContentSecurity::GetInstance();
-            $user = UserGroups::GetInstance();
+            $user = new \Objects\Users();
             $systemgroup = $user->GetUserGroupByIdeticator("system");
             $security->DeleteByCondition("ObjectId = $contentId", true, false);
 
@@ -1292,7 +1292,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function GetFrontendCss($contentId, $langId) {
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         $groupId = $user->GetUserGroupId();
         $res = dibi::query("SELECT * FROM  FRONTENEDCSS WHERE Id = %i  AND GroupId = %i AND LangId = %i", $contentId, $groupId, $langId)->fetchAll();
         return $res[0]["data"];
@@ -1300,7 +1300,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
 
     public function GetFrontendJs($contentId, $langId = 0) {
 
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         $groupId = $user->GetUserGroupId();
         $res = dibi::query("SELECT * FROM FRONTENEDJS WHERE Id = %i AND GroupId = %i AND  LangId = %i", $contentId, $groupId, $langId)->fetchAll();
 
@@ -1329,9 +1329,9 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         
         if (trim($xml->DatasourceType) == "XmlExport") {
             $outXml .= $xmlStart;
-            $domain = \Model\UserDomainsValues::GetInstance();
+            $domain = new \Objects\UserDomains();
             $values = $domain->GetDomainValueList(trim($xml->Domain));
-            $domainItems = \Model\UserDomainsItems::GetInstance();
+            $domainItems = new \Objects\UserDomains();
             $items = $domainItems->GetUserDomainItemById(trim($xml->Domain));
             $items = ArrayUtils::ValueAsKey($items, "Identificator");
             foreach ($values as $row) {
@@ -1353,7 +1353,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             $outXml .= $xmlEnd;
             return $outXml;
         } else if (trim($xml->DatasourceType) == "XmlExportUserItem") {
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $langId = $this->GetLangIdByWebUrl();
             $data = $this->LoadFrontend($xmlUserItem, $users->GetUserGroupId(), $langId, $this->GetActualWeb(),0,"",true,false,false,"","",true,$exportCondition,$exportColumnCondition);
             $data = ArrayUtils::GetChildToRoot($data, "Child");
@@ -1515,7 +1515,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                 $content = Content::GetInstance();
                 $content->DeleteByCondition("ParentId = $xmlUserItem");
             }
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $langId = $this->GetLangIdByWebUrl();
             $dataItem = $this->GetUserItemDetail($xmlUserItem, $users->GetUserGroupId(), 0, $langId);
             $useTemplateId = empty($dataItem[0]["ChildTemplateId"]) ? $dataItem[0]["TemplateId"] : $dataItem[0]["ChildTemplateId"];
@@ -1624,7 +1624,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         
         if ($mode == "")
             return;
-        $ud = \Model\UserDomainsItems::GetInstance();
+        $ud = new \Objects\UserDomains();
         /**
          * @var \Model\UserDomains
          *  
@@ -1636,7 +1636,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         /** 
          * @var \Model\UserDomainsValues
          */
-        $values = \Model\UserDomainsValues::GetInstance();
+        $values = new \Objects\UserDomains();
         if ($mode == "DeleteInsert") {
             $values->DeleteAllValues($domain);
             $mode = "Insert";
@@ -1687,7 +1687,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     private function XmlDetail($seoUrl) {
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         $groupId = $user->GetUserGroupId();
         $langId = $this->GetLangIdByWebUrl();
         $res = dibi::query("SELECT * FROM FRONTENDXML WHERE SeoUrl = %s AND GroupId = %i AND  LangId = %i", $seoUrl, $groupId, $langId)->fetchAll();
@@ -1998,7 +1998,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
 
     public function HasPrivileges($id, $privilegesName, $checkTree = false, $groupId = 0) {
         try{
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         if ($this->IsLink($id))
             return true;
         if ($groupId == 0) {
@@ -2181,7 +2181,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         if ($this->IsLink($destinationId))
             return FALSE;
 
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         $groupId = $user->GetUserGroupId();
         $rootCopy = $this->GetUserItemDetail($sourceId, $groupId, $webId, $langId);
         if (!empty($rootCopy)) {
@@ -2383,7 +2383,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         if ($sourceLang == $destinationLang)
             return;
 
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         $usergroup = $user->GetUserGroupId();
         $useritems = dibi::query("SELECT * FROM CONTENTTREE WHERE LangId = %i AND (ContentType= 'UserItem' OR ContentType= 'Link' OR ContentType= 'ExternalLink') AND Deleted = 0", $sourceLang)->fetchAll();
         $this->CopyLangItem($useritems, $sourceLang, $destinationLang, $usergroup, $user->GetUserId(), ContentTypes::$UserItem);
@@ -2429,27 +2429,27 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             $parentId = $this->GetParent($id);
             $res = dibi::query("SELECT * FROM CONTENTTREE WHERE LangId = %i AND (ContentType= 'UserItem' OR ContentType= 'Link' OR ContentType= 'ExternalLink') AND Deleted = 0 AND ParentId = %i ORDER BY Sort ASC", $_GET["langid"], $parentId)->fetchAll();
         } else if ($contentType == ContentTypes::$Template) {
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $res = $this->GetTemplateList($users->GetUserId(), $_GET["langid"], true);
         } else if ($contentType == ContentTypes::$Css || $contentType == ContentTypes::$CssExternalLink) {
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $res = $this->GetCssList($users->GetUserId(), $_GET["langid"], true);
         } else if ($contentType == ContentTypes::$Javascript || $contentType == ContentTypes::$JsExternalLink) {
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $res = $this->GetJsList($users->GetUserId(), $_GET["langid"], true);
         } else if ($contentType == ContentTypes::$Form) {
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $res = $this->GetFormsList($users->GetUserId(), $_GET["langid"], true);
         } else if ($contentType == ContentTypes::$Mail) {
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $res = $this->GetMailList($users->GetUserId(), $_GET["langid"], true);
         } else if ($contentType == ContentTypes::$FileFolder || $contentType == ContentTypes::$FileUpload) {
             $res = dibi::query("SELECT * FROM CONTENTTREE  WHERE LangId = %i AND (ContentType =  'FileFolder' OR ContentType =  'FileUpload')  AND Deleted = 0", $_GET["langid"])->fetchAll();
         } else if ($contentType == ContentTypes::$Mailing) {
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $res = $this->GetMailingList($users->GetUserId(), $_GET["langid"], true);
         } else if ($contentType == ContentTypes::$DataSource) {
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $res = $this->GetDataSourceList($users->GetUserId(), $_GET["langid"], true);
         }
 
@@ -2568,7 +2568,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function PublishItem($contentId, $langId) {
-        $user = Users::GetInstance();
+        $users = new \Objects\Users();
         if (!$this->HasPrivileges($contentId, PrivilegesType::$CanPublish))
             return false;
         $res = $this->SelectByCondition("ContentId = $contentId AND IsLast = 1 AND LangId = $langId");
@@ -2604,7 +2604,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function SendMailing($id, $groupId = 0, $webId = 0, $langId = 0, $emailid = 0, $mailingGroupId = 0, $from = "") {
-        $mailingGroup = MailingContactsInGroups::GetInstance();
+        $mailingGroup = new \Objects\MailingContacts();
         $emails = $mailingGroup->GetMailsInMailingGroups($mailingGroupId);
         foreach ($emails as $row) {
             $to = $row["Email"];
@@ -2655,7 +2655,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         if (trim($xml->DatasourceType) == "XmlExport") {
             if ($domain == 0)
                 return "";
-            $domainItem = \Model\UserDomainsItems::GetInstance();
+            $domainItem = new \Objects\UserDomains();
             $items = $domainItem->GetUserDomainItemById($domain);
             $xml = "";
             foreach ($items as $row) {
@@ -2663,7 +2663,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             }
             return $xml;
         } else if (trim($xml->DatasourceType) == "XmlExportUserItem") {
-            $users = Users::GetInstance();
+            $users = new \Objects\Users();
             $langId = $this->GetLangIdByWebUrl();
             if (empty($xmlUserItem))
                 return "";
@@ -2671,7 +2671,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             $detail = $this->GetUserItemDetail($xmlUserItem, $users->GetUserGroupId(), 0, $langId);
 
             $templateId = empty($detail[0]["ChildTemplateId"]) ? $detail[0]["TemplateId"] : $detail[0]["ChildTemplateId"];
-            $domainItems = \Model\UserDomainsItems::GetInstance();
+            $domainItems = new \Objects\UserDomains();
             $identificator = $domainItems->GetUserDomainByTemplateId($templateId);
             $items = $domainItems->GetUserDomainItems($identificator);
             $xml = "";
@@ -2796,7 +2796,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                  
             ", $contentId, $langId)->fetchAll();
         } else {
-            $userGroup = UserGroups::GetInstance();
+            $userGroup = new \Objects\Users();
             $tmp = $userGroup->ChangeSystemGroupToAdmin();
             $groupId = $tmp == 0 ? $groupId : $tmp;
             $res = dibi::query("SELECT Content.Identificator,ContentAlternative.AlternativeContentId, ContentAlternative.Id,ContentAlternative.ContentId,ContentVersion.Name AS ItemName, UserGroups.GroupName,ContentVersion.SeoUrl FROM ContentAlternative 

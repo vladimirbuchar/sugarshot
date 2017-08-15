@@ -82,7 +82,6 @@ class DatabaseTable extends SqlDatabase{
     {
         if (!$this->KeyExists($keyName))
         {
-            
             $columns = implode(",", $keyColumns);
             if ($keyType == KeyType::$INDEX)
                 dibi::query("ALTER TABLE `$this->ObjectName` ADD INDEX `$keyName` ($columns)");
@@ -449,7 +448,7 @@ class DatabaseTable extends SqlDatabase{
                 $action = DatabaseActions::$Truncate;
                 $this->SaveObjectHistory($row["Id"], $action, $row);
             }
-            $history = ObjectHistory::GetInstance();
+            $history = new \Objects\ObjectHistory();
             $history->DeactiveHistoryItem($this->ObjectName);
         }
         dibi::query("TRUNCATE TABLE $this->ObjectName");
@@ -694,7 +693,7 @@ class DatabaseTable extends SqlDatabase{
                     }
                     if ($row->RuleType == RuleType::$UserId)
                     {
-                        $u =  Users::GetInstance();
+                        $u = new \Objects\Users();
                         $value = $u->GetUserId();
                     }
 
@@ -781,8 +780,8 @@ class DatabaseTable extends SqlDatabase{
         if ($this->SaveHistory) {
             $className = "Model\\".$this->ObjectName;
             $obj = new $className();
-            $users =  Users::GetInstance();
-            $ohistory = ObjectHistory::GetInstance();
+            $users =  new \Objects\Users();
+            $ohistory = new \Objects\ObjectHistory();
             
             if ($data == null) {
                 $data = $obj->GetObjectById($id);
@@ -899,6 +898,11 @@ class DatabaseTable extends SqlDatabase{
         $className = "Model\\$materializedView";
         $view = new $className();
         $view->UpdateMaterializeView();
+    }
+    
+    public function RunTableMigrate($query)
+    {
+        \Dibi::query($query);
     }
             
             

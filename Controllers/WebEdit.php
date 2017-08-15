@@ -434,7 +434,7 @@ class WebEdit extends AdminController {
     public function Discusion() {
         $this->SetStateTitle($this->GetWord("word236"));
         $this->SetLeftMenu("contentMenu", "contentMenuDiscusionList");
-        $userGroup = UserGroups::GetInstance();
+        $userGroup = new \Objects\Users();
         $userGroupList = $userGroup->GetUserGroups(array("system"));
         $this->SetTemplateData("GroupList", $userGroupList);
         $content =  new \Objects\Content();
@@ -701,7 +701,7 @@ class WebEdit extends AdminController {
         $this->AddScript("/Scripts/ExternalApi/tinymce/tinymce.min.js");
         $this->SetStateTitle($this->GetWord("word236"));
         $this->SetLeftMenu("contentMenu", "contentMenuMailList");
-        $userGroup = UserGroups::GetInstance();
+        $userGroup = new \Objects\Users();
         $userGroupList = $userGroup->GetUserGroups(array("system"));
         $this->SetTemplateData("GroupList", $userGroupList);
         $content =  new \Objects\Content();
@@ -972,7 +972,7 @@ class WebEdit extends AdminController {
 
     private function PreparePrivilegesList($data, $securityValue, $groupId, $securityType) {
             
-        $ug = UserGroups::GetInstance();
+        $ug = new \Objects\Users();
         $groupList = $ug->GetUserGroups(array("system"));
         if (empty($data))
         {
@@ -1127,7 +1127,7 @@ class WebEdit extends AdminController {
         $content =  new \Objects\Content();
         
         $templateId = $ajaxParametrs["Id"];
-        $domain = UserDomainsItems::GetInstance();
+        $domain = new \Objects\UserDomains();
         $identificator = $domain->GetUserDomainByTemplateId($templateId);
         $data = "";
         if (!empty($ajaxParametrs["ObjectId"]))
@@ -1652,9 +1652,9 @@ class WebEdit extends AdminController {
         $this->SetHistoryList($id);
         $mailList = $content->GetMailList(self::$UserGroupId, $this->LangId, true,"","Name ASC");
         $this->SetTemplateData("MailList", $mailList);
-        $ud = UserDomains::GetInstance();
+        $ud = new \Objects\UserDomains();
         $domainDetail = $ud->GetDomainInfo("Mailinggroups");
-        $udv = UserDomainsValues::GetInstance();
+        $udv = new \Objects\UserDomains();
         $mailingGroups = $udv->GetDomainValueList($domainDetail["Id"]);
         $mailingGroups = ArrayUtils::SortArray($mailingGroups, "MailingGroupName", SORT_ASC);   
         $this->SetTemplateData("MailingGroup", $mailingGroups);
@@ -1839,7 +1839,7 @@ class WebEdit extends AdminController {
     
     public function GetDomainColumns()
     {
-        $ui = UserDomainsItems::GetInstance();
+        $ui = new \Objects\UserDomains();
         return $ui->GetUserDomainItemById($_GET["params"]);
     }
     public function GetSelectedObjectName()
@@ -1857,7 +1857,7 @@ class WebEdit extends AdminController {
     public function GetDomainItems()
     {
         $domainId = $_GET["params"];
-        $udi = \Model\UserDomainsItems::GetInstance();
+        $udi = new \Objects\UserDomains();
         $res = $udi->GetUserDomainItemById($domainId);
 //        print_r($res);die();
         return $res;
@@ -2045,7 +2045,7 @@ class WebEdit extends AdminController {
 /// funkce pro contnet
     private function SetUserGroupList()
     {
-        $userGroup = UserGroups::GetInstance();
+        $userGroup = new \Objects\Users();
         $userGroupList = $userGroup->GetUserGroups(array("system"));
         $this->SetTemplateData("GroupList", $userGroupList);
     }

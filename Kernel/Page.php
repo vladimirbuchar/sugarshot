@@ -742,7 +742,7 @@ class Page {
 
     public static function RequestLogin() {
         if (!empty($_GET["login"]) && !empty($_GET["pswrd"])) {
-            $usr =  Users::GetInstance();
+            $usr = new \Objects\Users();
             if ($usr->UserLogin($_GET["login"], $_GET["pswrd"])) {
                 $_SESSION["RequestLogin"] = true;
             }
@@ -752,7 +752,7 @@ class Page {
     public static function RequestLogout() {
         if (!empty($_SESSION["RequestLogin"])) {
             $_SESSION["RequestLogin"] = null;
-            $usr = Users::GetInstance();
+            $usr = new \Objects\Users();
             $usr->UserLogout();
         } 
     }
@@ -795,7 +795,7 @@ class Page {
         if (!empty($_GET["caching"]))
             return "";
         $url = SERVER_NAME_LANG;
-        $user = \Model\Users::GetInstance();
+        $user = new \Objects\Users();
         $groupId = $user->GetUserGroupId();
         $cache = new \Model\Cache();
         $out = array();

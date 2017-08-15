@@ -1,11 +1,8 @@
 <?php
  
 try{
-
-
-        
-        session_start();
-        $now = time();
+    session_start();
+    $now = time();
         if (!empty($_SESSION["expired"]))
         {
             $expired = $_SESSION["expired"];

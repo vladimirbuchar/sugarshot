@@ -14,7 +14,7 @@ class SelectLang extends UserComponents{
     
     public function GetComponentHtml()
     {
-        $lang = \Model\Langs::GetInstance();
+        $lang = new \Objects\Langs();
         $langList = $lang->GetLangListByWeb($this->WebId);
         \Utils\ArrayUtils::AddColumn($langList,"Protocol",SERVER_PROTOCOL);
         $this->ReplaceItems($langList);

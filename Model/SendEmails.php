@@ -1,12 +1,13 @@
 <?php
 
 namespace Model;
-use Dibi;
+use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
+ 
+
 class SendEmails  extends DatabaseTable{
     public $MailId;
-    //private static $_instance = null;
     
     public function __construct()
     {
@@ -15,18 +16,6 @@ class SendEmails  extends DatabaseTable{
         $this->SetSelectColums(array("MailId"));
         $this->SetDefaultSelectColumns();
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }
-    */
-    
     
     public function OnCreateTable() {
         $colDateEvent = new DataTableColumn();

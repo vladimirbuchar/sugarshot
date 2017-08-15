@@ -308,7 +308,7 @@ class ContentFrontend extends Content {
 
     private function GetAlternativeItems() {
 
-        $userGroup = new UserGroups();
+        $userGroup = new \Objects\Users();
         $tmp = $userGroup->ChangeSystemGroupToAdmin();
         $groupId = $tmp == 0 ? $groupId : $tmp;
         $res = dibi::query("

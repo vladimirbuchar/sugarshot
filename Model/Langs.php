@@ -1,11 +1,10 @@
 <?php
 namespace Model;
-use Utils\StringUtils;
-use Dibi;
+use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
-use Types\RuleType;
-use Types\DatabaseActions;
+
+
 class Langs  extends DatabaseTable{
     public $LangName;
     public $RootUrl;
@@ -28,60 +27,7 @@ class Langs  extends DatabaseTable{
     }
     
     
-    public function GetLangListByWeb($webid)
-    {
-        return $this->SelectByCondition("WebId = ".$webid." AND Deleted = 0");
-    }
     
-    public function BlockAdmin($web)
-    {
-        $res = $this->SelectByCondition("RootUrl ='".$web."'");
-        if (!empty($res))
-        {
-            $webid= $res[0]["WebId"];
-            $web =  Webs::GetInstance();
-            $web->GetObjectById($webid,true);
-            return $web->BlockAdmin;
-        }
-        return false;
-    }
-    
-    public function GetRootUrl($langId)
-    {
-        $this->GetObjectById($langId,true);
-        if (!StringUtils::StartWidth($this->RootUrl, SERVER_PROTOCOL))
-        {
-            $this->RootUrl = SERVER_PROTOCOL.$this->RootUrl;
-        }
-        return StringUtils::EndWith($this->RootUrl,"/") ? $this->RootUrl : $this->RootUrl."/";
-    }
-    
-    public function GetWebInfo($web)
-    {
-        if (self::$SessionManager->IsEmpty("WebInfo",$web))
-        {
-            $url[] = " RootUrl = '".SERVER_PROTOCOL.$web."'";
-            $url[] = " RootUrl = '".SERVER_PROTOCOL."www.$web'";
-            $url[] = " RootUrl = 'www.$web'";
-            $url[] = " RootUrl = '".trim(StringUtils::RemoveString($web,"www."))."'";  
-            $url[] = " RootUrl = '".StringUtils::RemoveLastChar($web)."'";  
-            $url[] = " RootUrl = '".trim(StringUtils::RemoveString(StringUtils::RemoveLastChar($web),"www."))."'";  
-            $url[] = " RootUrl = '".trim(StringUtils::RemoveString($web,SERVER_PROTOCOL."www."))."'";  
-            $url[] = " RootUrl = '".StringUtils::RemoveLastChar($web)."'";  
-            $url[] = " RootUrl = '".trim(StringUtils::RemoveString(StringUtils::RemoveLastChar($web),SERVER_PROTOCOL."www."))."'";  
-            $url[] = " RootUrl = '". trim(StringUtils::RemoveString($web,SERVER_PROTOCOL))."'";  
-            $url[] = " RootUrl = '".StringUtils::RemoveLastChar($web)."'";  
-            $url[] = " RootUrl = '".$web."'";  
-            $url[] = " RootUrl = '". StringUtils::RemoveString( $web,SERVER_PROTOCOL) ."'";  
-            $url[] = " RootUrl = '".trim(StringUtils::RemoveString(StringUtils::RemoveLastChar($web),SERVER_PROTOCOL))."'";  
-            $where = implode(" OR ", $url);
-            $res = $this->SelectByCondition($where);
-            $res = \Utils\ArrayUtils::ObjectToArray($res);
-            self::$SessionManager->SetSessionValue("WebInfo",$res,$web);
-        }
-        return self::$SessionManager->GetSessionValue("WebInfo",$web);
-        
-    }
     
     public function OnCreateTable() {
         $colLangName = new DataTableColumn();
@@ -156,7 +102,7 @@ class Langs  extends DatabaseTable{
         }
         else 
         {
-            $user = Users::GetInstance();
+            $users = new \Objects\Users();
             $content->CreateVersion($folderId, $name, true, $user->GetUserId(), "langfolder$id", 0, false, $id, "", "", "", "", false, "");
         }
     }
@@ -168,8 +114,7 @@ class Langs  extends DatabaseTable{
     
     public function TableMigrate()
     {
-        
-        dibi::query("ALTER TABLE  `Langs` CHANGE  `Title`  `Title` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
+        $this->RunTableMigrate("ALTER TABLE  `Langs` CHANGE  `Title`  `Title` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
             CHANGE  `Keywords`  `Keywords` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
             CHANGE  `Description`  `Description` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
             CHANGE  `CategoryPage`  `CategoryPage` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ;");

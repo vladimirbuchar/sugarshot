@@ -19,7 +19,7 @@ class DomainItemValue extends UserComponents{
             $this->LoadId = \Utils\StringUtils::RemoveString($this->LoadId, "<![CDATA[");
             $this->LoadId = \Utils\StringUtils::RemoveString($this->LoadId, "]]>");
         }
-        $ud =  \Model\UserDomainsValues::GetInstance();
+        $ud = new \Objects\UserDomains();
         $data = $ud->UserDomainItemByObjectId($this->LoadId, self::$UserGroupId, $this->LangId, $this->WebId,$this->ValueIdetificator);
         
         if(!empty($data))
@@ -89,7 +89,7 @@ class DomainItemValue extends UserComponents{
                      * @var Model\UserDomainsValues
                      */
                     
-                     $dv =  \Model\UserDomainsValues::GetInstance();
+                     $dv = new \Objects\UserDomains();
                      $values = $dv->GetDomainValueConditon($userDomain->DomainIdentificator,0,"");
                      
                 }

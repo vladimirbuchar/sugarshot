@@ -57,7 +57,7 @@ class Controllers extends GlobalClass{
      */
     protected function BlockAdmin()
     {
-        $lang =  Langs::GetInstance();
+        $lang =  new \Objects\Langs();
         if($lang->BlockAdmin(SERVER_NAME))
         {
             self::$User->UserLogout();
@@ -316,7 +316,7 @@ class Controllers extends GlobalClass{
         }
         //print_r($domainData);die();
         
-        $domainValue =  UserDomainsValues::GetInstance();
+        $domainValue =  new \Objects\UserDomains();
         $domainValue->SaveDomainValue($domainName, $objectId, $domainData);
     }
     
@@ -415,9 +415,9 @@ class Controllers extends GlobalClass{
         $canShow = true;
         if ($groupId == 0)
             $groupId = self::$User->GetUserGroupId();
-        $uig = UsersInGroup::GetInstance();
+        $uig = new \Objects\UsersGroups();
         $otherGroups = $uig->GetMinorityUserGroup(self::$UserId);
-        $module = Modules::GetInstance();
+        $module = new \Objects\Modules();
         if (!empty($otherGroups))
         {
             foreach ($otherGroups as $group)
@@ -524,7 +524,7 @@ class Controllers extends GlobalClass{
     
     protected function GetRoorUrl()
     {
-        $langItem = Langs::GetInstance();
+        $langItem = new \Objects\Langs();
         return $langItem->GetRootUrl($this->LangId);
     }
     

@@ -11,7 +11,7 @@ class LangSelect extends UserComponents{
     
     public function GetComponentHtml()
     {
-        $lang = \Model\Langs::GetInstance();
+        $lang = new \Objects\Langs();
         $data = $lang->GetLangListByWeb($this->WebId);
         
     }

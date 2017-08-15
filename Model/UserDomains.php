@@ -1,10 +1,11 @@
 <?php
 
 namespace Model;
-use Dibi;
 use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
+
+
 class UserDomains  extends DatabaseTable{
     public $DomainName;
     public $DomainIdentificator;
@@ -23,43 +24,9 @@ class UserDomains  extends DatabaseTable{
         $this->SetSelectColums(array("DomainName","DomainIdentificator","Template","Domain","EditValue","IsSystem","ShowNameInSubDomain","SaveHiddenColumn"));
         $this->SetDefaultSelectColumns();
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }
-    */
-    public function GetDomainInfo($identificator)
-    {
-        return $this->GetFirstRow($this->SelectByCondition(" DomainIdentificator = '$identificator'"));
-    }
-    public function GenerateShowName($id, $arrayList,$prefix ="",$idColumn="Id")
-    { 
-        $this->GetObjectById($id,true);
-        $showname = $this->ShowNameInSubDomain;
-        if (empty($showname)) return $arrayList;
-        foreach ($arrayList as &$row)
-        {
-            $tmp = $showname;
-            foreach ($row as $k => $v)
-            {
-                if ($k=="ObjectId")
-                {
-                    $row[$idColumn] = $id."-".$v;
-                }
-                $tmp = str_replace("{".$k."}", $v, $tmp);
-            }
-            $row["ShowName"] = trim($prefix." ".$tmp);
-        }
-        
-        
-        return $arrayList;
-    }
+
+    
+    
     
     
             

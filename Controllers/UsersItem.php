@@ -54,7 +54,7 @@ class UsersItem extends AdminController {
         $header[] = new TableHeader($this->GetWord("word171"), "FirstName", TableHeaderFiltrType::$Textbox);
         $header[] = new TableHeader($this->GetWord("word172"), "LastName", TableHeaderFiltrType::$Textbox);
         $header[] = new TableHeader($this->GetWord("word173"), "UserEmail", TableHeaderFiltrType::$Textbox);
-        $userGroups = UserGroups::GetInstance();
+        $userGroups =  new \Objects\Users();
         $systemUserGroups = $userGroups->GetSystemGroups();
         $noSystemUserGroup = $userGroups->GetNoSystemGroups();
         $this->SetTemplateData("SystemUserGroups", $systemUserGroups);
@@ -113,7 +113,7 @@ class UsersItem extends AdminController {
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["Id"];
-        $user =  Users::GetInstance();
+        $user =  new \Objects\Users();
         $id = $user->CreateUser($id, $ajaxParametrs["FirstName"], $ajaxParametrs["LastName"], $ajaxParametrs["UserEmail"], $ajaxParametrs["UserName"], $ajaxParametrs["UserPassword"], $ajaxParametrs["BlockDiscusion"], $ajaxParametrs["MainUserGroup"], array(), $ajaxParametrs["IsActive"], $ajaxParametrs["DefaultLang"], true);
         return $id;
     }
@@ -252,7 +252,7 @@ class UsersItem extends AdminController {
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["Id"];
-        $userGroup = UserGroups::GetInstance();
+        $userGroup = new \Objects\Users();
         $userGroupDetail = $userGroup->GetUserGroupDetail($id);
         return $userGroupDetail;
     }
@@ -398,7 +398,7 @@ class UsersItem extends AdminController {
         $password1 = $ajaxParametrs["password1"];
         $password2 = $ajaxParametrs["password2"];
         $userId = $ajaxParametrs["UserId"];
-        $user =  Users::GetInstance();
+        $user = new \Objects\Users();
         return $user->ChangePassword($password1, $password2, $userId);
     }
 
@@ -420,7 +420,7 @@ class UsersItem extends AdminController {
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
-        $userGr = UsersInGroup::GetInstance();
+        $userGr = new \Objects\UsersGroups();
         $userId = $ajaxParametrs["UserId"];
         unset($ajaxParametrs["UserId"]);
         $userGr->DeleteByCondition("UserId = $userId AND IsMainGroup = 0");

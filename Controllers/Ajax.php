@@ -47,7 +47,7 @@ class Ajax extends Controllers {
         if (empty($ajaxParametrs))
             return;
         $userId = $ajaxParametrs["UserId"];
-        $userGroup =  UsersInGroup::GetInstance();
+        $userGroup =  new \Objects\UsersGroups();
         return $userGroup->GetMainUserGroup($userId);
     }
 
@@ -56,7 +56,7 @@ class Ajax extends Controllers {
         if (empty($ajaxParametrs))
             return;
         $userId = $ajaxParametrs["UserId"];
-        $userGroup = UsersInGroup::GetInstance();
+        $userGroup = new \Objects\UsersGroups();
         return $userGroup->GetMinorityUserGroup($userId);
     }
 
@@ -84,7 +84,7 @@ class Ajax extends Controllers {
         unset($ajax["DomainIdentificator_UserProfile"]);
         unset($ajax["ObjectId_UserProfile"]);
         unset($ajax["UserName"]);
-        $udv = new UserDomainsValues();
+        $udv = new \Objects\UserDomains();
         $domainName = "UserProfile";
         $preparedData = array();
         $x = 0;
@@ -130,7 +130,7 @@ class Ajax extends Controllers {
         $ajax = $this->PrepareAjaxParametrs();
         if (empty($ajax))
             return;
-        $user = new Users();
+        $user = new \Objects\Users();
 
         $profile = $ajax;
         unset($profile["FirstName"]);

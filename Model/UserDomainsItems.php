@@ -1,10 +1,11 @@
 <?php
 
 namespace Model;
-use Dibi;
-use Types\RuleType;
+ use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
+
+
 class UserDomainsItems  extends DatabaseTable{
     public $DomainId;
     public $ShowName;
@@ -48,120 +49,6 @@ class UserDomainsItems  extends DatabaseTable{
 "DomainSettings","FiltrSettings","Autocomplete","AddToSort","OnChangeEvent","ValueForAllLangues,GenerateHiddenInput"));
         $this->SetDefaultSelectColumns();
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
-    
-    public function GetUserDomainItems($identifcator,$groupId = 0,$elementId = "")
-    {       
-        
-        if ($groupId == 0)
-        {
-            if ($elementId == "")
-            {
-                $res = dibi::query("SELECT DISTINCT * FROM ITEMSINDOMAIN WHERE DomainIdentificator = %s  ",$identifcator)->fetchAll();
-                return $res;
-            }
-            else 
-                
-            {
-                $res = dibi::query("SELECT DISTINCT * FROM ITEMSINDOMAIN WHERE DomainIdentificator = %s  AND Identificator =%s ",$identifcator,$elementId)->fetchAll();
-                return $res;
-            }
-            
-        }
-        else 
-        {
-            if($elementId =="")
-            {
-                $res = dibi::query("SELECT DISTINCT * FROM ITEMSINDOMAIN WHERE DomainIdentificator = %s  AND GroupId = %i ",$identifcator,$groupId)->fetchAll();
-                return $res;
-            }
-            else 
-            {
-                $res = dibi::query("SELECT DISTINCT * FROM ITEMSINDOMAIN WHERE DomainIdentificator = %s  AND GroupId = %i AND Identificator =%s ",$identifcator,$groupId,$elementId)->fetchAll();
-                return $res;
-            }
-        }
-    }
-    
-    public function GetUserDomainItemsOnlyMn($identifcator) 
-    {
-        $res = dibi::query("SELECT DISTINCT * FROM ITEMSINDOMAIN WHERE DomainIdentificator = %s  AND (DomainSettings = 'mn' OR DomainSettings ='1n')",$identifcator)->fetchAll();
-        return $res;
-    }
-    
-    public function  GetUserDomainItemById($id,$mode = "")
-    {
-        
-        if ($mode == "")
-        {
-            
-            $res = dibi::query("SELECT DISTINCT  * FROM ITEMSINDOMAIN WHERE DomainId = %i  ",$id)->fetchAll();
-            return $res;
-        }
-        else if ($mode =="filtr")
-        {
-            $res = dibi::query("SELECT DISTINCT * FROM ITEMSINDOMAIN WHERE DomainId = %i  AND FiltrSettings <> 'HideInFiltr' AND FiltrSettings<> ''  ",$id)->fetchAll();
-            return $res;
-        }
-        else if ($mode =="sort")
-        {
-            $res = dibi::query("SELECT DISTINCT * FROM ITEMSINDOMAIN WHERE DomainId = %i AND AddToSort = 1  ",$id)->fetchAll();
-            return $res;
-        }
-    }
-    
-    public function  GetUserDomainItemByIdentificator($identificator,$mode = "")
-    {
-        if ($mode == "")
-        {
-            $res = dibi::query("SELECT DISTINCT  * FROM ITEMSINDOMAIN WHERE DomainIdentificator = %s  ",$identificator)->fetchAll();
-            return $res;
-        }
-        else if ($mode =="filtr")
-        {
-            $res = dibi::query("SELECT DISTINCT * FROM ITEMSINDOMAIN WHERE DomainIdentificator = %s  AND FiltrSettings <> 'HideInFiltr' AND FiltrSettings<> ''  ",$identificator)->fetchAll();
-            return $res;
-        }
-        else if ($mode =="sort")
-        {
-            $res = dibi::query("SELECT DISTINCT * FROM ITEMSINDOMAIN WHERE DomainIdentificator = %s AND AddToSort = 1  ",$identificator)->fetchAll();
-            return $res;
-        }
-    }
-    
-    public function  GetUserDomainByTemplateId($id,$identificator = true)
-    {
-        $res = dibi::query("SELECT UserDomains.* FROM `Content`  JOIN UserDomains ON Content.DomainId = UserDomains.Id WHERE Content.Id = %i",$id)->fetchAll();
-        if(!empty($res))
-        {
-            if ($identificator)
-                return $res[0]["DomainIdentificator"];
-            return $res[0]["Id"];
-        }
-        return "";
-    }
-    
-    public function  GetUserDomainByTemplateIdentificator($id,$identificator = true)
-    {
-        $res = dibi::query("SELECT UserDomains.* FROM `Content`  JOIN UserDomains ON Content.DomainId = UserDomains.Id WHERE Content.Identificator = %s",$id)->fetchAll();
-        if(!empty($res))
-        {
-            if ($identificator)
-                return $res[0]["DomainIdentificator"];
-            return $res[0]["Id"];
-        }
-        return "";
-    }
-    
     public function OnCreateTable() {
         $colDomainId = new DataTableColumn();
         $colDomainId->DefaultValue ="";

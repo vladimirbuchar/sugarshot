@@ -1,8 +1,10 @@
 <?php
 namespace Model;
-use Dibi;
+ use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
+
+
 class UserGroupsWeb  extends DatabaseTable{
     public $UserGroupId;
     public $UserWebId;
@@ -15,16 +17,6 @@ class UserGroupsWeb  extends DatabaseTable{
         $this->SetSelectColums(array("UserGroupId","UserWebId"));
         $this->SetDefaultSelectColumns();
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
     
     public function OnCreateTable() {
         

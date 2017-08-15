@@ -1,9 +1,9 @@
 <?php
 namespace Model;
-use Dibi;
-use Types\RuleType;
+ use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
+
 class WordGroups  extends DatabaseTable{
     public $GroupName;
     //private static $_instance = null;
@@ -14,16 +14,6 @@ class WordGroups  extends DatabaseTable{
         $this->ObjectName = "WordGroups";
         
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
     
     public function AddColumnLang($wordIndetificator)
     {

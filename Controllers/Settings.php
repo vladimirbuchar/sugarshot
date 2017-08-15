@@ -148,7 +148,7 @@ class Settings extends SettingsController {
         $this->SetTemplateData("MailListAdmin", $mailList);
 
         $this->PrepareList($this->GetWord("word73"), $colums, $table);
-        $userGroup = UserGroups::GetInstance();
+        $userGroup = new \Objects\Users();
         $userGroupList = $userGroup->GetUserGroups(array("system"));
         $this->SetTemplateData("GroupList", $userGroupList);
     }
@@ -174,9 +174,9 @@ class Settings extends SettingsController {
         $table->ScrollClass = "scrollTable1200";
         $this->PrepareList($this->GetWord("word551"), $colums, $table);
 
-        $ud =  UserDomains::GetInstance();
+        $ud =  new \Objects\UserDomains();
         $info = $ud->GetDomainInfo("Mailinggroups");
-        $udv =  UserDomainsValues::GetInstance();
+        $udv =  new \Objects\UserDomains();
         $values = $udv->GetDomainValueList($info["Id"], false);
         $this->SetTemplateData("MailingGroups", $values);
     }
@@ -186,7 +186,7 @@ class Settings extends SettingsController {
         if (empty($ajaxParametrs))
             return;
         $out = array();
-        $mailinig =  MailingContacts::GetInstance();
+        $mailinig = new \Objects\MailingContacts();
         $detail = $mailinig->GetMailingDetail($ajaxParametrs["Id"]);
         $malingGroups = $mailinig->GetUserMailingGroups($ajaxParametrs["Id"]);
         $out["Detail"] = $detail[0];
@@ -204,7 +204,7 @@ class Settings extends SettingsController {
         if ($id == 0)
             return;
         
-        $mg =  MailingContactsInGroups::GetInstance();
+        $mg = new \Objects\MailingContacts();
         $mg->AddContactToMailingGroup($id, $ajaxParametrs["MailingGroups"]);
     }
 
@@ -375,9 +375,9 @@ class Settings extends SettingsController {
         $domainInfo = $domain->GetObjectById($_GET["objectid"]);
         if ($domainInfo["EditValue"] == 0)
             $this->GoToBack();
-        $userDomainItem =  UserDomainsItems::GetInstance();
+        $userDomainItem =  new \Objects\UserDomains();
         $items = $userDomainItem->GetUserDomainItemById($domainid);
-        $userDomainValue = UserDomainsValues::GetInstance();
+        $userDomainValue = new \Objects\UserDomains();
         $values = $userDomainValue->GetDomainValueList($domainid);
 
         $header = array();
@@ -464,7 +464,7 @@ class Settings extends SettingsController {
         $table->ShowHistoryButton = false;
         $table->DeleteAction = "DeleteUserDomainGroupItem";
         $table->AceptEmptyData = true;
-        $domainItems = UserDomainsItems::GetInstance();
+        $domainItems = new \Objects\UserDomains();
         $items = $domainItems->GetUserDomainItemById($domainid);
         $this->SetTemplateData("DomainItems", $items);
         $this->PrepareList($this->GetWord("word628"), $colums, $table);
@@ -505,7 +505,7 @@ class Settings extends SettingsController {
         $table->DeleteAction = "DeleteUserDomainAddctionItem";
         $table->ShowDelete = true;
         $table->AceptEmptyData = true;
-        $domainItems = UserDomainsItems::GetInstance();
+        $domainItems = new \Objects\UserDomains();
         $items = $domainItems->GetUserDomainItemById($domainid);
         $this->SetTemplateData("DomainItems", $items);
         $this->PrepareList($this->GetWord("word705"), $colums, $table);
@@ -517,7 +517,7 @@ class Settings extends SettingsController {
 
     private function CretateDomainItemsAddiction($domainItems, $addName = "") {
         $out = array();
-        $di = UserDomainsItems::GetInstance();
+        $di = new \Objects\UserDomains();
 
         foreach ($domainItems as $row) {
             if ($row["Type"] == "password" || $row["Type"] == "file" || $row["Type"] == "textarea" || $row["Type"] == "html" || $row["Type"] == "range") {
@@ -529,8 +529,8 @@ class Settings extends SettingsController {
             if ($row["Type"] == "domainData") {
                 if ($row["DomainSettings"] == "1n" || $row["DomainSettings"] == "mn") {
 
-                    $userdomain = UserDomains::GetInstance();
-                    $udv = UserDomainsValues::GetInstance();
+                    $userdomain = new \Objects\UserDomains();
+                    $udv = new \Objects\UserDomains();
                     $list = $udv->GetDomainValueList($row["Domain"]);
                     $list = $userdomain->GenerateShowName($row["Domain"], $list, $row["ShowName"] . ":");
                     $out = array_merge($out, $list);
@@ -561,7 +561,7 @@ class Settings extends SettingsController {
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
-        $addiction = UserDomainsAddiction::GetInstance();
+        $addiction = new  \Objects\UserDomains();
         $out["Id"] = $addiction->SaveAddiction($ajaxParametrs["Id"], $ajaxParametrs["DomainId"], $ajaxParametrs["AddictionName"], $ajaxParametrs["Item1"], $ajaxParametrs["RuleName"], $ajaxParametrs["Item1Value"], $ajaxParametrs["ActionName"], $ajaxParametrs["ItemXValue"], $ajaxParametrs["ItemX"], $ajaxParametrs["Priority"]);
         return $out;
     }
@@ -604,7 +604,7 @@ class Settings extends SettingsController {
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["Id"];
-        $domainValues = UserDomainsValues::GetInstance();
+        $domainValues = new \Objects\UserDomains();
         $data = $domainValues->GetDomainValueByDomainId($_GET["objectid"], $id);
         return $data;
     }
@@ -613,7 +613,7 @@ class Settings extends SettingsController {
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
-        $userValues = UserDomainsValues::GetInstance();
+        $userValues = new \Objects\UserDomains();
         $out["Id"] = $userValues->SaveUserDomainData($ajaxParametrs);
         return $out;
     }
@@ -627,9 +627,9 @@ class Settings extends SettingsController {
         $domainid = $_GET["objectid"];
         $domain = UserDomains::GetInstance();
         $domainInfo = $domain->GetObjectById($_GET["objectid"]);
-        $userDomainItem = UserDomainsItems::GetInstance();
+        $userDomainItem = new \Objects\UserDomains();
         $items = $userDomainItem->GetUserDomainItemById($domainid);
-        $userDomainValue = UserDomainsValues::GetInstance();
+        $userDomainValue = new \Objects\UserDomains();
         $values = $userDomainValue->GetDomainValueList($domainid, $deleted);
         return $values;
     }
@@ -652,7 +652,7 @@ class Settings extends SettingsController {
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["Id"];
-        $userDomainValue = UserDomainsValues::GetInstance();
+        $userDomainValue = new \Objects\UserDomains();
         $userDomainValue->Delete($id);
     }
 
@@ -723,12 +723,12 @@ class Settings extends SettingsController {
 
     public function AddDomainItemToGroup() {
         $params = $_POST["params"];
-        $groupSetting = UserDomainsItemsInGroups::GetInstance();
+        $groupSetting = new \Objects\UserDomains();
         $groupSetting->SaveItemInGroup($params[0][1], $params);
     }
 
     public function GetIntemsInDomainGroup() {
-        $groupSetting = UserDomainsItemsInGroups::GetInstance();
+        $groupSetting = new \Objects\UserDomains();
         return $groupSetting->GetUserItemInGroups($_GET["params"]);
     }
 

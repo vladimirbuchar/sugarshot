@@ -5,7 +5,7 @@ class DiscusionUtils extends GlobalClass{
     {
         if (empty($mode))
             $mode = DiscusionsMode::$AdminMode;
-        $users = \Model\Users::GetInstance();
+        $users = new \Objects\Users();
         $blockDiscusion = $users->UserHasBlockDiscusion();
         $button = new Button();
         $button->Value = "Přidat příspěvěk do diskuze";

@@ -88,7 +88,7 @@ class Webs extends ObjectManager{
         $ugw =  \Model\UserGroupsWeb::GetInstance();
         if (empty($ugw->SelectByCondition("UserWebId = $id")))
         {
-            $user =  \Model\Users::GetInstance();
+            $user =  new \Objects\Users();
             if ($user->IsSystemUser())
             {
                 $ugw->UserGroupId = $user->GetUserGroupId();
@@ -100,7 +100,7 @@ class Webs extends ObjectManager{
                 $ugw->UserGroupId = $user->GetUserGroupId();
                 $ugw->UserWebId = $id;
                 $ugw->SaveObject();
-                $ug =  \Model\UserGroups::GetInstance();
+                $ug =  new \Objects\Users();
                 $ugw->UserGroupId = $ug->GetUserGroupByIdeticator("system")["Id"];
                 $ugw->UserWebId = $id;
                 $ugw->SaveObject();
@@ -125,10 +125,10 @@ class Webs extends ObjectManager{
                 ",$webUrl)->fetchAll();
         
         $template = $webInfo[0];
-        $lang = \Model\Langs::GetInstance();
+        $lang = new \Objects\Langs();
         $langList =$lang->GetLangListByWeb($template["WebId"]);
         $langList = ArrayUtils::ValueAsKey($langList, "Id");
-        $userGroups = \Model\UserGroups::GetInstance();
+        $userGroups = new \Objects\Users();
         $anonymous = $userGroups->GetAnonymousGroup();
         $anonymous = ArrayUtils::ObjectToArray($anonymous);
         $res = \dibi::query("SELECT * FROM FrontendDetail_materialized WHERE GroupId = %i And WebId = %i",$anonymous["Id"],$template["WebId"])->fetchAll();

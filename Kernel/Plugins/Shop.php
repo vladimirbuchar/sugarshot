@@ -274,7 +274,7 @@ class Shop {
         /** 
          * @var \Model\UserDomainsValues
          */
-        $udv = \Model\UserDomainsValues::GetInstance();
+        $udv = new \Objects\UserDomains();
         $values = $udv->GetDomainValueConditon("shopsettings",0,$value);
         if (empty($values)) return "";
         return $values[0]["Value"];

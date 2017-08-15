@@ -26,7 +26,7 @@ class Sort extends UserComponents{
     
   
     public function GetComponentHtml(){
-        $userDomainItems = \Model\UserDomainsItems::GetInstance();
+        $userDomainItems = new \Objects\UserDomains();
         $data = $userDomainItems->GetUserDomainItemByIdentificator($this->SortDomain, "sort");
         $select = new \HtmlComponents\Select();
         $select->Id = "selectSort";

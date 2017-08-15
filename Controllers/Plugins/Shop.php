@@ -56,7 +56,7 @@ class Shop extends Controllers {
     }
 
     public function SelectTransport($params) {
-        $udv =  \Model\UserDomainsValues::GetInstance();
+        $udv =  new \Objects\UserDomains();
         $list = $udv->GetDomainValue("ShopTransport", $params["objectid"]);
         $list = \Utils\ArrayUtils::ToArray($list);
         $list = \Utils\ArrayUtils::ValueAsKey($list, "ItemIdentificator");
@@ -67,7 +67,7 @@ class Shop extends Controllers {
     
     public function SelectPayment($params)
     {
-        $udv = \Model\UserDomainsValues::GetInstance();
+        $udv = new \Objects\UserDomains();
         $list = $udv->GetDomainValue("Payment", $params["objectid"]);
         $list = \Utils\ArrayUtils::ToArray($list);
         $list = \Utils\ArrayUtils::ValueAsKey($list, "ItemIdentificator");

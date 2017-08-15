@@ -1,13 +1,14 @@
 <?php
 
 namespace Model;
-use Dibi;
+ use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
+ 
 class UserGroupsModules  extends DatabaseTable{
     public $UserGroupId;
     public $ModuleId;
-    //private static $_instance = null;
+    
     public function __construct()
     {
         parent::__construct();
@@ -15,23 +16,8 @@ class UserGroupsModules  extends DatabaseTable{
         $this->SetSelectColums(array("UserGroupId","ModuleId"));
         $this->SetDefaultSelectColumns();
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
     
-    public function  SetUserGroupModules($userGroup,$module)
-    {
-        $this->UserGroupId = $userGroup;
-        $this->ModuleId = $module;
-        $this->SaveObject($this);
-    }
+    
             
 
 

@@ -2,7 +2,6 @@
 
 namespace Model;
 
-use Dibi;
 use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
@@ -19,9 +18,6 @@ class DiscusionItems extends DatabaseTable {
     public $VersionId;
     public $ParentIdDiscusion;
     public $DiscusionId;
-
-    //private static $_instance = null;
-
     public function __construct() {
         parent::__construct();
         $this->ObjectName = "DiscusionItems";

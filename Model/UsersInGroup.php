@@ -1,13 +1,16 @@
 <?php
 namespace Model;
-use Dibi;
+ 
+  use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
+
+
 class UsersInGroup  extends DatabaseTable{
     public $UserId;
     public $GroupId;
     public $IsMainGroup;
-    //private static $_instance = null;
+
     
     public function __construct()
     {
@@ -15,34 +18,6 @@ class UsersInGroup  extends DatabaseTable{
         $this->ObjectName = "UsersInGroup";
         $this->SetSelectColums(array("UserId","GroupId","IsMainGroup"));
         $this->SetDefaultSelectColumns();
-    }
-    
-   /* public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    } */
-    
-    public function AddUserToGroup($userId,$groupId, $isMain=FALSE)
-    {
-        $this->UserId = $userId;
-        $this->GroupId = $groupId;
-        $this->IsMainGroup = $isMain;
-        $this->SaveObject($this);
-    }
-    public function GetMainUserGroup($userid)
-    {
-        $res = $this->SelectByCondition("UserId = $userid AND IsMainGroup = 1 AND Deleted = 0");
-        if (empty($res)) return 0;
-        return $res[0]["GroupId"];
-    }
-    public function GetMinorityUserGroup($userId)
-    {
-        return $this->SelectByCondition("UserId =  $userId AND Deleted= 0 AND IsMainGroup = 0");
     }
     
     public function OnCreateTable() {

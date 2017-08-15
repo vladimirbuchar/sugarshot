@@ -2,7 +2,7 @@
 
 namespace Model;
 
-use Dibi;
+use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
 

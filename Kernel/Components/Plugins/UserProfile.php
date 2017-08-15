@@ -12,7 +12,7 @@ class UserProfile extends UserComponentsDatasource{
     
     public function GetComponentHtml()
     {
-        $user =  \Model\Users::GetInstance();
+        $user =  new \Objects\Users();
         $userDetail = $user->GetUserDetail($this->UserId);
         $domainHtml = $this->GetUserDomain("UserProfile",$this->User->GetUserId());
         $this->ReplaceData = $userDetail;

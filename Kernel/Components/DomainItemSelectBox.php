@@ -25,7 +25,7 @@ class DomainItemSelectBox extends UserComponents {
         $selectBox->DataRole = "none";
         $selectBox->Id = $this->SelectId;
         $selectBox->CssClass = $this->CssClass;
-        $ud = \Model\UserDomainsValues::GetInstance();
+        $ud = new \Objects\UserDomains();
         
 
         $option = new \HtmlComponents\Option();
@@ -82,7 +82,7 @@ class DomainItemSelectBox extends UserComponents {
             if (empty($this->SelectedValue) || $this->SelectedValue == "{". $this->SelectId."}")
                 $this->SelectedValue = $this->DefalutSelectedValue;
             
-            $domainInfo =  new \Model\UserDomains();
+            $domainInfo =  new \Objects\UserDomains();
             $info = $domainInfo->GetDomainInfo($this->DomainIdentificator);
             $data = $ud->GetDomainValueList($info["Id"]);
             foreach ($data as $row)

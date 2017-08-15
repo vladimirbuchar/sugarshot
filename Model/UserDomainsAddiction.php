@@ -1,10 +1,10 @@
 <?php
 
 namespace Model;
-use Utils\StringUtils;
-use Dibi;
+ use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
+
 class UserDomainsAddiction  extends DatabaseTable{
     public $DomainId;
     public $AddictionName;
@@ -33,16 +33,6 @@ class UserDomainsAddiction  extends DatabaseTable{
         $this->SetDefaultSelectColumns();
         
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }*/
     
         
     public function OnCreateTable() {
@@ -180,50 +170,6 @@ class UserDomainsAddiction  extends DatabaseTable{
         $this->AddColumn($colDomainId);
     }
     
-    public function  SaveAddiction($id,$domainId,$name,$item1,$ruleName,$item1Value,$actionName,$itemXValue,$itemX,$priority)
-    {
-        $this->Id = $id;
-        $this->DomainId = $domainId;
-        $this->AddictionName = $name;
-        $this->Item1 = $item1;
-        $this->RuleName = $ruleName;
-        $this->Item1Value = $item1Value;
-        $this->ActionName = $actionName;
-        $this->ItemXValue = $itemXValue;    
-        $this->ItemX = $itemX;
-        $this->Priority = $priority;
-        
-        if (StringUtils::ContainsString($item1, "-"))
-        {
-            $ar = explode("-", $item1);
-            $this->IsDomain1 = true;
-            $this->DomainId1 = $ar[0];
-            $this->ItemId1 = $ar[1];
-        }
-        if (StringUtils::ContainsString($itemX, "-"))
-        {
-            $ar = explode("-", $itemX);
-            $this->IsDomainX = true;
-            $this->DomainIdX = $ar[0];
-            $this->ItemIdX = $ar[1];
-        }
-        $this->SaveObject();
-    }
-    
-    public function GetAddictionDomain($domainId)
-    {
-        $res = dibi::query("SELECT UserDomainsAddiction.*,Item1Info.Identificator AS Item1Identificator,Item1Info.Type AS Item1Type,"
-                . "ItemXInfo.Identificator AS ItemXIdentificator,ItemXInfo.Type AS ItemXType "
-                . "FROM UserDomainsAddiction ".
-                " LEFT JOIN UserDomainsItems Item1Info ON UserDomainsAddiction.Item1 = Item1Info.Id AND Item1Info.Deleted = 0 "
-                . " LEFT JOIN UserDomainsItems ItemXInfo ON UserDomainsAddiction.ItemX = ItemXInfo.Id  AND ItemXInfo.Deleted = 0 "
-                . "WHERE UserDomainsAddiction.DomainId =%i AND UserDomainsAddiction.Deleted = 0 ORDER BY Priority DESC",$domainId)->fetchAll();
-        return $res;
-    }
-
-
-    
-
     public function InsertDefaultData() {
         $this->Setup($this);
     }

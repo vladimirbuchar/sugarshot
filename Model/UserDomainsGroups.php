@@ -1,13 +1,15 @@
 <?php
 
 namespace Model;
-use Dibi;
+ use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
+
+
 class UserDomainsGroups  extends DatabaseTable{
     public $DomainId;
     public $GroupName;
-    //private static $_instance = null;
+    
     
     public function __construct()
     {
@@ -16,17 +18,7 @@ class UserDomainsGroups  extends DatabaseTable{
         $this->SetSelectColums(array("DomainId","GroupName"));
         $this->SetDefaultSelectColumns();
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }
-    */
+    
         
     public function OnCreateTable() {
         $colDomainId = new DataTableColumn();
@@ -49,13 +41,7 @@ class UserDomainsGroups  extends DatabaseTable{
         
         
     }
-    public function SaveGroup($id,$name,$domainId)
-    {
-        $this->Id = $id;
-        $this->GroupName = $name;
-        $this->DomainId = $domainId;
-        return $this->SaveObject();
-    }
+    
     
 
     public function InsertDefaultData() {

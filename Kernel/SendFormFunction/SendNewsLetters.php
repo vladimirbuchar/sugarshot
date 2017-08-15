@@ -10,7 +10,7 @@ class SendNewsLetters extends \SendFormFunction\SendFormFunction
 
     public function CallFunction()
      {
-        $mailing = \Model\MailingContacts::GetInstance();
+        $mailing = new \Objects\MailingContacts();
         if ($this->GetParametrsFromSaveData("SendNewsletter") == 1)
         {
             $mailing->AddContactToMailingGroup($this->GetParametrsFromSaveData("ShopEmail"),"Newsletter");

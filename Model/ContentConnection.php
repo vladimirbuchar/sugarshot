@@ -2,9 +2,7 @@
 
 namespace Model;
 
-use Utils\ArrayUtils;
-use Dibi;
-use Types\PrivilegesType;
+use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
 

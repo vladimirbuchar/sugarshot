@@ -435,12 +435,12 @@ class Forms extends GlobalClass {
         if (!empty($templateHtml)) {
             $generateFromUserTemplate = true;
         }
-        $userDomainItem = \Model\UserDomainsItems::GetInstance();
+        $userDomainItem = new \Objects\UserDomains();;
         $domainItems = $userDomainItem->GetUserDomainItems($domainIdentificator,$groupId,$this->ShowElementId);
-        //print_r($domainItems);
-        $ud = \Model\UserDomains::GetInstance();
+        
+        $ud = new \Objects\UserDomains();
         $udi = $ud->GetDomainInfo($domainIdentificator);
-        $addiction = \Model\UserDomainsAddiction::GetInstance();
+        $addiction = new \Objects\UserDomains();
         $addictionList = $addiction->GetAddictionDomain($udi["Id"]);
         $html = "";
         $script = "";
@@ -448,7 +448,7 @@ class Forms extends GlobalClass {
         $domainValue = array();
         if ($dataId > 0) {
             
-            $userDomainValue = \Model\UserDomainsValues::GetInstance();
+            $userDomainValue = new \Objects\UserDomains();
             $domainValue = $userDomainValue->GetDomainValue($domainIdentificator, $dataId);
             $domainValue = ArrayUtils::ValueAsKey($domainValue, "ItemId",true);
             $hiddenItem = new HiddenInput();
@@ -567,7 +567,7 @@ class Forms extends GlobalClass {
                     else if ($dItem["DomainSettings"] == "1n" || $dItem["DomainSettings"] == "mn")
                     { 
                         
-                        $userDomainData = \Model\UserDomainsValues::GetInstance();
+                        $userDomainData = new \Objects\UserDomains();
                         $domainData = $userDomainData->GetDomainValueList($nDomain->Id);
                         $showName = $nDomain->ShowNameInSubDomain;
                         $itemHtml .= $label->RenderHtml($label);
@@ -625,7 +625,7 @@ class Forms extends GlobalClass {
                         $dataList = new Datalist();
                         $dataList->Id = "list".$htmlItemId;
                         $dataList->Style="display:none;";
-                        $userDomainsAutoComplete =  \Model\UserDomainsAutoComplete::GetInstance();
+                        $userDomainsAutoComplete =  new \Objects\UserDomains();
                         $complList = $userDomainsAutoComplete->GetItemAutoComplected($dItem["Id"]);
                         foreach ($complList as $row)
                         {
@@ -978,7 +978,7 @@ class Forms extends GlobalClass {
         
         $mailAttachments = array();
         
-        $ud = \Model\UserDomainsValues::GetInstance();
+        $ud = new \Objects\UserDomains();
         $endValidate = "";
         $unSetKey = array();
         $domainArray = array();
@@ -1057,8 +1057,8 @@ class Forms extends GlobalClass {
         
         
          
-        $userDomaiItems = \Model\UserDomainsItems::GetInstance();
-        $userDomainValues = \Model\UserDomainsValues::GetInstance();
+        $userDomaiItems = new \Objects\UserDomains();
+        $userDomainValues = new \Objects\UserDomains();
         $userDomain = \Model\UserDomains::GetInstance();
         foreach ($domainNames as $identifcator)
         {
@@ -1237,7 +1237,7 @@ class Forms extends GlobalClass {
     
     public function ValidateForm($dataByDomain)
     {
-        $ud = \Model\UserDomainsValues::GetInstance();
+        $ud = new \Objects\UserDomains();
         $endValidate = "";
         $unSetKey = array();
         $domainArray = array();
@@ -1337,7 +1337,7 @@ class Forms extends GlobalClass {
         $autoColumn[] = "&nbsp;";
         $header = $this->GetHeader($templateId,false,$autoColumn);
         
-        $userDomainItems = \Model\UserDomainsItems::GetInstance();
+        $userDomainItems =new \Objects\UserDomains();
         $data = $userDomainItems->GetUserDomainItems($userDomainItems->GetUserDomainByTemplateId($templateId));
         $ignored = array("DomainIdentificator","ActiveStep","UserId");
         $domainsItems = array();
@@ -1370,7 +1370,7 @@ class Forms extends GlobalClass {
             foreach ($domainsItems as  $key => $value)
             {
                 $domainItem->GetObjectById($value,true);
-                $domainValues =  \Model\UserDomainsValues::GetInstance();
+                $domainValues =  new \Objects\UserDomains();
                 $vals = $domainValues->GetDomainValueList($value);
                 $vals = ArrayUtils::ValueAsKey($vals, "ObjectId");
                 $showName = $domainItem->ShowNameInSubDomain;
@@ -1422,7 +1422,7 @@ class Forms extends GlobalClass {
         $content =  \Model\Content::GetInstance();
         $content->GetObjectById($templateId, true);
         $domainId = $content->DomainId;
-        $domain = \Model\UserDomainsItems::GetInstance();
+        $domain = new \Objects\UserDomains();
         $domainItems = $domain->GetUserDomainItemById($domainId);
         $header = array();
         foreach ($domainItems as $item) {
@@ -1720,7 +1720,7 @@ class Forms extends GlobalClass {
     
     public function GetFormItemDetail($id)
     {
-        $userDomainItems = \Model\UserDomainsItems::GetInstance();
+        $userDomainItems = new \Objects\UserDomains();
         $content = new \Objects\Content();
         $parent = $content->GetParent($id);
         $data = $content->GetFromStatisticDetail($id,$this->LangId);

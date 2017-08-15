@@ -35,7 +35,7 @@ class Forms extends Controllers {
         $xml = simplexml_load_string($data);
         $xmlRow = $xml[0];
         $form = new \Utils\Forms();
-        $lang = \Model\Langs::GetInstance();
+        $lang = new \Objects\Langs();
         $url = $lang->GetRootUrl($_GET["langid"]);
         
 

@@ -30,7 +30,7 @@ class Login extends Controllers {
         
         if (self::$User->UserLogin($_POST["UserName"], $_POST["UserPassowrd"])) {
             $this->_errorLogin = false;
-            $module = Modules::GetInstance();
+            $module = new \Objects\Modules();
             $url = $module->GetModuleUrl("Admin", "SelectLang", "xadm");
             $this->Redirect($url);
         } else {

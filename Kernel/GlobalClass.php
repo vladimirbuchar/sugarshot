@@ -40,7 +40,7 @@ class GlobalClass {
     private static $_prepareWords = true;
     /** @var string*/
     protected static $SelectLang = "";
-    /** @var \Model\Users  */
+    /** @var \Objects\Users  */
     protected static $User;
     /** @var array */
     private static $_dataRequest = array();
@@ -76,7 +76,7 @@ class GlobalClass {
         
         
         if (!self::$IsAjax) {
-            $this->IsFrontend = empty($_GET) || !empty($_GET["seourl"]) || !empty($_GET["renderHtml"]) || !empty($_GET["lang"] || !empty($_GET["caching"]) || !empty($_GET["xml"])) ? true : false;
+            $this->IsFrontend = empty($_GET) || !empty($_GET["seourl"]) || !empty($_GET["renderHtml"]) || !empty($_GET["lang"]) || !empty($_GET["caching"]) || !empty($_GET["xml"]) ? true : false;
         } else {
             $this->IsFrontend = empty($_GET["isFrontEnd"]) ? true : $_GET["isFrontEnd"] == "false" ? false : true;
         }
@@ -95,7 +95,7 @@ class GlobalClass {
         
         
         if (self::$_lang == null)
-            self::$_lang = Langs::GetInstance();
+            self::$_lang = new \Objects\Langs ();
         
         if (self::$_web == null)
         {
@@ -103,7 +103,7 @@ class GlobalClass {
         }           
         if (self::$User == null)
         {
-            self::$User =  Users::GetInstance();
+            self::$User =  new \Objects\Users();
         }
         if (self::$UserGroupId == 0)
         {
@@ -237,7 +237,7 @@ class GlobalClass {
     private function PageRedirect($url) {
         if (self::$_pageRedirects) {
             self::$_pageRedirects = false;
-            $udv = \Model\UserDomainsValues::GetInstance();
+            $udv = new \Objects\UserDomains();
             $res = $udv->GetDomainValueConditon("Redirects", 0, "OldUrl", $url);
             if (empty($res))
                 return;

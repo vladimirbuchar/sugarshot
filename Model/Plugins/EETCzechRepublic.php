@@ -1,5 +1,6 @@
 <?php
 namespace Model;
+use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
 

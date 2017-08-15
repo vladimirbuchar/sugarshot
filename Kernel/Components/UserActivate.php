@@ -16,7 +16,7 @@ class UserActivate extends UserComponents{
         $param = base64_decode($param);
         $ar = explode("#", $param);
         $id = $ar[2];
-        $user =  \Model\Users::GetInstance();
+        $user =  new \Objects\Users();
         $user->UserActivate($id);
         $this->GoHome();
     }

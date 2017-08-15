@@ -136,7 +136,7 @@ class SelectDialog extends UserComponents{
         }
         if ($this->ShowPrivileges)
         {
-            $userGroups =  \Model\UserGroups::GetInstance();
+            $userGroups =  new \Objects\Users();
             $list = $userGroups->GetUserGroups();
             $security =\Utils\ArrayUtils::CreateCheckBoxList($list, "GroupName", "Id");
             $this->SetReplaceString("security",$security);

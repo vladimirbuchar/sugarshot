@@ -1,17 +1,16 @@
 <?php
 
 namespace Model;
-use Utils\StringUtils;
-use Dibi;
 use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
-use Types\DatabaseActions;
+
+
 class Modules  extends DatabaseTable{
     public $ModuleName;
     public $ModuleControler;
     public $ModuleView;
-    //private static $_instance = null;
+    
     
     public function __construct()
     {
@@ -22,52 +21,6 @@ class Modules  extends DatabaseTable{
         $this->SetDefaultSelectColumns();
         
     }
-    /*
-    public static function GetInstance()
-    {
-        self::$_instance = null;
-        if (self::$_instance == null)
-        {
-            self::$_instance = new static();
-        }
-        return self::$_instance;
-    }
-    */
-    public function  SetupModule($id)
-    {
-        $userGroupModule =  UserGroupsModules::GetInstance();
-        $system =  UserGroups::GetInstance();
-        $systemGrouup= $system->GetUserGroupByIdeticator("system");
-        $systemId = $systemGrouup->Id;
-        $userGroupModule->SetUserGroupModules($systemId, $id);        
-    }
-    
-    public function GetModuleUrl($moduleController,$moduleView,$prefix,$hashUrl = FALSE)
-    {
-        $url = "/$prefix/".$moduleController."/".$moduleView."/";
-        if ($hashUrl)
-            $url = StringUtils::EncodeString($url);
-        return $url;
-    }
-    
-    public function GetModuleByIdentificator($identificator)
-    {
-        return  $this->GetFirstRow($this->SelectByCondition("ModuleIdentificator = '".$identificator."'"));
-    }
-    
-    public function CanModuleShow($controller,$view,$userId)
-    {
-        
-        $res = dibi::query("SELECT * FROM USERMODULESVIEW WHERE ModuleControler = %s AND ModuleView = %s AND UserGroupId =%i",$controller,$view,$userId)->fetchAll();
-        if(count($res) == 0) return false;
-        return true;
-    }
-            
-    
-
-
-    
-    
     public function OnCreateTable() {
         $colModuleName = new DataTableColumn();
         $colModuleName->DefaultValue ="";

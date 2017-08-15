@@ -207,7 +207,7 @@ abstract class SettingsController extends AdminController {
         $id = $ajaxParametrs["Id"];
         $modelName =  "Model\\".$ajaxParametrs["ModelName"];
         $model = new $modelName();
-        $item =  ObjectHistory::GetInstance();
+        $item =  new \Objects\ObjectHistory();
         return $item->GetHistoryObject($ajaxParametrs["ModelName"], $id);
     }
     /** metoda pro obnovení dat z historie*/
@@ -220,7 +220,7 @@ abstract class SettingsController extends AdminController {
         if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
         if (empty($ajaxParametrs)) return;
         $id = $ajaxParametrs["Id"];
-        $item = ObjectHistory::GetInstance();
+        $item = new \Objects\ObjectHistory();
         return $item->RecoveryItemFromHistory($id);
         
     }

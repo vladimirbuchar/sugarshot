@@ -14,7 +14,7 @@ class UserArticles extends UserComponents{
         $content =  new \Objects\Content();
         $id = $content->GetIdByIdentificator($this->DataSource);
         $data = $content->GetUserItemDetail($id, self::$UserGroupId, $this->WebId, $this->LangId,0,true);
-        $userDomains = \Model\UserDomainsItems::GetInstance();
+        $userDomains = new \Objects\UserDomains();
         $domainIdentificator = $userDomains->GetUserDomainByTemplateId($data[0]["ChildTemplateId"]);
         $form = new Forms();
         $formHtml = $form->GetUserDomain($domainIdentificator);

@@ -2,26 +2,9 @@
 
 namespace Model;
 
-use Utils\ArrayUtils;
-use Utils\StringUtils;
-use Types\ContentTypes;
-use HtmlComponents\HtmlTable;
-use HtmlComponents\HtmlTableTd;
-use HtmlComponents\HtmlTableTh;
-use HtmlComponents\HtmlTableTr;
-use HtmlComponents\Link;
-use HtmlComponents\FontAwesome;
 use Types\RuleType;
-use Types\PrivilegesType;
-use Dibi;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
-use Types\xWebExceptions;
-use Types\LinkType;
-use Utils\Mail;
-use Utils\Utils;
-use Kernel;
-use Utils\Image;
 
 class ContentVersion extends DatabaseTable {
 

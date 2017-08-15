@@ -28,7 +28,7 @@ class Admin extends AdminController {
         $webs = new Webs();
         $webList = $webs->GetWebListByUser(self::$UserGroupId);
         if (count($webList) == 1) {
-            $lang =  Langs::GetInstance();
+            $lang =  new \Objects\Langs();
             $langList = $lang->GetLangListByWeb($webList[0]["Id"]);
             if (count($langList) == 1) {
                 $this->OpenDefaultState($webList[0]["Id"], $langList[0]["Id"]);
@@ -51,7 +51,7 @@ class Admin extends AdminController {
 
     public function GetLangListByWeb() {
         $id = $_GET["params"];
-        $lang = Langs::GetInstance();
+        $lang = new \Objects\Langs();
         return $lang->GetLangListByWeb($id);
     }
 

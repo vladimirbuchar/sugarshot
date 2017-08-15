@@ -8,7 +8,7 @@ class Discusion extends ObjectManager{
     public function  AddNewDiscusionItem($subject,$text,$showUserName,$parent,$discusionId,$historyId)
     {
         if(empty($historyId)) $historyId = 0;
-        $user = Users::GetInstance();
+        $user = new \Objects\Users();
         if ($user->UserHasBlockDiscusion())
             return;
         dibi::query("UPDATE DiscusionItems SET IsLast = 0 WHERE VersionId = %i",$historyId);
@@ -60,8 +60,8 @@ class Discusion extends ObjectManager{
     
     private function CheckBadWords()
     {
-        $domainsValues = \Model\UserDomainsValues::GetInstance();
-        $userDomain = \Model\UserDomains::GetInstance();
+        $domainsValues = new \Objects\UserDomains();
+        $userDomain = new \Objects\UserDomains();
         $domainInfo = $userDomain->GetDomainInfo("BadWords");
         $badWords = $domainsValues->GetDomainValueList($domainInfo["Id"],false);
         foreach ($badWords as $row)

@@ -12,9 +12,9 @@ class Filtr extends UserComponents{
     
     public function GetComponentHtml()
     {
-        $userDomainItems =  \Model\UserDomainsItems::GetInstance();
+        $userDomainItems =  new \Objects\UserDomains();
         $items = $userDomainItems->GetUserDomainItemByIdentificator($this->FiltrDomain,"filtr");
-        $udv =  \Model\UserDomainsValues::GetInstance();
+        $udv =  new \Objects\UserDomains();
         $html = "";
         $arrayPosition = -1;
         $seoUrl = $data[0]["SeoUrl"];
