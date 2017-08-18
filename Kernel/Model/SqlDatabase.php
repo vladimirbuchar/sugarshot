@@ -280,7 +280,7 @@ class SqlDatabase {
         return TRUE;
     }
 
-    protected function GetFirstRow($res) {
+    public function GetFirstRow($res) {
         if (!empty($res))
             return $res[0];
     }

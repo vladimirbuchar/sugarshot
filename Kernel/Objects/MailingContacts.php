@@ -11,7 +11,7 @@ class MailingContacts extends ObjectManager{
         return $this->SaveObject();
     }
     
-    public function AddContactToMailingGroup($email,$mailingGroupName)
+    public function RegisterNewContact($email,$mailingGroupName)
     {
         $id = $this->AddContact($email);
         $udv = new \Objects\UserDomains();

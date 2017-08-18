@@ -2,10 +2,7 @@
 
 namespace Controller;
 
-use Model\DiscusionItems;
-use Model\UsersInGroup;
 use Utils\StringUtils;
-
 
 class Forms extends Controllers {
 
@@ -18,17 +15,17 @@ class Forms extends Controllers {
     }
 
     public function SendFormWeb() {
-        
+
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
-        
+
 
         $formData = $ajaxParametrs["parametrs"]; //$this->PrepareAjaxParametrs();
         $formData = $this->PrepareDomains($formData);
         $formDataTmp = $this->PrepareAjaxParametrs($formData);
         $id = $ajaxParametrs["FormId"];
-        $content =  new \Objects\Content();
+        $content = new \Objects\Content();
         $form = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         $data = $form[0]["Data"];
 
@@ -37,16 +34,16 @@ class Forms extends Controllers {
         $form = new \Utils\Forms();
         $lang = new \Objects\Langs();
         $url = $lang->GetRootUrl($_GET["langid"]);
-        
 
-        $state = $form->SaveUserForm(trim($xmlRow->SendAdminEmail), trim($xmlRow->EmailFrom), trim($xmlRow->FormEmailAdmin), trim($xmlRow->TextEmailAdmin), trim($xmlRow->SendCustomerEmail), trim($xmlRow->TextEmailCustomer), trim($xmlRow->SaveType), $formData, $id, $formDataTmp, trim($xmlRow->UseCaptcha), trim($xmlRow->SaveTo),trim($xmlRow->SendFormAction));
+
+        $state = $form->SaveUserForm(trim($xmlRow->SendAdminEmail), trim($xmlRow->EmailFrom), trim($xmlRow->FormEmailAdmin), trim($xmlRow->TextEmailAdmin), trim($xmlRow->SendCustomerEmail), trim($xmlRow->TextEmailCustomer), trim($xmlRow->SaveType), $formData, $id, $formDataTmp, trim($xmlRow->UseCaptcha), trim($xmlRow->SaveTo), trim($xmlRow->SendFormAction));
         $outArray["Errors"] = array();
         $outArray["AfterSendFormAction"] = trim($xmlRow->AfterSendFormAction);
         $outArray["EndText"] = trim($xmlRow->EndText);
-        
-        $outArray["RedirectUrl"] =  $url.trim($xmlRow->GoToPage);
+
+        $outArray["RedirectUrl"] = $url . trim($xmlRow->GoToPage);
         $outArray["captchaImage"] = "";
-                
+
         if (!$state) {
             $outArray["AfterSendFormAction"] = "erorr";
             $outArray["EndText"] = "erorr";
@@ -69,7 +66,7 @@ class Forms extends Controllers {
         $formData = $this->PrepareDomains($formData);
         $formDataTmp = $this->PrepareAjaxParametrs($formData);
         $id = $ajaxParametrs["FormId"];
-        $content =  new \Objects\Content();
+        $content = new \Objects\Content();
         $form = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         $data = $form[0]["Data"];
         $form = new \Utils\Forms();
@@ -85,7 +82,7 @@ class Forms extends Controllers {
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["Id"];
-        $content =  new \Objects\Content();
+        $content = new \Objects\Content();
         $form = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         $data = $form[0]["Data"];
         $xml = simplexml_load_string($data);

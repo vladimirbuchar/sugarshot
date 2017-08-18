@@ -221,3 +221,5 @@ pip-log.txt
 .mr.developer.cfg
 /templates_c/
 settings.php
+/settings_beta.php
+/settings_localhost.php

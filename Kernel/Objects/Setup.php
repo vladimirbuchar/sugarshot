@@ -8,7 +8,8 @@ class Setup extends ObjectManager{
     
     public function IsInstaled()
     {
-        $empty = $this->TableIsEmpty();
+        $model = new \Model\Setup();
+        $empty = $model->TableIsEmpty();
         if ($empty) return false;
         return true;
     }

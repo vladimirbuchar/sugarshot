@@ -16,7 +16,7 @@ class IndexWeb extends PageController {
     }
 
     public function IndexPage() {
-        
+
         $this->SetTemplateData("langId", $this->LangId);
         $this->SetTemplateData("webId", $this->WebId);
 
@@ -24,7 +24,7 @@ class IndexWeb extends PageController {
         $this->SetTemplateData("NormalPage", $normalPage);
 
         $this->_seoUrl = empty($_GET["seourl"]) ? "" : $_GET["seourl"];
-        
+
         $this->_renderMailHtml = empty($_GET["renderHtml"]) ? false : ($_GET["renderHtml"] == "TRUE" ? true : false);
         $this->_isHomePage = empty($_GET["seourl"]) && !$this->_renderMailHtml ? true : false;
         $this->_id = empty($_GET["id"]) ? 0 : $_GET["id"];
@@ -38,7 +38,7 @@ class IndexWeb extends PageController {
         } else if ($this->_isHomePage) {
             $html = $this->LoadPageByIndentificator("Homepage");
         } else {
-            
+
             $html = $this->LoadBySeoUrl($this->_seoUrl);
         }
         $this->SetTemplateData("pageHtml", $html);

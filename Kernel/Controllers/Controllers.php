@@ -2,12 +2,10 @@
 namespace Controller;
 use Utils\Files;
 use Kernel\GlobalClass;
-use Model\Langs;
 use Model\AdminLangs;
-use Model\UsersInGroup;
-use Model\Modules;
+
 use Utils\StringUtils; 
-use Model\UserDomainsValues; 
+
 use Types\DomainData;
 class Controllers extends GlobalClass{
 
@@ -46,15 +44,11 @@ class Controllers extends GlobalClass{
     
     public function __construct() {
         parent::__construct();
-        
         $this->ControllerName = $this->GetControllerName();
         
     
     }
-    #SECURITY 
-    /**
-     * this function is testing blocking web administration 
-     */
+    
     protected function BlockAdmin()
     {
         $lang =  new \Objects\Langs();
@@ -151,7 +145,7 @@ class Controllers extends GlobalClass{
     } 
 
     protected function AddStyle($path) {
-        if (!self::$IsAjax)
+        if (!self::$IsApi)
             $this->_styles[] = $path;
     }
 
@@ -181,7 +175,7 @@ class Controllers extends GlobalClass{
     }
 
     public function AddScript($path) {
-        if (!self::$IsAjax)
+        if (!self::$IsApi)
             $this->_scripts[] = $path;
     }
 
@@ -395,7 +389,7 @@ class Controllers extends GlobalClass{
     
 
     protected function Referesch() {
-        if (self::$IsAjax) return;
+        if (self::$IsApi) return;
         $this->Redirect("");
     }
 
@@ -554,14 +548,4 @@ class Controllers extends GlobalClass{
         if ($mustBeWebId)
             $this->MustBeWebId ($viewName);
     }
-    
-    
-            
-    
-    
-    
-    
-    
-    
-
 }

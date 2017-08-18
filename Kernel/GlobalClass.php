@@ -2,10 +2,7 @@
 
 namespace Kernel;
 
-use Model\Webs;
-use Model\Users;
-use Model\Langs;
-use Model\UserDomainsValues;
+
 use Model\WordGroups;
 use Utils\Utils;
 use Utils\Forms;
@@ -13,7 +10,7 @@ use Utils\Forms;
 class GlobalClass {
 
     /** @var bool*/
-    protected static $IsAjax = false;
+    protected static $IsApi = false;
     /** @var integer*/
     protected static $UserGroupId = 0;
     /** @var integer*/
@@ -22,7 +19,7 @@ class GlobalClass {
     protected static $OtherUserGroups = array();
     /** @var array()*/
     private static $_templateData = array();
-    /** @var \Model\Langs*/
+    /** @var \Objects\Langs*/
     private static $_lang = null;
     /** @var \Objects\Webs*/
     private static $_web = null;
@@ -71,11 +68,11 @@ class GlobalClass {
         
          if (!empty($_GET["ajax"])) {
             if ($_GET["ajax"] == "ajax")
-                self::$IsAjax = TRUE;
+                self::$IsApi = TRUE;
         }
         
         
-        if (!self::$IsAjax) {
+        if (!self::$IsApi) {
             $this->IsFrontend = empty($_GET) || !empty($_GET["seourl"]) || !empty($_GET["renderHtml"]) || !empty($_GET["lang"]) || !empty($_GET["caching"]) || !empty($_GET["xml"]) ? true : false;
         } else {
             $this->IsFrontend = empty($_GET["isFrontEnd"]) ? true : $_GET["isFrontEnd"] == "false" ? false : true;
@@ -123,19 +120,11 @@ class GlobalClass {
             }
         }
       
-        if (strtoupper($_SERVER['REQUEST_METHOD']) == 'POST') {
-            $this->IsPostBack = true;
-        }
-        if (strtoupper($_SERVER['REQUEST_METHOD']) == 'GET') {
-            $this->IsGet = true;
-        }
-
-        
-        
-        
+        $this->IsPostBack = strtoupper($_SERVER['REQUEST_METHOD']) == 'POST';
+        $this->IsGet =    strtoupper($_SERVER['REQUEST_METHOD']) == 'GET';
         
 
-        if (!self::$IsAjax) {
+        if (!self::$IsApi) {
             
             if (!$this->IsFrontend) {
                 $this->GetLang();
@@ -179,7 +168,7 @@ class GlobalClass {
         }
 
         self::$_web->SetWebInfo($this->WebId);
-        if (!self::$IsAjax) {
+        if (!self::$IsApi) {
             if ($this->IsFrontend) {
                 $this->IpRestriction("web");
             } else {
@@ -198,7 +187,6 @@ class GlobalClass {
             self::$_javascriptFramework = self::$_web->JavascriptFrameworkMode($this->WebId);
         }
         $this->IsCookiesAccept();
-        
     }
 
     public function IsLoginUser() {
@@ -210,7 +198,7 @@ class GlobalClass {
     }
 
     protected function GoHome() {
-        if (!self::$IsAjax)
+        if (!self::$IsApi)
             $this->Redirect(SERVER_NAME_LANG);
     }
 
@@ -221,7 +209,6 @@ class GlobalClass {
         exit;
     }
 
-    
     public function IsHttps() {
         return stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true;
     }
@@ -396,13 +383,7 @@ class GlobalClass {
         }
     }
     
-    public function GetIfrmaesHtml($key)
-    {
-        
-        
-        
-        
-    }
+   
     
     // WORDS - přesunout do PAGE.PHP
      protected function GetAutoLang() {

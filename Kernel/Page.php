@@ -4,7 +4,7 @@ namespace Kernel;
 
 use Utils\StringUtils;
 use Controller\Templates;
-use Model\Users;
+
 use Utils\Utils;
 use Types\xWebExceptions;
 
@@ -59,23 +59,29 @@ class Page {
      * $functionName - jméno volané funkce
      * $mode - mód  GET,POST,JSON
      *      */
-    public static function AjaxFunction($controllerName, $functionName, $mode) {
+    public static function ApiFunction($controllerName, $functionName, $mode) {
         try {
+            if(empty($_SERVER['HTTP_X_REQUESTED_WITH']) || trim(strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])) != "xmlhttprequest")
+            {    
+                exit;
+            }
+            
             if (empty($controllerName) || empty($functionName) || empty($mode)) {
                 return;
             }
-            $controllerPath = CONTROLLER_PATH . $controllerName . ".php";
+            $controllerPath = CONTROLLER_PATH ."Api/". $controllerName . "Api.php";
+            
             if (!Files::FileExists($controllerPath)) {
-                $controllerPath = CONTROLLER_PATH . "Plugins/" . $controllerName . ".php";
-                //Files::WriteLogFile($controllerName." ". $functionName);
+                $controllerPath = CONTROLLER_PATH . "Plugins/Api/" . $controllerName . "Api.php";
+                
             }
             require_once $controllerPath;
             $controllerName = "Controller\\" . $controllerName;
-            $controller = new $controllerName();
+            $controllerNameApi = $controllerName."Api" ;
+            $controller = new $controllerNameApi();
             $out = "";
             
             if ($controller->IsAjaxFunction($functionName) && !$controller->GetNoAccess()) {
-                
                 $mode = strtolower($mode);
 //                echo $mode;
                 if ($mode == "postobject") { 
@@ -110,8 +116,6 @@ class Page {
                     echo $out;
                     
                 } else if ($mode == "json" || $mode == "jsonobject" || $mode == "longrequestjson") {
-                    /*$out =  self::RenderXWebComponent($out); NE!!
-                    $out = preg_replace('({[A-Za-z0-9\-]*})', "", $out);*/
                     echo json_encode($out);
                 }
             }
@@ -157,18 +161,10 @@ class Page {
         
         if (empty($html))
         {
-            try{
             $template = new Templates();
-            }
- catch (Exception $e)
- {
-     echo $e;
-     die();
- }
-            
-            /*     if ($template->UseHttps() && !$template->IsHttps()) {
-            $template->HttpsRedirect();
-         }*/
+            /*if ($template->UseHttps() && !$template->IsHttps()) {
+              $template->HttpsRedirect();
+            }*/
         
         
         
@@ -389,10 +385,7 @@ class Page {
     }
 
     private static function CheckPermintionController($controler) {
-        if ($controler->GetControllerPermition())
-            return true;
-        return false;
-        //throw new Exception("SECURITY ERROR");
+        return $controler->GetControllerPermition();
     }
 
     private static function UpdateModel($model) {

@@ -2,8 +2,6 @@
 
 namespace Controller;
 
-use Model\Modules;
-
 class Login extends Controllers {
 
     private $_errorLogin;
@@ -27,7 +25,7 @@ class Login extends Controllers {
     }
 
     public function UserLogin() {
-        
+
         if (self::$User->UserLogin($_POST["UserName"], $_POST["UserPassowrd"])) {
             $this->_errorLogin = false;
             $module = new \Objects\Modules();

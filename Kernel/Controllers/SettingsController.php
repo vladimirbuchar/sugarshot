@@ -1,7 +1,7 @@
 <?php
 namespace Controller;
 use Types\SortDatabase;
-use Model\ObjectHistory;
+
 abstract class SettingsController extends AdminController {
     
 /** tuto třídu požívají číselníky */
@@ -10,7 +10,7 @@ abstract class SettingsController extends AdminController {
         parent::__construct();
         
         $this->SharedView = "List";
-        if (self::$IsAjax)
+        if (self::$IsApi)
         {
             $this->SetAjaxFunction("DeleteItem",array("system","Administrators"));
             $this->SetAjaxFunction("AddItem",array("system","Administrators"));
@@ -27,11 +27,7 @@ abstract class SettingsController extends AdminController {
     /** metoda pro smazání objektu */
     public function  DeleteItem()
     {
-        
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs)) return;
         $deletePernamently = false;  
          
@@ -50,9 +46,7 @@ abstract class SettingsController extends AdminController {
     /** metoda pro přidání položky*/
     public function AddItem()
     {
-        
-        $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs)) return 0;
         if (empty($ajaxParametrs["ModelName"])) return 0;
         
@@ -78,8 +72,8 @@ abstract class SettingsController extends AdminController {
     /** metoda pro zobrazení detailu položky */
     public function  GetDetailItem()
     {
-        $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
+        
         if (empty($ajaxParametrs)) return;
         $id = $ajaxParametrs["Id"];
         $model = "Model\\".$ajaxParametrs["ModelName"];
@@ -91,10 +85,7 @@ abstract class SettingsController extends AdminController {
     /** metoda pro zkopírování položky*/
     public function  CopyItem()
     {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs)) return;
         $id = $ajaxParametrs["Id"];
         $model =  "Model\\".$ajaxParametrs["ModelName"];
@@ -105,10 +96,8 @@ abstract class SettingsController extends AdminController {
     /** metoda  pro vyexportování dat z číselníku  */
     public function ExportData()
     {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
+        
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs)) return;
         $modelName =  "Model\\".$ajaxParametrs["ModelName"];
         $model = new $modelName();
@@ -118,10 +107,7 @@ abstract class SettingsController extends AdminController {
     /** metoda pro naimportovaní dat do číselníku*/
     public function Import()
     {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs)) return;
         $modelName =  "Model\\".$ajaxParametrs["ModelName"];
         $model = new $modelName();
@@ -184,12 +170,8 @@ abstract class SettingsController extends AdminController {
     /** metoda pro zobrazení smazaných dat z číselníku */
     public function RecoveryItem()
     {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs)) return;
-        
         $id = $ajaxParametrs["Id"];
         $modelName =  "Model\\".$ajaxParametrs["ModelName"];
         $model = new $modelName();
@@ -199,10 +181,7 @@ abstract class SettingsController extends AdminController {
     /** metoda pro zobrazení historie změn v objektu */
     public function ShowHistory()
     {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs)) return;
         $id = $ajaxParametrs["Id"];
         $modelName =  "Model\\".$ajaxParametrs["ModelName"];
@@ -213,11 +192,7 @@ abstract class SettingsController extends AdminController {
     /** metoda pro obnovení dat z historie*/
     public function RecoveryFromHistory()
     {
-        
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))$ajaxParametrs =  $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs)) return;
         $id = $ajaxParametrs["Id"];
         $item = new \Objects\ObjectHistory();

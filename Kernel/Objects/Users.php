@@ -1,6 +1,7 @@
 <?php
 
 namespace Objects;
+use Dibi;
 class Users extends ObjectManager{
     public function __construct() {
         parent::__construct();
@@ -43,8 +44,8 @@ class Users extends ObjectManager{
             $userEmailActivate = $web->UserEmailActivate;
         }
         
-        $ug =  new \Objects\Users();
-        $registeredUser = $ug->GetUserGroupByIdeticator("RegisteredUser");
+        
+        $registeredUser = $this->GetUserGroupByIdeticator("RegisteredUser");
         $userGroupId = $registeredUser["Id"];
         
         return $this->CreateUser($userId,$FirstName,$LastName,$UserEmail,$UserName,$UserPassword,$blockDiscusion,$userGroupId,$profile,$isActive,$defaultLang,false, $UserPassword2, $sendEmailAdmin,$adminMail,$adminMailId,$adminActivation,$sendUserEmail,$sendEmailUserFrom,$userMailId,$userEmailActivate);
@@ -57,10 +58,10 @@ class Users extends ObjectManager{
         $newUser = $id == 0 ? TRUE: FALSE;
         //$this->validatePassword();
         $user =  Users::GetInstance();
-        $testExists = $this->SelectByCondition("UserName = '$UserName' AND Id <> $id");
+        $testExists = $user->SelectByCondition("UserName = '$UserName' AND Id <> $id");
         if (!empty($testExists))
             return -1;
-        $testExistsEmail = $this->SelectByCondition("UserEmail  = '$UserEmail' AND Id <> $id");
+        $testExistsEmail = $user->SelectByCondition("UserEmail  = '$UserEmail' AND Id <> $id");
         if (!empty($testExistsEmail))
             return -2;
         if (!$createFromAdmin && (empty($UserPassword) || $UserPassword != $UserPassword2))
@@ -168,7 +169,7 @@ class Users extends ObjectManager{
             $badLogins->AddBadLogin();
             return FALSE;
         }
-        $userData = $this->GetFirstRow($res);
+        $userData = $res[0];
         
         self::$SessionManager->SetSessionValue("UserId", $userData->UserId);
         
@@ -196,7 +197,8 @@ class Users extends ObjectManager{
     public function UserHasBlockDiscusion()
     {
         $userId = $this->GetUserId();
-        $this->GetObjectById($userId,true);
+        $model = new Model\Users();
+        $model->GetObjectById($userId,true);
         return $this->BlockDiscusion;
     }
     
@@ -209,8 +211,8 @@ class Users extends ObjectManager{
     {
         if (!self::$SessionManager->IsEmpty("UserGroupId"))
             return self::$SessionManager->GetSessionValue("UserGroupId");
-        $userGroup =  new \Objects\Users();
-        $groupData = $userGroup->GetUserGroupByIdeticator("anonymous");
+        
+        $groupData = $this->GetUserGroupByIdeticator("anonymous");
         self::$SessionManager->SetSessionValue("UserGroupId", $groupData->Id);
         return $groupData->Id;
     }
@@ -245,10 +247,12 @@ class Users extends ObjectManager{
         if (self::$SessionManager->GetSessionValue("UserGroupId") == 0) 
             return FALSE;
         
-        $userGroup =  UserGroups::GetInstance();
-        $groupData = $userGroup->GetAnonymousGroup();
         
-        if($groupData->Id == self::$SessionManager->GetSessionValue("UserGroupId"))
+        $groupData = $this->GetAnonymousGroup();
+        
+
+        
+        if($groupData["Id"] == self::$SessionManager->GetSessionValue("UserGroupId"))
             return FALSE;
         return TRUE;   
         }
@@ -266,12 +270,12 @@ class Users extends ObjectManager{
      public function GetUserId()
     {
         try{
-            
+            $user =   \Model\Users::GetInstance();
             if (!self::$SessionManager->IsEmpty("UserId")) return self::$SessionManager->GetSessionValue("UserId");
             
             if (self::$SessionManager->IsEmpty("AnonymousUserId"))
             {
-                $res = $this->GetFirstRow($this->SelectByCondition("UserName = 'anonymous'","",array("Id")));
+                $res = $user->GetFirstRow($user->SelectByCondition("UserName = 'anonymous'","",array("Id")));
                 self::$SessionManager->SetSessionValue("AnonymousUserId",$res["Id"]);
                 
             }
@@ -296,15 +300,17 @@ class Users extends ObjectManager{
     }
     public function GetUserDetail($userId)
     {
-        return $this->GetObjectById($userId);
+        $model = new \Model\Users();
+        return $model->GetObjectById($userId);
     }
     public function IsSystemUser()
     {
         
         if (self::$SessionManager->IsEmpty("IsSystemUser") || self::$SessionManager->GetSessionValue("IsSystemUser")== true)
         {
-            $this->GetObjectById($this->GetUserId(),true);
-            if ($this->UserName == "system"){
+            $model = new \Model\Users();
+            $model->GetObjectById($this->GetUserId(),true);
+            if ($model->UserName == "system"){
                 self::$SessionManager->SetSessionValue("IsSystemUser",true);
                 return true;
             }
@@ -316,7 +322,7 @@ class Users extends ObjectManager{
     
     public function ChangePassword($password1,$password2,$userId)
     {
-        
+        $model = new \Model\Users();
         $this->validatePassword();
         if (empty($password1) || empty($password2))
         {
@@ -326,10 +332,10 @@ class Users extends ObjectManager{
         {
             return;
         }
-        $this->SetValidateRule("UserPassword", RuleType::$Hash);
-        $this->GetObjectById($userId,true);
-        $this->UserPassword = $password1;
-        $this->SaveObject();
+        $model->SetValidateRule("UserPassword", RuleType::$Hash);
+        $model->GetObjectById($userId,true);
+        $model->UserPassword = $password1;
+        $model->SaveObject();
     }
     
     public function GetUserName()
@@ -370,8 +376,9 @@ class Users extends ObjectManager{
     
     public function GetUserGroupByIdeticator($identificator)
     {
-        $res = $this->SelectByCondition("GroupIdentificator = '$identificator'");
-        return $this->GetFirstRow($res);
+        $userGroup = new \Model\UserGroups();
+        $res = $userGroup->SelectByCondition("GroupIdentificator = '$identificator'");
+        return $userGroup->GetFirstRow($res);
     }
     
     public function GetAnonymousGroup()
@@ -380,6 +387,7 @@ class Users extends ObjectManager{
         if (self::$SessionManager->IsEmpty("AnonymousInfo"))
         {
             $res = $this->GetUserGroupByIdeticator("anonymous");
+            $res = \Utils\ArrayUtils::ObjectToArray($res);
             self::$SessionManager->SetSessionValue("AnonymousInfo", $res);
             
         }
@@ -389,26 +397,28 @@ class Users extends ObjectManager{
     
     public function GetSystemGroups()
     {
-        $user = new \Objects\Users();
+        $userGroup = \Model\UserGroups::GetInstance();
         $condition = "IsSystemGroup = 1 AND Deleted = 0";
-        if ($user->IsSystemUser())
-          return $this->SelectByCondition($condition);
-        return $this->SelectByCondition($condition." AND GroupName <> 'system'");
+        if ($this->IsSystemUser())
+          return $userGroup->SelectByCondition($condition);
+        return $userGroup->SelectByCondition($condition." AND GroupName <> 'system'");
     }
     
     public function GetNoSystemGroups()
     {
+        $userGroup = \Model\UserGroups::GetInstance();
         $condition = "IsSystemGroup = 0 AND Deleted = 0";
-        return $this->SelectByCondition($condition);
+        return $userGroup->SelectByCondition($condition);
 
     }
     
     public function ChangeSystemGroupToAdmin()
     {
-        $user = new \Objects\Users();
-        if ($user->IsSystemUser())
+        
+        if ($this->IsSystemUser())
         {
-            $res = $this->SelectByCondition("GroupIdentificator = 'Administrators'");
+            $userGroup = \Model\UserGroups::GetInstance();
+            $res = $userGroup->SelectByCondition("GroupIdentificator = 'Administrators'");
             return $res[0]["Id"];
         }
         return 0;
@@ -417,8 +427,9 @@ class Users extends ObjectManager{
     
     public function GetUserGroups($removeIdentificator = array())
     {
+        $userGroup = \Model\UserGroups::GetInstance();
         if (empty($removeIdentificator))
-            return $this->SelectByCondition ("Deleted = 0");
+            return $userGroup->SelectByCondition ("Deleted = 0");
         $where = "";
         
         for ($i = 0; $i< count($removeIdentificator);$i++)
@@ -428,11 +439,10 @@ class Users extends ObjectManager{
             if (empty($where)) $where =" GroupIdentificator <>'".$identificator."' ";
             else $where .=" AND GroupIdentificator <> '".$identificator."'";
         }
-        $user = new \Objects\Users();
-        if ($user->IsSystemUser())
-            return $this->SelectByCondition("($where) AND Deleted = 0 ");   
+        if ($this->IsSystemUser())
+            return $userGroup->SelectByCondition("($where) AND Deleted = 0 ");   
         
-        return $this->SelectByCondition("($where) AND Deleted = 0 AND   GroupIdentificator <>'system'");   
+        return $userGroup->SelectByCondition("($where) AND Deleted = 0 AND   GroupIdentificator <>'system'");   
     }
     
 

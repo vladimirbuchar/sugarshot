@@ -1360,7 +1360,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             $data = ArrayUtils::GetDataXmlValueToRow($data);
             $detail = $this->GetUserItemDetail($xmlUserItem, $users->GetUserGroupId(), 0, $langId);
             $templateId = empty($detail[0]["ChildTemplateId"]) ? $detail[0]["TemplateId"] : $detail[0]["ChildTemplateId"];
-            $domainItems = \Model\UserDomainsItems::GetInstance();
+            $domainItems = new \Objects\UserDomains();
             $identificator = $domainItems->GetUserDomainByTemplateId($templateId);
             $items = $domainItems->GetUserDomainItems($identificator);
             $items = ArrayUtils::ValueAsKey($items, "Identificator");
@@ -1519,7 +1519,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             $langId = $this->GetLangIdByWebUrl();
             $dataItem = $this->GetUserItemDetail($xmlUserItem, $users->GetUserGroupId(), 0, $langId);
             $useTemplateId = empty($dataItem[0]["ChildTemplateId"]) ? $dataItem[0]["TemplateId"] : $dataItem[0]["ChildTemplateId"];
-            $domain = \Model\UserDomainsItems::GetInstance();
+            $domain = new \Objects\UserDomains();
             $domainIdentificator = $domain->GetUserDomainByTemplateId($useTemplateId);
 
 

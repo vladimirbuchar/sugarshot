@@ -6,13 +6,10 @@ use Types\AlterTableMode;
 
 class WordGroups  extends DatabaseTable{
     public $GroupName;
-    //private static $_instance = null;
     public function __construct()
     {
         parent::__construct();
-        
         $this->ObjectName = "WordGroups";
-        
     }
     
     public function AddColumnLang($wordIndetificator)

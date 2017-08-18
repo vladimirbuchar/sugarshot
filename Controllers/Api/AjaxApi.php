@@ -3,10 +3,8 @@
 namespace Controller;
 
 use Model\DiscusionItems;
-use Model\UsersInGroup;
 
-
-class Ajax extends Controllers {
+class AjaxApi extends Controllers {
 
     public function __construct() {
         parent::__construct();
@@ -36,7 +34,7 @@ class Ajax extends Controllers {
         $ajax = $this->PrepareAjaxParametrs();
         if (empty($ajax))
             return;
-        $content =  new \Objects\Content();
+        $content = new \Objects\Content();
         $id = $ajax["ParentId"];
         unset($ajax["ParentId"]);
         $content->CreateSurveyAnswer($this->LangId, $id, $ajax);
@@ -47,7 +45,7 @@ class Ajax extends Controllers {
         if (empty($ajaxParametrs))
             return;
         $userId = $ajaxParametrs["UserId"];
-        $userGroup =  new \Objects\UsersGroups();
+        $userGroup = new \Objects\UsersGroups();
         return $userGroup->GetMainUserGroup($userId);
     }
 
@@ -66,7 +64,7 @@ class Ajax extends Controllers {
     }
 
     public function DeleteUserItem() {
-        $content =  new \Objects\Content();
+        $content = new \Objects\Content();
         $content->DeleteItem($_POST["params"]);
     }
 
@@ -97,9 +95,9 @@ class Ajax extends Controllers {
     }
 
     public function Search() {
-        $contentVersion =  new \Objects\Content();
-        $seourl = $contentVersion->GetSeoUrlByIdentificator("search",$this->LangId);
-        return $seourl.base64_encode($_POST["params"])."/";
+        $contentVersion = new \Objects\Content();
+        $seourl = $contentVersion->GetSeoUrlByIdentificator("search", $this->LangId);
+        return $seourl . base64_encode($_POST["params"]) . "/";
     }
 
     public function UserLogin() {
@@ -149,7 +147,7 @@ class Ajax extends Controllers {
         if (empty($ajaxParametrs))
             return;
 
-        $discusion =  new \Objects\Discusion();
+        $discusion = new \Objects\Discusion();
         $id = $ajaxParametrs["Id"];
         $subject = $ajaxParametrs["SubjectDiscusion"];
         $showUserName = $ajaxParametrs["ShowUserName"];
@@ -185,8 +183,8 @@ class Ajax extends Controllers {
         $discusion = DiscusionItems::GetInstance();
         $discusion->DeleteObject($id);
     }
-    public function ReloadComponent()
-    {
+
+    public function ReloadComponent() {
         
     }
 

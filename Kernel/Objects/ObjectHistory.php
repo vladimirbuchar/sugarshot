@@ -1,6 +1,7 @@
 <?php
 
 namespace Objects;
+use \Types\DatabaseActions;
 class ObjectHistory extends ObjectManager{
     public function __construct() {
         parent::__construct();
@@ -14,7 +15,7 @@ class ObjectHistory extends ObjectManager{
         $res = dibi::query("SELECT * FROM  ObjectHistory WHERE Id = %i  ",$idHistory)->fetchAll();
         if (!empty($res))
         {
-            $res = $this->GetFirstRow($res);
+            $res = $res[0];
             if ($res->Action == DatabaseActions::$Update)
             {
                 $objName =  $res->ObjectHistoryName;
@@ -34,17 +35,18 @@ class ObjectHistory extends ObjectManager{
     }
     public function CreateHistoryItem($objectName,$objectId,$action,$userId,$IP,$oldData,$activeItem,$userName,$historyWebId)
     {
-        $this->ObjectHistoryName = $objectName;
-        $this->ObjectId = $objectId;
-        $this->Action = $action;
-        $this->UserId = $userId;
-        $this->IP = $IP;
-        $this->OldData = $oldData;
-        $this->CreateDate = new \DateTime();
-        $this->ActiveItem = $activeItem;
-        $this->UserName = $userName;
-        $this->HistoryWebId = $historyWebId;
-        $this->SaveObject();
+        $model = new \Objects\ObjectHistory();
+        $model->ObjectHistoryName = $objectName;
+        $model->ObjectId = $objectId;
+        $model->Action = $action;
+        $model->UserId = $userId;
+        $model->IP = $IP;
+        $model->OldData = $oldData;
+        $model->CreateDate = new \DateTime();
+        $model->ActiveItem = $activeItem;
+        $model->UserName = $userName;
+        $model->HistoryWebId = $historyWebId;
+        $model->SaveObject();
 
     }
 }

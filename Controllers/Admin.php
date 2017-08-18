@@ -3,7 +3,6 @@
 namespace Controller;
 
 use Objects\Webs;
-use Model\Langs;
 use Utils\StringUtils;
 
 class Admin extends AdminController {
@@ -11,16 +10,11 @@ class Admin extends AdminController {
     public function __construct() {
         parent::__construct();
         $this->SetControllerPermition(array("system", "Administrators"));
-        if ($this->IsPostBack || $this->IsGet) {
-            $this->SetIgnoreUserPrivileges("Logout");
-            $this->SetViewPermition("SelectLang", array("system", "Administrators"));
-            $this->SetViewPermition("Logout", array("*"));
-            $this->SetTemplateData("controllerName", $this->ControllerName);
-        }
-        if (self::$IsAjax) {
-            $this->SetAjaxFunction("GetJavascriptWord", array("system", "Administrators"));
-            $this->SetAjaxFunction("GetLangListByWeb", array("system", "Administrators"));
-        }
+        $this->SetTemplateData("controllerName", $this->ControllerName);
+        $this->SetIgnoreUserPrivileges("Logout");
+        $this->SetViewPermition("SelectLang", array("system", "Administrators"));
+        $this->SetViewPermition("Logout", array("*"));
+        
     }
 
     public function SelectLang() {
@@ -28,7 +22,7 @@ class Admin extends AdminController {
         $webs = new Webs();
         $webList = $webs->GetWebListByUser(self::$UserGroupId);
         if (count($webList) == 1) {
-            $lang =  new \Objects\Langs();
+            $lang = new \Objects\Langs();
             $langList = $lang->GetLangListByWeb($webList[0]["Id"]);
             if (count($langList) == 1) {
                 $this->OpenDefaultState($webList[0]["Id"], $langList[0]["Id"]);
@@ -49,24 +43,8 @@ class Admin extends AdminController {
         $this->Redirect("/xswadmin/");
     }
 
-    public function GetLangListByWeb() {
-        $id = $_GET["params"];
-        $lang = new \Objects\Langs();
-        return $lang->GetLangListByWeb($id);
-    }
-
-    public function OpenDefaultState($webId, $langId) {
+    private function OpenDefaultState($webId, $langId) {
         $this->GoToState("WebEdit", "Tree", "xadm", $webId, $langId);
-    }
-
-    public function GetJavascriptWord() {
-        $wordid = $_POST["params"];
-        if (empty($wordid))
-            return "";
-        $wordid = StringUtils::RemoveString($wordid, '<!--{$');
-        $wordid = StringUtils::RemoveString($wordid, '}-->');
-        $word = $this->GetWord($wordid);
-        return empty($word) ? $wordid : $word;
     }
 
 }

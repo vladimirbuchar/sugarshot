@@ -130,7 +130,6 @@ class Webs extends ObjectManager{
         $langList = ArrayUtils::ValueAsKey($langList, "Id");
         $userGroups = new \Objects\Users();
         $anonymous = $userGroups->GetAnonymousGroup();
-        $anonymous = ArrayUtils::ObjectToArray($anonymous);
         $res = \dibi::query("SELECT * FROM FrontendDetail_materialized WHERE GroupId = %i And WebId = %i",$anonymous["Id"],$template["WebId"])->fetchAll();
         $xml = $template["SiteMapStart"]."\n";   
         

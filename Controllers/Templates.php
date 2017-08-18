@@ -5,15 +5,13 @@ namespace Controller;
 class Templates extends Controllers {
 
     public function __construct() {
-        
-        
+
+
         parent::__construct();
 
         $this->TestUserPrivileges = false;
         $this->SetControllerPermition(array("*"));
         $this->GetAutoLang();
-        /* if ($this->IsPostBack || $this->IsGet)
-          { */
         $this->AddStyle("/Styles/Core.css");
         $this->SetTemplateData("controllerName", $this->ControllerName);
         $this->SetViewPermition("AdminNoLogin", array("*"));
@@ -21,13 +19,6 @@ class Templates extends Controllers {
         $this->SetViewPermition("AdminLogin", array("system", "Administrators"));
         $this->SetViewPermition("AdminLoginSmallTemplate", array("system", "Administrators"));
         $this->SetViewPermition("Setup", array("*"));
-        //}
-        /* if ($this->IsAjax)
-          {* */
-        $this->SetAjaxFunction("SetAdminLang", array("*"));
-        $this->SetAjaxFunction("IsLoginUser", array("*"));
-
-        //}
     }
 
     public function Index() {
@@ -43,7 +34,6 @@ class Templates extends Controllers {
 
         $this->IncludeState();
         $this->GetAdminLangs();
-            
     }
 
     public function AdminLogin() {
@@ -101,15 +91,6 @@ class Templates extends Controllers {
         } else {
             $this->Redirect("/xswadmin/");
         }
-    }
-
-    public function SetAdminLang() {
-        self::$SessionManager->SetSessionValue("AdminUserLang",$_POST["params"]);
-        
-    }
-
-    public function IsLoginUser() {
-        return $this->IsLogin;
     }
 
 }

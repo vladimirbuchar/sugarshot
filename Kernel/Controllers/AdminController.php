@@ -8,12 +8,10 @@ class AdminController extends Controllers{
         parent::__construct();
         $this->BlockAdmin();
         $this->SetTemplateData("LeftMenuSettings", "");
-        if (!self::$IsAjax)
+        if (!self::$IsApi)
         {
             $this->SetTemplateData("IsSystem", self::$User->IsSystemUser());
         }
-        
-        
     }
     protected function SetLeftMenu($level1,$level2)
     {

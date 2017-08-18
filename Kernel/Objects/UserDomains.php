@@ -1,44 +1,48 @@
 <?php
 
 namespace Objects;
+use Dibi;
 class UserDomains extends ObjectManager{
+    private $DomainValidateErrors = array();
     public function __construct() {
         parent::__construct();
     }
     public function GetDomainInfo($identificator)
     {
-        return $this->GetFirstRow($this->SelectByCondition(" DomainIdentificator = '$identificator'"));
+        $model = new Model\UserDomains();
+        return $model->GetFirstRow($model->SelectByCondition(" DomainIdentificator = '$identificator'"));
     }
     
     //UserDomainAddiction
     public function  SaveAddiction($id,$domainId,$name,$item1,$ruleName,$item1Value,$actionName,$itemXValue,$itemX,$priority)
     {
-        $this->Id = $id;
-        $this->DomainId = $domainId;
-        $this->AddictionName = $name;
-        $this->Item1 = $item1;
-        $this->RuleName = $ruleName;
-        $this->Item1Value = $item1Value;
-        $this->ActionName = $actionName;
-        $this->ItemXValue = $itemXValue;    
-        $this->ItemX = $itemX;
-        $this->Priority = $priority;
+        $model = new Model\UserDomainsAddiction();
+        $model->Id = $id;
+        $model->DomainId = $domainId;
+        $model->AddictionName = $name;
+        $model->Item1 = $item1;
+        $model->RuleName = $ruleName;
+        $model->Item1Value = $item1Value;
+        $model->ActionName = $actionName;
+        $model->ItemXValue = $itemXValue;    
+        $model->ItemX = $itemX;
+        $model->Priority = $priority;
         
         if (StringUtils::ContainsString($item1, "-"))
         {
             $ar = explode("-", $item1);
-            $this->IsDomain1 = true;
-            $this->DomainId1 = $ar[0];
-            $this->ItemId1 = $ar[1];
+            $model->IsDomain1 = true;
+            $model->DomainId1 = $ar[0];
+            $model->ItemId1 = $ar[1];
         }
         if (StringUtils::ContainsString($itemX, "-"))
         {
             $ar = explode("-", $itemX);
-            $this->IsDomainX = true;
-            $this->DomainIdX = $ar[0];
-            $this->ItemIdX = $ar[1];
+            $model->IsDomainX = true;
+            $model->DomainIdX = $ar[0];
+            $model->ItemIdX = $ar[1];
         }
-        $this->SaveObject();
+        $model->SaveObject();
     }
     
     public function GetAddictionDomain($domainId)
@@ -55,23 +59,25 @@ class UserDomains extends ObjectManager{
     /// UserDomainsAutoComplete
     public function GetItemAutoComplected($itemId)
     {
-        return $this->SelectByCondition("DomainItemId = $itemId AND Deleted = 0");
+        $model = new Model\UserDomainsAutoComplete();
+        return $model->SelectByCondition("DomainItemId = $itemId AND Deleted = 0");
     }
     
     // userdomains  groups
     
     public function SaveGroup($id,$name,$domainId)
     {
-        $this->Id = $id;
-        $this->GroupName = $name;
-        $this->DomainId = $domainId;
-        return $this->SaveObject();
+        $model = new Model\UserDomainsGroups();
+        $model->Id = $id;
+        $model->GroupName = $name;
+        $model->DomainId = $domainId;
+        return $model->SaveObject();
     }
     
     //user domain items
     public function GetUserDomainItems($identifcator,$groupId = 0,$elementId = "")
     {       
-        
+
         if ($groupId == 0)
         {
             if ($elementId == "")
@@ -175,19 +181,21 @@ class UserDomains extends ObjectManager{
     
     public function SaveItemInGroup($groupId,$items)
     {
-        $this->DeleteByCondition("GroupId = $groupId");
+        $model = new Model\UserDomainsGroups();
+        $model ->DeleteByCondition("GroupId = $groupId");
         
         for($i = 0;$i< count($items);$i++)
         {
-            $this->GroupId = $groupId;
-            $this->ItemId = $items[$i][0];
-            $this->SaveObject();
+            $model->GroupId = $groupId;
+            $model->ItemId = $items[$i][0];
+            $model->SaveObject();
         }
         
     }
     public function GetUserItemInGroups($groupId)
     {
-        return $this->SelectByCondition("GroupId = $groupId AND Deleted = 0");
+        $model = new Model\UserDomainsGroups();
+        return $model->SelectByCondition("GroupId = $groupId AND Deleted = 0");
     }
     
     /// userdomain values
@@ -495,7 +503,8 @@ class UserDomains extends ObjectManager{
     }
     public function DeleteAllValues($domainId)
     {
-        $this->DeleteByCondition("DomainId = $domainId",true,false);
+        $model = new Model\UserDomainsValues();
+        $model->DeleteByCondition("DomainId = $domainId",true,false);
     }
     
     

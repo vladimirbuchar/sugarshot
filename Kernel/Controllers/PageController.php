@@ -3,7 +3,7 @@ namespace Controller;
 use Utils\StringUtils;
 
 use Model\Langs;
-use Model\Cache;
+
 use Types\ContentTypes;
 use Utils\Forms;
 abstract class PageController extends Controllers {
@@ -173,7 +173,7 @@ abstract class PageController extends Controllers {
                 
             }
             
-            if (self::$IsAjax)
+            if (self::$IsApi)
                 return $html;
             if(empty($template))
             {

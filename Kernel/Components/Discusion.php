@@ -1,7 +1,5 @@
 <?php
 namespace Components;
-
-use Model\DiscusionItems;
 use HtmlComponents\Div;
 use Types\DiscusionsMode;
 use HtmlComponents\Link;

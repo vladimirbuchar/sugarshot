@@ -809,7 +809,7 @@ class Forms extends GlobalClass {
                     $labelMain = new Label();
                     $labelMain->Html = $dItem["ShowName"];
                     $labelMain->CssClass = "control-label col-sm-2";
-                    $userDomainData = \Model\UserDomainsValues::GetInstance();
+                    $userDomainData = new \Objects\UserDomains();
                     $showName = $nDomain->ShowNameInSubDomain;
                     $identificatorD =  $nDomain->DomainIdentificator;
                     

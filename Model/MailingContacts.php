@@ -7,8 +7,6 @@ use Types\AlterTableMode;
 
 class MailingContacts  extends DatabaseTable{
     public $Email;
-    //private static $_instance = null;
-    
     public function __construct()
     {
         parent::__construct();

@@ -27,10 +27,21 @@ class SessionManager  {
 
     public function GetSessionValue($key,$key1 = "")
     {
+        if (empty($key) && empty($key1))
+            return "";
         if (empty($key1))
+        {
+            if (empty($_SESSION[self::$_seesionMode][$key]))
+                return "";
             return $_SESSION[self::$_seesionMode][$key];
+        }
         else 
+        {
+            if (empty($_SESSION[self::$_seesionMode][$key][$key1]))
+                return "";
             return $_SESSION[self::$_seesionMode][$key][$key1];
+        }
+            
             
     }
     

@@ -50,7 +50,7 @@ function DeleteDiscusionItem(id)
          html += "</th>";
          html += "<th> "+GetWord("word408");
          html += "</th>";
-                  html += "<th> "+GetWord("word409");
+         html += "<th> "+GetWord("word409");
          html += "</th>";
          html += "</tr>";
         for (var i =0; i<data.length; i++)

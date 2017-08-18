@@ -23,7 +23,8 @@ class Modules extends ObjectManager{
     
     public function GetModuleByIdentificator($identificator)
     {
-        return  $this->GetFirstRow($this->SelectByCondition("ModuleIdentificator = '".$identificator."'"));
+        $model = new \Model\Modules();
+        return  $model ->GetFirstRow($model ->SelectByCondition("ModuleIdentificator = '".$identificator."'"));
     }
         public function CanModuleShow($controller,$view,$userId)
     {

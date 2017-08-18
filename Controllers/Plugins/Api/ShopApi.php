@@ -2,12 +2,12 @@
 
 namespace Controller;
 
-use Model\DiscusionItems;
-use Model\UsersInGroup;
+
+
 use Utils\StringUtils;
 
 
-class Shop extends Controllers {
+class ShopApi extends Controllers {
 
     public function __construct() {
         parent::__construct();

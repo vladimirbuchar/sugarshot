@@ -554,10 +554,9 @@ class DatabaseTable extends SqlDatabase{
             {
                 $action = DatabaseActions::$DeletePernamently;
                 $this->SaveObjectHistory($id, $action);
-                $history = ObjectHistory::GetInstance();
+                $history = new \Objects\ObjectHistory();
                 $history->DeactiveHistoryItem($this->ObjectName, $id);
             }
-            
             dibi::query("DELETE FROM $this->ObjectName  WHERE Id = $id");
         }
         
@@ -875,7 +874,7 @@ class DatabaseTable extends SqlDatabase{
     /** 
      * test table is empty
     */
-    protected function TableIsEmpty()
+    public function TableIsEmpty()
     {
         $res = \dibi::query("SELECT Id FROM $this->ObjectName");
         if (empty($res)) return true;

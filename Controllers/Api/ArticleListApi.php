@@ -2,10 +2,11 @@
 
 namespace Controller;
 
-class ArticleList extends Controllers {
+class ArticleListApi extends Controllers {
 
     public function __construct() {
         parent::__construct();
+        $this->SetControllerPermition(array("*"));
         $this->SetAjaxFunction("Filter", array("*"));
     }
 
@@ -184,7 +185,7 @@ class ArticleList extends Controllers {
             }
             $sortColumn = $params1[0][0];
             $mode = $params1[0][1];
-            if (empty($mode)  &&  self::$SessionManager->IsEmpty("SortFrontend")) {
+            if (empty($mode) && self::$SessionManager->IsEmpty("SortFrontend")) {
                 $mode = "ASC";
             } else {
                 $mode = self::$SessionManager->GetSessionValue("SortFrontend");

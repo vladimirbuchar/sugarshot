@@ -90,10 +90,4 @@ class ExportSetting extends GlobalClass{
         return $newName;
     }
     
-        
-    
-    
-    
-    
-    
 }

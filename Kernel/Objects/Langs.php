@@ -1,17 +1,20 @@
 <?php
 
 namespace Objects;
+use Utils\StringUtils;
 class Langs extends ObjectManager{
     public function __construct() {
         parent::__construct();
     }
     public function GetLangListByWeb($webid)
     {
-        return $this->SelectByCondition("WebId = ".$webid." AND Deleted = 0");
+        $model = new \Model\Langs();
+        return $model->SelectByCondition("WebId = ".$webid." AND Deleted = 0");
     }
     public function BlockAdmin($web)
     {
-        $res = $this->SelectByCondition("RootUrl ='".$web."'");
+        $model = new \Model\Langs();
+        $res = $model->SelectByCondition("RootUrl ='".$web."'");
         if (!empty($res))
         {
             $webid= $res[0]["WebId"];
@@ -24,12 +27,13 @@ class Langs extends ObjectManager{
     
     public function GetRootUrl($langId)
     {
-        $this->GetObjectById($langId,true);
-        if (!StringUtils::StartWidth($this->RootUrl, SERVER_PROTOCOL))
+        $model = new \Model\Langs();
+        $model ->GetObjectById($langId,true);
+        if (!StringUtils::StartWidth($mode->RootUrl, SERVER_PROTOCOL))
         {
-            $this->RootUrl = SERVER_PROTOCOL.$this->RootUrl;
+            $mode->RootUrl = SERVER_PROTOCOL.$mode->RootUrl;
         }
-        return StringUtils::EndWith($this->RootUrl,"/") ? $this->RootUrl : $this->RootUrl."/";
+        return StringUtils::EndWith($mode->RootUrl,"/") ? $mode->RootUrl : $mode->RootUrl."/";
     }
     public function GetWebInfo($web)
     {
@@ -50,7 +54,8 @@ class Langs extends ObjectManager{
             $url[] = " RootUrl = '". StringUtils::RemoveString( $web,SERVER_PROTOCOL) ."'";  
             $url[] = " RootUrl = '".trim(StringUtils::RemoveString(StringUtils::RemoveLastChar($web),SERVER_PROTOCOL))."'";  
             $where = implode(" OR ", $url);
-            $res = $this->SelectByCondition($where);
+            $model = new \Model\Langs();
+            $res = $model->SelectByCondition($where);
             $res = \Utils\ArrayUtils::ObjectToArray($res);
             self::$SessionManager->SetSessionValue("WebInfo",$res,$web);
         }

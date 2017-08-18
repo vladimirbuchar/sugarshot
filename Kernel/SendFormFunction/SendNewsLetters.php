@@ -13,7 +13,7 @@ class SendNewsLetters extends \SendFormFunction\SendFormFunction
         $mailing = new \Objects\MailingContacts();
         if ($this->GetParametrsFromSaveData("SendNewsletter") == 1)
         {
-            $mailing->AddContactToMailingGroup($this->GetParametrsFromSaveData("ShopEmail"),"Newsletter");
+            $mailing->RegisterNewContact($this->GetParametrsFromSaveData("ShopEmail"),"Newsletter");
         }
         
         

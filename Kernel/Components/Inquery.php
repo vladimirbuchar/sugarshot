@@ -1,6 +1,5 @@
 <?php
 namespace Components;
-use Model\ContentVersion;
 use Utils\Forms;
 class Inquery extends UserComponents{
     

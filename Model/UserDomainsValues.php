@@ -11,7 +11,7 @@ class UserDomainsValues  extends DatabaseTable{
     public $ItemId;
     public $ObjectId;
     public $Value;
-    private $DomainValidateErrors = array();
+    
     public function __construct()
     {
         parent::__construct();
