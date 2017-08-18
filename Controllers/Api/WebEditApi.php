@@ -36,14 +36,11 @@ class WebEditApi extends Controller {
         $this->SetAjaxFunction("GetTreeCopyDialog", array("system", "Administrators"));
         $this->SetAjaxFunction("GetTreeLinkDialog", array("system", "Administrators"));
         $this->SetAjaxFunction("SaveMailing", array("system", "Administrators"));
-        //$this->SetAjaxFunction("SaveMailinContact", array("system","Administrators"));
-        //$this->SetAjaxFunction("GetMailingItemDetail",array("system","Administrators"));
         $this->SetAjaxFunction("DeteleteMailing", array("system", "Administrators"));
         $this->SetAjaxFunction("SendMailing", array("system", "Administrators"));
         $this->SetAjaxFunction("SaveDataSource", array("system", "Administrators"));
         $this->SetAjaxFunction("GetDomainColumns", array("system", "Administrators"));
         $this->SetAjaxFunction("GetReletedArticle", array("system", "Administrators"));
-        //$this->SetAjaxFunction("GetReletedUserItemsDialog", array("system","Administrators"));
         $this->SetAjaxFunction("GetGalleryList", array("system", "Administrators"));
         $this->SetAjaxFunction("GetGalleryFromArticle", array("system", "Administrators"));
         $this->SetAjaxFunction("GetSelectedObjectName", array("system", "Administrators"));

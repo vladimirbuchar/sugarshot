@@ -16,10 +16,7 @@ try {
         session_start();
     }
     $_SESSION["expired"] = $now + 900;
-
-
     include './autoload.php';
-
     include_once './settings_global.php';
     \Kernel\Page::GetConfigByDomain();
     include_once './settings.php';
@@ -47,6 +44,7 @@ try {
     $iframe = (!empty($_GET["iframe"])) ? true : false;
     $robots = (!empty($_GET["robots"])) ? true : false;
     $sitemap = (!empty($_GET["sitemap"])) ? true : false;
+    $adminer = (!empty($_GET["adminer"])&& $_GET["security"] == SECURITY_STRING) ? true : false;
     if ($updatemodel) {
 
         $options = array(
@@ -75,7 +73,11 @@ try {
         phpinfo();
         return;
     }
-
+    
+    if ($adminer && Kernel\Page::IsDeveloperIp())
+    {
+        header('Location: /Utils/adminer-4.3.1.php');
+    }
 
     if ($updatemodel) {
 
@@ -83,22 +85,29 @@ try {
         return;
     }
 
-    if ($ajaxMode) {
+    if ($ajaxMode) 
+    {
+        \Kernel\Page::SetOrigin ();
         $controller = empty($_GET["Controller"]) ? "" : $_GET["Controller"];
         $functionName = empty($_GET["functionName"]) ? "" : $_GET["functionName"];
         $paramsMode = empty($_GET["paramsMode"]) ? "" : $_GET["paramsMode"];
         \Kernel\Page::ApiFunction($controller, $functionName, $paramsMode);
     } else if ($fileUpload) {
+        \Kernel\Page::SetOrigin ();
         echo \Utils\Files::FileUpload();
     } else if ($fileExplorer) {
+        \Kernel\Page::SetOrigin ();
         echo \Utils\Folders::FileExplorer();
     } else if ($iscss) {
+        \Kernel\Page::SetOrigin ();
         echo \Kernel\Page::LoadCss();
     } else if ($isjs) {
+        \Kernel\Page::SetOrigin ();
         echo \Kernel\Page::LoadJs();
     } else if ($isxml) {
         echo \Kernel\Page::LoadXml();
     } else if ($isxmlImport) {
+        \Kernel\Page::SetOrigin ();
         \Kernel\Page::RequestLogin();
         \Kernel\Page::XmlImport();
         \Kernel\Page::RequestLogout();
@@ -107,29 +116,32 @@ try {
     } else if ($checkXmlImport) {
         echo \Kernel\Page::CheckXmlImport();
     } else if ($test) {
+        \Kernel\Page::SetOrigin ();
         $className = $_GET["ClassName"];
         echo \Kernel\Page::RunTest($className);
     } else if ($runalltest) {
+        \Kernel\Page::SetOrigin ();
         echo \Kernel\Page::RunAllTest();
     } else if ($timers) {
+        \Kernel\Page::SetOrigin ();
         \Kernel\Page::RunTimer($_GET["timerName"]);
     } else if ($multiuaploadfiles) {
+        \Kernel\Page::SetOrigin ();
         echo Utils\Files::UploadFiles();
     } else if ($setLongRequest) {
+        \Kernel\Page::SetOrigin ();
         Kernel\Page::SetLongRequestParam($_POST["name"], $_POST["value"]);
     } else if ($runalltimers) {
+        \Kernel\Page::SetOrigin ();
         Kernel\Page::RunAllTimers();
     } else if ($iframe) {
+        \Kernel\Page::SetOrigin ();
         echo \Kernel\Page::GetIframeHtml($_GET["key"]);
     } else if ($robots) {
         echo \Kernel\Page::GetWebRobots();
     } else if ($sitemap) {
         echo \Kernel\Page::GetSitemap();
     } else {
-
-        if (UPDATE_MODEL) {
-            \Kernel\Page::StartUpdateModel();
-        }
         $controller = empty($_GET["Controller"]) ? "" : $_GET["Controller"];
         $view = empty($_GET["View"]) ? "" : $_GET["View"];
         $template = empty($_GET["Template"]) ? "" : $_GET["Template"];

@@ -21,14 +21,6 @@ RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]
 RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1&webid=$3&langid=$4 [QSA]
 RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1&param=$3 [QSA]
 RewriteRule   xadm\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]$   /index.php?Template=AdminLogin&View=$2&Controller=$1 [QSA]
-#admin without template
-#RewriteRule   xadmNT\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]$   /index.php?Template=AdminLoginSmallTemplate&View=$2&Controller=$1
-#RewriteRule   xadmNT\/([A-Za-z0-9]*)[\/]([A-Za-z0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=AdminLoginSmallTemplate&View=$2&Controller=$1&langid=$3
-#RewriteRule   xadmNT\/([A-Za-z0-9]*)[\/]([A-Za-z0-9]*)[\/]([0-9]*)[\/]([A-Za-z0-9|]*)[\/]$   /index.php?Template=AdminLoginSmallTemplate&View=$2&Controller=$1&langid=$3&params=$4
-
-#RewriteRule   xadmHTML\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]$   /index.php?Template=HtmlEditorTemplate&View=$2&Controller=$1
-#RewriteRule   xadmHTML\/([A-Za-z0-9]*)[\/]([A-Za-z0-9]*)[\/]([0-9]*)[\/]$   /index.php?Template=HtmlEditorTemplate&View=$2&Controller=$1&langid=$3
-#RewriteRule   xadmHTML\/([A-Za-z0-9]*)[\/]([A-Za-z0-9]*)[\/]([0-9]*)[\/]([A-Za-z0-9|]*)[\/]$   /index.php?Template=HtmlEditorTemplate&View=$2&Controller=$1&langid=$3&params=$4
 
 #ajax
 RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/]([A-Za-z0-9]*)[\/]([A-Za-z]*)[\/] /index.php?ajax=ajax&Controller=$1&functionName=$2&paramsMode=$3&webid=$4&langid=$5&objectid=$6&param1=$7&isFrontEnd=$8 [QSA]
@@ -39,13 +31,10 @@ RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/]([0-9]*)[\/] /i
 RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/] /index.php?ajax=ajax&Controller=$1&functionName=$2&paramsMode=$3 [QSA]
 
 # ohers 
-
 RewriteRule   fileupload[\/]([0-9]*)[\/] /index.php?fileUpload=true&webid=$1
-#RewriteRule   fileupload[\/]  /index.php?fileUpload=true
 RewriteRule   filesupload[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/] /index.php?multiuaploadfiles=true&langId=$1&parentId=$2&webid=$3
 RewriteRule   fileexplorer[\/] /index.php?fileExplorer=true
 RewriteRule   renderhtml[\/]([0-9]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&id=$1&renderHtml=TRUE
-#RewriteRule   download[\/]([0-9]*)[\/] /index.php?download=true&ObjectId=$1
 RewriteRule   css[\/]([0-9]*)[\/]([0-9]*)[\/]([A-Za-z]*)\.css /index.php?css=true&id=$2&name=$3&langId=$1
 RewriteRule   xml[\/]([A-Za-z]{2,3})[\/]([A-Za-z0-9\-]*)\.xml /index.php?xml=true&SeoUrl=$2&lang=$1
 RewriteRule   xml[\/]([A-Za-z0-9\-]*)\.xml /index.php?xml=true&SeoUrl=$1
@@ -69,12 +58,7 @@ RewriteRule   runalltimers[\/] /index.php?runalltimers=true [QSA]
 RewriteRule   caching[\/] /index.php?caching=true [QSA]
 RewriteRule   robots.txt /index.php?robots=true
 RewriteRule   sitemap.xml /index.php?sitemap=true
-RewriteRule   adminer[\/] /Utils/adminer-4.3.1.php
-
-
-
-
-
+RewriteRule   adminer[\/] /index.php?adminer=true [QSA] 
 
 # frontend  
 #with lang 
