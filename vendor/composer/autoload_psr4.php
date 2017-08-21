@@ -6,7 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'RobRichards\\XMLSecLibs\\' => array($vendorDir . '/robrichards/xmlseclibs/src'),
     'RobRichards\\WsePhp\\' => array($vendorDir . '/robrichards/wse-php/src'),
     'MetzWeb\\Instagram\\' => array($vendorDir . '/cosenary/instagram/src'),
+    'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
+    'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
 );

@@ -1439,9 +1439,9 @@ class Content extends ObjectManager {
     }
 
     public function XmlImport($seoUrl) {
-
+        
         $id = $this->GetIdBySeoUrl($seoUrl);
-
+            
         $this->SetLastVistedObject($id);
         $xml = simplexml_load_string($this->XmlDetail($seoUrl));
         $xmlStart = trim($xml->DatasourceXmlStart);
@@ -1459,7 +1459,7 @@ class Content extends ObjectManager {
         $xmlContent = file_get_contents($xmlUrl);
         $searchItemName = "";
         $useTemplateId = 0;
-
+        
 
         if (trim($xml->DatasourceType) == "XmlImport") {
 
@@ -1482,7 +1482,7 @@ class Content extends ObjectManager {
                 $content->DeleteByCondition("ParentId = $xmlUserItem");
             }
             $users = new \Objects\Users();
-            $langId = $this->GetLangIdByWebUrl();
+            $langId = $_GET["langid"];
             $dataItem = $this->GetUserItemDetail($xmlUserItem, $users->GetUserGroupId(), 0, $langId);
             $useTemplateId = empty($dataItem[0]["ChildTemplateId"]) ? $dataItem[0]["TemplateId"] : $dataItem[0]["ChildTemplateId"];
             $domain = new \Objects\UserDomains();
