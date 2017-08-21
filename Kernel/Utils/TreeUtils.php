@@ -27,4 +27,12 @@ class TreeUtils {
         $html = $content->CreateHtml($cssList);
         return $html;
     }
+    
+    public static function CreateTreeDataSource($userGroup,$langid,$search)
+    {
+        $content = new \Objects\Content();
+        $cssList = $content->GetDataSourceList($userGroup, $langid, false, $search);
+        $html = $content->CreateHtml($cssList);
+        return $html;
+    }
  }

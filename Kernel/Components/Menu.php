@@ -115,11 +115,7 @@ class Menu extends UserComponents{
     public function GetComponentHtml(){
         $content =  new \Objects\Content();
         $contentId = $content->GetIdByIdentificator($this->MainParent,$this->WebId);
-        //$data = $content->LoadFrontend($contentId, self::$UserGroupId, $this->LangId, $this->WebId, 0, "", true, FALSE, FALSE, $this->AcceptUserTeplates, "",true);
         $data = $this->GetDataSource($contentId);
-        
-
-                    
         return $this->CreateMenuHtml($data)->RenderHtml();
     }
     

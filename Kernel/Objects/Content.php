@@ -1577,13 +1577,7 @@ class Content extends ObjectManager {
         }
     }
 
-    private function PrepareXmlImport($array, $columns) {
-        $prepareArray = array();
-
-        foreach ($array as $key => $value) {
-            
-        }
-    }
+ 
 
     private function ImportXmlData($prepareArray, $domain, $mode, $testColumn) {
 

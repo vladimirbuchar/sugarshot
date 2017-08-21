@@ -79,6 +79,8 @@ class WebEditApi extends ApiController {
         $this->SetApiFunction("UpdateFormStatisticItem", array("system", "Administrators"));
         $this->SetApiFunction("CreateTreeDiscusion", array("system", "Administrators"));
         $this->SetApiFunction("CreateTreeInqury", array("system", "Administrators"));
+        $this->SetApiFunction("CreateTreeDataSource", array("system", "Administrators"));
+        
         
         
     }
@@ -376,7 +378,6 @@ class WebEditApi extends ApiController {
         $domainId = $_GET["params"];
         $udi = new \Objects\UserDomains();
         $res = $udi->GetUserDomainItemById($domainId);
-//        print_r($res);die();
         return $res;
     }
 
@@ -854,5 +855,8 @@ class WebEditApi extends ApiController {
     }
     public function CreateTreeInqury($search = "") {
         return \Utils\TreeUtils::CreateTreeInqury(self::$User->GetUserGroupId(), $this->LangId, $search);
+    }
+        public function CreateTreeDataSource($search = "") {
+        return \Utils\TreeUtils::CreateTreeDataSource(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 }

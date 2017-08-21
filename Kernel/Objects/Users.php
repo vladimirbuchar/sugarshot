@@ -309,11 +309,12 @@ class Users extends ObjectManager{
         if (self::$SessionManager->IsEmpty("IsSystemUser") || self::$SessionManager->GetSessionValue("IsSystemUser")== true)
         {
             $model = new \Model\Users();
-            $model->GetObjectById($this->GetUserId());
+            $model->GetObjectById($this->GetUserId(),true,array("UserName"));
             if ($model->UserName == "system"){
                 self::$SessionManager->SetSessionValue("IsSystemUser",true);
                 return true;
             }
+            
             self::$SessionManager->SetSessionValue("IsSystemUser",false);
             return false;
         }
@@ -401,7 +402,9 @@ class Users extends ObjectManager{
         $userGroup = \Model\UserGroups::GetInstance();
         $condition = "IsSystemGroup = 1 AND Deleted = 0";
         if ($this->IsSystemUser())
+        {
           return $userGroup->SelectByCondition($condition);
+        }
         return $userGroup->SelectByCondition($condition." AND GroupName <> 'system'");
     }
     

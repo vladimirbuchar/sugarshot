@@ -194,10 +194,9 @@ class ContentFrontend extends Content {
                 if ($row["ContentType"] == ContentTypes::LINK) {
                     $xml = $row["Data"];
                     $ar = ArrayUtils::XmlToArray($xml);
-                    $contentLink = new \Objects\Content();
                     if ($ar["item"]["LinkType"] == LinkType::$Document)
                     {
-                        $linkInfo = $contentLink->GetUserItemDetail($ar["item"]["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId,0,true);
+                        $linkInfo = $this->GetUserItemDetail($ar["item"]["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId,0,true);
                         if (!empty($linkInfo)) {
                             $rowPrepare = $linkInfo[0];
                         }
@@ -205,7 +204,7 @@ class ContentFrontend extends Content {
                     }
                     else if ($ar["item"]["LinkType"] == LinkType::$Form)
                     {
-                        $linkInfo = $contentLink->GetFormDetail($ar["item"]["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId);
+                        $linkInfo = $this->GetFormDetail($ar["item"]["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId);
                         if (!empty($linkInfo)) {
                             $rowPrepare = $linkInfo[0];
                         }
@@ -213,7 +212,7 @@ class ContentFrontend extends Content {
                     }
                     else if ($ar["item"]["LinkType"] == LinkType::$Repository)
                     {
-                        $linkInfo = $contentLink->GetFileFolderDetail($ar["item"]["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId);
+                        $linkInfo = $this->GetFileFolderDetail($ar["item"]["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId);
                         if (!empty($linkInfo)) {
                             $rowPrepare = $linkInfo[0];
                             $xmlRepositoryData = trim($linkInfo[0]["Data"]);
