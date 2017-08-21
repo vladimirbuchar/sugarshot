@@ -1,89 +1,82 @@
-
 <?php
-
 namespace Controller;
-
 use Model\Langs;
-use Model\UserDomains;
 use Utils\ArrayUtils;
-use Components\HtmlEditor;
 use Model\MailingContacts;
 use Utils\StringUtils;
 use Model\ContentConnection;
 use Components\SelectDialog;
 use Model\ContentAlternative;
-use Model\MailingContactsInGroups;
-use Types\ContentTypes;
 
-class WebEditApi extends Controller {
+class WebEditApi extends ApiController {
 
     public function __construct() {
         parent::__construct();
         $this->SetControllerPermition(array("system", "Administrators"));
         $this->CheckWebPrivileges();
-        $this->SetAjaxFunction("GetAlernativeArticle", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveDiscusion", array("system", "Administrators"));
-        $this->SetAjaxFunction("CreateWebLink", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetSeoUrlById", array("system", "Administrators"));
-        $this->SetAjaxFunction("RecoveryItem", array("system", "Administrators"));
-        $this->SetAjaxFunction("ChangeLangVersion", array("system", "Administrators"));
-        $this->SetAjaxFunction("ReSendMails", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetActualTree", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetArticleUrl", array("system", "Administrators"));
-        $this->SetAjaxFunction("MoveItemFolder", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetLinkDetail", array("system", "Administrators"));
-        $this->SetAjaxFunction("PublishItem", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetTreeCopyDialog", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetTreeLinkDialog", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveMailing", array("system", "Administrators"));
-        $this->SetAjaxFunction("DeteleteMailing", array("system", "Administrators"));
-        $this->SetAjaxFunction("SendMailing", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveDataSource", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetDomainColumns", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetReletedArticle", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetGalleryList", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetGalleryFromArticle", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetSelectedObjectName", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetObjectsXml", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetDomainIdByUserItemId", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetDomainItems", array("system", "Administrators"));
-        $this->SetAjaxFunction("CallDataSourceImport", array("system", "Administrators"));
-        $this->SetAjaxFunction("CallDataSourceExport", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetObjectData", array("system", "Administrators"));
-        $this->SetAjaxFunction("GenerateXmlItem", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveIquery", array("system", "Administrators"));
-        $this->SetAjaxFunction("AddAlternativeItem", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetAlternativeItem", array("system", "Administrators"));
-        $this->SetAjaxFunction("CheckFile", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetFormItemDetail", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetTreeLinkDialogCss", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetTreeLinkDialogSaveForm", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetTreeLinkDialogFormSelectFolder", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetTreeLinkDialogAddLinkForm", array("system", "Administrators"));
-        $this->SetAjaxFunction("DeleteAlternativeItems", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveTemplate", array("system", "Administrators"));
-        $this->SetAjaxFunction("CreateTree", array("system", "Administrators"));
-        $this->SetAjaxFunction("DeleteTemplate", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveCss", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetDomainFromTemplate", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveUserItem", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveForm", array("system", "Administrators"));
-        $this->SetAjaxFunction("MoveItem", array("system", "Administrators"));
-        $this->SetAjaxFunction("CopyItem", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveFolderFile", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetDomainByIdentificator", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveFile", array("system", "Administrators"));
-        $this->SetAjaxFunction("ConnectObject", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetRelatedObject", array("system", "Administrators"));
-        $this->SetAjaxFunction("DisconnectObject", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetArticleDiscusion", array("system", "Administrators"));
-        $this->SetAjaxFunction("BlockDiscusionUser", array("system", "Administrators"));
-        $this->SetAjaxFunction("TestDeletePrivileges", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveJs", array("system", "Administrators"));
-        $this->SetAjaxFunction("SaveEmail", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetRootId", array("system", "Administrators"));
-        $this->SetAjaxFunction("DeleteLangVersion", array("system", "Administrators"));
-        $this->SetAjaxFunction("UpdateFormStatisticItem", array("system", "Administrators"));
+        $this->SetApiFunction("GetAlernativeArticle", array("system", "Administrators"));
+        $this->SetApiFunction("SaveDiscusion", array("system", "Administrators"));
+        $this->SetApiFunction("CreateWebLink", array("system", "Administrators"));
+        $this->SetApiFunction("GetSeoUrlById", array("system", "Administrators"));
+        $this->SetApiFunction("RecoveryItem", array("system", "Administrators"));
+        $this->SetApiFunction("ChangeLangVersion", array("system", "Administrators"));
+        $this->SetApiFunction("ReSendMails", array("system", "Administrators"));
+        $this->SetApiFunction("GetActualTree", array("system", "Administrators"));
+        $this->SetApiFunction("GetArticleUrl", array("system", "Administrators"));
+        $this->SetApiFunction("MoveItemFolder", array("system", "Administrators"));
+        $this->SetApiFunction("GetLinkDetail", array("system", "Administrators"));
+        $this->SetApiFunction("PublishItem", array("system", "Administrators"));
+        $this->SetApiFunction("GetTreeCopyDialog", array("system", "Administrators"));
+        $this->SetApiFunction("GetTreeLinkDialog", array("system", "Administrators"));
+        $this->SetApiFunction("SaveMailing", array("system", "Administrators"));
+        $this->SetApiFunction("DeteleteMailing", array("system", "Administrators"));
+        $this->SetApiFunction("SendMailing", array("system", "Administrators"));
+        $this->SetApiFunction("SaveDataSource", array("system", "Administrators"));
+        $this->SetApiFunction("GetDomainColumns", array("system", "Administrators"));
+        $this->SetApiFunction("GetReletedArticle", array("system", "Administrators"));
+        $this->SetApiFunction("GetGalleryList", array("system", "Administrators"));
+        $this->SetApiFunction("GetGalleryFromArticle", array("system", "Administrators"));
+        $this->SetApiFunction("GetSelectedObjectName", array("system", "Administrators"));
+        $this->SetApiFunction("GetObjectsXml", array("system", "Administrators"));
+        $this->SetApiFunction("GetDomainIdByUserItemId", array("system", "Administrators"));
+        $this->SetApiFunction("GetDomainItems", array("system", "Administrators"));
+        $this->SetApiFunction("CallDataSourceImport", array("system", "Administrators"));
+        $this->SetApiFunction("CallDataSourceExport", array("system", "Administrators"));
+        $this->SetApiFunction("GetObjectData", array("system", "Administrators"));
+        $this->SetApiFunction("GenerateXmlItem", array("system", "Administrators"));
+        $this->SetApiFunction("SaveIquery", array("system", "Administrators"));
+        $this->SetApiFunction("AddAlternativeItem", array("system", "Administrators"));
+        $this->SetApiFunction("GetAlternativeItem", array("system", "Administrators"));
+        $this->SetApiFunction("CheckFile", array("system", "Administrators"));
+        $this->SetApiFunction("GetFormItemDetail", array("system", "Administrators"));
+        $this->SetApiFunction("GetTreeLinkDialogCss", array("system", "Administrators"));
+        $this->SetApiFunction("GetTreeLinkDialogSaveForm", array("system", "Administrators"));
+        $this->SetApiFunction("GetTreeLinkDialogFormSelectFolder", array("system", "Administrators"));
+        $this->SetApiFunction("GetTreeLinkDialogAddLinkForm", array("system", "Administrators"));
+        $this->SetApiFunction("DeleteAlternativeItems", array("system", "Administrators"));
+        $this->SetApiFunction("SaveTemplate", array("system", "Administrators"));
+        $this->SetApiFunction("CreateTree", array("system", "Administrators"));
+        $this->SetApiFunction("DeleteTemplate", array("system", "Administrators"));
+        $this->SetApiFunction("SaveCss", array("system", "Administrators"));
+        $this->SetApiFunction("GetDomainFromTemplate", array("system", "Administrators"));
+        $this->SetApiFunction("SaveUserItem", array("system", "Administrators"));
+        $this->SetApiFunction("SaveForm", array("system", "Administrators"));
+        $this->SetApiFunction("MoveItem", array("system", "Administrators"));
+        $this->SetApiFunction("CopyItem", array("system", "Administrators"));
+        $this->SetApiFunction("SaveFolderFile", array("system", "Administrators"));
+        $this->SetApiFunction("GetDomainByIdentificator", array("system", "Administrators"));
+        $this->SetApiFunction("SaveFile", array("system", "Administrators"));
+        $this->SetApiFunction("ConnectObject", array("system", "Administrators"));
+        $this->SetApiFunction("GetRelatedObject", array("system", "Administrators"));
+        $this->SetApiFunction("DisconnectObject", array("system", "Administrators"));
+        $this->SetApiFunction("GetArticleDiscusion", array("system", "Administrators"));
+        $this->SetApiFunction("BlockDiscusionUser", array("system", "Administrators"));
+        $this->SetApiFunction("TestDeletePrivileges", array("system", "Administrators"));
+        $this->SetApiFunction("SaveJs", array("system", "Administrators"));
+        $this->SetApiFunction("SaveEmail", array("system", "Administrators"));
+        $this->SetApiFunction("GetRootId", array("system", "Administrators"));
+        $this->SetApiFunction("DeleteLangVersion", array("system", "Administrators"));
+        $this->SetApiFunction("UpdateFormStatisticItem", array("system", "Administrators"));
     }
 
     public function GetAlernativeArticle() {
@@ -95,11 +88,7 @@ class WebEditApi extends Controller {
     }
 
     public function SaveDiscusion() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $privileges = $ajaxParametrs["Privileges"];
@@ -224,7 +213,7 @@ class WebEditApi extends Controller {
 
         $id = $_POST["params"];
         $lang = Langs::GetInstance();
-        $lang->GetObjectById($this->LangId, true);
+        $lang->GetObjectById($this->LangId);
         $content = new \Objects\Content();
         $detail = $content->GetUserItemDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         return $lang->RootUrl . "preview/" . $detail[0]["SeoUrl"] . "/";
@@ -459,11 +448,7 @@ class WebEditApi extends Controller {
     }
 
     public function SaveIquery() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
         if (empty($ajaxParametrs))
             return;
         $privileges = $ajaxParametrs["Privileges"];
@@ -575,11 +560,7 @@ class WebEditApi extends Controller {
     }
 
     public function DeleteTemplate() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["Id"];
@@ -588,11 +569,7 @@ class WebEditApi extends Controller {
     }
 
     public function SaveCss() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $privileges = $ajaxParametrs["Privileges"];
@@ -645,12 +622,7 @@ class WebEditApi extends Controller {
     }
 
     public function SaveUserItem() {
-        $ajaxParametrs = array();
-
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $noChild = $ajaxParametrs["NoChild"] == 1 ? true : false;
@@ -676,12 +648,7 @@ class WebEditApi extends Controller {
     }
 
     public function SaveForm() {
-
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $privileges = $ajaxParametrs["Privileges"];
@@ -700,12 +667,7 @@ class WebEditApi extends Controller {
     }
 
     public function MoveItem() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
-
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
 
@@ -718,29 +680,17 @@ class WebEditApi extends Controller {
     }
 
     public function CopyItem() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
-
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
-
-
         $sourceId = $ajaxParametrs["sourceId"];
-
         $destinationId = $ajaxParametrs["destinationId"];
         $contentVersion = new \Objects\Content();
         return $contentVersion->Copy($_GET["langid"], $_GET["webid"], $sourceId, $destinationId) ? "TRUE" : "FALSE";
     }
 
     public function SaveFolderFile() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $privileges = $ajaxParametrs["Privileges"];
@@ -756,12 +706,7 @@ class WebEditApi extends Controller {
     }
 
     public function GetDomainByIdentificator() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
-
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $identificator = $ajaxParametrs["Identifcator"];
@@ -785,11 +730,7 @@ class WebEditApi extends Controller {
     }
 
     public function SaveFile() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $privileges = $ajaxParametrs["Privileges"];
@@ -806,11 +747,7 @@ class WebEditApi extends Controller {
     }
 
     public function ConnectObject() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $conObj = new \Objects\Content();
@@ -818,11 +755,7 @@ class WebEditApi extends Controller {
     }
 
     public function GetRelatedObject() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $conObj = new \Objects\Content();
@@ -830,12 +763,7 @@ class WebEditApi extends Controller {
     }
 
     public function DisconnectObject() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
-
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $conObj = ContentConnection::GetInstance();
@@ -844,11 +772,7 @@ class WebEditApi extends Controller {
     }
 
     public function GetArticleDiscusion() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
 
@@ -858,11 +782,7 @@ class WebEditApi extends Controller {
     }
 
     public function BlockDiscusionUser() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["UserId"];
@@ -871,11 +791,7 @@ class WebEditApi extends Controller {
     }
 
     public function SaveJs() {
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $privileges = $ajaxParametrs["Privileges"];
@@ -891,12 +807,7 @@ class WebEditApi extends Controller {
     }
 
     public function SaveEmail() {
-
-        $ajaxParametrs = array();
-        if (!empty($_GET["params"]))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_GET["params"]);
-        if (empty($ajaxParametrs))
-            $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
+        $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
         $privileges = $ajaxParametrs["Privileges"];

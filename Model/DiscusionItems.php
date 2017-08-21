@@ -4,9 +4,8 @@ namespace Model;
 
 use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class DiscusionItems extends DatabaseTable {
+class DiscusionItems extends DatabaseTable  implements \Inteface\iDataTable{
 
     public $SubjectDiscusion;
     public $TextDiscusion;
@@ -27,99 +26,20 @@ class DiscusionItems extends DatabaseTable {
     }
 
     public function OnCreateTable() {
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 9;
-        $colLangName->Name = "DiscusionId";
-        $colLangName->Type = "INT";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 9;
-        $colLangName->Name = "VersionId";
-        $colLangName->Type = "INT";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 9;
-        $colLangName->Name = "ParentIdDiscusion";
-        $colLangName->Type = "INT";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 1;
-        $colLangName->Name = "IsLast";
-        $colLangName->Type = "BOOLEAN";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 255;
-        $colLangName->Name = "SubjectDiscusion";
-        $colLangName->Type = "varchar";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue = "";
-        $colLangIdentificator->IsNull = false;
-        $colLangIdentificator->Name = "TextDiscusion";
-        $colLangIdentificator->Type = "TEXT";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 9;
-        $colLangName->Name = "UserId";
-        $colLangName->Type = "INT";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 255;
-        $colLangName->Name = "ShowUserName";
-        $colLangName->Type = "varchar";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 20;
-        $colLangName->Name = "DateTime";
-        $colLangName->Type = "int";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 255;
-        $colLangName->Name = "UserIp";
-        $colLangName->Type = "varchar";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
+        $this->AddColumn(new DataTableColumn("DiscusionId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("VersionId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("ParentIdDiscusion", \Types\DataColumnsTypes::INTEGER, 0, false, 11));
+        $this->AddColumn(new DataTableColumn("IsLast", \Types\DataColumnsTypes::BOOLEAN, false, false, 1));
+        $this->AddColumn(new DataTableColumn("SubjectDiscusion", \Types\DataColumnsTypes::VARCHAR, "", false, 255));
+        $this->AddColumn(new DataTableColumn("TextDiscusion", \Types\DataColumnsTypes::TEXT, "", false));
+        $this->AddColumn(new DataTableColumn("UserId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("ShowUserName", \Types\DataColumnsTypes::VARCHAR, "", false, 255));
+        $this->AddColumn(new DataTableColumn("DateTime", \Types\DataColumnsTypes::INTEGER, "", false, 20));
+        $this->AddColumn(new DataTableColumn("UserIp", \Types\DataColumnsTypes::VARCHAR, "", false, 255));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function SetValidate($mode = false) {

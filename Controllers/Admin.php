@@ -1,9 +1,6 @@
 <?php
-
 namespace Controller;
-
 use Objects\Webs;
-use Utils\StringUtils;
 
 class Admin extends AdminController {
 
@@ -12,8 +9,8 @@ class Admin extends AdminController {
         $this->SetControllerPermition(array("system", "Administrators"));
         $this->SetTemplateData("controllerName", $this->ControllerName);
         $this->SetIgnoreUserPrivileges("Logout");
-        $this->SetViewPermition("SelectLang", array("system", "Administrators"));
-        $this->SetViewPermition("Logout", array("*"));
+        $this->SetViewSettings("SelectLang", array("system", "Administrators"));
+        $this->SetViewSettings("Logout", array("*"));
         
     }
 

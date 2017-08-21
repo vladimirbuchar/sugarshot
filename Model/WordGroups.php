@@ -2,9 +2,8 @@
 namespace Model;
  use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class WordGroups  extends DatabaseTable{
+class WordGroups  extends DatabaseTable implements \Inteface\iDataTable{
     public $GroupName;
     public function __construct()
     {
@@ -16,63 +15,21 @@ class WordGroups  extends DatabaseTable{
     {
         if (!empty($wordIndetificator))
         {
-            $colWordEN = new DataTableColumn();
-            $colWordEN ->DefaultValue ="";
-            $colWordEN ->IsNull = true;
-            $colWordEN ->Name ="Word$wordIndetificator";
-            $colWordEN ->Type = "TEXT";
-            $colWordEN ->Mode = AlterTableMode::$AddColumn;
-            $this->AddColumn($colWordEN);
+            $this->AddColumn(new DataTableColumn("Word$wordIndetificator", \Types\DataColumnsTypes::TEXT, "", true));
             $this->SaveNewColums();
         }
     }
     
     public function OnCreateTable() {
-        $colGroupName = new DataTableColumn();
-        $colGroupName->DefaultValue ="";
-        $colGroupName->IsNull = false;
-        $colGroupName->Length = 50;
-        $colGroupName->Name ="GroupName";
-        $colGroupName->Type = "varchar";
-        $colGroupName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colGroupName);
-        
-        $colWordDefault = new DataTableColumn();
-        $colWordDefault ->DefaultValue ="";
-        $colWordDefault ->IsNull = true;
-        $colWordDefault ->Name ="Word".DEFAULT_LANG;
-        $colWordDefault ->Type = "TEXT";
-        $colWordDefault ->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWordDefault);
-        
-        $colWordDefault = new DataTableColumn();
-        $colWordDefault ->DefaultValue ="";
-        $colWordDefault ->IsNull = true;
-        $colWordDefault ->Name ="WordEN";
-        $colWordDefault ->Type = "TEXT";
-        $colWordDefault ->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWordDefault);
-        
-        $colWordDefault = new DataTableColumn();
-        $colWordDefault ->DefaultValue ="";
-        $colWordDefault ->IsNull = true;
-        $colWordDefault ->Name ="WordRU";
-        $colWordDefault ->Type = "TEXT";
-        $colWordDefault ->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWordDefault);
-            
-        
-        
-        
-        
-        
+        $this->AddColumn(new DataTableColumn("GroupName", \Types\DataColumnsTypes::VARCHAR, "", FALSE, 50));
+        $this->AddColumn(new DataTableColumn("Word".DEFAULT_LANG, \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("WordEN", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("WordRU", \Types\DataColumnsTypes::TEXT, "", true));
     }
     
 
     public function InsertDefaultData() {
-        $admL = AdminLangs::GetInstance();
-        $admL->Setup($admL);
-        $this->Setup($this);  
+        $this->Setup();  
         
     }
 

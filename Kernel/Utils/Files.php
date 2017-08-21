@@ -85,7 +85,7 @@ class Files {
                         $web = \Model\Webs::GetInstance();
                         $webId = empty($_GET["webid"]) ? 0 : $_GET["webid"];
                         if ($webId > 0) {
-                            $web->GetObjectById($webId, true);
+                            $web->GetObjectById($webId);
                             $tmpName = ROOT_PATH . "res/" . $newName;
                             $newFileNameB = $img->CreateFileName($tmpName, "_b");
                             $img->Resizer($tmpName, $newFileNameB, $web->BigWidth, $web->BigHeight);

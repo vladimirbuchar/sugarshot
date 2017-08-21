@@ -2,12 +2,12 @@
 
 namespace Controller;
 
-class ArticleListApi extends Controllers {
+class ArticleListApi extends ApiController {
 
     public function __construct() {
         parent::__construct();
         $this->SetControllerPermition(array("*"));
-        $this->SetAjaxFunction("Filter", array("*"));
+        $this->SetApiFunction("Filter", array("*"));
     }
 
     public function Filter() {

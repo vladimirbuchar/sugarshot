@@ -117,7 +117,6 @@ class Shop {
     
     public function GetCart()
     {
-        
         if (self::$_sessionManager->IsEmpty("shop") || self::$_sessionManager->IsEmpty("shop","products")) return array();
         return self::$_sessionManager->GetSessionValue("shop","products");
     }

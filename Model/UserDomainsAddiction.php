@@ -1,11 +1,10 @@
 <?php
 
 namespace Model;
- use Types\RuleType;
-use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class UserDomainsAddiction  extends DatabaseTable{
+use Types\DataTableColumn;
+
+class UserDomainsAddiction  extends DatabaseTable implements \Inteface\iDataTable{
     public $DomainId;
     public $AddictionName;
     public $Item1;
@@ -36,142 +35,25 @@ class UserDomainsAddiction  extends DatabaseTable{
     
         
     public function OnCreateTable() {
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue ="";
-        $colDomainId->IsNull = false;
-        $colDomainId->Length = 9;
-        $colDomainId->Name ="DomainId";
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colShowName = new DataTableColumn();
-        $colShowName->DefaultValue ="";
-        $colShowName->IsNull = false;
-        $colShowName->Length = 50;
-        $colShowName->Name ="AddictionName";
-        $colShowName->Type = "varchar";
-        $colShowName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colShowName);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue ="";  
-        $colDomainId->IsNull = false;
-        $colDomainId->Length = 20;
-        $colDomainId->Name ="Item1";
-        $colDomainId->Type = "varchar";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colShowName = new DataTableColumn();
-        $colShowName->DefaultValue ="";
-        $colShowName->IsNull = false;
-        $colShowName->Length = 255;
-        $colShowName->Name ="Item1Value";
-        $colShowName->Type = "varchar";
-        $colShowName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colShowName);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue ="";
-        $colDomainId->IsNull = false;
-        $colDomainId->Length = 20;
-        $colDomainId->Name ="ItemX";
-        $colDomainId->Type = "varchar";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colShowName = new DataTableColumn();
-        $colShowName->DefaultValue ="";
-        $colShowName->IsNull = false;
-        $colShowName->Length = 255;
-        $colShowName->Name ="ItemXValue";
-        $colShowName->Type = "varchar";
-        $colShowName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colShowName);
-        
-        $colShowName = new DataTableColumn();
-        $colShowName->DefaultValue ="";
-        $colShowName->IsNull = false;
-        $colShowName->Length = 50;
-        $colShowName->Name ="ActionName";
-        $colShowName->Type = "varchar";
-        $colShowName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colShowName);
-        
-        $colShowName = new DataTableColumn();
-        $colShowName->DefaultValue ="";
-        $colShowName->IsNull = false;
-        $colShowName->Length = 50;
-        $colShowName->Name ="RuleName";
-        $colShowName->Type = "varchar";
-        $colShowName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colShowName);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue =1;
-        $colDomainId->IsNull = false;
-        $colDomainId->Length = 9;
-        $colDomainId->Name ="Priority";
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue =0;
-        $colDomainId->IsNull = true;
-        $colDomainId->Name ="IsDomain1";
-        $colDomainId->Type = "BIT";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue =0;
-        $colDomainId->IsNull = true;
-        $colDomainId->Name ="DomainId1";
-        $colDomainId->Length = 9;
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue =0;
-        $colDomainId->IsNull = true;
-        $colDomainId->Name ="ItemId1";
-        $colDomainId->Length = 9;
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue =0;
-        $colDomainId->IsNull = true;
-        $colDomainId->Name ="IsDomainX";
-        $colDomainId->Type = "BIT";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue =0;
-        $colDomainId->IsNull = true;
-        $colDomainId->Name ="DomainIdX";
-        $colDomainId->Length = 9;
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue =0;
-        $colDomainId->IsNull = true;
-        $colDomainId->Name ="ItemIdX";
-        $colDomainId->Length = 9;
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
+        $this->AddColumn(new DataTableColumn("DomainId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("AddictionName", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("Item1", \Types\DataColumnsTypes::VARCHAR, "", false, 20));
+        $this->AddColumn(new DataTableColumn("Item1Value", \Types\DataColumnsTypes::VARCHAR, "", FALSE, 255));
+        $this->AddColumn(new DataTableColumn("ItemX", \Types\DataColumnsTypes::VARCHAR, "", false, 20));
+        $this->AddColumn(new DataTableColumn("ItemXValue", \Types\DataColumnsTypes::VARCHAR, "", false, 255));
+        $this->AddColumn(new DataTableColumn("ActionName", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("RuleName", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("Priority", \Types\DataColumnsTypes::INTEGER, 1, false, 9));
+        $this->AddColumn(new DataTableColumn("IsDomain1", \Types\DataColumnsTypes::BIT, 0, true));
+        $this->AddColumn(new DataTableColumn("DomainId1", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("ItemId1", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("IsDomainX", \Types\DataColumnsTypes::BIT, 0, true));
+        $this->AddColumn(new DataTableColumn("DomainIdX", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("ItemIdX", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
     }
     
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

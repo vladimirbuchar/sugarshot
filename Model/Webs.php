@@ -2,13 +2,10 @@
 
 namespace Model;
 
-use Dibi;
-use Utils\ArrayUtils;
 use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class Webs extends DatabaseTable {
+class Webs extends DatabaseTable  implements \Inteface\iDataTable{
 
     public $WebName;
     public $SmallHeight;
@@ -67,324 +64,51 @@ class Webs extends DatabaseTable {
     
 
     public function OnCreateTable() {
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = false;
-        $colWebName->Length = 50;
-        $colWebName->Name = "WebName";
-        $colWebName->Type = "varchar";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = true;
-        $colWebName->Name = "WebPrivileges";
-        $colWebName->Type = "TEXT";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-     
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = false;
-        $colWebName->Length = 9;
-        $colWebName->Name = "SmallHeight";
-        $colWebName->Type = "INTEGER";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = false;
-        $colWebName->Length = 9;
-        $colWebName->Name = "SmallWidth";
-        $colWebName->Type = "INTEGER";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = false;
-        $colWebName->Length = 9;
-        $colWebName->Name = "MediumHeight";
-        $colWebName->Type = "INTEGER";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = false;
-        $colWebName->Length = 9;
-        $colWebName->Name = "MediumWidth";
-        $colWebName->Type = "INTEGER";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = false;
-        $colWebName->Length = 9;
-        $colWebName->Name = "BigHeight";
-        $colWebName->Type = "INTEGER";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = false;
-        $colWebName->Length = 9;
-        $colWebName->Name = "BigWidth";
-        $colWebName->Type = "INTEGER";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "AdminUserActive";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "UserEmailActivate";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "EmailUserLogin";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "BlockSendEmails";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "BlockAdmin";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        //
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "UseHttps";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        //
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "WebIpRestrictionAll";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        //
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "WebIpRestrictionAceptIp";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        //
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "WebIpRestrictionBlockIp";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = "";
-        $deletedColumn->Name = "WebIpAddress";
-        $deletedColumn->Type = "TEXT";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "AdminIpRestrictionAll";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        //
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "AdminIpRestrictionAceptIp";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        //
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "AdminIpRestrictionBlockIp";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = "";
-        $deletedColumn->Name = "AdminIpAddress";
-        $deletedColumn->Type = "TEXT";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "GenerateAjaxLink";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        //
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = false;
-        $colWebName->Length = 50;
-        $colWebName->Name = "AfterLoginAction";
-        $colWebName->Type = "varchar";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->IsNull = false;
-        $colWebName->Length = 50;
-        $colWebName->Name = "AfterLoginUrl";
-        $colWebName->Type = "varchar";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = 0;
-        $colWebName->Name = "SendInfoEmailToAdmin";
-        $colWebName->Type = "BOOLEAN";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "AdminInfoEmail";
-        $colWebName->Type = "varchar";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = 0;
-        $colWebName->Name = "AdmiInfoMailId";
-        $colWebName->Type = "INTEGER";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = 0;
-        $colWebName->Name = "SendInfoEmailToUser";
-        $colWebName->Type = "BOOLEAN";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "UserInfoEmailFrom";
-        $colWebName->Type = "varchar";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = 0;
-        $colWebName->Name = "UserInfoMailId";
-        $colWebName->Type = "INTEGER";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = 0;
-        $colWebName->Name = "CookiesAccept";
-        $colWebName->Type = "BOOLEAN";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-        
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "DefaultFramework";
-        $colWebName->Type = "varchar";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-        //RobotsTxt
-        
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "RobotsTxt";
-        $colWebName->Type = "TEXT";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-
-        
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "SiteMapStart";
-        $colWebName->Type = "TEXT";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-        
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "SiteMapEnd";
-        $colWebName->Type = "TEXT";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-        
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "SiteMapItemImage";
-        $colWebName->Type = "TEXT";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-        
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "SiteMapItemVideo";
-        $colWebName->Type = "TEXT";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-        
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "SiteMapItemUrl";
-        $colWebName->Type = "TEXT";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-        
-        
-        
-        //
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "SiteMapItemStart";
-        $colWebName->Type = "TEXT";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
-        
-        $colWebName = new DataTableColumn();
-        $colWebName->DefaultValue = "";
-        $colWebName->Name = "SiteMapItemEnd";
-        $colWebName->Type = "TEXT";
-        $colWebName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebName);
+        $this->AddColumn(new DataTableColumn("WebName", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("WebPrivileges", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("SmallHeight", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("SmallWidth", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("MediumHeight", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("MediumWidth", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("BigHeight", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("BigWidth", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("AdminUserActive", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("UserEmailActivate", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("EmailUserLogin", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("BlockSendEmails", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("BlockAdmin", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("UseHttps", \Types\DataColumnsTypes::BOOLEAN, true, true, 1));
+        $this->AddColumn(new DataTableColumn("WebIpRestrictionAll", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("WebIpRestrictionAceptIp", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("WebIpRestrictionBlockIp", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("WebIpAddress", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("AdminIpRestrictionAll", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("AdminIpRestrictionAceptIp", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("AdminIpRestrictionBlockIp", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("AdminIpAddress", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("GenerateAjaxLink", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("AfterLoginAction", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("AfterLoginUrl", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("SendInfoEmailToAdmin", \Types\DataColumnsTypes::BOOLEAN, FALSE, true, 1));
+        $this->AddColumn(new DataTableColumn("AdminInfoEmail", \Types\DataColumnsTypes::VARCHAR, "",true, 255));
+        $this->AddColumn(new DataTableColumn("AdmiInfoMailId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("SendInfoEmailToUser", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("UserInfoEmailFrom", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("UserInfoMailId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("CookiesAccept", \Types\DataColumnsTypes::INTEGER, false, true, 1));
+        $this->AddColumn(new DataTableColumn("DefaultFramework", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("RobotsTxt", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("SiteMapStart", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("SiteMapEnd", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("SiteMapItemImage", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("SiteMapItemVideo", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("SiteMapItemUrl", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("SiteMapItemStart", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("SiteMapItemEnd", \Types\DataColumnsTypes::TEXT, "", true));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function SetValidate($mode = false) {

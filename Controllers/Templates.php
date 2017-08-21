@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-class Templates extends Controllers {
+class Templates extends ViewController {
 
     public function __construct() {
 
@@ -14,11 +14,11 @@ class Templates extends Controllers {
         $this->GetAutoLang();
         $this->AddStyle("/Styles/Core.css");
         $this->SetTemplateData("controllerName", $this->ControllerName);
-        $this->SetViewPermition("AdminNoLogin", array("*"));
-        $this->SetViewPermition("Index", array("*"));
-        $this->SetViewPermition("AdminLogin", array("system", "Administrators"));
-        $this->SetViewPermition("AdminLoginSmallTemplate", array("system", "Administrators"));
-        $this->SetViewPermition("Setup", array("*"));
+        $this->SetViewSettings("AdminNoLogin", array("*"));
+        $this->SetViewSettings("Index", array("*"));
+        $this->SetViewSettings("AdminLogin", array("system", "Administrators"));
+        $this->SetViewSettings("AdminLoginSmallTemplate", array("system", "Administrators"));
+        $this->SetViewSettings("Setup", array("*"));
     }
 
     public function Index() {

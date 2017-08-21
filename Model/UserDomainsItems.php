@@ -3,10 +3,8 @@
 namespace Model;
  use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class UserDomainsItems  extends DatabaseTable{
+class UserDomainsItems  extends DatabaseTable implements \Inteface\iDataTable{
     public $DomainId;
     public $ShowName;
     public $Identificator;
@@ -50,239 +48,40 @@ class UserDomainsItems  extends DatabaseTable{
         $this->SetDefaultSelectColumns();
     }
     public function OnCreateTable() {
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue ="";
-        $colDomainId->IsNull = false;
-        $colDomainId->Length = 9;
-        $colDomainId->Name ="DomainId";
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colShowName = new DataTableColumn();
-        $colShowName->DefaultValue ="";
-        $colShowName->IsNull = false;
-        $colShowName->Length = 50;
-        $colShowName->Name ="ShowName";
-        $colShowName->Type = "varchar";
-        $colShowName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colShowName);
-        
-        $colIdentificator = new DataTableColumn();
-        $colIdentificator->DefaultValue ="";
-        $colIdentificator->IsNull = false;
-        $colIdentificator->Length = 50;
-        $colIdentificator->Name ="Identificator";
-        $colIdentificator->Type = "varchar";
-        $colIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colIdentificator);
-        
-        $colType = new DataTableColumn();
-        $colType->DefaultValue ="";
-        $colType->IsNull = false;
-        $colType->Length = 50;
-        $colType->Name ="Type";
-        $colType->Type = "varchar";
-        $colType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colType);
-        
-        $colShowInAdmin = new DataTableColumn();
-        $colShowInAdmin->IsNull = true;
-        $colShowInAdmin->Length = 1;
-        $colShowInAdmin->Name ="ShowInAdmin";
-        $colShowInAdmin->Type = "BOOLEAN";
-        $colShowInAdmin->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colShowInAdmin);
-        
-        $colShowInWeb = new DataTableColumn();
-        $colShowInWeb->IsNull = true;
-        $colShowInWeb->Length = 1;
-        $colShowInWeb->Name ="ShowInWeb";
-        $colShowInWeb->Type = "BOOLEAN";
-        $colShowInWeb->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colShowInWeb);
-        
-        $colRequired = new DataTableColumn();
-        $colRequired->IsNull = true;
-        $colRequired->Length = 1;
-        $colRequired->Name ="Required";
-        $colRequired->Type = "BOOLEAN";
-        $colRequired->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colRequired);
-        
-        $colDefaultValue = new DataTableColumn();
-        $colDefaultValue->IsNull = true;
-        $colDefaultValue->Length = 50;
-        $colDefaultValue->Name ="DefaultValue";
-        $colDefaultValue->Type = "varchar";
-        $colDefaultValue->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDefaultValue);
-        
-        $colMaxLength = new DataTableColumn();
-        $colMaxLength->IsNull = true;
-        $colMaxLength->Length = 50;
-        $colMaxLength->Name ="MaxLength";
-        $colMaxLength->Type = "varchar";
-        $colMaxLength->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colMaxLength);
-        
-        $colMinLength = new DataTableColumn();
-        $colMinLength->IsNull = true;
-        $colMinLength->Length = 50;
-        $colMinLength->Name ="MinLength";
-        $colMinLength->Type = "varchar";
-        $colMinLength->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colMinLength);         
-        
-        $colMinLength = new DataTableColumn();
-        $colMinLength->IsNull = true;
-        $colMinLength->Name ="ValueList";
-        $colMinLength->Type = "TEXT";
-        $colMinLength->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colMinLength);         
-        
-        $colRequired = new DataTableColumn();
-        $colRequired->IsNull = true;
-        $colRequired->Length = 1;
-        $colRequired->Name ="ShowInAdminReadOnly";
-        $colRequired->Type = "BOOLEAN";
-        $colRequired->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colRequired);
-
-
-        $colRequired = new DataTableColumn();
-        $colRequired->IsNull = true;
-        $colRequired->Length = 1;
-        $colRequired->Name ="ShowInWebReadOnly";
-        $colRequired->Type = "BOOLEAN";
-        $colRequired->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colRequired);
-        
-        $colMinLength = new DataTableColumn();
-        $colMinLength->IsNull = true;
-        $colMinLength->Name ="Validate";
-        $colMinLength->Type = "TEXT";
-        $colMinLength->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colMinLength);     
-        
-        $colMinLength = new DataTableColumn();
-        $colMinLength->IsNull = true;
-        $colMinLength->Name ="CssClass";
-        $colMinLength->Type = "TEXT";
-        $colMinLength->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colMinLength);     
-        
-        $colMinLength = new DataTableColumn();
-        $colMinLength->IsNull = true;
-        $colMinLength->Name ="MoreHtmlAtribut";
-        $colMinLength->Type = "TEXT";
-        $colMinLength->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colMinLength);     
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue ="";
-        $colDomainId->IsNull = false;
-        $colDomainId->Length = 9;
-        $colDomainId->Name ="Domain";
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "UniqueValue";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "NoUpdate";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = "";
-        $deletedColumn->Length = 255;
-        $deletedColumn->Name = "XmlSettings";
-        $deletedColumn->Type = "varchar";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "AddCDATA";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "ShowOnlyDetail";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = "";
-        $deletedColumn->Length = 255;
-        $deletedColumn->Name = "DomainSettings";
-        $deletedColumn->Type = "varchar";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        ///FiltrSettings
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = "";
-        $deletedColumn->Length = 255;
-        $deletedColumn->Name = "FiltrSettings";
-        $deletedColumn->Type = "varchar";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        //
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "Autocomplete";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        //
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "AddToSort";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        
-        //OnChangeEvent
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = "";
-        $deletedColumn->Name = "OnChangeEvent";
-        $deletedColumn->Type = "varchar";
-        $deletedColumn->Length = 255;
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "ValueForAllLangues";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-        //
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "GenerateHiddenInput";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        $this->AddColumn(new DataTableColumn("DomainId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("ShowName", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("Identificator", \Types\DataColumnsTypes::VARCHAR, "", FALSE, 50));
+        $this->AddColumn(new DataTableColumn("Type", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("ShowInAdmin", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("ShowInWeb", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("Required", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("DefaultValue", \Types\DataColumnsTypes::VARCHAR, "", true, 50));
+        $this->AddColumn(new DataTableColumn("MaxLength", \Types\DataColumnsTypes::VARCHAR, "", true, 50));
+        $this->AddColumn(new DataTableColumn("MinLength", \Types\DataColumnsTypes::VARCHAR, "", true, 50));         
+        $this->AddColumn(new DataTableColumn("ValueList", \Types\DataColumnsTypes::TEXT , "", true));         
+        $this->AddColumn(new DataTableColumn("ShowInAdminReadOnly", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("ShowInWebReadOnly", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("Validate", \Types\DataColumnsTypes::TEXT, "", true));     
+        $this->AddColumn(new DataTableColumn("CssClass", \Types\DataColumnsTypes::TEXT, "", true));     
+        $this->AddColumn(new DataTableColumn("MoreHtmlAtribut", \Types\DataColumnsTypes::TEXT, "", true));     
+        $this->AddColumn(new DataTableColumn("Domain", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("UniqueValue", \Types\DataColumnsTypes::BOOLEAN, FALSE, true, 1));
+        $this->AddColumn(new DataTableColumn("NoUpdate", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("XmlSettings", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("AddCDATA", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("ShowOnlyDetail", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("DomainSettings", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("FiltrSettings", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("Autocomplete", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("AddToSort", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("OnChangeEvent", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("ValueForAllLangues", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("GenerateHiddenInput", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
     }
     
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

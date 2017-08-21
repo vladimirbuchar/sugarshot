@@ -1,12 +1,9 @@
 <?php
 namespace Model;
- 
-  use Types\RuleType;
+
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class UsersInGroup  extends DatabaseTable{
+class UsersInGroup  extends DatabaseTable implements \Inteface\iDataTable{
     public $UserId;
     public $GroupId;
     public $IsMainGroup;
@@ -21,39 +18,15 @@ class UsersInGroup  extends DatabaseTable{
     }
     
     public function OnCreateTable() {
-        
-        $colUserId = new DataTableColumn();
-        $colUserId->DefaultValue ="";
-        $colUserId->IsNull = false;
-        $colUserId->Length = 9;
-        $colUserId->Name ="UserId";
-        $colUserId->Type = "INTEGER";
-        $colUserId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colUserId);
-        
-        $colGroupId = new DataTableColumn();
-        $colGroupId->DefaultValue ="";
-        $colGroupId->IsNull = false;
-        $colGroupId->Length = 9;
-        $colGroupId->Name ="GroupId";
-        $colGroupId->Type = "INTEGER";
-        $colGroupId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colGroupId);
-        
-        $colIsMainGroup = new DataTableColumn();
-        $colIsMainGroup->DefaultValue =0;
-        $colIsMainGroup->IsNull = true;
-        $colIsMainGroup->Length = 1;
-        $colIsMainGroup->Name ="IsMainGroup";
-        $colIsMainGroup->Type = "BOOLEAN";
-        $colIsMainGroup->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colIsMainGroup);
+        $this->AddColumn(new DataTableColumn("UserId", \Types\DataColumnsTypes::INTEGER, 0, FALSE, 9));
+        $this->AddColumn(new DataTableColumn("GroupId", \Types\DataColumnsTypes::INTEGER, 0, FALSE, 9));
+        $this->AddColumn(new DataTableColumn("IsMainGroup", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
         
          
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

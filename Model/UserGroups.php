@@ -3,10 +3,8 @@
 namespace Model;
  use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class UserGroups  extends DatabaseTable{
+class UserGroups  extends DatabaseTable implements \Inteface\iDataTable{
     public $GroupName;
     public $IsSystemGroup;
     public $GroupIdentificator;
@@ -22,48 +20,16 @@ class UserGroups  extends DatabaseTable{
     }
     
     public function OnCreateTable() {
-        
-        $colUserGroupName = new DataTableColumn();
-        $colUserGroupName->DefaultValue ="";
-        $colUserGroupName->IsNull = false;
-        $colUserGroupName->Length = 50;
-        $colUserGroupName->Name ="GroupName";
-        $colUserGroupName->Type = "varchar";
-        $colUserGroupName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colUserGroupName);
-        
-        $colIsSystemGroup = new DataTableColumn();
-        $colIsSystemGroup->DefaultValue =0;
-        $colIsSystemGroup->IsNull = false;
-        $colIsSystemGroup->Length = 1;
-        $colIsSystemGroup->Name ="IsSystemGroup";
-        $colIsSystemGroup->Type = "BOOLEAN";
-        $colIsSystemGroup->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colIsSystemGroup);
-        
-        $colGroupIdentificator = new DataTableColumn();
-        $colGroupIdentificator->DefaultValue ="";
-        $colGroupIdentificator->IsNull = true;
-        $colGroupIdentificator->Length = 50;
-        $colGroupIdentificator->Name ="GroupIdentificator";
-        $colGroupIdentificator->Type = "varchar";
-        $colGroupIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colGroupIdentificator);
-        
-        $colGroupIdentificator = new DataTableColumn();
-        $colGroupIdentificator->DefaultValue ="";
-        $colGroupIdentificator->IsNull = true;
-        $colGroupIdentificator->Length = 50;
-        $colGroupIdentificator->Name ="UserDefaultState";
-        $colGroupIdentificator->Type = "varchar";
-        $colGroupIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colGroupIdentificator);
+        $this->AddColumn(new DataTableColumn("GroupName", \Types\DataColumnsTypes::VARCHAR, "", FALSE, 50));
+        $this->AddColumn(new DataTableColumn("IsSystemGroup", \Types\DataColumnsTypes::BOOLEAN, false, false, 1));
+        $this->AddColumn(new DataTableColumn("GroupIdentificator", \Types\DataColumnsTypes::VARCHAR, "", true, 50));
+        $this->AddColumn(new DataTableColumn("UserDefaultState", \Types\DataColumnsTypes::VARCHAR, "", true, 50));
         
  
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

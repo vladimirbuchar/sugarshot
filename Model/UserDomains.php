@@ -3,10 +3,8 @@
 namespace Model;
 use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class UserDomains  extends DatabaseTable{
+class UserDomains  extends DatabaseTable implements \Inteface\iDataTable{
     public $DomainName;
     public $DomainIdentificator;
     public $Template;
@@ -15,7 +13,7 @@ class UserDomains  extends DatabaseTable{
     public $IsSystem;
     public $ShowNameInSubDomain;
     public $SaveHiddenColumn;
-    //private static $_instance = null;
+    
     
     public function __construct()
     {
@@ -24,89 +22,22 @@ class UserDomains  extends DatabaseTable{
         $this->SetSelectColums(array("DomainName","DomainIdentificator","Template","Domain","EditValue","IsSystem","ShowNameInSubDomain","SaveHiddenColumn"));
         $this->SetDefaultSelectColumns();
     }
-
-    
-    
-    
-    
-            
-    
-    
-
     
     public function OnCreateTable() {
-        $colDomainName = new DataTableColumn();
-        $colDomainName->DefaultValue ="";
-        $colDomainName->IsNull = false;
-        $colDomainName->Length = 255;
-        $colDomainName->Name ="DomainName";
-        $colDomainName->Type = "varchar";
-        $colDomainName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainName);
-        
-        $colDomainIdentificator = new DataTableColumn();
-        $colDomainIdentificator->DefaultValue ="";
-        $colDomainIdentificator->IsNull = false;
-        $colDomainIdentificator->Length = 50;
-        $colDomainIdentificator->Name ="DomainIdentificator";
-        $colDomainIdentificator->Type = "varchar";
-        $colDomainIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainIdentificator);
-        
-        
-        $colDomainIdentificator = new DataTableColumn();
-        $colDomainIdentificator->DefaultValue =0;
-        $colDomainIdentificator->Length = 9;
-        $colDomainIdentificator->Name ="Template";
-        $colDomainIdentificator->Type = "INTEGER";
-        $colDomainIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainIdentificator);
-        
-        $colDomainIdentificator = new DataTableColumn();
-        $colDomainIdentificator->DefaultValue =0;
-        $colDomainIdentificator->Length = 9;
-        $colDomainIdentificator->Name ="Domain";
-        $colDomainIdentificator->Type = "INTEGER";
-        $colDomainIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainIdentificator);
-        
-        $colDomainIdentificator = new DataTableColumn();
-        $colDomainIdentificator->DefaultValue =0;
-        $colDomainIdentificator->Name ="EditValue";
-        $colDomainIdentificator->Type = "BOOLEAN";
-        $colDomainIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainIdentificator);
-        
-        $colDomainIdentificator = new DataTableColumn();
-        $colDomainIdentificator->DefaultValue =0;
-        $colDomainIdentificator->Name ="IsSystem";
-        $colDomainIdentificator->Type = "BOOLEAN";
-        $colDomainIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainIdentificator);
-        //
-        $colDomainIdentificator = new DataTableColumn();
-        $colDomainIdentificator->DefaultValue ="";
-        $colDomainIdentificator->IsNull = false;
-        $colDomainIdentificator->Length = 255;
-        $colDomainIdentificator->Name ="ShowNameInSubDomain";
-        $colDomainIdentificator->Type = "varchar";
-        $colDomainIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainIdentificator);
-        //
-                $colDomainIdentificator = new DataTableColumn();
-        $colDomainIdentificator->DefaultValue ="";
-        $colDomainIdentificator->IsNull = false;
-        $colDomainIdentificator->Length = 255;
-        $colDomainIdentificator->Name ="SaveHiddenColumn";
-        $colDomainIdentificator->Type = "varchar";
-        $colDomainIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainIdentificator);
+        $this->AddColumn(new DataTableColumn("DomainName", \Types\DataColumnsTypes::VARCHAR, "", false, 255));
+        $this->AddColumn(new DataTableColumn("DomainIdentificator", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("Template", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("Domain", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("EditValue", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("IsSystem", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("ShowNameInSubDomain", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("SaveHiddenColumn", \Types\DataColumnsTypes::VARCHAR, "", false, 255));
         
     }
     
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

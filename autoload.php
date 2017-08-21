@@ -11,6 +11,7 @@ function xAutoLoader($className)
     $htmlComponents = $kernel."HtmlComponents/";
     $types = $kernel."Types/";
     $utils = $kernel."Utils/";
+    $interfaces = $kernel."Interfaces/";
     
     $controllersKernel = $kernel."Controllers/";
     $modelKernel = $kernel."Model/";
@@ -131,4 +132,9 @@ function xAutoLoader($className)
     {
         require_once $sendFormFunction."Plugins/".$className.".php";
     }
+    if (file_exists($interfaces.$className.".php"))
+    {
+        require_once $interfaces.$className.".php";
+    }
+    
 }

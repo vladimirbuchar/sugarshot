@@ -1,14 +1,14 @@
 <?php
 namespace Types;
 class DatabaseActions {
-    public static $Insert = "Insert";
-    public static $Update = "Update";
-    public static $Truncate="Truncate";
-    public static $DeleteItem = "DeleteItem";
-    public static $DeletePernamently = "DeletePernamently";
-    public static $RecoveryItem = "RecoveryItem";
-    public static $CleanItem = "CleanItem";
-    public static $NoneAction = "None";
+    const INSERT = "Insert";
+    const UPDATE = "Update";
+    const TRUNCATE ="Truncate";
+    const DELETE_ITEM = "DeleteItem";
+    const DELETE_PERNAMENTLY = "DeletePernamently";
+    const RECOVERY_ITEM = "RecoveryItem";
+    const CLEAN_ITEM = "CleanItem";
+    const NONE_ACTION = "None";
     
 }
 

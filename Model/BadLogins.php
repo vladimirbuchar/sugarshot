@@ -2,10 +2,9 @@
 
 namespace Model;
 
-use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
-class BadLogins extends DatabaseTable {
+
+class BadLogins extends DatabaseTable  implements \Inteface\iDataTable{
 
     public $DateEvent;
     public $UserName;
@@ -18,26 +17,12 @@ class BadLogins extends DatabaseTable {
     }
 
     public function OnCreateTable() {
-        $colDateEvent = new DataTableColumn();
-        $colDateEvent->DefaultValue = "";
-        $colDateEvent->IsNull = true;
-        $colDateEvent->Name = "DateEvent";
-        $colDateEvent->Type = "DATETIME";
-        $colDateEvent->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDateEvent);
-
-
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->Length = 255;
-        $deletedColumn->Name = "UserName";
-        $deletedColumn->Type = "varchar";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        $this->AddColumn(new DataTableColumn("DateEvent", \Types\DataColumnsTypes::DATETIME, "", true));
+        $this->AddColumn(new DataTableColumn("UserName", \Types\DataColumnsTypes::VARCHAR, "", true,255));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        
     }
 
     public function SetValidate($mode = false) {

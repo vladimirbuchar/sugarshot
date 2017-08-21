@@ -2,13 +2,13 @@
 
 namespace Controller;
 
-class TemplatesApi extends Controller {
+class TemplatesApi extends ApiController {
 
     public function __construct() {
         parent::__construct();
         $this->SetControllerPermition(array("*"));
-        $this->SetAjaxFunction("SetAdminLang", array("*"));
-        $this->SetAjaxFunction("IsLoginUser", array("*"));
+        $this->SetApiFunction("SetAdminLang", array("*"));
+        $this->SetApiFunction("IsLoginUser", array("*"));
     }
 
     public function SetAdminLang() {

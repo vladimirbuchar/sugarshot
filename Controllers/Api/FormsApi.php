@@ -4,14 +4,14 @@ namespace Controller;
 
 use Utils\StringUtils;
 
-class Forms extends Controllers {
+class Forms extends ApiController {
 
     public function __construct() {
         parent::__construct();
         $this->SetControllerPermition(array("*"));
-        $this->SetAjaxFunction("SendFormWeb", array("*"));
-        $this->SetAjaxFunction("RegenerateCaptcha", array("*"));
-        $this->SetAjaxFunction("ValidateForm", array("*"));
+        $this->SetApiFunction("SendFormWeb", array("*"));
+        $this->SetApiFunction("RegenerateCaptcha", array("*"));
+        $this->SetApiFunction("ValidateForm", array("*"));
     }
 
     public function SendFormWeb() {

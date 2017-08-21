@@ -1,6 +1,6 @@
 <?php
 namespace Controller;
-class AdminController extends Controllers{
+class AdminController extends ViewController{
     
     
     public function __construct()
@@ -8,10 +8,8 @@ class AdminController extends Controllers{
         parent::__construct();
         $this->BlockAdmin();
         $this->SetTemplateData("LeftMenuSettings", "");
-        if (!self::$IsApi)
-        {
-            $this->SetTemplateData("IsSystem", self::$User->IsSystemUser());
-        }
+        $this->SetTemplateData("IsSystem", self::$User->IsSystemUser());
+        
     }
     protected function SetLeftMenu($level1,$level2)
     {

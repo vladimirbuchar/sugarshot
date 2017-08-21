@@ -52,8 +52,11 @@ class SqlDatabase {
     public function __construct() {
 
         if (self::$_utf8Set) {
-            dibi::query("SET NAMES 'utf8'");
-//            mysqli_query("");
+            try {
+                dibi::query("SET NAMES 'utf8'");
+            } catch (Exception $ex) {
+                \Kernel\Page::ApplicationError($ex);
+            }
             self::$_utf8Set = false;
         }
         if (self::$SessionManager == null) {
@@ -61,6 +64,9 @@ class SqlDatabase {
         }
     }
 
+    /**
+     * @param boolean $resetInstance
+     */
     public static function GetInstance($resetInstance = TRUE) {
         if ($resetInstance)
             self::$_instance = null;
@@ -71,55 +77,49 @@ class SqlDatabase {
         return self::$_instance;
     }
 
+    /** function for select database 
+     * @param string  $where WHERE
+     * @param string $sort - ORDER BY
+     * @param array() $columns - select columns
+     * @param array $params
+     * @return array
+     */
     public function SelectByCondition($where = "", $sort = "", $columns = array(), $params = array()) {
-        try {
-            if (!empty($where))
-                $where = " WHERE $where";
-            if (!empty($sort))
-                $sort = " ORDER BY $sort";
-            $col = "*";
-            if (empty($columns))
-                $columns = $this->SelectColumns;
-            if (!empty($columns)) {
-                $col = implode(",", $columns);
-            }
-            if (empty($col))
-                $col = "*";
-            $query = "SELECT $col FROM " . $this->ObjectName . " $where $sort";
-            if ($this->TestQuery) {
-                \dibi::test($query);
-                die();
-            }
-            return $this->SelectQuery($query, $params);
-        } catch (Exception $ex) {
-            \Kernel\Page::ApplicationError($ex);
-            return null;
+
+        if (!empty($where))
+            $where = " WHERE $where";
+        if (!empty($sort))
+            $sort = " ORDER BY $sort";
+        $col = "*";
+        if (empty($columns))
+            $columns = $this->SelectColumns;
+        if (!empty($columns)) {
+            $col = implode(",", $columns);
         }
-        return null;
+        if (empty($col))
+            $col = "*";
+        $query = "SELECT $col FROM " . $this->ObjectName . " $where $sort";
+        return $this->DbQuery($query, $params);
     }
 
-    // SELECT DO DATABÁZE
-
-    /** prvedení selectu do databze
-     * @param $columns seznam sloupců array
-     * @param $deleted bool smazané záznamy
-     * @param $actualWeb  bool aktuální web
-     * @param $actualLang bool aktuání jazyk
-     * @param $sort string řazení 
-     * @param $extWhere string další podmínky
-     * @param $saveToSession zda se má $sort a $extWhere uložit do session - 
-     * @param $parentId int id parenta
+    /** SELECT to database 
+     * @param array $columns 
+     * @param boolean $deleted 
+     * @param boolean $actualWeb 
+     * @param boolean $actualLang
+     * @param \Types\SortDatabase $sort
+     * @param string $extWhere  
+     * @param boolean $saveToSession 
+     * @param integer $parentId int 
+     * @return array
      */
     public function Select($columns = array(), $deleted = FALSE, $actualWeb = true, $actualLang = true, $sort = null, $extWhere = "", $saveToSession = false, $parentId = 0) {
 
-        $query = "";
-        $res = null;
         $whereDeleted = "";
         $whereWeb = "";
         $whereLang = "";
         $where = "";
         if ($saveToSession) {
-            //break;
             if ($sort != null) {
                 self::$SessionManager->SetSessionValue($this->ObjectName . "_sort_type", $sort->SortType);
                 self::$SessionManager->SetSessionValue($this->ObjectName . "_sort_columnName", $sort->ColumnName);
@@ -174,49 +174,25 @@ class SqlDatabase {
         if (!empty($this->ParentColumn && $parentId > 0)) {
             $where = $where . " AND  $this->ParentColumn = " . $parentId;
         }
-        $query = " SELECT ";
-        if (empty($columns))
-            $columns = $this->SelectColumns;
-        if (empty($columns)) {
-            $query .= " * ";
-        } else {
-            $cols = implode(",", $columns);
-            $query .= " $cols ";
-        }
-        $query .= " FROM $this->ObjectName ";
-        if (!empty($where)) {
-            $query .= " WHERE $where";
-            if (!empty($extWhere)) {
-                $query .= " AND (" . $extWhere . ")";
+        if (!empty($extWhere)) {
+            if (empty($where)) {
+                $where = $extWhere;
+            } else {
+                $where .= " AND (" . $extWhere . ")";
             }
-        } else if (!empty($extWhere)) {
-            $query .= " WHERE $extWhere";
         }
-
+        $sortQuery = "";
         if ($sort != null) {
-
             if (!empty($sort))
-                $query .= " ORDER BY " . $sort->ColumnName . " " . $sort->SortType;
+                $sortQuery .= " ORDER BY " . $sort->ColumnName . " " . $sort->SortType;
         }
-        try {
-
-            $res = dibi::query($query)->fetchAll();
-            if ($this->TestQuery)
-                dibi::test($query);
-        } catch (Exception $ex) {
-            self::$SessionManager->UnsetKey($this->ObjectName . "_sort_type");
-            self::$SessionManager->UnsetKey($this->ObjectName . "_sort_columnName");
-            self::$SessionManager->UnsetKey($this->ObjectName . "_extWhere");
-            dibi::test($query);
-            \Kernel\Page::ApplicationError($ex);
-        }
-
-
-        return $res;
+        return $this->SelectByCondition($where, $sortQuery, $columns);
     }
 
-    /* fukce pro přípravu where z listu */
-
+    /** fukce pro přípravu where z array 
+     * @param  string  $array
+     * @return string
+     */
     public function PrepareWhere($array) {
         if ($array == "clear")
             return "clear";
@@ -264,7 +240,7 @@ class SqlDatabase {
     }
 
     /** ověříme zda objekt existuje
-     *   @param $colName strin jméno sloupce 
+     *  @param $colName strin jméno sloupce 
      * @param $value hodnota
      * @ $noTestId int co se nemá testovat
      */
@@ -363,6 +339,82 @@ class SqlDatabase {
         return SQLMODE == "mysql";
     }
 
+    public function GetMaxValue($columnName, $condition = "") {
+        $where = empty($condition) ? "" : " WHERE $condition";
+        $res = $this->DbQuery("SELECT MAX($columnName) AS MaxVal FROM " . $this->ObjectName . $where);
+        return empty($res) ? 0 : $res[0]["MaxVal"];
+    }
+
+    public function GetCount($columnName = "", $condition = "") {
+        $where = empty($condition) ? "" : " WHERE $condition";
+        $res = $this->DbQuery("SELECT COUNT(*) $columnName FROM $this->ObjectName $where");
+        return empty($res) ? 0 : $res[0][$columnName];
+    }
+
+    protected function SetSelectColums($columns) {
+        $this->SelectColumns = array_merge($this->SelectColumns, $columns);
+    }
+
+    protected function DbQuery($query, $params = array()) {
+        try {
+            if ($this->TestQuery)
+                dibi::test($query, $params);
+            return \dibi::query($query, $params)->fetchAll();
+        } catch (Exception $ex) {
+            \Kernel\Page::ApplicationError($ex);
+        }
+    }
+
+    public function TransactionBegin() {
+        try {
+            \dibi::begin();
+        } catch (Exception $ex) {
+            \Kernel\Page::ApplicationError($ex);
+        }
+    }
+
+    public function TransactionEnd() {
+        try {
+
+            \dibi::commit();
+        } catch (Exception $ex) {
+            \Kernel\Page::ApplicationError($ex);
+        }
+    }
+
+    public function RollbackTransaction() {
+        try {
+            \dibi::rollback();
+        } catch (Exception $ex) {
+            \Kernel\Page::ApplicationError($ex);
+        }
+    }
+
+    /** function for read mysql variables
+     * @param string $variableName
+     * @return string
+     *  */
+    protected function GetSqlVariable($variableName) {
+        try {
+            $res = \dibi::query("SHOW VARIABLES LIKE %s", $variableName)->fetchAll();
+            return (empty($res)) ? "" : $res[0]["Value"];
+        } catch (Exception $ex) {
+            \Kernel\Page::ApplicationError($ex);
+        }
+    }
+
+    /** function for set mysql variable
+     * @param string  $variableName 
+     * @param string $variableValue
+     */
+    protected function SetSqlVariable($variableName, $variableValue) {
+        try {
+            \dibi::query("set global $variableName='$variableValue'");
+        } catch (Exception $ex) {
+            \Kernel\Page::ApplicationError($ex);
+        }
+    }
+
     /** UTILS */
     protected function GetLangIdByWebUrl() {
         $langItem = new \Objects\Langs();
@@ -384,50 +436,6 @@ class SqlDatabase {
         if (!self::$SessionManager->IsEmpty("AdminWords$userLang"))
             return self::$SessionManager->GetSessionValue("AdminWords$userLang", $wordid);
         return "";
-    }
-
-    public function GetMaxValue($columnName, $condition = "") {
-        $where = "";
-        if (!empty($condition)) {
-            $where = " WHERE $condition";
-        }
-        $res = dibi::query("SELECT MAX($columnName) AS MaxVal FROM " . $this->ObjectName . $where)->fetchAll();
-        if (empty($res))
-            return 0;
-        return $res[0]["MaxVal"];
-    }
-
-    public function GetCount($columnName = "", $condition = "") {
-        $where = "";
-        if (!empty($condition)) {
-            $where = " WHERE $condition";
-        }
-        $query = "SELECT COUNT(*) $columnName FROM $this->ObjectName $where";
-        return $this->SelectQuery($query);
-    }
-
-    protected function SetSelectColums($columns) {
-        $this->SelectColumns = array_merge($this->SelectColumns, $columns);
-    }
-
-    protected function SetSqlParams($name, $value, $type) {
-        
-    }
-
-    protected function SelectQuery($query, $params = array()) {
-        return \dibi::query($query, $params)->fetchAll();
-    }
-
-    public function TransactionBegin() {
-        \dibi::begin();
-    }
-
-    public function TransactionEnd() {
-        \dibi::commit();
-    }
-
-    public function RollbackTransaction() {
-        \dibi::rollback();
     }
 
 }

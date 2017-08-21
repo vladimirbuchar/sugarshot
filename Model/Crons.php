@@ -2,11 +2,9 @@
 
 namespace Model;
 
-use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class Crons extends DatabaseTable {
+class Crons extends DatabaseTable  implements \Inteface\iDataTable {
 
     public $CronName;
     public $CronUrl;
@@ -24,56 +22,16 @@ class Crons extends DatabaseTable {
     }
 
     public function OnCreateTable() {
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->Name = "CronName";
-        $colLangName->Type = "varchar";
-        $colLangName->Length = 255;
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->Name = "CronUrl";
-        $colLangName->Type = "varchar";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue = "";
-        $colLangIdentificator->IsNull = false;
-        $colLangIdentificator->Name = "IsActive";
-        $colLangIdentificator->Type = "BOOLEAN";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
-
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue = "";
-
-        $colLangIdentificator->Name = "IsRun";
-        $colLangIdentificator->Type = "BOOLEAN";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->Name = "RunMode";
-        $colLangName->Type = "varchar";
-        $colLangIdentificator->Length = 255;
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue = "";
-        $colLangIdentificator->IsNull = true;
-        $colLangIdentificator->Name = "LastRun";
-        $colLangIdentificator->Type = "DATETIME";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
+        $this->AddColumn(new DataTableColumn("CronName", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("CronUrl", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("IsActive", \Types\DataColumnsTypes::BOOLEAN, false, false, 1));
+        $this->AddColumn(new DataTableColumn("IsRun", \Types\DataColumnsTypes::BOOLEAN, false, true));
+        $this->AddColumn(new DataTableColumn("RunMode", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("LastRun", \Types\DataColumnsTypes::DATETIME, "", true));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function SetValidate($mode = false) {

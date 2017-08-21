@@ -1,9 +1,9 @@
 <?php
 namespace Model;
-use Types\RuleType;
+
 use Types\DataTableColumn;
-use Types\AlterTableMode;
-class Plugins  extends DatabaseTable{
+
+class Plugins  extends DatabaseTable implements \Inteface\iDataTable{
     public $PluginName;
     
     
@@ -16,14 +16,7 @@ class Plugins  extends DatabaseTable{
     
     
     public function OnCreateTable() {
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue ="";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 50;
-        $colLangName->Name ="PluginName";
-        $colLangName->Type = "varchar";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
+        $this->AddColumn(new DataTableColumn("PluginName", \Types\DataColumnsTypes::VARCHAR, "", false, 50) );
     }
     
 

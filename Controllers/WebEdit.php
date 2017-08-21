@@ -6,12 +6,7 @@ use Model\Langs;
 use Model\UserDomains;
 use Utils\ArrayUtils;
 use Components\HtmlEditor;
-use Model\MailingContacts;
 use Utils\StringUtils;
-use Model\ContentConnection;
-use Components\SelectDialog;
-use Model\ContentAlternative;
-use Model\MailingContactsInGroups;
 use Types\ContentTypes;
 
 class WebEdit extends AdminController {
@@ -20,66 +15,35 @@ class WebEdit extends AdminController {
         parent::__construct();
         $this->SetControllerPermition(array("system", "Administrators"));
         $this->CheckWebPrivileges();
-
-
-
-        $this->SetViewPermition("Tree", array("system", "Administrators"));
-        $this->SetViewPermition("TemplateEditor", array("system", "Administrators"));
-        $this->SetViewPermition("Detail", array("system", "Administrators"));
-        $this->SetViewPermition("TemplateDetail", array("system", "Administrators"));
-        $this->SetViewPermition("CssList", array("system", "Administrators"));
-        $this->SetViewPermition("FormsList", array("system", "Administrators"));
-        $this->SetViewPermition("MailList", array("system", "Administrators"));
-        $this->SetViewPermition("CssEditor", array("system", "Administrators"));
-        $this->SetViewPermition("FileFolder", array("system", "Administrators"));
-        $this->SetViewPermition("FileUploader", array("system", "Administrators"));
-        $this->SetViewPermition("Discusion", array("system", "Administrators"));
-        $this->SetViewPermition("JsList", array("system", "Administrators"));
-        $this->SetViewPermition("JsEditor", array("system", "Administrators"));
-        $this->SetViewPermition("FormEditor", array("system", "Administrators"));
-        $this->SetViewPermition("MailEditor", array("system", "Administrators"));
-        $this->SetViewPermition("SendMailList", array("system", "Administrators"));
-        $this->SetViewPermition("Trash", array("system", "Administrators"));
-        $this->SetViewPermition("NoPublishItems", array("system", "Administrators"));
-        $this->SetViewPermition("Mailing", array("system", "Administrators"));
-        $this->SetViewPermition("MailingDetail", array("system", "Administrators"));
-        //$this->SetViewPermition("MailingContacts", array("system","Administrators"));
-        $this->SetViewPermition("DataSource", array("system", "Administrators"));
-        $this->SetViewPermition("DataSourceDetail", array("system", "Administrators"));
-        $this->SetViewPermition("InquryList", array("system", "Administrators"));
-        $this->SetViewPermition("InqueryDetail", array("system", "Administrators"));
-        $this->SetMustBeLang("InquryList");
-        $this->SetMustBeWebId("InquryList");
-        $this->SetMustBeWebId("Tree");
-        $this->SetMustBeLang("Tree");
-        $this->SetMustBeWebId("TemplateEditor");
-        $this->SetMustBeLang("TemplateEditor");
-        $this->SetMustBeWebId("CssList");
-        $this->SetMustBeLang(("CssList"));
-        $this->SetMustBeWebId("FormsList");
-        $this->SetMustBeLang(("FormsList"));
         $this->SetTemplateData("controllerName", $this->ControllerName);
         $this->AddScript("/Scripts/ContentTree.js");
-        $this->SetMustBeWebId("JsList");
-        $this->SetMustBeLang("JsList");
-        $this->SetMustBeLang("MailList");
-        $this->SetMustBeWebId("MailList");
-        $this->SetMustBeLang("SendMailList");
-        $this->SetMustBeWebId("SendMailList");
-        $this->SetMustBeLang("Mailing");
-        $this->SetMustBeWebId("Mailing");
-        $this->SetMustBeLang("NoPublishItems");
-        $this->SetMustBeWebId("NoPublishItems");
-        $this->SetMustBeLang("Trash");
-        $this->SetMustBeWebId("Trash");
-        $this->SetMustBeLang("DataSource");
-        $this->SetMustBeWebId("DataSource");
-        $this->SetViewPermition("DiscusionList", array("system", "Administrators"));
-        $this->MustBeLangId("DiscusionList");
-        $this->MustBeWebId("DiscusionList");
-        $this->SetViewPermition("FileManager", array("system", "Administrators"));
-        $this->SetMustBeLang("FileManager");
-        $this->SetMustBeWebId("FileManager");
+        $this->SetViewSettings("Tree", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("TemplateEditor", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("Detail", array("system", "Administrators"));
+        $this->SetViewSettings("TemplateDetail", array("system", "Administrators"));
+        $this->SetViewSettings("CssList", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("FormsList", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("MailList", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("CssEditor", array("system", "Administrators"));
+        $this->SetViewSettings("FileFolder", array("system", "Administrators"));
+        $this->SetViewSettings("FileUploader", array("system", "Administrators"));
+        $this->SetViewSettings("Discusion", array("system", "Administrators"));
+        $this->SetViewSettings("JsList", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("JsEditor", array("system", "Administrators"));
+        $this->SetViewSettings("FormEditor", array("system", "Administrators"));
+        $this->SetViewSettings("MailEditor", array("system", "Administrators"));
+        $this->SetViewSettings("SendMailList", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("Trash", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("NoPublishItems", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("Mailing", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("MailingDetail", array("system", "Administrators"));
+        $this->SetViewSettings("DataSource", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("DataSourceDetail", array("system", "Administrators"));
+        $this->SetViewSettings("InquryList", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("InqueryDetail", array("system", "Administrators"));
+        $this->SetViewSettings("FileManager", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("DiscusionList", array("system", "Administrators"),true,true);
+        
     }
 
     public function Mailing() {
@@ -209,7 +173,7 @@ class WebEdit extends AdminController {
 
 
 
-        if ($content->GetContentType($id) == ContentTypes::$FileUpload) {
+        if ($content->GetContentType($id) == ContentTypes::FILEUPLOAD) {
             $this->GoToState("WebEdit", "FileUploader", "xadm", $this->WebId, $this->LangId, $id);
         }
         $data = $content->GetFileFolderDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId, $this->GetVersionId());
@@ -634,7 +598,7 @@ class WebEdit extends AdminController {
         if (empty($data)) {
 
             $web = \Model\Webs::GetInstance();
-            $web->GetObjectById($this->WebId, true);
+            $web->GetObjectById($this->WebId);
             $xml = $web->WebPrivileges;
             $ar = ArrayUtils::XmlToArray($xml);
             $data = $ar["item"];

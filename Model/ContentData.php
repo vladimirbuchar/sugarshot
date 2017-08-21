@@ -2,11 +2,9 @@
 
 namespace Model;
 
-use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class ContentData extends DatabaseTable {
+class ContentData extends DatabaseTable implements \Inteface\iDataTable {
 
     public $ContentId;
     public $ItemName;
@@ -25,49 +23,15 @@ class ContentData extends DatabaseTable {
     }
 
     public function OnCreateTable() {
-
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "ContentId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 255;
-        $colContentType->Name = "ItemName";
-        $colContentType->Type = "varchar";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Name = "Value";
-        $colContentType->Type = "TEXT";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Name = "ValueNoHtml";
-        $colContentType->Type = "TEXT";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "ItemId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
+        $this->AddColumn(new DataTableColumn("ContentId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("ItemName", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("Value", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("ValueNoHtml", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("ItemId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function SetValidate($mode = false) {

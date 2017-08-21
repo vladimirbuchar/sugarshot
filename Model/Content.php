@@ -1,12 +1,11 @@
 <?php
 
 namespace Model;
-
 use Types\RuleType;
 use Types\DataTableColumn;
 use Types\AlterTableMode;
 
-class Content extends DatabaseTable {
+class Content extends DatabaseTable implements \Inteface\iDataTable {
 
     public $ContentType;
     public $ParentId;
@@ -45,210 +44,37 @@ class Content extends DatabaseTable {
     }
 
     public function OnCreateTable() {
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->IsNull = false;
-        $colContentType->Length = 50;
-        $colContentType->Name = "ContentType";
-        $colContentType->Type = "varchar";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "ParentId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 1;
-        $colContentType->Name = "NoIncludeSearch";
-        $colContentType->Type = "BOOLEAN";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 255;
-        $colContentType->Name = "Identificator";
-        $colContentType->Type = "varchar";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "DomainId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "TemplateId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "GalleryId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "GallerySettings";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "DiscusionSettings";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "DiscusionId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "NoChild";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = 0;
-        $deletedColumn->Name = "UseTemplateInChild";
-        $deletedColumn->Type = "BOOLEAN";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "Sort";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = "";
-        $deletedColumn->Length = 100;
-        $deletedColumn->Name = "UploadedFileType";
-        $deletedColumn->Type = "varchar";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "FormId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "ChildTemplateId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Name = "CopyDataToChild";
-        $colContentType->Type = "BOOLEAN";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Name = "ActivatePager";
-        $colContentType->Type = "BOOLEAN";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Name = "FirstItemLoadPager";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Name = "NextItemLoadPager";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Name = "Owner";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-        //Inquery
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Name = "Inquery";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Name = "NoLoadSubItems";
-        $colContentType->Type = "BOOLEAN";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Name = "LastVisited";
-        $colContentType->Type = "DATETIME";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        //SaveToCache
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Name = "SaveToCache";
-        $colContentType->Type = "BOOLEAN";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $deletedColumn = new DataTableColumn();
-        $deletedColumn->DefaultValue = "";
-        $deletedColumn->Length = 50;
-        $deletedColumn->Name = "SortRule";
-        $deletedColumn->Type = "varchar";
-        $deletedColumn->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($deletedColumn);
+        $this->AddColumn(new DataTableColumn("ContentType", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("ParentId", \Types\DataColumnsTypes::INTEGER, 0, false, 0));
+        $this->AddColumn(new DataTableColumn("INTEGER", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("NoIncludeSearch", \Types\DataColumnsTypes::BOOLEAN, 0, true, 1));
+        $this->AddColumn(new DataTableColumn("Identificator", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("DomainId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("TemplateId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("GalleryId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("GallerySettings", \Types\DataColumnsTypes::INTEGER,0,true,9));
+        $this->AddColumn(new DataTableColumn("DiscusionSettings", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("DiscusionId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("NoChild", \Types\DataColumnsTypes::BOOLEAN, 0, true, 1));
+        $this->AddColumn(new DataTableColumn("UseTemplateInChild", \Types\DataColumnsTypes::BOOLEAN, 0, true, 1));
+        $this->AddColumn(new DataTableColumn("Sort", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("UploadedFileType", \Types\DataColumnsTypes::VARCHAR, "", true, 100));
+        $this->AddColumn(new DataTableColumn("FormId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("ChildTemplateId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("CopyDataToChild", \Types\DataColumnsTypes::BOOLEAN,0));
+        $this->AddColumn(new DataTableColumn("ActivatePager", \Types\DataColumnsTypes::BOOLEAN, 0));
+        $this->AddColumn(new DataTableColumn("FirstItemLoadPager", \Types\DataColumnsTypes::INTEGER, 0));
+        $this->AddColumn(new DataTableColumn("NextItemLoadPager", \Types\DataColumnsTypes::INTEGER, 0));
+        $this->AddColumn(new DataTableColumn("Owner", \Types\DataColumnsTypes::INTEGER, 0));
+        $this->AddColumn(new DataTableColumn("Inquery", \Types\DataColumnsTypes::INTEGER, 0));
+        $this->AddColumn(new DataTableColumn("NoLoadSubItems", \Types\DataColumnsTypes::BOOLEAN, 0, true, 1));
+        $this->AddColumn(new DataTableColumn("LastVisited", \Types\DataColumnsTypes::DATETIME, ""));
+        $this->AddColumn(new DataTableColumn("SaveToCache", \Types\DataColumnsTypes::BOOLEAN, 0));
+        $this->AddColumn(new DataTableColumn("SortRule", \Types\DataColumnsTypes::VARCHAR, "", true, 50));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function SetValidate($mode = false) {

@@ -52,6 +52,11 @@ class Folders {
         chmod($path.$name,$security);
     }
     
+    public static function SetPermitions($path,$name,$security=0777)
+    {
+        chmod($path.$name,$security);
+    }
+    
     public static function  CopyFolder($src,$dst)
     {
           $dir = opendir($src); 

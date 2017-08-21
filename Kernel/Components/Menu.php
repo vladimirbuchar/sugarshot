@@ -47,7 +47,7 @@ class Menu extends UserComponents{
             $li = new Li();
             $link = new Link();
             $link->AddAtrribut("data-ajax", "false");
-            if ($row["ContentType"] == ContentTypes::$Link) {
+            if ($row["ContentType"] == ContentTypes::LINK) {
                 $xml = $row["Data"];
                 $ar = ArrayUtils::XmlToArray($xml);
                 $contentLink =  new \Objects\Content();
@@ -73,7 +73,7 @@ class Menu extends UserComponents{
                     }
                 }
             }
-            else if( $row["ContentType"] == ContentTypes::$ExternalLink)
+            else if( $row["ContentType"] == ContentTypes::EXTERNAL_LINK)
             {
                 $link->Href = "";
             }

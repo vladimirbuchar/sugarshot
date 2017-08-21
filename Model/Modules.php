@@ -2,10 +2,8 @@
 namespace Model;
 use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class Modules  extends DatabaseTable{
+class Modules  extends DatabaseTable implements \Inteface\iDataTable{
     public $ModuleName;
     public $ModuleControler;
     public $ModuleView;
@@ -21,41 +19,14 @@ class Modules  extends DatabaseTable{
         
     }
     public function OnCreateTable() {
-        $colModuleName = new DataTableColumn();
-        $colModuleName->DefaultValue ="";
-        $colModuleName->IsNull = false;
-        $colModuleName->Length = 50;
-        $colModuleName->Name ="ModuleName";
-        $colModuleName->Type = "varchar";
-        $colModuleName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colModuleName);
-        
-        $colModuleIdentificator = new DataTableColumn();
-        $colModuleIdentificator->DefaultValue ="";
-        $colModuleIdentificator->IsNull = false;
-        $colModuleIdentificator->Length = 50;
-        $colModuleIdentificator->Name ="ModuleControler";
-        $colModuleIdentificator->Type = "varchar";
-        $colModuleIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colModuleIdentificator);
-        
-        $colModuleGroup = new DataTableColumn();
-        $colModuleGroup->DefaultValue ="";
-        $colModuleGroup->IsNull = false;
-        $colModuleGroup->Length = 50;
-        $colModuleGroup->Name ="ModuleView";
-        $colModuleGroup->Type = "varchar";
-        $colModuleGroup->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colModuleGroup);
-        
-        
+        $this->AddColumn(new DataTableColumn("ModuleName", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("ModuleControler", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("ModuleView", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);   
+        $this->Setup();   
     }
-
-    
 
     public function SetValidate($mode = false) {
         $this->SetValidateRule("ModuleName", RuleType::$NoEmpty,$this->GetWord("word150"));
@@ -71,5 +42,4 @@ class Modules  extends DatabaseTable{
     {
         
     }
-
 }

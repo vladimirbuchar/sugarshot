@@ -75,7 +75,7 @@ class Page {
             $controller = new $controllerNameApi();
             $out = "";
 
-            if ($controller->IsAjaxFunction($functionName) && !$controller->GetNoAccess()) {
+            if ($controller->IsApiFunction($functionName) && !$controller->GetNoAccess()) {
                 $mode = strtolower($mode);
                 if ($mode == "postobject") {
                     $params = $_POST["params"];
@@ -352,40 +352,37 @@ class Page {
     }
 
     private static function UpdateModel($model) {
-        try {
-            for ($i = 0; $i < count($model); $i++) {
-                if (empty($model[$i]["Name"]))
-                    $name = $model[$i];
-                else
-                    $name = $model[$i]["Name"];
 
-                if (strpos($name, '.php') !== FALSE) {
-                    
-                } else {
-                    $name = $name . ".php";
-                }
-                $modelPath = MODEL_PATH . $name;
+        for ($i = 0; $i < count($model); $i++) {
+            if (empty($model[$i]["Name"]))
+                $name = $model[$i];
+            else
+                $name = $model[$i]["Name"];
 
-                $className = basename($modelPath, ".php");
-
-                if (empty($className) || $className == "") {
-                    continue;
-                }
-
-
-                $className = "Model\\" . $className;
-                $modelClass = null;
-                $modelClass = new $className();
-                $modelClass->CreateTable();
-                $modelClass->OnCreateTable();
-                $modelClass->SaveNewColums();
-                $modelClass->TableMigrate();
-
-                if ($modelClass->WasCreated)
-                    $modelClass->InsertDefaultData();
+            if (strpos($name, '.php') !== FALSE) {
+                
+            } else {
+                $name = $name . ".php";
             }
-        } catch (Exception $e) {
-            echo $e;
+            $modelPath = MODEL_PATH . $name;
+
+            $className = basename($modelPath, ".php");
+
+            if (empty($className) || $className == "") {
+                continue;
+            }
+
+
+            $className = "Model\\" . $className;
+            $modelClass = null;
+            $modelClass = new $className();
+            $modelClass->CreateTable();
+            $modelClass->OnCreateTable();
+            $modelClass->SaveNewColums();
+            $modelClass->TableMigrate();
+
+            if ($modelClass->WasCreated)
+                $modelClass->InsertDefaultData();
         }
     }
 
@@ -426,12 +423,12 @@ class Page {
         }
     }
 
-    public static function ApplicationError($ex, $goHome = false, $clear = false) {
+    public static function ApplicationError($ex, $nextMessage = "", $goHome = false, $clear = false) {
         if (SHOW_ERRORS) {
             echo $ex;
         }
         if (WRITE_TO_LOG) {
-            Files::WriteLogFile($ex);
+            Files::WriteLogFile($ex . "\n" . $nextMessage);
         }
         if ($clear) {
             $_SESSION = null;
@@ -475,6 +472,7 @@ class Page {
                 $modelPriority[] = "ContentConnection.php";
                 $modelPriority[] = "AdminLangs.php";
                 $modelPriority[] = "WordGroups.php";
+
                 $folderContent = array_merge($modelPriority, $folderContent);
 
 
@@ -588,7 +586,7 @@ class Page {
     }
 
     public static function RenderXWebComponent($inHtml) {
-
+        $outArray = array();
         preg_match_all("(<xWeb:Component(( )*[A-Za-z]*=\"[\[\]!{}\%:A-Za-z0-9\_\-/\;( )\',\#=\.><]*\")*( )*/>)", $inHtml, $outArray);
         $inHtml = self::ReplaceComponent($outArray, $inHtml);
         return $inHtml;
@@ -799,8 +797,9 @@ class Page {
         $info = $web->GenerateSitemapXml(SERVER_NAME_LANG);
         return $info;
     }
-    public static function SetOrigin()
-    {
-        header('Access-Control-Allow-Origin: '.SERVER_NAME);  
+
+    public static function SetOrigin() {
+        header('Access-Control-Allow-Origin: ' . SERVER_NAME);
     }
+
 }

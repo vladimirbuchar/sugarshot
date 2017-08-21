@@ -1263,8 +1263,7 @@ INSERT INTO `ContentSecurity` (`Id`, `Deleted`, `IsSystem`, `GroupId`, `ObjectId
 (3257, 0, NULL, 1, 61, 'canWrite', 1),
 (3256, 0, NULL, 1, 61, 'canRead', 1),
 (3255, 0, NULL, 11, 61, 'canChangePrivileges', 1),
-(3254, 0, NULL, 11, 61, 'canPublish', 1);
-INSERT INTO `ContentSecurity` (`Id`, `Deleted`, `IsSystem`, `GroupId`, `ObjectId`, `SecurityType`, `Value`) VALUES
+(3254, 0, NULL, 11, 61, 'canPublish', 1),
 (3253, 0, NULL, 11, 61, 'canDelete', 1),
 (3252, 0, NULL, 11, 61, 'canWrite', 1),
 (3251, 0, NULL, 11, 61, 'canRead', 1),

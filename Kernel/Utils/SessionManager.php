@@ -1,78 +1,66 @@
 <?php
+
 namespace Utils;
-class SessionManager  {
+
+class SessionManager {
+
     private static $_seesionMode = "";
-    public static  $AdminMode ="adminmode";
+    public static $AdminMode = "adminmode";
     public static $WebMode = "webmode";
-    public function __construct($sessionMode ="") {
+
+    public function __construct($sessionMode = "") {
         $this->SetSessionMode($sessionMode);
     }
-    
-    private function SetSessionMode($sessionMode)
-    {
-        if (!empty($sessionMode))
-        {
+
+    private function SetSessionMode($sessionMode) {
+        if (!empty($sessionMode)) {
             $_SESSION["activeSessionMode"] = $sessionMode;
             self::$_seesionMode = $sessionMode;
-        }
-        else 
-        {
-            if (!empty($_SESSION["activeSessionMode"]))
-            {
+        } else {
+            if (!empty($_SESSION["activeSessionMode"])) {
                 self::$_seesionMode = $_SESSION["activeSessionMode"];
             }
         }
     }
 
-
-    public function GetSessionValue($key,$key1 = "")
-    {
+    public function GetSessionValue($key, $key1 = "") {
         if (empty($key) && empty($key1))
             return "";
-        if (empty($key1))
-        {
+        if (empty($key1)) {
             if (empty($_SESSION[self::$_seesionMode][$key]))
                 return "";
             return $_SESSION[self::$_seesionMode][$key];
         }
-        else 
-        {
+        else {
             if (empty($_SESSION[self::$_seesionMode][$key][$key1]))
                 return "";
             return $_SESSION[self::$_seesionMode][$key][$key1];
         }
-            
-            
     }
-    
-    public function SetSessionValue($key, $value,$key1 = "")
-    {
+
+    public function SetSessionValue($key, $value, $key1 = "") {
         if (empty($key1))
             $_SESSION[self::$_seesionMode][$key] = $value;
-        else 
+        else
             $_SESSION[self::$_seesionMode][$key][$key1] = $value;
     }
-    
-    public function IsEmpty($key,$key1 = "")
-    {
+
+    public function IsEmpty($key, $key1 = "") {
         if (empty($key1))
             return empty($_SESSION[self::$_seesionMode][$key]);
-        else 
-        {
+        else {
             return empty($_SESSION[self::$_seesionMode][$key][$key1]);
-        }   
+        }
     }
-    public function UnsetKey($key,$key1="")
-    {
-        if (empty($key1))
-        {
+
+    public function UnsetKey($key, $key1 = "") {
+        if (empty($key1)) {
             $_SESSION[self::$_seesionMode][$key] = null;
             unset($_SESSION[self::$_seesionMode][$key]);
-        }
-        else 
-        {
+        } else {
             $_SESSION[self::$_seesionMode][$key][$key1] = null;
             unset($_SESSION[self::$_seesionMode][$key][$key1]);
         }
-    }       
+    }
+
 }

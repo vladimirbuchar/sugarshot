@@ -6,7 +6,6 @@ use Utils\Files;
 use Utils\Utils;
 use Utils\ArrayUtils;
 use Utils\StringUtils;
-use Types\ContentTypes;
 use Types\LinkType;
 use Types\CacheType; 
 
@@ -16,8 +15,6 @@ class  UserComponents extends GlobalClass {
     public $ItemTemplate ="";
     public $Type;
     public $IsCache = true;
-    public $CacheTime;
-    public $CacheTimeType ="";
     public $Id;
     public $UseBootstrap = true;
     public $CssClass = "";
@@ -61,8 +58,7 @@ class  UserComponents extends GlobalClass {
     public function __construct() {
         
         parent::__construct();
-        $this->CacheTimeType = CacheTimeType::$Minutes;
-        $this->CacheTime = 15;         
+        
         
         
     }
@@ -300,8 +296,5 @@ class  UserComponents extends GlobalClass {
         return $contentObj->PrepareHtml($template, $data);
     }
     
-    protected function  RunPHPInTemplate($params =array())
-    {
-        return eval($this->RenderHtml);
-    }
+   
 }

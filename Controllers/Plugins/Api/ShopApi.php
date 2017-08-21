@@ -2,23 +2,18 @@
 
 namespace Controller;
 
-
-
-use Utils\StringUtils;
-
-
-class ShopApi extends Controllers {
+class ShopApi extends ApiController {
 
     public function __construct() {
         parent::__construct();
         $this->SetControllerPermition(array("*"));
-        $this->SetAjaxFunction("AddProductToCart", array("*"));
-        $this->SetAjaxFunction("RecountProduct", array("*"));
-        $this->SetAjaxFunction("DeleteProductFromCart", array("*"));
-        $this->SetAjaxFunction("RegisteredServerEvents", array("*"));
-        $this->SetAjaxFunction("SelectTransport", array("*"));
-        $this->SetAjaxFunction("SelectPayment", array("*"));
-        $this->SetAjaxFunction("IsEmptyCart",array("*"));
+        $this->SetApiFunction("AddProductToCart", array("*"));
+        $this->SetApiFunction("RecountProduct", array("*"));
+        $this->SetApiFunction("DeleteProductFromCart", array("*"));
+        $this->SetApiFunction("RegisteredServerEvents", array("*"));
+        $this->SetApiFunction("SelectTransport", array("*"));
+        $this->SetApiFunction("SelectPayment", array("*"));
+        $this->SetApiFunction("IsEmptyCart",array("*"));
     }
 
     public function AddProductToCart() {
@@ -79,7 +74,7 @@ class ShopApi extends Controllers {
     public function IsEmptyCart()
     {
         $shop = new \xweb_plugins\Shop;
-        return $shop->IsEmptyCart() ? true : false;
+        return $shop->IsEmptyCart();
     }
 
 }

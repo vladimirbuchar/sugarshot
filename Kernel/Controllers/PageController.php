@@ -6,7 +6,7 @@ use Model\Langs;
 
 use Types\ContentTypes;
 use Utils\Forms;
-abstract class PageController extends Controllers {
+abstract class PageController extends ViewController {
     
     public function PageController() {
         parent::Controllers();
@@ -150,11 +150,11 @@ abstract class PageController extends Controllers {
             $template =  $content->GetTemplateDetail(self::$UserGroupId, $this->WebId, $this->LangId, $out[0]["TemplateId"]);
             
             
-            if ($out[0]["ContentType"] == ContentTypes::$UserItem)
+            if ($out[0]["ContentType"] == ContentTypes::USERITEM)
             {
                 $html = $this->PrepareHtml($out);
             }
-            else if ($out[0]["ContentType"] == ContentTypes::$Form)
+            else if ($out[0]["ContentType"] == ContentTypes::FORM)
             {
                 
                 $form = new Forms();
@@ -165,7 +165,7 @@ abstract class PageController extends Controllers {
                 
                 
             }
-            else if ($out[0]["ContentType"] == ContentTypes::$Discusion)
+            else if ($out[0]["ContentType"] == ContentTypes::DISCUSION)
             {
                 $template = $content->GetTempateDetailByIdentificator("Discusion", self::$UserGroupId, $this->LangId, $this->WebId);
                 $discomponent = new \Components\Discusion();
@@ -196,7 +196,7 @@ abstract class PageController extends Controllers {
         $content = new \Objects\Content();
         $out = $content->RenderSendEmail ($id,$this->LangId,$this->WebId);
         $template = new Content();
-        $template->GetObjectById($out[0]["TemplateId"],true);
+        $template->GetObjectById($out[0]["TemplateId"]);
         return $this->LoadPageById($template->TemplateId, $this->PrepareHtml($out));
     }
     

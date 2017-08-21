@@ -700,8 +700,7 @@
     (699, 0, NULL, 'word696', 'Vybrat', 'Select', NULL),
     (700, 0, NULL, 'word697', 'Speciální pole formuáře', '', NULL),
     (701, 0, NULL, 'word698', 'Jméno objektu', 'Object name', NULL),
-    (702, 0, NULL, 'word699', 'Na frontendu nenačítat podobjekty', 'Disable Load subobjects (frontend)', NULL);
-    INSERT INTO `WordGroups` (`Id`, `Deleted`, `IsSystem`, `GroupName`, `WordCS`, `WordEN`, `WordRU`) VALUES
+    (702, 0, NULL, 'word699', 'Na frontendu nenačítat podobjekty', 'Disable Load subobjects (frontend)', NULL),
     (703, 0, NULL, 'word700', 'Opravdu si přejete odstranit zvolenou položku?', 'Do you really want to delete the selected item?', NULL),
     (704, 0, NULL, 'word701', 'Zobrazit', 'Show', NULL),
     (705, 0, NULL, 'word702', 'Cancel', 'Cancel', NULL),

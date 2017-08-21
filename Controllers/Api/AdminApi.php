@@ -2,16 +2,15 @@
 
 namespace Controller;
 
-use Objects\Webs;
 use Utils\StringUtils;
 
-class AdminApi extends AdminController {
+class AdminApi extends ApiController {
 
     public function __construct() {
         parent::__construct();
         $this->SetControllerPermition(array("system", "Administrators"));
-        $this->SetAjaxFunction("GetJavascriptWord", array("system", "Administrators"));
-        $this->SetAjaxFunction("GetLangListByWeb", array("system", "Administrators"));
+        $this->SetApiFunction("GetJavascriptWord", array("system", "Administrators"));
+        $this->SetApiFunction("GetLangListByWeb", array("system", "Administrators"));
     }
 
     public function GetJavascriptWord() {

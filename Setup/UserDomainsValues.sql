@@ -936,8 +936,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (2967, 0, NULL, 34, 174, 229, 'Heureka.cz | Bílé zboží | Malé spotřebiče | Žehličky'),
 (2968, 0, NULL, 34, 172, 230, '940'),
 (2969, 0, NULL, 34, 173, 230, 'Velké spotřebiče'),
-(2970, 0, NULL, 34, 172, 231, '963');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(2970, 0, NULL, 34, 172, 231, '963'),
 (2971, 0, NULL, 34, 173, 231, 'Digestoře'),
 (2972, 0, NULL, 34, 174, 231, 'Heureka.cz | Bílé zboží | Velké spotřebiče | Digestoře'),
 (2973, 0, NULL, 34, 172, 232, '1053'),
@@ -1763,8 +1762,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (3793, 0, NULL, 34, 173, 515, 'Zástěry'),
 (3794, 0, NULL, 34, 174, 515, 'Heureka.cz | Dům a zahrada | Bydlení a doplňky | Bytový textil | Zástěry'),
 (3795, 0, NULL, 34, 172, 516, '3950'),
-(3796, 0, NULL, 34, 173, 516, 'Závěsy');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(3796, 0, NULL, 34, 173, 516, 'Závěsy'),
 (3797, 0, NULL, 34, 174, 516, 'Heureka.cz | Dům a zahrada | Bydlení a doplňky | Bytový textil | Závěsy'),
 (3798, 0, NULL, 34, 172, 517, '2313'),
 (3799, 0, NULL, 34, 173, 517, 'Čistící prostředky v domácnosti'),
@@ -2521,8 +2519,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (4550, 0, NULL, 34, 173, 776, 'Kleště armovací'),
 (4551, 0, NULL, 34, 174, 776, 'Heureka.cz | Dům a zahrada | Dílna | Ruční nářadí | Kleště armovací'),
 (4552, 0, NULL, 34, 172, 777, '3373'),
-(4553, 0, NULL, 34, 173, 777, 'Kleště kombinované');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(4553, 0, NULL, 34, 173, 777, 'Kleště kombinované'),
 (4554, 0, NULL, 34, 174, 777, 'Heureka.cz | Dům a zahrada | Dílna | Ruční nářadí | Kleště kombinované'),
 (4555, 0, NULL, 34, 172, 778, '3385'),
 (4556, 0, NULL, 34, 173, 778, 'Kleště kulaté'),
@@ -3341,8 +3338,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (5369, 0, NULL, 34, 174, 1055, 'Heureka.cz | Elektronika | Mobily, GPS | GPS | GPS antény'),
 (5370, 0, NULL, 34, 172, 1056, '729'),
 (5371, 0, NULL, 34, 173, 1056, 'GPS mapy'),
-(5372, 0, NULL, 34, 174, 1056, 'Heureka.cz | Elektronika | Mobily, GPS | GPS | GPS mapy');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(5372, 0, NULL, 34, 174, 1056, 'Heureka.cz | Elektronika | Mobily, GPS | GPS | GPS mapy'),
 (5373, 0, NULL, 34, 172, 1057, '726'),
 (5374, 0, NULL, 34, 173, 1057, 'GPS navigace'),
 (5375, 0, NULL, 34, 174, 1057, 'Heureka.cz | Elektronika | Mobily, GPS | GPS | GPS navigace'),
@@ -4076,8 +4072,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (6103, 0, NULL, 34, 173, 1311, 'Gramofony'),
 (6104, 0, NULL, 34, 174, 1311, 'Heureka.cz | Elektronika | TV, video, audio | Audio | Hi-Fi komponenty | Gramofony'),
 (6105, 0, NULL, 34, 172, 1312, '2034'),
-(6106, 0, NULL, 34, 173, 1312, 'Mixážní pulty');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(6106, 0, NULL, 34, 173, 1312, 'Mixážní pulty'),
 (6107, 0, NULL, 34, 174, 1312, 'Heureka.cz | Elektronika | TV, video, audio | Audio | Hi-Fi komponenty | Mixážní pulty'),
 (6108, 0, NULL, 34, 172, 1313, '2115'),
 (6109, 0, NULL, 34, 173, 1313, 'Subwoofery'),
@@ -4889,8 +4884,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (6915, 0, NULL, 34, 172, 1593, '2669'),
 (6916, 0, NULL, 34, 173, 1593, 'Písky a substráty do terárií'),
 (6917, 0, NULL, 34, 174, 1593, 'Heureka.cz | Hobby | Chovatelství | Teraristika | Písky a substráty do terárií'),
-(6918, 0, NULL, 34, 172, 1594, '2680');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(6918, 0, NULL, 34, 172, 1594, '2680'),
 (6919, 0, NULL, 34, 173, 1594, 'Terária'),
 (6920, 0, NULL, 34, 174, 1594, 'Heureka.cz | Hobby | Chovatelství | Teraristika | Terária'),
 (6921, 0, NULL, 34, 172, 1595, '2670'),
@@ -5672,8 +5666,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (7697, 0, NULL, 34, 173, 1869, 'Přípravky do solárií'),
 (7698, 0, NULL, 34, 174, 1869, 'Heureka.cz | Kosmetika a zdraví | Kosmetika | Sluneční ochrana | Přípravky do solárií'),
 (7699, 0, NULL, 34, 172, 1870, '1809'),
-(7700, 0, NULL, 34, 173, 1870, 'Přípravky na opalování');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(7700, 0, NULL, 34, 173, 1870, 'Přípravky na opalování'),
 (7701, 0, NULL, 34, 174, 1870, 'Heureka.cz | Kosmetika a zdraví | Kosmetika | Sluneční ochrana | Přípravky na opalování'),
 (7702, 0, NULL, 34, 172, 1871, '1810'),
 (7703, 0, NULL, 34, 173, 1871, 'Přípravky po opalování'),
@@ -6452,8 +6445,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (8476, 0, NULL, 34, 173, 2138, 'Sady erotických pomůcek'),
 (8477, 0, NULL, 34, 174, 2138, 'Heureka.cz | Sexuální a erotické pomůcky | Sady erotických pomůcek'),
 (8478, 0, NULL, 34, 172, 2139, '2065'),
-(8479, 0, NULL, 34, 173, 2139, 'SM, BDSM, fetiš');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(8479, 0, NULL, 34, 173, 2139, 'SM, BDSM, fetiš'),
 (8480, 0, NULL, 34, 174, 2139, 'Heureka.cz | Sexuální a erotické pomůcky | SM, BDSM, fetiš'),
 (8481, 0, NULL, 34, 172, 2140, '2063'),
 (8482, 0, NULL, 34, 173, 2140, 'Umělé vagíny, orály, anály, masturbátory'),
@@ -7290,8 +7282,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (9313, 0, NULL, 34, 173, 2429, 'Volejbalové doplňky'),
 (9314, 0, NULL, 34, 174, 2429, 'Heureka.cz | Sport | Míčové sporty | Volejbal | Volejbalové doplňky'),
 (9315, 0, NULL, 34, 172, 2430, '5082'),
-(9316, 0, NULL, 34, 173, 2430, 'Volejbalové chrániče');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(9316, 0, NULL, 34, 173, 2430, 'Volejbalové chrániče'),
 (9317, 0, NULL, 34, 174, 2430, 'Heureka.cz | Sport | Míčové sporty | Volejbal | Volejbalové chrániče'),
 (9318, 0, NULL, 34, 172, 2431, '1101'),
 (9319, 0, NULL, 34, 173, 2431, 'Volejbalové míče'),
@@ -8122,8 +8113,8 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (10144, 0, NULL, 34, 174, 2720, 'Heureka.cz | Stavebniny | Štítové kování'),
 (10145, 0, NULL, 34, 172, 2721, '2804'),
 (10146, 0, NULL, 34, 173, 2721, 'Tepelné izolace'),
-(10147, 0, NULL, 34, 172, 2722, '3611');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(10147, 0, NULL, 34, 172, 2722, '3611'),
+
 (10148, 0, NULL, 34, 173, 2722, 'Izolační materiály'),
 (10149, 0, NULL, 34, 174, 2722, 'Heureka.cz | Stavebniny | Tepelné izolace | Izolační materiály'),
 (10150, 0, NULL, 34, 172, 2723, '3612'),
@@ -8918,8 +8909,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (10939, 0, NULL, 34, 172, 2994, '5107'),
 (10940, 0, NULL, 34, 173, 2994, 'Montážní sady k pračkám'),
 (10941, 0, NULL, 34, 174, 2994, 'Heureka.cz | Bílé zboží | Velké spotřebiče | Příslušenství k velkým spotřebičům | Montážní sady k pračkám'),
-(10942, 0, NULL, 34, 172, 2995, '1955');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(10942, 0, NULL, 34, 172, 2995, '1955'),
 (10943, 0, NULL, 34, 173, 2995, 'Příslušenství k digestořím'),
 (10944, 0, NULL, 34, 174, 2995, 'Heureka.cz | Bílé zboží | Velké spotřebiče | Příslušenství k velkým spotřebičům | Příslušenství k digestořím'),
 (10945, 0, NULL, 34, 172, 2996, '5108'),
@@ -9713,8 +9703,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (11733, 0, NULL, 34, 172, 3269, '3698'),
 (11734, 0, NULL, 34, 173, 3269, 'Ekologické praní'),
 (11735, 0, NULL, 34, 174, 3269, 'Heureka.cz | Dům a zahrada | Bydlení a doplňky | Čistící prostředky v domácnosti | Ekologická domácnost | Ekologické praní'),
-(11736, 0, NULL, 34, 172, 3270, '3684');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(11736, 0, NULL, 34, 172, 3270, '3684'),
 (11737, 0, NULL, 34, 173, 3270, 'Leštící prostředky'),
 (11738, 0, NULL, 34, 172, 3271, '3685'),
 (11739, 0, NULL, 34, 173, 3271, 'Leštidla na nábytek a přípravky proti prachu'),
@@ -10451,8 +10440,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (12470, 0, NULL, 34, 173, 3522, 'Kleště kombinované'),
 (12471, 0, NULL, 34, 174, 3522, 'Heureka.cz | Dům a zahrada | Dílna | Ruční nářadí | Kleště kombinované'),
 (12472, 0, NULL, 34, 172, 3523, '3385'),
-(12473, 0, NULL, 34, 173, 3523, 'Kleště kulaté');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(12473, 0, NULL, 34, 173, 3523, 'Kleště kulaté'),
 (12474, 0, NULL, 34, 174, 3523, 'Heureka.cz | Dům a zahrada | Dílna | Ruční nářadí | Kleště kulaté'),
 (12475, 0, NULL, 34, 172, 3524, '3375'),
 (12476, 0, NULL, 34, 173, 3524, 'Kleště lisovací'),
@@ -11246,8 +11234,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (13264, 0, NULL, 34, 174, 3792, 'Heureka.cz | Elektronika | Foto | Studiová fototechnika | Stojany a držáky k fotopozadí'),
 (13265, 0, NULL, 34, 172, 3793, '4238'),
 (13266, 0, NULL, 34, 173, 3793, 'Studiová světla'),
-(13267, 0, NULL, 34, 174, 3793, 'Heureka.cz | Elektronika | Foto | Studiová fototechnika | Studiová světla');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(13267, 0, NULL, 34, 174, 3793, 'Heureka.cz | Elektronika | Foto | Studiová fototechnika | Studiová světla'),
 (13268, 0, NULL, 34, 172, 3794, '4239'),
 (13269, 0, NULL, 34, 173, 3794, 'Studiové blesky'),
 (13270, 0, NULL, 34, 174, 3794, 'Heureka.cz | Elektronika | Foto | Studiová fototechnika | Studiové blesky'),
@@ -11973,8 +11960,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (13990, 0, NULL, 34, 172, 4046, '720'),
 (13991, 0, NULL, 34, 173, 4046, 'Autorádia'),
 (13992, 0, NULL, 34, 174, 4046, 'Heureka.cz | Elektronika | TV, video, audio | Audio | Auto Hi-Fi | Autorádia'),
-(13993, 0, NULL, 34, 172, 4047, '888');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(13993, 0, NULL, 34, 172, 4047, '888'),
 (13994, 0, NULL, 34, 173, 4047, 'CD/MD/DVD měniče'),
 (13995, 0, NULL, 34, 174, 4047, 'Heureka.cz | Elektronika | TV, video, audio | Audio | Auto Hi-Fi | CD/MD/DVD měniče'),
 (13996, 0, NULL, 34, 172, 4048, '4233'),
@@ -12773,8 +12759,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (14789, 0, NULL, 34, 173, 4323, 'Antiparazitika pro ptáky'),
 (14790, 0, NULL, 34, 174, 4323, 'Heureka.cz | Hobby | Chovatelství | Pro ptáky | Antiparazitika pro ptáky'),
 (14791, 0, NULL, 34, 172, 4324, '2656'),
-(14792, 0, NULL, 34, 173, 4324, 'Bidýlka');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(14792, 0, NULL, 34, 173, 4324, 'Bidýlka'),
 (14793, 0, NULL, 34, 174, 4324, 'Heureka.cz | Hobby | Chovatelství | Pro ptáky | Bidýlka'),
 (14794, 0, NULL, 34, 172, 4325, '2253'),
 (14795, 0, NULL, 34, 173, 4325, 'Hračky pro ptáky'),
@@ -13550,8 +13535,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (15565, 0, NULL, 34, 173, 4597, 'Pleťová kosmetika'),
 (15566, 0, NULL, 34, 172, 4598, '4199'),
 (15567, 0, NULL, 34, 173, 4598, 'Ochrana pleti v zimě'),
-(15568, 0, NULL, 34, 174, 4598, 'Heureka.cz | Kosmetika a zdraví | Kosmetika | Pleťová kosmetika | Ochrana pleti v zimě');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(15568, 0, NULL, 34, 174, 4598, 'Heureka.cz | Kosmetika a zdraví | Kosmetika | Pleťová kosmetika | Ochrana pleti v zimě'),
 (15569, 0, NULL, 34, 172, 4599, '4142'),
 (15570, 0, NULL, 34, 173, 4599, 'Pleťová séra a emulze'),
 (15571, 0, NULL, 34, 174, 4599, 'Heureka.cz | Kosmetika a zdraví | Kosmetika | Pleťová kosmetika | Pleťová séra a emulze'),
@@ -14314,8 +14298,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (16328, 0, NULL, 34, 174, 4861, 'Heureka.cz | Sexuální a erotické pomůcky | Dámské erotické prádlo | Dámské erotické podvazky a podvazkové pásy'),
 (16329, 0, NULL, 34, 172, 4862, '4388'),
 (16330, 0, NULL, 34, 173, 4862, 'Dámské erotické punčochy'),
-(16331, 0, NULL, 34, 174, 4862, 'Heureka.cz | Sexuální a erotické pomůcky | Dámské erotické prádlo | Dámské erotické punčochy');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(16331, 0, NULL, 34, 174, 4862, 'Heureka.cz | Sexuální a erotické pomůcky | Dámské erotické prádlo | Dámské erotické punčochy'),
 (16332, 0, NULL, 34, 172, 4863, '4386'),
 (16333, 0, NULL, 34, 173, 4863, 'Dámské erotické soupravy'),
 (16334, 0, NULL, 34, 174, 4863, 'Heureka.cz | Sexuální a erotické pomůcky | Dámské erotické prádlo | Dámské erotické soupravy'),
@@ -15131,8 +15114,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (17144, 0, NULL, 34, 173, 5144, 'Kopačky na rugby'),
 (17145, 0, NULL, 34, 174, 5144, 'Heureka.cz | Sport | Míčové sporty | Rugby | Kopačky na rugby'),
 (17146, 0, NULL, 34, 172, 5145, '3905'),
-(17147, 0, NULL, 34, 173, 5145, 'Míče na rugby');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(17147, 0, NULL, 34, 173, 5145, 'Míče na rugby'),
 (17148, 0, NULL, 34, 174, 5145, 'Heureka.cz | Sport | Míčové sporty | Rugby | Míče na rugby'),
 (17149, 0, NULL, 34, 172, 5146, '1072'),
 (17150, 0, NULL, 34, 173, 5146, 'Squash'),
@@ -15946,8 +15928,7 @@ INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemI
 (17958, 0, NULL, 34, 174, 5429, 'Heureka.cz | Stavebniny | Okna a parapety | Okna'),
 (17959, 0, NULL, 34, 172, 5430, '3101'),
 (17960, 0, NULL, 34, 173, 5430, 'Parapety'),
-(17961, 0, NULL, 34, 174, 5430, 'Heureka.cz | Stavebniny | Okna a parapety | Parapety');
-INSERT INTO `UserDomainsValues` (`Id`, `Deleted`, `IsSystem`, `DomainId`, `ItemId`, `ObjectId`, `Value`) VALUES
+(17961, 0, NULL, 34, 174, 5430, 'Heureka.cz | Stavebniny | Okna a parapety | Parapety'),
 (17962, 0, NULL, 34, 172, 5431, '3581'),
 (17963, 0, NULL, 34, 173, 5431, 'Rolety'),
 (17964, 0, NULL, 34, 174, 5431, 'Heureka.cz | Stavebniny | Okna a parapety | Rolety'),

@@ -21,9 +21,8 @@ class BadLogins extends ObjectManager{
          * @var \Model\BadLogins 
          */
         $model =  \Model\BadLogins::GetInstance();
-        $res = $model->GetCount("countBadLogins","TIMEDIFF(NOW(),DateEvent) <= '00:15:00'");
-        if (empty($res)) return 0;
-        return $res[0]["countBadLogins"];
+        return $model->GetCount("countBadLogins","TIMEDIFF(NOW(),DateEvent) <= '00:15:00'");
+        
     }
     
     public function RemoveAllBadLogins()

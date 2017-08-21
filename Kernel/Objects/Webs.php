@@ -15,7 +15,7 @@ class Webs extends ObjectManager{
         if (empty(self::$_webInfo))
         {
             $web = \Model\Webs::GetInstance();
-            $web->GetObjectById($webId,true);
+            $web->GetObjectById($webId);
             self::$_webInfo["GenerateAjaxLink"] = $web->GenerateAjaxLink;
             self::$_webInfo["DefaultFramework"] = $web->DefaultFramework;
             self::$_webInfo["CookiesAccept"] = $web->CookiesAccept;    

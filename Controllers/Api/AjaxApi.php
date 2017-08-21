@@ -4,26 +4,26 @@ namespace Controller;
 
 use Model\DiscusionItems;
 
-class AjaxApi extends Controllers {
+class AjaxApi extends ApiController {
 
     public function __construct() {
         parent::__construct();
         $this->SetControllerPermition(array("*"));
-        $this->SetAjaxFunction("GetLastUrl", array("*"));
-        $this->SetAjaxFunction("GetUserGroupMain", array("system", "Administrators"));
-        $this->SetAjaxFunction("Filter", array("*"));
-        $this->SetAjaxFunction("UserLogout", array("*"));
-        $this->SetAjaxFunction("SaveSurveyAnswer", array("*"));
-        $this->SetAjaxFunction("GetUserGroupMinority", array("*"));
-        $this->SetAjaxFunction("DeleteUserItem", array("system", "Administrators", "RegisteredUser"));
-        $this->SetAjaxFunction("SaveUserProfile", array("system", "Administrators", "RegisteredUser"));
-        $this->SetAjaxFunction("Search", array("*"));
-        $this->SetAjaxFunction("UserLogin", array("*"));
-        $this->SetAjaxFunction("UserRegister", array("*"));
-        $this->SetAjaxFunction("AddDiscusionItem", array("*"));
-        $this->SetAjaxFunction("HistoryItemDetail", array("*"));
-        $this->SetAjaxFunction("DiscusionItemDetail", array("*"));
-        $this->SetAjaxFunction("DeleteDiscusionItem", array("*"));
+        $this->SetApiFunction("GetLastUrl", array("*"));
+        $this->SetApiFunction("GetUserGroupMain", array("system", "Administrators"));
+        $this->SetApiFunction("Filter", array("*"));
+        $this->SetApiFunction("UserLogout", array("*"));
+        $this->SetApiFunction("SaveSurveyAnswer", array("*"));
+        $this->SetApiFunction("GetUserGroupMinority", array("*"));
+        $this->SetApiFunction("DeleteUserItem", array("system", "Administrators", "RegisteredUser"));
+        $this->SetApiFunction("SaveUserProfile", array("system", "Administrators", "RegisteredUser"));
+        $this->SetApiFunction("Search", array("*"));
+        $this->SetApiFunction("UserLogin", array("*"));
+        $this->SetApiFunction("UserRegister", array("*"));
+        $this->SetApiFunction("AddDiscusionItem", array("*"));
+        $this->SetApiFunction("HistoryItemDetail", array("*"));
+        $this->SetApiFunction("DiscusionItemDetail", array("*"));
+        $this->SetApiFunction("DeleteDiscusionItem", array("*"));
     }
 
     public function GetLastUrl() {
@@ -103,7 +103,7 @@ class AjaxApi extends Controllers {
     public function UserLogin() {
         $ajax = $this->PrepareAjaxParametrs();
         $web = \Model\Webs::GetInstance();
-        $web->GetObjectById($this->WebId, true);
+        $web->GetObjectById($this->WebId);
         $outData = array();
         $outData["Error"] = "";
         $outData["AfterLoginAction"] = "";

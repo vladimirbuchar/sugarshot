@@ -1,12 +1,10 @@
 <?php
 
 namespace Model;
- use Types\RuleType;
+
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class UserDomainsGroups  extends DatabaseTable{
+class UserDomainsGroups  extends DatabaseTable implements \Inteface\iDataTable{
     public $DomainId;
     public $GroupName;
     
@@ -21,23 +19,8 @@ class UserDomainsGroups  extends DatabaseTable{
     
         
     public function OnCreateTable() {
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue ="";
-        $colDomainId->IsNull = false;
-        $colDomainId->Length = 9;
-        $colDomainId->Name ="DomainId";
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colShowName = new DataTableColumn();
-        $colShowName->DefaultValue ="";
-        $colShowName->IsNull = false;
-        $colShowName->Length = 50;
-        $colShowName->Name ="GroupName";
-        $colShowName->Type = "varchar";
-        $colShowName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colShowName);
+        $this->AddColumn(new DataTableColumn("DomainId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("GroupName", \Types\DataColumnsTypes::VARCHAR, "", FALSE, 50));
         
         
     }
@@ -45,7 +28,7 @@ class UserDomainsGroups  extends DatabaseTable{
     
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

@@ -2,10 +2,8 @@
 namespace Model;
 use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class Langs  extends DatabaseTable{
+class Langs  extends DatabaseTable implements \Inteface\iDataTable{
     public $LangName;
     public $RootUrl;
     public $Title;
@@ -26,64 +24,14 @@ class Langs  extends DatabaseTable{
         $this->SetDefaultSelectColumns();
     }
     
-    
-    
-    
     public function OnCreateTable() {
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue ="";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 50;
-        $colLangName->Name ="LangName";
-        $colLangName->Type = "varchar";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-        
-        $colRootUrl = new DataTableColumn();
-        $colRootUrl->DefaultValue ="";
-        $colRootUrl->IsNull = false;
-        $colRootUrl->Length = 50;
-        $colRootUrl->Name ="RootUrl";
-        $colRootUrl->Type = "varchar";
-        $colRootUrl->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colRootUrl);
-        
-        $colRootUrl = new DataTableColumn();
-        $colRootUrl->DefaultValue ="";
-        $colRootUrl->Length = 255;
-        $colRootUrl->Name ="Title";
-        $colRootUrl->Type = "text";
-        $colRootUrl->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colRootUrl);
-        
-        $colRootUrl = new DataTableColumn();
-        $colRootUrl->DefaultValue ="";
-        $colRootUrl->Name ="Keywords";
-        $colRootUrl->Type = "text";
-        $colRootUrl->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colRootUrl);
-        $colRootUrl = new DataTableColumn();
-        $colRootUrl->DefaultValue ="";
-        $colRootUrl->Name ="Description";
-        $colRootUrl->Type = "text";
-        $colRootUrl->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colRootUrl);
-        $colRootUrl = new DataTableColumn();
-        $colRootUrl->DefaultValue ="";
-        $colRootUrl->Name ="CategoryPage";
-        $colRootUrl->Type = "text";
-        $colRootUrl->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colRootUrl);
-        
-        
-        
-        $colRootUrl = new DataTableColumn();
-        $colRootUrl->DefaultValue ="";
-        $colRootUrl->Length = 255;
-        $colRootUrl->Name ="LangIdentificator";
-        $colRootUrl->Type = "varchar";
-        $colRootUrl->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colRootUrl);
+        $this->AddColumn(new DataTableColumn("LangName", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("RootUrl", \Types\DataColumnsTypes::VARCHAR, "", false,50));
+        $this->AddColumn(new DataTableColumn("Title", \Types\DataColumnsTypes::TEXT));
+        $this->AddColumn(new DataTableColumn("Keywords", \Types\DataColumnsTypes::TEXT));
+        $this->AddColumn(new DataTableColumn("Description", \Types\DataColumnsTypes::TEXT));
+        $this->AddColumn(new DataTableColumn("CategoryPage", \Types\DataColumnsTypes::TEXT));
+        $this->AddColumn(new DataTableColumn("LangIdentificator", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
     }
     
     
@@ -109,7 +57,7 @@ class Langs  extends DatabaseTable{
     
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
     
     public function TableMigrate()

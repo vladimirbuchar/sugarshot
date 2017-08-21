@@ -4,9 +4,8 @@ namespace Model;
 
 use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class AdminLangs extends DatabaseTable {
+class AdminLangs extends DatabaseTable implements \Inteface\iDataTable {
 
     public $LangName;
     public $LangIdentificator;
@@ -19,27 +18,12 @@ class AdminLangs extends DatabaseTable {
     }
 
     public function OnCreateTable() {
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->IsNull = false;
-        $colLangName->Length = 50;
-        $colLangName->Name = "LangName";
-        $colLangName->Type = "varchar";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue = "";
-        $colLangIdentificator->IsNull = false;
-        $colLangIdentificator->Length = 50;
-        $colLangIdentificator->Name = "LangIdentificator";
-        $colLangIdentificator->Type = "varchar";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
+        $this->AddColumn(new DataTableColumn("LangName", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
+        $this->AddColumn(new DataTableColumn("LangIdentificator", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function TableMigrate() {
@@ -52,7 +36,7 @@ class AdminLangs extends DatabaseTable {
         $this->SetValidateRule("LangIdentificator", RuleType::$Unique, $this->GetWord("word84"));
         $this->SetValidateRule("LangIdentificator", RuleType::$NoUpdate);
         $this->SetValidateRule("LangIdentificator", RuleType::$ToUpper);
-        $this->SetCallModelFunction("WordGroups", "AddColumnLang", "", \Types\DatabaseActions::$Insert);
+        $this->SetCallModelFunction("WordGroups", "AddColumnLang", "", \Types\DatabaseActions::INSERT);
 
         $this->SetParametrsColumn("LangIdentificator");
     }

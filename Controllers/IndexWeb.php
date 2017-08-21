@@ -12,7 +12,7 @@ class IndexWeb extends PageController {
     public function __construct() {
         parent::__construct();
         $this->SetControllerPermition(array("*"));
-        $this->SetViewPermition("IndexPage", array("*"));
+        $this->SetViewSettings("IndexPage", array("*"));
     }
 
     public function IndexPage() {

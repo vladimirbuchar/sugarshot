@@ -44,7 +44,7 @@ try {
     $iframe = (!empty($_GET["iframe"])) ? true : false;
     $robots = (!empty($_GET["robots"])) ? true : false;
     $sitemap = (!empty($_GET["sitemap"])) ? true : false;
-    $adminer = (!empty($_GET["adminer"])&& $_GET["security"] == SECURITY_STRING) ? true : false;
+    $adminer = (!empty($_GET["adminer"])&& !empty($_GET["security"]) && $_GET["security"] == SECURITY_STRING) ? true : false;
     if ($updatemodel) {
 
         $options = array(

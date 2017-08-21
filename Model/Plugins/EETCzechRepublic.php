@@ -1,10 +1,9 @@
 <?php
 namespace Model;
-use Types\RuleType;
-use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class EETCzechRepublic  extends DatabaseTable{
+use Types\DataTableColumn;
+
+class EETCzechRepublic  extends DatabaseTable implements \Inteface\iDataTable{
     public $PluginName;
     
     
@@ -17,14 +16,7 @@ class EETCzechRepublic  extends DatabaseTable{
     
     
     public function OnCreateTable() {
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue =0;
-        $colLangName->IsNull = false;
-        $colLangName->Length = 9;
-        $colLangName->Name ="ObjectId";
-        $colLangName->Type = "INTEGER";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
+        $this->AddColumn(new DataTableColumn("ObjectId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
     }
     
 
@@ -42,7 +34,8 @@ class EETCzechRepublic  extends DatabaseTable{
     {
         
     }
-       public function TableMigrate()
+    
+    public function TableMigrate()
     {
         
     }
@@ -50,8 +43,4 @@ class EETCzechRepublic  extends DatabaseTable{
     {
         
     }
-
-    
-    
-
 }

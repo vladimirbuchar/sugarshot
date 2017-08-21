@@ -2,11 +2,9 @@
 
 namespace Model;
 
-use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class ContentAlternative extends DatabaseTable {
+class ContentAlternative extends DatabaseTable  implements \Inteface\iDataTable{
 
     public $ContentId;
     public $AlternativeContentId;
@@ -22,33 +20,14 @@ class ContentAlternative extends DatabaseTable {
     }
 
     public function OnCreateTable() {
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "ContentId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "AlternativeContentId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 9;
-        $colContentType->Name = "UserGroupId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
+        $this->AddColumn(new DataTableColumn("ContentId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("AlternativeContentId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("UserGroupId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function SetValidate($mode = false) {

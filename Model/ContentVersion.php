@@ -4,9 +4,8 @@ namespace Model;
 
 use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class ContentVersion extends DatabaseTable {
+class ContentVersion extends DatabaseTable  implements \Inteface\iDataTable{
 
     public $ContentId;
     public $Name;
@@ -35,131 +34,25 @@ class ContentVersion extends DatabaseTable {
     }
 
     public function OnCreateTable() {
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->IsNull = false;
-        $colContentType->Length = 9;
-        $colContentType->Name = "ContentId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-
-        $colContentType->Length = 255;
-        $colContentType->Name = "Name";
-        $colContentType->Type = "varchar";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->Length = 1;
-        $colContentType->Name = "IsActive";
-        $colContentType->Type = "BOOLEAN";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = true;
-        $colContentType->IsNull = false;
-        $colContentType->Length = 1;
-        $colContentType->Name = "IsLast";
-        $colContentType->Type = "BOOLEAN";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->IsNull = false;
-        $colContentType->Length = 9;
-        $colContentType->Name = "Author";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        //PublishUser
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->IsNull = false;
-        $colContentType->Length = 9;
-        $colContentType->Name = "PublishUser";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Length = 255;
-        $colContentType->Name = "SeoUrl";
-        $colContentType->Type = "varchar";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Length = 9;
-        $colContentType->Name = "Template";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Length = 1;
-        $colContentType->Name = "AvailableOverSeoUrl";
-        $colContentType->Type = "BOOLEAN";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Name = "Data";
-        $colContentType->Type = "LONGTEXT";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Name = "Header";
-        $colContentType->Type = "TEXT";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Name = "ActiveFrom";
-        $colContentType->Type = "DATETIME";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Name = "ActiveTo";
-        $colContentType->Type = "DATETIME";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Name = "Date";
-        $colContentType->Type = "DATETIME";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = "";
-        $colContentType->Name = "ContentSettings";
-        $colContentType->Type = "TEXT";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
+        $this->AddColumn(new DataTableColumn("ContentId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("Name", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("IsActive", \Types\DataColumnsTypes::BOOLEAN, 0, true, 1));
+        $this->AddColumn(new DataTableColumn("IsLast", \Types\DataColumnsTypes::BOOLEAN, true, false, 1));
+        $this->AddColumn(new DataTableColumn("Author", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("PublishUser", \Types\DataColumnsTypes::INTEGER, 0, false, 0));
+        $this->AddColumn(new DataTableColumn("SeoUrl", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
+        $this->AddColumn(new DataTableColumn("Template", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("AvailableOverSeoUrl", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
+        $this->AddColumn(new DataTableColumn("Data", \Types\DataColumnsTypes::LONGTEXT, "", true));
+        $this->AddColumn(new DataTableColumn("Header", \Types\DataColumnsTypes::TEXT, "", true));
+        $this->AddColumn(new DataTableColumn("ActiveFrom", \Types\DataColumnsTypes::DATETIME, "", true));
+        $this->AddColumn(new DataTableColumn("ActiveTo", \Types\DataColumnsTypes::DATETIME, "", true));
+        $this->AddColumn(new DataTableColumn("Date", \Types\DataColumnsTypes::DATETIME, "", true));
+        $this->AddColumn(new DataTableColumn("ContentSettings", \Types\DataColumnsTypes::TEXT, "", true));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function TableMigrate() {

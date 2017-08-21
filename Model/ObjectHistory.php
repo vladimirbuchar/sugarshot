@@ -1,12 +1,10 @@
 <?php
 
 namespace Model;
-use Types\RuleType;
+
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class ObjectHistory  extends DatabaseTable{
+class ObjectHistory  extends DatabaseTable implements \Inteface\iDataTable{
     public $ObjectHistoryName;
     public $ObjectId;
     public $Action;
@@ -27,91 +25,20 @@ class ObjectHistory  extends DatabaseTable{
         
     }
     public function OnCreateTable() {
-        $colObjectName = new DataTableColumn();
-        $colObjectName->DefaultValue ="";
-        $colObjectName->IsNull = false;
-        $colObjectName->Length = 100;
-        $colObjectName->Name ="ObjectHistoryName";
-        $colObjectName->Type = "varchar";
-        $colObjectName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colObjectName);
-        
-        $colObjectId = new DataTableColumn();
-        $colObjectId->DefaultValue ="";
-        $colObjectId->IsNull = false;
-        $colObjectId->Length = 9;
-        $colObjectId->Name ="ObjectId";
-        $colObjectId->Type = "INTEGER";
-        $colObjectId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colObjectId);
-        
-        $colAction = new DataTableColumn();
-        $colAction->DefaultValue ="";
-        $colAction->IsNull = false;
-        $colAction->Length = 100;
-        $colAction->Name ="Action";
-        $colAction->Type = "varchar";
-        $colAction->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colAction);
-        
-        $colUserId = new DataTableColumn();
-        $colUserId->IsNull = true;
-        $colUserId->Length = 9;
-        $colUserId->Name ="UserId";
-        $colUserId->Type = "INTEGER";
-        $colUserId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colUserId);
-        
-        
-                $colUserId = new DataTableColumn();
-        $colUserId->IsNull = true;
-        $colUserId->Length = 50;
-        $colUserId->Name ="UserName";
-        $colUserId->Type = "varchar";
-        $colUserId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colUserId);
-        
-        $colIP = new DataTableColumn();
-        $colIP->DefaultValue ="";
-        $colIP->IsNull = false;
-        $colIP->Length = 100;
-        $colIP->Name ="IP";
-        $colIP->Type = "varchar";
-        $colIP->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colIP);
-        
-        $colOldData = new DataTableColumn();
-        $colOldData->DefaultValue ="";
-        $colOldData->IsNull = true;
-        $colOldData->Length = 100;
-        $colOldData->Name ="OldData";
-        $colOldData->Type = "TEXT";
-        $colOldData->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colOldData);
-        
-        $colCreateDate = new DataTableColumn();
-        $colCreateDate->DefaultValue ="";
-        $colCreateDate->IsNull = false;
-        $colCreateDate->Length = 100;
-        $colCreateDate->Name ="CreateDate";
-        $colCreateDate->Type = "DATETIME";
-        $colCreateDate->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colCreateDate);
-        
-        $colActiveItem = new DataTableColumn();
-        $colActiveItem->DefaultValue =TRUE;
-        $colActiveItem->IsNull = true;
-        $colActiveItem->Name ="ActiveItem";
-        $colActiveItem->Type = "BOOLEAN";
-        $colActiveItem->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colActiveItem);
-        
-     
+        $this->AddColumn(new DataTableColumn("ObjectHistoryName", \Types\DataColumnsTypes::VARCHAR, "", false, 100));
+        $this->AddColumn(new DataTableColumn("ObjectId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("Action", \Types\DataColumnsTypes::VARCHAR, "", false, 100));
+        $this->AddColumn(new DataTableColumn("UserId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("UserName", \Types\DataColumnsTypes::VARCHAR, "", true, 50));
+        $this->AddColumn(new DataTableColumn("IP", \Types\DataColumnsTypes::VARCHAR, "", false, 100));
+        $this->AddColumn(new DataTableColumn("OldData", \Types\DataColumnsTypes::TEXT, "", true, 100));
+        $this->AddColumn(new DataTableColumn("CreateDate", \Types\DataColumnsTypes::DATETIME, "", false, 100));
+        $this->AddColumn(new DataTableColumn("ActiveItem", \Types\DataColumnsTypes::BOOLEAN, true, true, 1));
     }
     
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function SetValidate($mode = false) {

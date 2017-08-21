@@ -1,11 +1,9 @@
 <?php
 namespace Model;
- use Types\RuleType;
+
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class Setup  extends DatabaseTable{
+class Setup  extends DatabaseTable implements \Inteface\iDataTable{
     public $VersionId;
     public $ShowVersionName;
     
@@ -19,34 +17,14 @@ class Setup  extends DatabaseTable{
         $this->SetDefaultSelectColumns();
     }
     
-
-    
-    
-    
     public function OnCreateTable() {
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue ="";
-        $colLangName->IsNull = false;
-        $colLangName->Name ="VersionId";
-        $colLangName->Type = "INTEGER";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-        
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue ="";
-        $colLangIdentificator->IsNull = false;
-        $colLangIdentificator->Length = 50;
-        $colLangIdentificator->Name ="ShowVersionName";
-        $colLangIdentificator->Type = "varchar";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
-        
-
+        $this->AddColumn(new DataTableColumn("VersionId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("ShowVersionName", \Types\DataColumnsTypes::VARCHAR, "", FALSE, 50));
     }
     
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function SetValidate($mode = false) {

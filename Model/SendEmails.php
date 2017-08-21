@@ -1,12 +1,10 @@
 <?php
 
 namespace Model;
-use Types\RuleType;
-use Types\DataTableColumn;
-use Types\AlterTableMode;
- 
 
-class SendEmails  extends DatabaseTable{
+use Types\DataTableColumn;
+
+class SendEmails  extends DatabaseTable implements \Inteface\iDataTable{
     public $MailId;
     
     public function __construct()
@@ -18,19 +16,13 @@ class SendEmails  extends DatabaseTable{
     }
     
     public function OnCreateTable() {
-        $colDateEvent = new DataTableColumn();
-        $colDateEvent->DefaultValue ="";
-        $colDateEvent->IsNull = true;
-        $colDateEvent->Name ="MailId";
-        $colDateEvent->Type = "INTEGER";
-        $colDateEvent->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDateEvent);
+        $this->AddColumn(new DataTableColumn("MailId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
         
     }
     
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

@@ -1,12 +1,10 @@
 <?php
 
 namespace Model;
- use Types\RuleType;
+
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class UserDomainsItemsInGroups  extends DatabaseTable{
+class UserDomainsItemsInGroups  extends DatabaseTable implements \Inteface\iDataTable{
     public $ItemId;
     public $GroupId;
     
@@ -21,27 +19,12 @@ class UserDomainsItemsInGroups  extends DatabaseTable{
     }
         
     public function OnCreateTable() {
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue ="";
-        $colDomainId->IsNull = false;
-        $colDomainId->Length = 9;
-        $colDomainId->Name ="ItemId";
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
-        
-        $colDomainId = new DataTableColumn();
-        $colDomainId->DefaultValue ="";
-        $colDomainId->IsNull = false;
-        $colDomainId->Length = 9;
-        $colDomainId->Name ="GroupId";
-        $colDomainId->Type = "INTEGER";
-        $colDomainId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colDomainId);
+        $this->AddColumn(new DataTableColumn("ItemId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("GroupId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
         
     }
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

@@ -1,15 +1,11 @@
 <?php
 namespace Model;
- use Types\RuleType;
+
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class UserGroupsWeb  extends DatabaseTable{
+class UserGroupsWeb  extends DatabaseTable implements \Inteface\iDataTable{
     public $UserGroupId;
     public $UserWebId;
-    //private static $_instance = null;
-    
     public function __construct()
     {
         parent::__construct();
@@ -20,29 +16,12 @@ class UserGroupsWeb  extends DatabaseTable{
     
     public function OnCreateTable() {
         
-        $colUserGroupId = new DataTableColumn();
-        $colUserGroupId->DefaultValue =0;
-        $colUserGroupId->IsNull = true;
-        $colUserGroupId->Length = 9;
-        $colUserGroupId->Name ="UserGroupId";
-        $colUserGroupId->Type = "INTEGER";
-        $colUserGroupId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colUserGroupId);
-        
-        $colWebId = new DataTableColumn();
-        $colWebId->DefaultValue =0;
-        $colWebId->IsNull = true;
-        $colWebId->Length = 9;
-        $colWebId->Name ="UserWebId";
-        $colWebId->Type = "INTEGER";
-        $colWebId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colWebId);
-        
-         
+        $this->AddColumn(new DataTableColumn("UserGroupId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("UserWebId", \Types\DataColumnsTypes::INTEGER, 0, true, 9)); 
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

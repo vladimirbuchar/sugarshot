@@ -19,7 +19,7 @@ class Langs extends ObjectManager{
         {
             $webid= $res[0]["WebId"];
             $web =  Webs::GetInstance();
-            $web->GetObjectById($webid,true);
+            $web->GetObjectById($webid);
             return $web->BlockAdmin;
         }
         return false;

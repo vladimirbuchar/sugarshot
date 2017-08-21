@@ -16,7 +16,7 @@ class ObjectHistory extends ObjectManager{
         if (!empty($res))
         {
             $res = $res[0];
-            if ($res->Action == DatabaseActions::$Update)
+            if ($res->Action == DatabaseActions::UPDATE)
             {
                 $objName =  $res->ObjectHistoryName;
                 $xml = $res->OldData;

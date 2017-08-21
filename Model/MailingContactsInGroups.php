@@ -1,11 +1,9 @@
 <?php
 namespace Model;
-use Types\RuleType;
+
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-
-class MailingContactsInGroups  extends DatabaseTable{
+class MailingContactsInGroups  extends DatabaseTable implements \Inteface\iDataTable{
     public $ContactId;
     public $GroupId;
     
@@ -20,24 +18,8 @@ class MailingContactsInGroups  extends DatabaseTable{
     }
     
     public function OnCreateTable() {
-        
-        $colUserGroupId = new DataTableColumn();
-        $colUserGroupId->DefaultValue =0;
-        $colUserGroupId->IsNull = true;
-        $colUserGroupId->Length = 9;
-        $colUserGroupId->Name ="ContactId";
-        $colUserGroupId->Type = "INT";
-        $colUserGroupId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colUserGroupId);
-        
-        $colUserGroupId = new DataTableColumn();
-        $colUserGroupId->DefaultValue =0;
-        $colUserGroupId->IsNull = true;
-        $colUserGroupId->Length = 9;
-        $colUserGroupId->Name ="GroupId";
-        $colUserGroupId->Type = "INT";
-        $colUserGroupId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colUserGroupId);
+        $this->AddColumn(new DataTableColumn("ContactId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("GroupId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
     }
     
     public function SetValidate($mode = false) {
@@ -45,7 +27,7 @@ class MailingContactsInGroups  extends DatabaseTable{
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
     public function TableMigrate()
     {

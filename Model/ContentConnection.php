@@ -2,11 +2,9 @@
 
 namespace Model;
 
-use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class ContentConnection extends DatabaseTable {
+class ContentConnection extends DatabaseTable implements \Inteface\iDataTable {
 
     public $ObjectId;
     public $ObjectIdConnected;
@@ -23,47 +21,15 @@ class ContentConnection extends DatabaseTable {
         $this->SetDefaultSelectColumns();
     }
 
-    /** @deprecated */
     public function OnCreateTable() {
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->IsNull = false;
-        $colContentType->Length = 9;
-        $colContentType->Name = "ObjectId";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->IsNull = false;
-        $colContentType->Length = 9;
-        $colContentType->Name = "ObjectIdConnected";
-        $colContentType->Type = "INTEGER";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->IsNull = false;
-        $colContentType->Length = 100;
-        $colContentType->Name = "ConnectedType";
-        $colContentType->Type = "VARCHAR";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
-
-        $colContentType = new DataTableColumn();
-        $colContentType->DefaultValue = 0;
-        $colContentType->IsNull = true;
-        $colContentType->Name = "SettingConnection";
-        $colContentType->Type = "TEXT";
-        $colContentType->DefaultValue = "";
-        $colContentType->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colContentType);
+        $this->AddColumn(new DataTableColumn("ObjectId", \Types\DataColumnsTypes::INTEGER, 0, FALSE, 9));
+        $this->AddColumn(new DataTableColumn("ObjectIdConnected", \Types\DataColumnsTypes::INTEGER, 0, FALSE, 9));
+        $this->AddColumn(new DataTableColumn("ConnectedType", \Types\DataColumnsTypes::VARCHAR, "", false, 100));
+        $this->AddColumn(new DataTableColumn("SettingConnection", \Types\DataColumnsTypes::TEXT, "", true));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     public function SetValidate($mode = false) {

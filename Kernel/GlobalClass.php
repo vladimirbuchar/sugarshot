@@ -2,130 +2,146 @@
 
 namespace Kernel;
 
-
 use Model\WordGroups;
 use Utils\Utils;
-use Utils\Forms;
 
 class GlobalClass {
 
-    /** @var bool*/
+    /** @var bool */
     protected static $IsApi = false;
-    /** @var integer*/
+
+    /** @var integer */
     protected static $UserGroupId = 0;
-    /** @var integer*/
+
+    /** @var integer */
     protected static $UserId = 0;
-    /** @var array()*/
+
+    /** @var array() */
     protected static $OtherUserGroups = array();
-    /** @var array()*/
+
+    /** @var array() */
     private static $_templateData = array();
-    /** @var \Objects\Langs*/
+
+    /** @var \Objects\Langs */
     private static $_lang = null;
-    /** @var \Objects\Webs*/
+
+    /** @var \Objects\Webs */
     private static $_web = null;
-    /** @var array()*/
+
+    /** @var array() */
     private static $_langInfo = array();
-    /** @var bool*/
+
+    /** @var bool */
     private static $_pageRedirects = true;
-    /** @var bool*/
+
+    /** @var bool */
     private static $_ipRestriction = true;
-    /** @var string*/
+
+    /** @var string */
     private static $_javascriptFramework = "";
-    /** @var bool*/
+
+    /** @var bool */
     protected static $IsCookiesAccept = true;
-    /** @var bool*/
+
+    /** @var bool */
     private static $_prepareWords = true;
-    /** @var string*/
+
+    /** @var string */
     protected static $SelectLang = "";
+
     /** @var \Objects\Users  */
     protected static $User;
+
     /** @var array */
     private static $_dataRequest = array();
-    /** @var bool*/
+
+    /** @var bool */
     private static $_callOtherGroups = true;
-    /** @var int*/
+
+    /** @var int */
     public $WebId = 0;
-    /** @var int*/
+
+    /** @var int */
     public $LangId = 0;
-    /** @var bool*/
+
+    /** @var bool */
     protected $IsLogin = false;
-    /** @var bool*/
+
+    /** @var bool */
     protected $IsPostBack = false;
-    /** @var bool*/
+
+    /** @var bool */
     protected $IsGet = false;
-    /** @var bool*/
+
+    /** @var bool */
     protected $IsFrontend = false;
+
     /** @var string */
     protected $ArticleUrl;
-    /** @var bool*/
+
+    /** @var bool */
     protected $test = false;
-    /**  @var  \Utils\SessionManager*/
+
+    /**  @var  \Utils\SessionManager */
     protected static $SessionManager = null;
-    /** @var array*/
+
+    /** @var array */
     private static $_wordList = array();
 
     public function __construct() {
-        
-         if (!empty($_GET["ajax"])) {
+
+        if (!empty($_GET["ajax"])) {
             if ($_GET["ajax"] == "ajax")
                 self::$IsApi = TRUE;
         }
-        
-        
+
+
         if (!self::$IsApi) {
             $this->IsFrontend = empty($_GET) || !empty($_GET["seourl"]) || !empty($_GET["renderHtml"]) || !empty($_GET["lang"]) || !empty($_GET["caching"]) || !empty($_GET["xml"]) ? true : false;
         } else {
             $this->IsFrontend = empty($_GET["isFrontEnd"]) ? true : $_GET["isFrontEnd"] == "false" ? false : true;
         }
-        
-        if (self::$SessionManager == null)
-        {
-            if ($this->IsFrontend)
-            {
+
+        if (self::$SessionManager == null) {
+            if ($this->IsFrontend) {
                 self::$SessionManager = new \Utils\SessionManager(\Utils\SessionManager::$WebMode);
-            }
-            else 
-            {
+            } else {
                 self::$SessionManager = new \Utils\SessionManager(\Utils\SessionManager::$AdminMode);
             }
         }
-        
-        
+
+
         if (self::$_lang == null)
-            self::$_lang = new \Objects\Langs ();
-        
-        if (self::$_web == null)
-        {
+            self::$_lang = new \Objects\Langs();
+
+        if (self::$_web == null) {
             self::$_web = new \Objects\Webs();
-        }           
-        if (self::$User == null)
-        {
-            self::$User =  new \Objects\Users();
         }
-        if (self::$UserGroupId == 0)
-        {
+        if (self::$User == null) {
+            self::$User = new \Objects\Users();
+        }
+        if (self::$UserGroupId == 0) {
             self::$UserGroupId = self::$User->GetUserGroupId();
         }
-        
+
         $this->IsLogin = self::$User->IsLoginUser();
-        if (self::$UserId == 0)
-        {
+        if (self::$UserId == 0) {
             self::$UserId = self::$User->GetUserId();
         }
-        
+
         if ($this->IsLogin) {
             if (empty(self::$OtherUserGroups) && self::$_callOtherGroups) {
                 self::$_callOtherGroups = false;
                 self::$OtherUserGroups = self::$User->GetOtherUserGroups();
             }
         }
-      
+
         $this->IsPostBack = strtoupper($_SERVER['REQUEST_METHOD']) == 'POST';
-        $this->IsGet =    strtoupper($_SERVER['REQUEST_METHOD']) == 'GET';
-        
+        $this->IsGet = strtoupper($_SERVER['REQUEST_METHOD']) == 'GET';
+
 
         if (!self::$IsApi) {
-            
+
             if (!$this->IsFrontend) {
                 $this->GetLang();
                 if (!empty($_GET["webid"]))
@@ -134,31 +150,29 @@ class GlobalClass {
                     $this->LangId = $_GET["langid"];
             }
             else {
-                
+
                 $web = SERVER_NAME_LANG;
-                
+
                 if (!empty($_GET["seourl"]))
                     $this->ArticleUrl = SERVER_NAME_LANG . $_GET["seourl"] . "/";
                 else
                     $this->ArticleUrl = SERVER_NAME_LANG;
-                
+
                 $this->PageRedirect($this->ArticleUrl);
-                
+
                 if (empty(self::$_langInfo))
                     self::$_langInfo = self::$_lang->GetWebInfo($web);
-                if (!empty(self::$_langInfo)) 
-                {
-                    
-                    
-                        
+                if (!empty(self::$_langInfo)) {
+
+
+
                     $this->WebId = self::$_langInfo[0]["WebId"];
                     $this->LangId = self::$_langInfo[0]["Id"];
                     $this->PrepareWords(self::$_langInfo[0]["LangIdentificator"]);
                     self::$SelectLang = self::$_langInfo[0]["LangIdentificator"];
                 } else {
                     http_response_code(404);
-                    throw \Types\xWebExceptions::$NoUrlLangExists;
-                } 
+                }
             }
         } else {
             if (!empty($_GET["webid"]))
@@ -175,14 +189,14 @@ class GlobalClass {
                 $this->IpRestriction("admin");
             }
         }
-        
+
 
         $ar["ajaxLinks"] = self::$_web->AjaxLinkLoad();
         $ar["FrameworkMode"] = self::$_web->JavascriptFrameworkMode();
         self::$_javascriptFramework = $ar["FrameworkMode"];
 
         $this->SetTemplateDataArray($ar);
-        
+
         if (empty(self::$_javascriptFramework)) {
             self::$_javascriptFramework = self::$_web->JavascriptFrameworkMode($this->WebId);
         }
@@ -279,13 +293,10 @@ class GlobalClass {
         $path = str_replace("//", "/", $path);
         return $path;
     }
-    
-   
+
     protected function SetTemplateDataArray($ar) {
         self::$_templateData = array_merge(self::$_templateData, $ar);
     }
-
-    
 
     protected function IsJquery() {
         if (empty(self::$_javascriptFramework)) {
@@ -308,7 +319,7 @@ class GlobalClass {
     }
 
     protected function GetUserDomain($domainIdentificator, $dataId = 0, $addDomainIdentificator = true, $data = "", $disabled = false) {
-        
+
         $form = new \Kernel\Forms();
         return $form->GetUserDomain($domainIdentificator, $dataId, $addDomainIdentificator, $data, $disabled);
     }
@@ -316,19 +327,16 @@ class GlobalClass {
     protected function SetTemplateData($key, $value) {
         self::$_templateData[$key] = $value;
     }
-    
-    protected function GetTemplateValue($key)
-    {
-        if (empty(self::$_templateData[$key])) return "";
+
+    protected function GetTemplateValue($key) {
+        if (empty(self::$_templateData[$key]))
+            return "";
         return self::$_templateData[$key];
     }
-
 
     public function GetTemplateData() {
         return self::$_templateData;
     }
-
-
 
     private function IsCookiesAccept() {
         if ($this->CookiesAccept()) {
@@ -358,17 +366,14 @@ class GlobalClass {
     public function GetDataRequest($key) {
         return self::$_dataRequest[$key];
     }
-    
-    public function GetUserGroupId()
-    {
+
+    public function GetUserGroupId() {
         return self::$UserGroupId;
     }
-    
-    protected function CallUrl($url,$get="",$returnData = false)
-    {
-        if(!empty($get))
-        {
-            $url = $url.$get;
+
+    protected function CallUrl($url, $get = "", $returnData = false) {
+        if (!empty($get)) {
+            $url = $url . $get;
         }
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -377,16 +382,13 @@ class GlobalClass {
         if ($returnData)
             $data = curl_exec($ch);
         curl_close($ch);
-        if ($returnData)
-        {
+        if ($returnData) {
             return $data;
         }
     }
-    
-   
-    
+
     // WORDS - přesunout do PAGE.PHP
-     protected function GetAutoLang() {
+    protected function GetAutoLang() {
         $lang = self::$SessionManager->GetSessionValue("AdminUserLang");
         if (empty($lang))
             $lang = "CS";
@@ -396,8 +398,7 @@ class GlobalClass {
 
     protected function GetLang() {
 
-        if (self::$SessionManager->IsEmpty("AdminUserLang"))
-        {
+        if (self::$SessionManager->IsEmpty("AdminUserLang")) {
             $this->GetAutoLang();
         }
         return self::$SessionManager->GetSessionValue("AdminUserLang");
@@ -405,57 +406,52 @@ class GlobalClass {
 
     public function GetWord($wordid) {
         $lang = $this->GetLang();
-        return self::$SessionManager->IsEmpty("AdminWords$lang",$wordid) ? "" : self::$SessionManager->GetSessionValue("AdminWords$lang",$wordid);
-        
+        return self::$SessionManager->IsEmpty("AdminWords$lang", $wordid) ? "" : self::$SessionManager->GetSessionValue("AdminWords$lang", $wordid);
     }
 
     protected function PrepareWords($lang) {
         if (self::$_prepareWords) {
-            
-            self::$SessionManager->SetSessionValue("AdminUserLang", $lang);self::$SessionManager->SetSessionValue("AdminUserLang", $lang);
+
+            self::$SessionManager->SetSessionValue("AdminUserLang", $lang);
+            self::$SessionManager->SetSessionValue("AdminUserLang", $lang);
             if (empty($lang))
                 return;
-            $word =  WordGroups::GetInstance();
-            $langName = "Word".$lang;
-            if (!$word->ColumnExists($langName))
-            {
+            $word = WordGroups::GetInstance();
+            $langName = "Word" . $lang;
+            if (!$word->ColumnExists($langName)) {
                 $lang = "CS";
-                $langName = "Word".DEFAULT_LANG;
+                $langName = "Word" . DEFAULT_LANG;
                 self::$SessionManager->SetSessionValue("AdminUserLang", "CS");
-                
             }
             $outArray = array();
-            /*if (!self::$SessionManager->IsEmpty("AdminWords$lang"))
-                return self::$SessionManager->GetSessionValue("AdminWords$lang");*/
-                $columns = array("GroupName",$langName,"WordCS");
-                $wordList = $word->Select($columns, false, false, false);
-                
-                foreach ($wordList as $row) {
-                    $key = trim($row["GroupName"]);
-                    $value = $row["Word" . $lang];
-                    $value = trim($value);
-                    if (empty($value))
-                    {
-                        $value = $row["WordCS"];
-                        
-                    }
-                    $outArray[$key] = $value;
+            /* if (!self::$SessionManager->IsEmpty("AdminWords$lang"))
+              return self::$SessionManager->GetSessionValue("AdminWords$lang"); */
+            $columns = array("GroupName", $langName, "WordCS");
+            $wordList = $word->Select($columns, false, false, false);
+
+            foreach ($wordList as $row) {
+                $key = trim($row["GroupName"]);
+                $value = $row["Word" . $lang];
+                $value = trim($value);
+                if (empty($value)) {
+                    $value = $row["WordCS"];
                 }
-                self::$_wordList = $outArray;
-                self::$SessionManager->SetSessionValue("AdminWords$lang",$outArray);
-                
+                $outArray[$key] = $value;
+            }
+            self::$_wordList = $outArray;
+            self::$SessionManager->SetSessionValue("AdminWords$lang", $outArray);
+
             $this->SetTemplateDataArray($outArray);
             self::$_prepareWords = false;
-            
+
             return $outArray;
         }
     }
-    
-    public function GetWordList()
-    {
+
+    public function GetWordList() {
         return self::$_wordList;
     }
-    
+
     protected function SetWordList() {
         $words = WordGroups::GetInstance();
         $wordList = $words->Select();
@@ -466,7 +462,5 @@ class GlobalClass {
             $row["ShowLang"] = $row["Word" . $adminLang];
         }
     }
-
-    
 
 }

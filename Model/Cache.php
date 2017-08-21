@@ -2,11 +2,9 @@
 
 namespace Model;
 
-use Types\RuleType;
 use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class Cache extends DatabaseTable {
+class Cache extends DatabaseTable implements \Inteface\iDataTable {
 
     public $HtmlCache;
     public $SeoUrl;
@@ -23,58 +21,16 @@ class Cache extends DatabaseTable {
     }
 
     public function OnCreateTable() {
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->Name = "HtmlCache";
-        $colLangName->Type = "LONGTEXT";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangName = new DataTableColumn();
-        $colLangName->DefaultValue = "";
-        $colLangName->Name = "SeoUrl";
-        $colLangName->Type = "varchar";
-        $colLangName->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangName);
-
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue = "";
-        $colLangIdentificator->IsNull = false;
-        $colLangIdentificator->Length = 9;
-        $colLangIdentificator->Name = "ObjectId";
-        $colLangIdentificator->Type = "INT";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
-
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue = "";
-        $colLangIdentificator->IsNull = false;
-        $colLangIdentificator->Length = 9;
-        $colLangIdentificator->Name = "LangId";
-        $colLangIdentificator->Type = "INT";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
-
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue = "";
-        $colLangIdentificator->IsNull = false;
-        $colLangIdentificator->Length = 9;
-        $colLangIdentificator->Name = "UserGroupId";
-        $colLangIdentificator->Type = "INT";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
-
-        $colLangIdentificator = new DataTableColumn();
-        $colLangIdentificator->DefaultValue = "";
-        $colLangIdentificator->IsNull = true;
-        $colLangIdentificator->Name = "CacheTime";
-        $colLangIdentificator->Type = "DATETIME";
-        $colLangIdentificator->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colLangIdentificator);
+        $this->AddColumn(new DataTableColumn("HtmlCache", \Types\DataColumnsTypes::LONGTEXT));
+        $this->AddColumn(new DataTableColumn("SeoUrl", \Types\DataColumnsTypes::VARCHAR));
+        $this->AddColumn(new DataTableColumn("ObjectId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("LangId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("UserGroupId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("CacheTime", \Types\DataColumnsTypes::DATETIME, "", true));
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        
     }
 
     public function SetValidate($mode = false) {

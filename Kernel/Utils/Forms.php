@@ -45,7 +45,7 @@ class Forms extends GlobalClass {
         $sendButtonValue = "";
         $domain =  \Model\UserDomains::GetInstance();
         
-        $domain->GetObjectById($template[0]["DomainId"], true);
+        $domain->GetObjectById($template[0]["DomainId"]);
         $useBootstrap = false;
         $buttonCssClass = "";
         $catcha = false;
@@ -359,12 +359,12 @@ class Forms extends GlobalClass {
             {
                 
                 $domainInfo1 = \Model\UserDomains::GetInstance();
-                $domainInfo1->GetObjectById($row["DomainId1"],true);
+                $domainInfo1->GetObjectById($row["DomainId1"]);
                 $domainIdent1 = $domainInfo1->DomainIdentificator;
                 if ($isDomainX)
                 {
                     $domainInfoX = \Model\UserDomains::GetInstance();
-                    $domainInfoX->GetObjectById($row["DomainIdX"],true);
+                    $domainInfoX->GetObjectById($row["DomainIdX"]);
                     $itemX = $domainInfoX->DomainIdentificator;
                 }
                 $script.= $this->GenerateActionScript($domainIdent1,$ruleName,$item1Value,$actionName,$itemX,$itemXValue,true);
@@ -559,7 +559,7 @@ class Forms extends GlobalClass {
                     
                     
                     $nDomain = \Model\UserDomains::GetInstance();
-                    $nDomain->GetObjectById($dItem["Domain"], true);
+                    $nDomain->GetObjectById($dItem["Domain"]);
                     if ($dItem["DomainSettings"] == "standard")
                     {   
                         $itemHtml.= $this->GetUserDomain($nDomain->DomainIdentificator, $dataId, $addDomainIdentificator, $data, $disabled, $templateHtml,"?".$nDomain->DomainIdentificator."?","",0,true);
@@ -762,7 +762,7 @@ class Forms extends GlobalClass {
                 $changeEvent = "";
                 if (!empty($dItem["OnChangeEvent"]))
                     $changeEvent = $dItem["OnChangeEvent"]."(this)";
-                $nDomain->GetObjectById($dItem["Domain"], true);
+                $nDomain->GetObjectById($dItem["Domain"]);
                 if ($dItem["DomainSettings"] == "standard")
                 {
                     
@@ -1075,7 +1075,7 @@ class Forms extends GlobalClass {
                     {
                         $valueId = $rowSave[1];
                         $value = $userDomainValues->GetDomainValueByDomainId($domainId, $valueId);
-                        $userDomain->GetObjectById($domainId,true);
+                        $userDomain->GetObjectById($domainId);
                         $nameItem = $userDomain->ShowNameInSubDomain;
                         foreach ($value as $k => $v)
                         {
@@ -1103,7 +1103,7 @@ class Forms extends GlobalClass {
                 if (count($dataInfo) > 0)
                 {
                     $domain = \Model\UserDomains::GetInstance();
-                    $domain->GetObjectById($dataInfo[0]["DomainId"],true);
+                    $domain->GetObjectById($dataInfo[0]["DomainId"]);
                     $tmp = $domain->ShowNameInSubDomain;
                     
                     foreach ($dataInfo as $key => $value)
@@ -1369,7 +1369,7 @@ class Forms extends GlobalClass {
             $domainItem = \Model\UserDomains::GetInstance();
             foreach ($domainsItems as  $key => $value)
             {
-                $domainItem->GetObjectById($value,true);
+                $domainItem->GetObjectById($value);
                 $domainValues =  new \Objects\UserDomains();
                 $vals = $domainValues->GetDomainValueList($value);
                 $vals = ArrayUtils::ValueAsKey($vals, "ObjectId");
@@ -1420,7 +1420,7 @@ class Forms extends GlobalClass {
 
     public function GetHeader($templateId,$all=false,$autoColumn = array()) {
         $content =  \Model\Content::GetInstance();
-        $content->GetObjectById($templateId, true);
+        $content->GetObjectById($templateId);
         $domainId = $content->DomainId;
         $domain = new \Objects\UserDomains();
         $domainItems = $domain->GetUserDomainItemById($domainId);

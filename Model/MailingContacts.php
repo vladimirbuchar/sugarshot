@@ -1,11 +1,10 @@
 <?php
 
 namespace Model;
-use Types\RuleType;
-use Types\DataTableColumn;
-use Types\AlterTableMode;
 
-class MailingContacts  extends DatabaseTable{
+use Types\DataTableColumn;
+
+class MailingContacts  extends DatabaseTable implements \Inteface\iDataTable{
     public $Email;
     public function __construct()
     {
@@ -20,19 +19,11 @@ class MailingContacts  extends DatabaseTable{
 
     
     public function OnCreateTable() {
-        
-        $colUserGroupId = new DataTableColumn();
-        $colUserGroupId->DefaultValue =0;
-        $colUserGroupId->IsNull = true;
-        $colUserGroupId->Length = 255;
-        $colUserGroupId->Name ="Email";
-        $colUserGroupId->Type = "varchar";
-        $colUserGroupId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colUserGroupId);
+        $this->AddColumn(new DataTableColumn("Email", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
     }
     
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

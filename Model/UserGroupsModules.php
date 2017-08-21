@@ -1,11 +1,10 @@
 <?php
 
 namespace Model;
- use Types\RuleType;
+
 use Types\DataTableColumn;
-use Types\AlterTableMode;
- 
-class UserGroupsModules  extends DatabaseTable{
+
+class UserGroupsModules  extends DatabaseTable implements \Inteface\iDataTable{
     public $UserGroupId;
     public $ModuleId;
     
@@ -23,30 +22,14 @@ class UserGroupsModules  extends DatabaseTable{
 
     
     public function OnCreateTable() {
-        
-        $colUserGroupId = new DataTableColumn();
-        $colUserGroupId->DefaultValue =0;
-        $colUserGroupId->IsNull = true;
-        $colUserGroupId->Length = 9;
-        $colUserGroupId->Name ="UserGroupId";
-        $colUserGroupId->Type = "INTEGER";
-        $colUserGroupId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colUserGroupId);
-        
-        $colModuleId = new DataTableColumn();
-        $colModuleId->DefaultValue =0;
-        $colModuleId->IsNull = true;
-        $colModuleId->Length = 9;
-        $colModuleId->Name ="ModuleId";
-        $colModuleId->Type = "INTEGER";
-        $colModuleId->Mode = AlterTableMode::$AddColumn;
-        $this->AddColumn($colModuleId);
+        $this->AddColumn(new DataTableColumn("UserGroupId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("ModuleId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
         
         
     }
 
     public function InsertDefaultData() {
-        $this->Setup($this);
+        $this->Setup();
     }
 
     

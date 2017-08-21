@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-class Login extends Controllers {
+class Login extends ViewController {
 
     private $_errorLogin;
     private $_isBadLogin = false;
@@ -11,7 +11,7 @@ class Login extends Controllers {
         parent::__construct();
         $this->SetCommnadFunction("UserLogin", array("*"));
         $this->SetControllerPermition(array("*"));
-        $this->SetViewPermition("AdminLogin", array("*"));
+        $this->SetViewSettings("AdminLogin", array("*"));
         $this->SetTemplateData("controllerName", $this->ControllerName);
     }
 

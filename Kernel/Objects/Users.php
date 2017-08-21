@@ -32,7 +32,7 @@ class Users extends ObjectManager{
         {
             $web = Webs::GetInstance();
             $webId = $this->GetActualWeb();
-            $web->GetObjectById($webId,true);
+            $web->GetObjectById($webId);
             $isActive = $web->AdminUserActive || $web->UserEmailActivate  ? false: true;
             $sendEmailAdmin = $web->SendInfoEmailToAdmin;
             $adminMail = $web->AdminInfoEmail;
@@ -84,7 +84,7 @@ class Users extends ObjectManager{
         $user->BlockDiscusion = $BlockDiscusion;
         $user->IsActive = $IsActive;
         $user->DefaultLang = $defaultLang;
-        $id = $user->SaveObject($user);
+        $id = $user->SaveObject();
         $userInGroup = new \Objects\UsersGroups();
         $userInGroup->DeleteByCondition("UserId = $id");
         $userInGroup->AddUserToGroup($id, $MainUserGroup , TRUE);
@@ -198,7 +198,7 @@ class Users extends ObjectManager{
     {
         $userId = $this->GetUserId();
         $model = new Model\Users();
-        $model->GetObjectById($userId,true);
+        $model->GetObjectById($userId);
         return $this->BlockDiscusion;
     }
     
@@ -309,7 +309,7 @@ class Users extends ObjectManager{
         if (self::$SessionManager->IsEmpty("IsSystemUser") || self::$SessionManager->GetSessionValue("IsSystemUser")== true)
         {
             $model = new \Model\Users();
-            $model->GetObjectById($this->GetUserId(),true);
+            $model->GetObjectById($this->GetUserId());
             if ($model->UserName == "system"){
                 self::$SessionManager->SetSessionValue("IsSystemUser",true);
                 return true;

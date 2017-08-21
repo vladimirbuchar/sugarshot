@@ -3,15 +3,11 @@
 namespace Controller;
 
 use Types\TableHeader;
-use Model\UserGroups;
 use Model\AdminLangs;
 use Components\Table;
-use Model\Users;
 use Model\UserModulesView;
 use Model\WebsList;
 use Types\TableHeaderFiltrType;
-use Model\UserGroupsModules;
-use Model\UserGroupsWeb;
 
 class UsersItem extends AdminController {
 
@@ -21,9 +17,9 @@ class UsersItem extends AdminController {
         $this->CheckWebPrivileges();
         $this->SetTemplateData("controllerName", $this->ControllerName);
         $this->AddScript("/Scripts/Domain.js");
-        $this->SetViewPermition("UserList", array("system", "Administrators"));
-        $this->SetViewPermition("UserGroup", array("system", "Administrators"));
-        $this->SetViewPermition("MyProfile", array("system", "Administrators"));
+        $this->SetViewSettings("UserList", array("system", "Administrators"));
+        $this->SetViewSettings("UserGroup", array("system", "Administrators"));
+        $this->SetViewSettings("MyProfile", array("system", "Administrators"));
     }
 
     public function UserList() {

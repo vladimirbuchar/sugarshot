@@ -191,7 +191,7 @@ class ContentFrontend extends Content {
             $rowPrepare = $row;
             if (!empty($row["ContentType"]))
             {
-                if ($row["ContentType"] == ContentTypes::$Link) {
+                if ($row["ContentType"] == ContentTypes::LINK) {
                     $xml = $row["Data"];
                     $ar = ArrayUtils::XmlToArray($xml);
                     $contentLink = new \Objects\Content();
@@ -230,11 +230,11 @@ class ContentFrontend extends Content {
                         
                     }
                 }
-                else if( $row["ContentType"] == ContentTypes::$ExternalLink)
+                else if( $row["ContentType"] == ContentTypes::EXTERNAL_LINK)
                 {
                     $row["SeoUrl"] = "#externalUrl#".$row["SeoUrl"];       
                 }
-                else if( $row["ContentType"] == ContentTypes::$JavascriptAction)
+                else if( $row["ContentType"] == ContentTypes::JAVASCRIPT_ACTION)
                 {   
                     $row["SeoUrl"] ="#jsaction#".$row["SeoUrl"];
                 }
