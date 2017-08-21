@@ -2003,15 +2003,13 @@ class Content extends ObjectManager {
     }
 
     public function LoadTemplateByIdentificator($identificator, $groupId, $langId, $webId) {
-
-
         $res = dibi::query("SELECT TemplateId, Header, data,ContentType,Id,ParentId,Name FROM FRONTENDTEMPLATES WHERE  Identificator =%s AND GroupId = %i  AND  LangId = %i  ", $identificator, $groupId, $langId)->fetchAll();
-        return $this->GetFirstRow($res);
+        return empty($res) ? array() : $res[0];
     }
 
     public function LoadTemplateById($id, $groupId, $langId, $webId) {
         $res = dibi::query("SELECT TemplateId, Header, data,ContentType,Id,ParentId,Name FROM FRONTENDTEMPLATES WHERE Id =%i AND GroupId = %i AND  LangId = %i ", $id, $groupId, $langId)->fetchAll();
-        return $this->GetFirstRow($res);
+        return empty($res) ? array() : $res[0];
     }
 
     public function CreateHtml($tree, $isRoot = true, $parentId = "", $showChild = false, $blockMove = false, $setSelectId = true, $dialogId = "") {
@@ -2557,7 +2555,8 @@ class Content extends ObjectManager {
     }
 
     public function GenerateXmlItem($id, $langid, $usergroup, $webId) {
-        $detail = $this->GetFirstRow($this->GetDataSourceDetail($id, $usergroup, $webId, $langid));
+        $detail = $this->GetDataSourceDetail($id, $usergroup, $webId, $langid);
+        $detail = $detail[0];
         $xmlstring = $detail["Data"];
 
         $xml = simplexml_load_string($xmlstring);

@@ -1440,7 +1440,7 @@ class Forms extends \Kernel\GlobalClass {
 
         $space_per_char = $size_x / ($pocet_znaku + 0.5);
 
-        $font = ROOT_PATH."Fonts/verdana.ttf";
+        $font = ROOT_PATH."fonts/verdana.ttf";
         $image_name = mktime(Date("H"),Date("i"),Date("s"),Date("Y"),Date("m"),Date("d")); 
         $save_as = TEMP_CAPTCHA_PATH . $image_name . ".jpg" ; // kam se obrázek uloží
 
