@@ -267,7 +267,6 @@ class SqlDatabase {
      * @param $showName zobrazené jméno 
      */
     public function SetExportSettings($columnName, $showName) {
-        $this->TableExportSettings();
         if (in_array($columnName, $this->ExportColumns))
             return;
         $this->ExportColumns[] = $columnName;
@@ -289,7 +288,9 @@ class SqlDatabase {
      * @param $mode - xls,xlsx a xml 
      */
     public function Export($mode) {
+        $this->TableExportSettings();
         $this->SetAllExportColumns();
+        
         $time = rand(0, 999999999999);
         $this->SetExportSettings("Id", "Id");
         $fileName = "";
