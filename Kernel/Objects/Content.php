@@ -2575,14 +2575,15 @@ class Content extends ObjectManager {
             return $xml;
         } else if (trim($xml->DatasourceType) == "XmlExportUserItem") {
             $users = new \Objects\Users();
-            $langId = $this->GetLangIdByWebUrl();
+            $langId = $_GET["langid"];
+            $webid = $_GET["webid"];
             if (empty($xmlUserItem))
                 return "";
-            $data = $this->LoadFrontendFromId($xmlUserItem, $users->GetUserGroupId(), $langId);
+            $data = $this->LoadFrontendFromId($xmlUserItem, $users->GetUserGroupId(), $langId,$webid);
             $detail = $this->GetUserItemDetail($xmlUserItem, $users->GetUserGroupId(), 0, $langId);
 
             $templateId = empty($detail[0]["ChildTemplateId"]) ? $detail[0]["TemplateId"] : $detail[0]["ChildTemplateId"];
-
+            $domainItem = new \Objects\UserDomains();
             $identificator = $domainItem->GetUserDomainByTemplateId($templateId);
             $items = $domainItem->GetUserDomainItems($identificator);
             $xml = "";
@@ -2591,6 +2592,7 @@ class Content extends ObjectManager {
             foreach ($items as $row) {
                 $xml .= "<" . $row["Identificator"] . ">{" . $row["Identificator"] . "}</" . $row["Identificator"] . ">";
             }
+            
             return $xml;
         }
     }

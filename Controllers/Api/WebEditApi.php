@@ -448,8 +448,8 @@ class WebEditApi extends ApiController {
 
     public function GenerateXmlItem() {
         $content = new \Objects\Content();
-        $data = $content->GenerateXmlItem($_POST["params"], $this->LangId, self::$UserGroupId, $this->WebId);
-        return $data;
+        $data = $content->GenerateXmlItem($_GET["params"], $this->LangId, self::$UserGroupId, $this->WebId);
+        return array("XML" => $data);
     }
 
     public function SaveIquery() {

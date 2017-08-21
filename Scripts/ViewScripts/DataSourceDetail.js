@@ -226,9 +226,9 @@ function XmlExport()
 function GenerateXmlItem()
 {
     SaveTemplate(true);
-    var data = CallPhpFunctionAjax("WebEdit","GenerateXmlItem","POST",$("#ObjectId").val());
-    $("#DatasourceXmlItem").val(data);
-    editor.setValue(data);
+    var data = CallPhpFunctionAjax("WebEdit","GenerateXmlItem","JSON",$("#ObjectId").val());
+    $("#DatasourceXmlItem").val(data.XML);
+    editor.setValue(data.XML);
 }
 
 function LoadDomainItems(id,type)
