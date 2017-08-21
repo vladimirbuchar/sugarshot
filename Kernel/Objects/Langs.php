@@ -29,11 +29,11 @@ class Langs extends ObjectManager{
     {
         $model = new \Model\Langs();
         $model ->GetObjectById($langId,true);
-        if (!StringUtils::StartWidth($mode->RootUrl, SERVER_PROTOCOL))
+        if (!StringUtils::StartWidth($model->RootUrl, SERVER_PROTOCOL))
         {
-            $mode->RootUrl = SERVER_PROTOCOL.$mode->RootUrl;
+            $model->RootUrl = SERVER_PROTOCOL.$model->RootUrl;
         }
-        return StringUtils::EndWith($mode->RootUrl,"/") ? $mode->RootUrl : $mode->RootUrl."/";
+        return StringUtils::EndWith($model->RootUrl,"/") ? $model->RootUrl : $model->RootUrl."/";
     }
     public function GetWebInfo($web)
     {
