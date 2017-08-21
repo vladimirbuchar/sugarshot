@@ -89,8 +89,8 @@ class DomainItemValue extends UserComponents{
                      * @var Model\UserDomainsValues
                      */
                     
-                     $dv = new \Objects\UserDomains();
-                     $values = $dv->GetDomainValueConditon($userDomain->DomainIdentificator,0,"");
+                     
+                     $values = $ud->GetDomainValueConditon($userDomain->DomainIdentificator,0,"");
                      
                 }
                 else 

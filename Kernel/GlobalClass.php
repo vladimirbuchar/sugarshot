@@ -4,6 +4,7 @@ namespace Kernel;
 
 use Model\WordGroups;
 use Utils\Utils;
+use Utils\Forms;
 
 class GlobalClass {
 
@@ -302,11 +303,10 @@ class GlobalClass {
         if (empty(self::$_javascriptFramework)) {
             self::$_javascriptFramework = $this->GetJavascriptFramework();
         }
-        return self::$_javascriptFramework == "jquery" ? true : false;
+        return self::$_javascriptFramework == "jquery";
     }
 
     private function GetJavascriptFramework() {
-
         return self::$_web->JavascriptFrameworkMode($this->WebId);
     }
 
@@ -320,7 +320,7 @@ class GlobalClass {
 
     protected function GetUserDomain($domainIdentificator, $dataId = 0, $addDomainIdentificator = true, $data = "", $disabled = false) {
 
-        $form = new \Kernel\Forms();
+        $form = new Forms();
         return $form->GetUserDomain($domainIdentificator, $dataId, $addDomainIdentificator, $data, $disabled);
     }
 

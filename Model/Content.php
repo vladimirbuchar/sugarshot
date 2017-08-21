@@ -45,8 +45,7 @@ class Content extends DatabaseTable implements \Inteface\iDataTable {
 
     public function OnCreateTable() {
         $this->AddColumn(new DataTableColumn("ContentType", \Types\DataColumnsTypes::VARCHAR, "", false, 50));
-        $this->AddColumn(new DataTableColumn("ParentId", \Types\DataColumnsTypes::INTEGER, 0, false, 0));
-        $this->AddColumn(new DataTableColumn("INTEGER", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
+        $this->AddColumn(new DataTableColumn("ParentId", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
         $this->AddColumn(new DataTableColumn("NoIncludeSearch", \Types\DataColumnsTypes::BOOLEAN, 0, true, 1));
         $this->AddColumn(new DataTableColumn("Identificator", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
         $this->AddColumn(new DataTableColumn("DomainId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));

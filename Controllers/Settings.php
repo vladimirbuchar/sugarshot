@@ -12,15 +12,8 @@ use Model\AdminLangs;
 use Utils\Files;
 use Types\TableHeaderFiltrType;
 use Model\UserDomains;
-use Model\UserDomainsItems;
-use Model\UserDomainsValues;
 use Model\UserDomainsGroups;
 use Model\UserDomainsAddiction;
-use Model\MailingContactsInGroups;
-use Types\ExportSettings;
-use Model\ExportSetting;
-use Model\Content;
-use Model\UserDomainsItemsInGroups;
 
 class Settings extends SettingsController {
 
@@ -130,11 +123,9 @@ class Settings extends SettingsController {
 
         $table->ScrollClass = "scrollTable1200";
         $this->PrepareList($this->GetWord("word551"), $colums, $table);
-
         $ud = new \Objects\UserDomains();
         $info = $ud->GetDomainInfo("Mailinggroups");
-        $udv = new \Objects\UserDomains();
-        $values = $udv->GetDomainValueList($info["Id"], false);
+        $values = $ud->GetDomainValueList($info["Id"], false);
         $this->SetTemplateData("MailingGroups", $values);
     }
 
@@ -301,8 +292,7 @@ class Settings extends SettingsController {
             $this->GoToBack();
         $userDomainItem = new \Objects\UserDomains();
         $items = $userDomainItem->GetUserDomainItemById($domainid);
-        $userDomainValue = new \Objects\UserDomains();
-        $values = $userDomainValue->GetDomainValueList($domainid);
+        $values = $userDomainItem->GetDomainValueList($domainid);
 
         $header = array();
         $colums = array();
@@ -451,11 +441,8 @@ class Settings extends SettingsController {
 
             if ($row["Type"] == "domainData") {
                 if ($row["DomainSettings"] == "1n" || $row["DomainSettings"] == "mn") {
-
-                    $userdomain = new \Objects\UserDomains();
-                    $udv = new \Objects\UserDomains();
-                    $list = $udv->GetDomainValueList($row["Domain"]);
-                    $list = $userdomain->GenerateShowName($row["Domain"], $list, $row["ShowName"] . ":");
+                    $list = $di->GetDomainValueList($row["Domain"]);
+                    $list = $di->GenerateShowName($row["Domain"], $list, $row["ShowName"] . ":");
                     $out = array_merge($out, $list);
                 } else {
                     $ar = $di->GetUserDomainItemById($row["Domain"]);
@@ -522,14 +509,17 @@ class Settings extends SettingsController {
 
     public function ClearLog() {
         $logPath = LOG_PATH . ERROR_LOG_FILENAME;
-        $logCopy = LOG_PATH . \Utils\StringUtils::GenerateRandomString() . ".log";
-        copy($logPath, $logCopy);
-        unlink($logPath);
+        if (Files::FileExists($logPath))
+        {
+            $logCopy = LOG_PATH . \Utils\StringUtils::GenerateRandomString() . ".log";
+            copy($logPath, $logCopy);
+            unlink($logPath);
+        }
+        $this->Referesch();
     }
 
     public function DowlandFile() {
-        //Files::DowlandFile(SERVER_NAME."Log/Errors.log");
-        Files::DowlandFile(SERVER_NAME . "Log/KUXOolX1Tc.log");
+        Files::DowlandFile(SERVER_NAME."Log/Errors.log");
     }
 
 }

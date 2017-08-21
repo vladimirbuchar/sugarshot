@@ -50,7 +50,7 @@ class ArrayUtils  {
         return $outString;
     }
 
-    public static function XmlToArray($xmlstring,$class_name="",$options=0) {
+    public static function XmlToArray($xmlstring,$class_name="SimpleXMLElement",$options=0) {
         $xml = simplexml_load_string($xmlstring,$class_name, $options);
         $json = json_encode($xml);
         $array = json_decode($json,TRUE);

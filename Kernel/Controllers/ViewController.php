@@ -269,7 +269,6 @@ class ViewController extends \Controller\Controllers {
                 $model = new $modelName();
                 $data = null;
                 $data = $model->Select($colums, FALSE, true, true, null, $where, true, $parentId);
-
                 $tableOut->Data = $data;
             }
         }

@@ -207,6 +207,7 @@ class UsersItemApi extends ApiController {
 
     public function SaveUsersGroupWeb() {
         $ajax = $this->PrepareAjaxParametrs();
+        $id = $ajax["UserGroupId"];
         $uweb = UserGroupsWeb::GetInstance();
         $uweb->DeleteByCondition("UserGroupId = $id AND Deleted= 0", false, false);
 
@@ -225,6 +226,7 @@ class UsersItemApi extends ApiController {
     public function SaveUsersModules() {
         $ajax = $this->PrepareAjaxParametrs();
         $ugm = UserGroupsModules::GetInstance();
+        $id = $ajax["UserGroupId"];
         $ugm->DeleteByCondition("UserGroupId = $id AND Deleted= 0", false, false);
         foreach ($ajax["ModuleList"] as $moduleId) {
             $moduleId = $moduleId[0];

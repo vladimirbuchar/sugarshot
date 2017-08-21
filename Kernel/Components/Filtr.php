@@ -14,7 +14,6 @@ class Filtr extends UserComponents{
     {
         $userDomainItems =  new \Objects\UserDomains();
         $items = $userDomainItems->GetUserDomainItemByIdentificator($this->FiltrDomain,"filtr");
-        $udv =  new \Objects\UserDomains();
         $html = "";
         $arrayPosition = -1;
         $seoUrl = $data[0]["SeoUrl"];
@@ -106,7 +105,7 @@ class Filtr extends UserComponents{
                     {
                         $domainInfo = UserDomains::GetInstance();
                         $domainInfo->GetObjectById($row["Domain"]);
-                        $values = $udv->GetDomainValueList($row["Domain"]);
+                        $values = $userDomainItems->GetDomainValueList($row["Domain"]);
                         $showName = $domainInfo->ShowNameInSubDomain;
                         $domainName = $domainInfo->DomainIdentificator;
                         $out = array();
@@ -193,7 +192,7 @@ class Filtr extends UserComponents{
                 {
                     $domainInfo = UserDomains::GetInstance();
                     $domainInfo->GetObjectById($row["Domain"]);
-                    $values = $udv->GetDomainValueList($row["Domain"]);
+                    $values = $userDomainItems->GetDomainValueList($row["Domain"]);
                     $showName = $domainInfo->ShowNameInSubDomain;
                     $domainName = $domainInfo->DomainIdentificator;
                     $out = array();

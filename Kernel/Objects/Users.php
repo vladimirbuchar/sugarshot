@@ -2,6 +2,7 @@
 
 namespace Objects;
 use Dibi;
+use Utils\ArrayUtils;
 class Users extends ObjectManager{
     public function __construct() {
         parent::__construct();
@@ -30,7 +31,7 @@ class Users extends ObjectManager{
         }
         else 
         {
-            $web = Webs::GetInstance();
+            $web = \Model\Webs::GetInstance();
             $webId = $this->GetActualWeb();
             $web->GetObjectById($webId);
             $isActive = $web->AdminUserActive || $web->UserEmailActivate  ? false: true;
@@ -57,7 +58,7 @@ class Users extends ObjectManager{
             $id = 0;
         $newUser = $id == 0 ? TRUE: FALSE;
         //$this->validatePassword();
-        $user =  Users::GetInstance();
+        $user =  \Model\Users::GetInstance();
         $testExists = $user->SelectByCondition("UserName = '$UserName' AND Id <> $id");
         if (!empty($testExists))
             return -1;
@@ -196,10 +197,9 @@ class Users extends ObjectManager{
     }
     public function UserHasBlockDiscusion()
     {
-        $userId = $this->GetUserId();
-        $model = new Model\Users();
-        $model->GetObjectById($userId);
-        return $this->BlockDiscusion;
+        $model = new \Model\Users();
+        $model->GetObjectById($this->GetUserId(),true,array("BlockDiscusion"));
+        return $model->BlockDiscusion;
     }
     
     public function GetFullUserName()
@@ -332,7 +332,7 @@ class Users extends ObjectManager{
         {
             return;
         }
-        $model->SetValidateRule("UserPassword", RuleType::$Hash);
+        $model->SetValidateRule("UserPassword", \Types\RuleType::$Hash);
         $model->GetObjectById($userId,true);
         $model->UserPassword = $password1;
         $model->SaveObject();
@@ -361,9 +361,10 @@ class Users extends ObjectManager{
     
     public function  SetUserGroupModules($userGroup,$module)
     {
-        $this->UserGroupId = $userGroup;
-        $this->ModuleId = $module;
-        $this->SaveObject($this);
+        $model = new \Model\UserGroupsModules();
+        $model->UserGroupId = $userGroup;
+        $model->ModuleId = $module;
+        $model->SaveObject();
     }
     
     

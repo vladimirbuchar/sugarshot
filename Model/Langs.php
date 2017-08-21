@@ -2,6 +2,7 @@
 namespace Model;
 use Types\RuleType;
 use Types\DataTableColumn;
+use Types\DatabaseActions;
 
 class Langs  extends DatabaseTable implements \Inteface\iDataTable{
     public $LangName;
@@ -36,24 +37,7 @@ class Langs  extends DatabaseTable implements \Inteface\iDataTable{
     
     
     
-    public function CreateLangFolder($id)
-    {
-        $content = new \Objects\Content();
-        $obj = $this->GetObjectById($id);
-        
-        $folderId = $content->GetIdByIdentificator("langfolder",$_GET["webid"]);
-        
-        $name = $obj->LangName;
-        if ($folderId == 0)
-        {
-            $content->CreateContentItem($name, true,  "langfolder$id", "", "langfolder",false,$id,0,true,"langfolder",array(),"", 0, 0, "", "", "", 0,  0,  0,  99999, 0,false);
-        }
-        else 
-        {
-            $users = new \Objects\Users();
-            $content->CreateVersion($folderId, $name, true, $user->GetUserId(), "langfolder$id", 0, false, $id, "", "", "", "", false, "");
-        }
-    }
+    
     
 
     public function InsertDefaultData() {
@@ -76,7 +60,7 @@ class Langs  extends DatabaseTable implements \Inteface\iDataTable{
         $this->SetValidateRule("RootUrl", RuleType::$NoEmpty,  $this->GetWord("word86"));
         $this->SetValidateRule("RootUrl", RuleType::$Unique,$this->GetWord("word87"));
         $this->SetValidateRule("LangIdentificator", RuleType::$Unique,$this->GetWord("word87"));
-        $this->SetCallModelFunction("Langs","CreateLangFolder","",DatabaseActions::$Insert);   
+        $this->SetCallModelFunction("Langs","CreateLangFolder","",DatabaseActions::INSERT);   
     }
     public function TableExportSettings()
     {

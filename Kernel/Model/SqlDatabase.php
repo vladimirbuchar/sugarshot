@@ -278,6 +278,7 @@ class SqlDatabase {
     protected function SetAllExportColumns() {
         if (empty($this->ExportColumns)) {
             $res = dibi::query("SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='$this->ObjectName' AND TABLE_SCHEMA <> 'performance_schema'")->fetchAll();
+            
             foreach ($res as $row) {
                 $this->SetExportSettings($row["column_name"], $row["column_name"]);
             }
@@ -293,9 +294,11 @@ class SqlDatabase {
         $this->SetExportSettings("Id", "Id");
         $fileName = "";
         $col = array();
+        
         foreach ($this->_exportSettings as $row) {
             $col[] = $row->ColumnName;
         }
+        
         $data = $this->Select($col);
 
 

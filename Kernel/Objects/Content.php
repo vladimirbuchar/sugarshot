@@ -7,22 +7,16 @@ use Utils\StringUtils;
 use Types\ContentTypes;
 use HtmlComponents\HtmlTable;
 use HtmlComponents\HtmlTableTd;
-use HtmlComponents\HtmlTableTh;
 use HtmlComponents\HtmlTableTr;
 use HtmlComponents\Link;
 use HtmlComponents\FontAwesome;
 use Types\RuleType;
 use Types\PrivilegesType;
 use Dibi;
-use Types\DataTableColumn;
-use Types\AlterTableMode;
-use Types\xWebExceptions;
 use Types\LinkType;
 use Utils\Mail;
 use Utils\Utils;
-use Kernel;
 use Utils\Image;
-
 
 class Content extends ObjectManager {
 
@@ -34,7 +28,7 @@ class Content extends ObjectManager {
         /**
          * @var \Model\ContentAlternative
          */
-        $model = ContentAlternative::GetInstance();
+        $model = \Model\ContentAlternative::GetInstance();
         $model->DeleteByCondition("ContentId = $objectId AND UserGroupId = $userGroupId", true, false);
         $model->ContentId = $objectId;
         $model->UserGroupId = $userGroupId;
@@ -49,13 +43,13 @@ class Content extends ObjectManager {
         $model = ContentConnection:: GetInstance();
         $model->TransactionBegin();
         try {
-            $contentVersion = ContentVersion::GetInstance();
+            $contentVersion = \Model\ContentVersion::GetInstance();
             if (!$contentVersion->HasPrivileges($ObjectId, PrivilegesType::$CanWrite))
                 return;
 
 
             if ($ConnectedType == "gallery") {
-                $content = Content::GetInstance();
+                $content = \Model\Content::GetInstance();
                 $content->GetObjectById($ObjectId, true);
                 if ($content->GallerySettings == 0) {
                     $content->GalleryId = 0;
@@ -80,7 +74,7 @@ class Content extends ObjectManager {
                         $content->GallerySettings = 1;
                         $content->SaveObject();
                     } else {
-                        $nContent = Content::GetInstance();
+                        $nContent = \Model\Content::GetInstance();
                         $nContent->GetObjectById($ObjectIdConnected);
                         $this->CreateConnection($ObjectId, $nContent->GalleryId, $ConnectedType, $Data);
                     }
@@ -134,7 +128,7 @@ class Content extends ObjectManager {
             /**
              * @var \Model\ConnectionObjects
              */
-            $connectionobjects = ConnectionObjects::GetInstance();
+            $connectionobjects = \Model\ConnectionObjects::GetInstance();
             if (empty($type)) {
                 $res = $connectionobjects->SelectByCondition("ObjectId = %i AND  (LangId = %i OR LangId =0 )", "", array("Name", "Data", "SeoUrl", "ConnectedType", "SettingConnection"), array($objectId, $langId));
             } else {
@@ -151,28 +145,28 @@ class Content extends ObjectManager {
         }
         return $res;
     }
-    
-    public function CanPrivileges($objectId, $userGroup,$privilegesName)
-    {
+
+    public function CanPrivileges($objectId, $userGroup, $privilegesName) {
         $model = ContentSecurity:: GetInstance();
         $data = $model->SelectByCondition("Value = 1 AND ObjectId = $objectId AND  GroupId = $userGroup AND SecurityType = '$privilegesName'");
-        if (empty($data)) return FALSE;
+        if (empty($data))
+            return FALSE;
         return TRUE;
     }
-    
+
     private function IsLink($id) {
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         $content->GetObjectById($id);
         return $content->ContentType == ContentTypes::EXTERNAL_LINK || $content->ContentType == ContentTypes::LINK ||
                 $content->ContentType == ContentTypes::JAVASCRIPT_ACTION ? true : false;
     }
-    
+
     private function IsLinkByType($type) {
         return $type == ContentTypes::EXTERNAL_LINK || $type == ContentTypes::LINK || $type == ContentTypes::JAVASCRIPT_ACTION ? true : false;
     }
-    
+
     private function CanHaveChild($id) {
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         $content->GetObjectById($id);
         if ($content->ContentType == ContentTypes::CSS || $content->ContentType == ContentTypes::JAVASCRIPT || $content->ContentType == ContentTypes::FORM ||
                 $content->ContentType == ContentTypes::MAIL || $content->ContentType == ContentTypes::MAILING || $content->ContentType == ContentTypes::DATASOURCE || $content->ContentType == ContentTypes::JAVASCRIPT_ACTION || $content->ContentType == ContentTypes::TEMPLATE
@@ -182,121 +176,120 @@ class Content extends ObjectManager {
             return true;
         return $content->NoChild ? false : true;
     }
-    
+
     public function GetParent($id) {
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         $content->GetObjectById($id);
         return $content->ParentId;
     }
-    
-    public function CreateContentItem($name, $isActive, $seoUrl, $template, $contentType, $AvailableOverSeoUrl, $lang, $parentid, $noIncludeSearch = true, $identificator = "", $privileges = array(), $data = "", $domainId = 0, $templateId = 0, $header = "", $activeFrom = "", $activeTo = "", $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $sort = 99999, $formId = 0, $testPrivileges = true, $dataArray = array(), $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $settings = "",$caching = false,$sortRule="") {
-        try{
-            
-        dibi::begin();
-        if ($this->IsLink($parentid) || (!$this->CanHaveChild($parentid) && ($contentType != ContentTypes::FORMSTATISTIC && $contentType != ContentTypes::SURVER_ANSWEB) )) {
-            $parentid = $this->GetParent($parentid);
-        }
-        
-        if (!$this->HasPrivileges($parentid, PrivilegesType::$CanWrite) && $testPrivileges) {
-            dibi::rollback();
-            return 0;
-        }
-        
-        /** @var  \Model\Content */
-        $content = Content::GetInstance();
-        $user = new \Objects\Users();
-        $userId = $user->GetUserId();
-        $content->ContentType = $contentType;
-        $content->Sort = $sort;
-        $content->ParentId = $parentid;
-        $content->NoIncludeSearch = $noIncludeSearch;
-        $content->Identificator = $identificator;
-        $content->DomainId = $domainId;
-        $content->TemplateId = $templateId;
-        $content->GallerySettings = $gallerySettings;
-        $content->DiscusionSettings = $discusionSettings;
-        $content->FormId = $formId;
-        $content->NoChild = $noChild;
-        $content->NoLoadSubItems = $noLoadSubItems;
-        $content->UseTemplateInChild = !$noChild ? $useTemplateInChild : false;
-        $content->ChildTemplateId = !$noChild ? $childTemplate : 0;
-        $content->CopyDataToChild = !$noChild ? $copyDataToChild : false;
-        $content->ActivatePager = $ActivatePager;
-        $content->FirstItemLoadPager = $FirstItemLoadPager;
-        $content->NextItemLoadPager = $NextItemLoadPager;
-        $content->Owner = $userId;
-        $content->Inquery = $inquery;
-        
-        $content->DiscusionId = $connectDiscusion;
-        $content->SaveToCache = $caching;
-        $content->SortRule=  $sortRule;
-        $contentId = $content->SaveObject();
-        
 
-        if ($contentId == 0) {
+    public function CreateContentItem($name, $isActive, $seoUrl, $template, $contentType, $AvailableOverSeoUrl, $lang, $parentid, $noIncludeSearch = true, $identificator = "", $privileges = array(), $data = "", $domainId = 0, $templateId = 0, $header = "", $activeFrom = "", $activeTo = "", $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $sort = 99999, $formId = 0, $testPrivileges = true, $dataArray = array(), $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $settings = "", $caching = false, $sortRule = "") {
+        try {
 
-            dibi::rollback();
-            return 0;
-        }
-        
-        if (!$this->IsLinkByType($contentType)) {
-            if (!$this->ChangePrivileges($privileges)) {
-                $privileges = $this->GetParentPrivileges($parentid);
+            dibi::begin();
+            if ($this->IsLink($parentid) || (!$this->CanHaveChild($parentid) && ($contentType != ContentTypes::FORMSTATISTIC && $contentType != ContentTypes::SURVER_ANSWEB) )) {
+                $parentid = $this->GetParent($parentid);
             }
-            $security = $this->Security($privileges, $contentId);
-            if (!$security) {
+
+            if (!$this->HasPrivileges($parentid, PrivilegesType::$CanWrite) && $testPrivileges) {
                 dibi::rollback();
                 return 0;
             }
-        } else {
-            $this->Security($privileges, $contentId, true);
-        }
-        
 
-        $versionId = $this->CreateVersion($contentId, $name, $isActive, $userId, $seoUrl, $template, $AvailableOverSeoUrl, $lang, $data, $header, $activeFrom, $activeTo, $testPrivileges, $contentType, $settings);
-        if ($versionId == 0) {
-            dibi::rollback();
-            return 0;
-        }
-        
+            /** @var  \Model\Content */
+            $content = \Model\Content::GetInstance();
+            $user = new \Objects\Users();
+            $userId = $user->GetUserId();
+            $content->ContentType = $contentType;
+            $content->Sort = $sort;
+            $content->ParentId = $parentid;
+            $content->NoIncludeSearch = $noIncludeSearch;
+            $content->Identificator = $identificator;
+            $content->DomainId = $domainId;
+            $content->TemplateId = $templateId;
+            $content->GallerySettings = $gallerySettings;
+            $content->DiscusionSettings = $discusionSettings;
+            $content->FormId = $formId;
+            $content->NoChild = $noChild;
+            $content->NoLoadSubItems = $noLoadSubItems;
+            $content->UseTemplateInChild = !$noChild ? $useTemplateInChild : false;
+            $content->ChildTemplateId = !$noChild ? $childTemplate : 0;
+            $content->CopyDataToChild = !$noChild ? $copyDataToChild : false;
+            $content->ActivatePager = $ActivatePager;
+            $content->FirstItemLoadPager = $FirstItemLoadPager;
+            $content->NextItemLoadPager = $NextItemLoadPager;
+            $content->Owner = $userId;
+            $content->Inquery = $inquery;
+
+            $content->DiscusionId = $connectDiscusion;
+            $content->SaveToCache = $caching;
+            $content->SortRule = $sortRule;
+            $contentId = $content->SaveObject();
+
+
+            if ($contentId == 0) {
+
+                dibi::rollback();
+                return 0;
+            }
+
+            if (!$this->IsLinkByType($contentType)) {
+                if (!$this->ChangePrivileges($privileges)) {
+                    $privileges = $this->GetParentPrivileges($parentid);
+                }
+                $security = $this->Security($privileges, $contentId);
+                if (!$security) {
+                    dibi::rollback();
+                    return 0;
+                }
+            } else {
+                $this->Security($privileges, $contentId, true);
+            }
+
+
+            $versionId = $this->CreateVersion($contentId, $name, $isActive, $userId, $seoUrl, $template, $AvailableOverSeoUrl, $lang, $data, $header, $activeFrom, $activeTo, $testPrivileges, $contentType, $settings);
+            if ($versionId == 0) {
+                dibi::rollback();
+                return 0;
+            }
 
 
 
-        if (!$this->SaveData($dataArray, $contentId, $lang)) {
-            dibi::rollback();
-            return 0;
-        }
 
-        dibi::commit();
-        return $contentId;
-        }
-        catch (Exception $e)
-        {
-            echo $e;die();
+            if (!$this->SaveData($dataArray, $contentId, $lang)) {
+                dibi::rollback();
+                return 0;
+            }
+
+            dibi::commit();
+            return $contentId;
+        } catch (Exception $e) {
+            echo $e;
+            die();
         }
     }
-    
+
     public function Search($groupId, $langId, $searchString) {
         if (empty($searchString))
             return array();
         return dibi::query("SELECT DISTINCT SearchValue, Name,SeoUrl  FROM  SEARCHVIEW WHERE SSGroupId =%i AND LangId = %i AND  (SearchValue LIKE %~like~ OR Name LIKE %~like~) GROUP BY Id", $groupId, $langId, $searchString, $searchString)->fetchAll();
     }
-    
-     private function SaveData($data, $contentId, $langId = 0) {
+
+    private function SaveData($data, $contentId, $langId = 0) {
         try {
-            
+
             if (!empty($data)) {
-                
+
                 if ($langId == 0) {
                     $langId = empty($_GET["langid"]) ? $this->GetLangIdByWebUrl() : $_GET["langid"];
                 }
-                $contentData =  ContentData::GetInstance();
-                $contentData->DeleteByCondition("ContentId = $contentId AND LangId = $langId", true,false);
+                $contentData = \Model\ContentData::GetInstance();
+                $contentData->DeleteByCondition("ContentId = $contentId AND LangId = $langId", true, false);
                 $contentData->ContentId = $contentId;
                 $contentData->LangId = $langId;
-                
+
                 if (is_array($data)) {
-                    
+
                     foreach ($data as $row) {
                         $contentData->Value = html_entity_decode($row[1]);
                         $contentData->ValueNoHtml = strip_tags(html_entity_decode($row[1]));
@@ -310,7 +303,7 @@ class Content extends ObjectManager {
         }
         return true;
     }
-    
+
     public function GetParentPrivileges($parent) {
         $res = dibi::query("SELECT SecurityType,GroupId,Value FROM ContentSecurity WHERE ObjectId = %i AND Deleted = 0", $parent)->fetchAll();
         $privileges = array();
@@ -326,7 +319,7 @@ class Content extends ObjectManager {
             $web = \Model\Webs::GetInstance();
             $web->GetObjectById(empty($_GET["webid"]) ? 0 : $_GET["webid"]);
             $xml = $web->WebPrivileges;
-            $resXml = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
+            $resXml = ArrayUtils::XmlToArray($xml, "SimpleXMLElement", LIBXML_NOCDATA);
             $i = 0;
             foreach ($resXml["item"] as $row) {
                 $privileges[$i][0] = $row["PrivilegesName"];
@@ -337,7 +330,7 @@ class Content extends ObjectManager {
         }
         return $privileges;
     }
-    
+
     private function ChangePrivileges($privileges) {
         if (!empty($privileges)) {
             foreach ($privileges as $row) {
@@ -350,19 +343,19 @@ class Content extends ObjectManager {
     }
 
     private function HasChild($id) {
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         $res = $content->SelectByCondition("ParentId = $id");
         return empty($res) ? false : true;
     }
-    
-    public function UpdateContentItem($contentId, $name, $isActive, $seoUrl, $template, $AvailableOverSeoUrl, $noIncludeSearch = true, $identificator = "", $privileges = array(), $data = "", $domainId = 0, $templateId = 0, $header = "", $activeFrom = "", $activeTo = "", $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $sort = 99999, $formId = 0, $dataArray = array(), $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $settings = "",$caching = false,$sortRule="") {
+
+    public function UpdateContentItem($contentId, $name, $isActive, $seoUrl, $template, $AvailableOverSeoUrl, $noIncludeSearch = true, $identificator = "", $privileges = array(), $data = "", $domainId = 0, $templateId = 0, $header = "", $activeFrom = "", $activeTo = "", $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $sort = 99999, $formId = 0, $dataArray = array(), $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $settings = "", $caching = false, $sortRule = "") {
         dibi::begin();
         if (!$this->HasPrivileges($contentId, PrivilegesType::$CanWrite)) {
             dibi::rollback();
             return $contentId;
         }
 
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         $user = new \Objects\Users();
         $userId = $user->GetUserId();
         $content->GetObjectById($contentId, true);
@@ -381,7 +374,7 @@ class Content extends ObjectManager {
         $content->Inquery = $inquery;
         $content->NoLoadSubItems = $noLoadSubItems;
         $content->SortRule = $sortRule;
-        
+
         /*
           $content->ChildTemplateId = $childTemplate;
           $content->CopyDataToChild = $copyDataToChild;* */
@@ -393,7 +386,7 @@ class Content extends ObjectManager {
         $content->ChildTemplateId = !$noChild ? $childTemplate : 0;
         $content->CopyDataToChild = !$noChild ? $copyDataToChild : false;
         $content->DiscusionId = $connectDiscusion;
-        $content->SaveToCache =$caching;
+        $content->SaveToCache = $caching;
         $contentId = $content->SaveObject();
         if ($contentId == 0) {
             dibi::rollback();
@@ -418,186 +411,167 @@ class Content extends ObjectManager {
             dibi::rollback();
             return $contentId;
         }
-        if(!$this->UpdateItemInOtherLang($contentId,$templateId,$dataArray)) {
+        if (!$this->UpdateItemInOtherLang($contentId, $templateId, $dataArray)) {
             dibi::rollback();
             return $contentId;
         }
-        
-        
+
+
 
         dibi::commit();
         return $contentId;
     }
-    
-     private function UpdateItemInOtherLang($contentId,$templateId,$dataArray)
-    {
-        
+
+    private function UpdateItemInOtherLang($contentId, $templateId, $dataArray) {
+
         $udi = new \Objects\UserDomains();
         $domainIden = $udi->GetUserDomainByTemplateId($templateId);
         $values = $udi->GetUserDomainItemByIdentificator($domainIden);
-        $multiLangValue = array_filter($values,function($row){ 
-            if ($row["ValueForAllLangues"] == 1)
-            {
+        $multiLangValue = array_filter($values, function($row) {
+            if ($row["ValueForAllLangues"] == 1) {
                 return $row;
             }
         }
         );
-        if(empty($multiLangValue))
+        if (empty($multiLangValue))
             return true;
-        
+
         $multiLangValue = ArrayUtils::ValueAsKey($multiLangValue, "Identificator");
-        $lang = Langs::GetInstance();
+        $lang = \Model\Langs::GetInstance();
         $langList = $lang->Select();
         $udpateData = array();
         $newDataArray = array();
-        foreach ($dataArray as $row)
-        {
+        foreach ($dataArray as $row) {
             $columnName = $row[0];
             $value = $row[1];
             $newDataArray[$columnName] = $value;
         }
-         $dataArray = $newDataArray;
-         foreach ($dataArray as $columnName => $value)
-         {
-            
+        $dataArray = $newDataArray;
+        foreach ($dataArray as $columnName => $value) {
+
             if (!empty($multiLangValue[$columnName]))
                 $udpateData[$columnName] = $value;
-            
-         }
-         
-         // hack for checkbox
-         $checkboxes = array_filter($multiLangValue,function($row){
-             if($row["Type"] == "checkbox")
-             {
-                 return $row;
-             }
-         });
-         
-         foreach  ($checkboxes as $row)
-         {
-             $id = $row["Id"]; 
-             $values = $row["ValueList"];
-             $dataAr = ArrayUtils::XmlToArray($values,"SimpleXMLElement",LIBXML_NOCDATA);
-             $dataAr = $dataAr["item"];
-             foreach ($dataAr as $item)
-             {
-                 $checkboxId = "checkbox_".$item["itemValue"]."_".$id;
-                 if(!empty($dataArray[$checkboxId]))
-                 {
-                     $udpateData[$checkboxId]= $dataArray[$checkboxId];
-                 }
-                 else 
-                 {
-                     $udpateData[$checkboxId] = 0;
-                 }
-             }   
-         }
-         
-         
-         
-         foreach ($langList as $row)
-         {
-            $exist = $this->ItemExistsInLang($contentId,$row["Id"]);
+        }
+
+        // hack for checkbox
+        $checkboxes = array_filter($multiLangValue, function($row) {
+            if ($row["Type"] == "checkbox") {
+                return $row;
+            }
+        });
+
+        foreach ($checkboxes as $row) {
+            $id = $row["Id"];
+            $values = $row["ValueList"];
+            $dataAr = ArrayUtils::XmlToArray($values, "SimpleXMLElement", LIBXML_NOCDATA);
+            $dataAr = $dataAr["item"];
+            foreach ($dataAr as $item) {
+                $checkboxId = "checkbox_" . $item["itemValue"] . "_" . $id;
+                if (!empty($dataArray[$checkboxId])) {
+                    $udpateData[$checkboxId] = $dataArray[$checkboxId];
+                } else {
+                    $udpateData[$checkboxId] = 0;
+                }
+            }
+        }
+
+
+
+        foreach ($langList as $row) {
+            $exist = $this->ItemExistsInLang($contentId, $row["Id"]);
             if ($row["Id"] == $_GET["langid"])
                 continue;
-            if($exist)
-            {
-                $res = $this->SelectByCondition("ContentId = $contentId AND IsLast = 1 AND LangId = ".$row["Id"],"","Data");
-                $xml =$res[0]["Data"];
-                $dataAr = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
+            if ($exist) {
+                $res = $this->SelectByCondition("ContentId = $contentId AND IsLast = 1 AND LangId = " . $row["Id"], "", "Data");
+                $xml = $res[0]["Data"];
+                $dataAr = ArrayUtils::XmlToArray($xml, "SimpleXMLElement", LIBXML_NOCDATA);
                 $saveXml = "<items>";
-                foreach ($udpateData as $key => $value)
-                {
-                    $exists = \Dibi::query("SELECT ContentId FROM ContentData WHERE ContentId = %i AND LangId =%i AND ItemName = %s",$contentId, $row["Id"], $key)->fetchAll();
-                    if(empty($exists))
-                    {
-                        \Dibi::query("INSERT INTO ContentData SET Value = %s, ValueNoHtml =%s , ContentId = %i , LangId =%i ,ItemName = %s",$value, strip_tags(html_entity_decode($value)),$contentId, $row["Id"], $key);
-                    }
-                    else 
-                    {
-                        \Dibi::query("UPDATE ContentData SET Value = %s, ValueNoHtml =%s WHERE ContentId = %i AND LangId =%i AND ItemName = %s",$value, strip_tags(html_entity_decode($value)),$contentId, $row["Id"], $key);
+                foreach ($udpateData as $key => $value) {
+                    $exists = \Dibi::query("SELECT ContentId FROM ContentData WHERE ContentId = %i AND LangId =%i AND ItemName = %s", $contentId, $row["Id"], $key)->fetchAll();
+                    if (empty($exists)) {
+                        \Dibi::query("INSERT INTO ContentData SET Value = %s, ValueNoHtml =%s , ContentId = %i , LangId =%i ,ItemName = %s", $value, strip_tags(html_entity_decode($value)), $contentId, $row["Id"], $key);
+                    } else {
+                        \Dibi::query("UPDATE ContentData SET Value = %s, ValueNoHtml =%s WHERE ContentId = %i AND LangId =%i AND ItemName = %s", $value, strip_tags(html_entity_decode($value)), $contentId, $row["Id"], $key);
                     }
                     $dataAr[$key] = $value;
                 }
-                foreach ($dataAr as $key => $value)
-                {
-                    $saveXml .= "<$key><![CDATA[".$value."]]></$key>";
+                foreach ($dataAr as $key => $value) {
+                    $saveXml .= "<$key><![CDATA[" . $value . "]]></$key>";
                 }
                 $saveXml .= "</items>";
-                \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND LangId =%i AND IsLast = 1",$saveXml, $contentId, $row["Id"]);
-                \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND LangId =%i AND IsActive = 1",$saveXml, $contentId, $row["Id"]);
+                \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND LangId =%i AND IsLast = 1", $saveXml, $contentId, $row["Id"]);
+                \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND LangId =%i AND IsActive = 1", $saveXml, $contentId, $row["Id"]);
             }
-            
         }
         return true;
-        
-        
-        
     }
-    
+
     public function CreateTemplate($name, $identificator, $privileges = array(), $data = "", $parentId = 0, $lang = 0, $domainId = 0, $templateId = 0, $publish = false, $header = "", $settings = "") {
         $settings = $this->PrepareXmlFromArray($settings);
         return $this->CreateContentItem($name, $publish, "", 0, ContentTypes::TEMPLATE, FALSE, $lang, $parentId, true, $identificator, $privileges, $data, $domainId, $templateId, $header, "", "", 0, 0, 0, 99999, 0, true, array(), false, false, 0, false, false, 0, 0, 0, 0, $settings);
     }
-    
-    public function CreateCss ($name, $privileges = array(), $data = "", $parentId = 0, $lang = 0, $publish = false) {
+
+    public function CreateCss($name, $privileges = array(), $data = "", $parentId = 0, $lang = 0, $publish = false) {
         return $this->CreateContentItem($name, $publish, "", 0, ContentTypes::CSS, FALSE, $lang, $parentId, true, "", $privileges, $data, 0, 0, "");
     }
-    
+
     public function UpdateJs($id, $name, $privileges = array(), $data = "", $publish = false, $sort = 99999) {
         return $this->UpdateContentItem($id, $name, $publish, "", 0, true, true, "", $privileges, $data, 0, 0, "", "", "", 0, 0, 0, $sort);
     }
-    
-    public function CreateInquery ($name, $privileges = array(), $data = array(), $parentId = 0, $lang = 0, $publish = false) {
+
+    public function CreateInquery($name, $privileges = array(), $data = array(), $parentId = 0, $lang = 0, $publish = false) {
         $data = $this->PrepareXmlFromArray($data);
         return $this->CreateContentItem($name, $publish, "", 0, ContentTypes::INQUERY, FALSE, $lang, $parentId, true, "", $privileges, $data, 0, 0, "");
     }
-    
-    public function UpdateDataSource ($id, $name, $privileges = array(), $seoUrl = "", $data = "", $publish = false, $sort = 99999, $dataIsPrepared = false) {
+
+    public function UpdateDataSource($id, $name, $privileges = array(), $seoUrl = "", $data = "", $publish = false, $sort = 99999, $dataIsPrepared = false) {
         $tmpData = $data;
         if (!$dataIsPrepared)
             $data = $this->PrepareXmlFromArray($data);
         return $this->UpdateContentItem($id, $name, $publish, $seoUrl, 0, true, true, "", $privileges, $data, 0, 0, "", "", "", 0, 0, 0, $sort, 0, $tmpData);
     }
+
     public function CreateJs($name, $privileges = array(), $data = "", $parentId = 0, $lang = 0, $publish = false, $sort = 99999) {
         return $this->CreateContentItem($name, $publish, "", 0, ContentTypes::JAVASCRIPT, FALSE, $lang, $parentId, true, "", $privileges, $data, 0, 0, "", "", "", 0, 0, 0, $sort);
     }
-    
-    public function CreateDataSource ($name, $privileges = array(), $seoUrl = "", $data = "", $parentId = 0, $lang = 0, $publish = false, $sort = 99999, $dataIsPrepared = false) {
+
+    public function CreateDataSource($name, $privileges = array(), $seoUrl = "", $data = "", $parentId = 0, $lang = 0, $publish = false, $sort = 99999, $dataIsPrepared = false) {
         $tmpData = $data;
         if (!$dataIsPrepared)
             $data = $this->PrepareXmlFromArray($data);
         return $this->CreateContentItem($name, $publish, $seoUrl, 0, ContentTypes::DATASOURCE, FALSE, $lang, $parentId, true, "", $privileges, $data, 0, 0, "", "", "", 0, 0, 0, $sort, 0, $tmpData);
     }
-    
+
     public function UpdateCss($id, $name, $privileges = array(), $data = "", $publish = false) {
         return $this->UpdateContentItem($id, $name, $publish, "", 0, true, true, "", $privileges, $data, 0, 0, "");
     }
-    
-     public function UpdateInquery($id, $name, $privileges = array(), $data = array(), $publish = false) {
+
+    public function UpdateInquery($id, $name, $privileges = array(), $data = array(), $publish = false) {
         $data = $this->PrepareXmlFromArray($data);
         return $this->UpdateContentItem($id, $name, $publish, "", 0, true, true, "", $privileges, $data, 0, 0, "");
     }
-    public function UpdateTemplate ($id, $name, $identificator, $privileges = array(), $data = "", $domainId = 0, $templateId = 0, $publish = false, $header = "", $settings = "") {
+
+    public function UpdateTemplate($id, $name, $identificator, $privileges = array(), $data = "", $domainId = 0, $templateId = 0, $publish = false, $header = "", $settings = "") {
         $settings = $this->PrepareXmlFromArray($settings);
         return $this->UpdateContentItem($id, $name, $publish, "", 0, true, true, $identificator, $privileges, $data, $domainId, $templateId, $header, "", "", 0, 0, 0, 99999, 0, array(), false, false, 0, false, false, 0, 0, 0, 0, $settings);
     }
-    
+
     private function SetValidateUserItem() {
         $model = new ContentVersion();
         $model->SetValidateRule("SeoUrl", RuleType::$NoEmpty);
         $model->SetValidateRule("SeoUrl", RuleType::$SeoString);
         $model->SetValidateRule("SeoUrl", RuleType::$Unique);
     }
-        public function CreateUserItem($name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $lang, $parentid, $privileges, $data, $dataIsPrepared = false, $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $formId = 0, $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0,$caching = false,$sort = 999999,$sortRule="") {
+
+    public function CreateUserItem($name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $lang, $parentid, $privileges, $data, $dataIsPrepared = false, $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $formId = 0, $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $caching = false, $sort = 999999, $sortRule = "") {
         $this->SetValidateUserItem();
         $tmpData = $data;
         if (!$dataIsPrepared)
             $data = $this->PrepareXmlFromArray($data);
-        return $this->CreateContentItem($name, $isActive, $seoUrl, 0, ContentTypes::USERITEM, $availableOverSeoUrl, $lang, $parentid, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo, $gallerySettings, $discusionSettings, $connectDiscusion, $sort, $formId, true, $tmpData, $noChild, $useTemplateInChild, $childTemplate, $copyDataToChild, $ActivatePager, $FirstItemLoadPager, $NextItemLoadPager, $inquery, $noLoadSubItems,"",$caching);
+        return $this->CreateContentItem($name, $isActive, $seoUrl, 0, ContentTypes::USERITEM, $availableOverSeoUrl, $lang, $parentid, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo, $gallerySettings, $discusionSettings, $connectDiscusion, $sort, $formId, true, $tmpData, $noChild, $useTemplateInChild, $childTemplate, $copyDataToChild, $ActivatePager, $FirstItemLoadPager, $NextItemLoadPager, $inquery, $noLoadSubItems, "", $caching);
     }
-    
-    public function CreateLink ($linkType, $parentId, $objectId, $externalLinkInfo, $objectLinkId = 0, $privileges = array()) {
+
+    public function CreateLink($linkType, $parentId, $objectId, $externalLinkInfo, $objectLinkId = 0, $privileges = array()) {
 
         if ($objectLinkId > 0) {
             $this->DeleteItem($objectLinkId);
@@ -615,7 +589,7 @@ class Content extends ObjectManager {
             $arrayXml[0]["ObjectId"] = $objectId;
             $user = new \Objects\Users();
             $data = array();
-            
+
             if ($linkType == LinkType::$Document)
                 $data = $this->GetUserItemDetail($objectId, $user->GetUserGroupId(), $_GET["webid"], $_GET["langid"]);
             else if ($linkType == LinkType::$Repository)
@@ -644,22 +618,22 @@ class Content extends ObjectManager {
             return $this->CreateContentItem($externalLinkInfo[0], true, $url, 0, ContentTypes::JAVASCRIPT_ACTION, false, $_GET["langid"], $parentId, true, "", $privileges, $linkInfoXml, 0, 0, "", "", "", 0, 0, 0, 99999, 0, true, $linkInfo);
         }
     }
-    
-        public function CreateForm($name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $lang, $parentid, $privileges, $data) {
+
+    public function CreateForm($name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $lang, $parentid, $privileges, $data) {
         $this->SetValidateUserItem();
         $data = $this->PrepareXmlFromArray($data);
         return $this->CreateContentItem($name, $isActive, $seoUrl, 0, ContentTypes::FORM, $availableOverSeoUrl, $lang, $parentid, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo, 0, 0, 0);
     }
-    
-    public function CreateMail ($name, $lang, $parentid, $privileges, $data, $active) {
+
+    public function CreateMail($name, $lang, $parentid, $privileges, $data, $active) {
         return $this->CreateContentItem($name, $active, "", 0, ContentTypes::MAIL, false, $lang, $parentid, true, "", $privileges, $data, 0, 0, "", "", "", 0, 0, 0, 99999, 0);
     }
-    
-    public function CreateMailing ($name, $lang, $parentid, $privileges, $data, $active) {
+
+    public function CreateMailing($name, $lang, $parentid, $privileges, $data, $active) {
         $data = $this->PrepareXmlFromArray($data);
         return $this->CreateContentItem($name, $active, "", 0, ContentTypes::MAILING, false, $lang, $parentid, true, "", $privileges, $data, 0, 0, "", "", "", 0, 0, 0, 99999, 0);
     }
-    
+
     public function CreateSendMail($lang, $parentid, $data, $sourceId, $webId, $groupId, $emailFrom, $emailTo) {
         $sourceData = $this->GetMailDetail($sourceId, $groupId, $webId, $lang);
         if (empty($sourceData))
@@ -680,7 +654,7 @@ class Content extends ObjectManager {
         $out["MailId"] = $id;
         return $out;
     }
-    
+
     public function CreateResendEmail($lang, $parentid, $data, $emailFrom, $emailTo, $name, $html) {
         $dataAr = array();
         $dataAr["EmailText"] = $html;
@@ -691,50 +665,50 @@ class Content extends ObjectManager {
         $data = $this->PrepareXmlFromArray($dataAr, "keyvalue");
         return $this->CreateContentItem($name, true, $name . "-" . StringUtils::GenerateRandomString(), 0, ContentTypes::SENDMAIL, false, $lang, $parentid, true, "", array(), $data, 0, 0, "", "", "", 0, 0, 0, 99999, 0, FALSE);
     }
-    
+
     public function UpdateMail($contentId, $name, $privileges, $data, $active) {
         return $this->UpdateContentItem($contentId, $name, $active, "", 0, false, true, "", $privileges, $data);
     }
-    
-    public function DisconnectObjects($ObjectId, $ConnectedType)
-    {
-        $contentVersion = ContentVersion::GetInstance();
+
+    public function DisconnectObjects($ObjectId, $ConnectedType) {
+        $contentVersion = \Model\ContentVersion::GetInstance();
         if (!$contentVersion->HasPrivileges($ObjectId, PrivilegesType::$CanWrite))
             return;
-        $this->DeleteByCondition("ObjectId = ".$ObjectId." AND ConnectedType = '$ConnectedType'",true,false);
+        $this->DeleteByCondition("ObjectId = " . $ObjectId . " AND ConnectedType = '$ConnectedType'", true, false);
     }
-     public function UpdateMailing($contentId, $name, $privileges, $data, $active) {
+
+    public function UpdateMailing($contentId, $name, $privileges, $data, $active) {
         $data = $this->PrepareXmlFromArray($data);
         return $this->UpdateContentItem($contentId, $name, $active, "", 0, false, true, "", $privileges, $data);
     }
-    
+
     public function UpdateForm($contentId, $name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $privileges, $data) {
         $this->SetValidateUserItem();
         $data = $this->PrepareXmlFromArray($data);
         return $this->UpdateContentItem($contentId, $name, $isActive, $seoUrl, 0, $availableOverSeoUrl, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo);
     }
-    
+
     public function CreateFileFolder($name, $seoUrl, $AvailableOverSeoUrl, $lang, $parentid, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $privileges) {
         return $this->CreateContentItem($name, true, $seoUrl, 0, ContentTypes::FILEFOLDER, $AvailableOverSeoUrl, $lang, $parentid, $noIncludeSearch, $identificator, $privileges, "", 0, 0, "", $activeFrom, $activeTo);
     }
-    
+
     public function CreateFile($name, $lang, $parentid, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $privileges, $data) {
         $data = $this->PrepareXmlFromArray($data);
         $id = $this->CreateContentItem($name, true, "", 0, ContentTypes::FILEUPLOAD, true, $lang, $parentid, $noIncludeSearch, $identificator, $privileges, $data, 0, 0, "", $activeFrom, $activeTo);
-        $this->GetFileType($id, $data,$lang);
+        $this->GetFileType($id, $data, $lang);
         return $id;
     }
-    
-     private function GetFileType($id, $data,$lang) {
-        $content = Content::GetInstance();
+
+    private function GetFileType($id, $data, $lang) {
+        $content = \Model\Content::GetInstance();
         $content->GetObjectById($id, true);
-        
+
         $data = str_replace("<items><FileUpload><![CDATA[", "", $data);
         $data = str_replace("]]></FileUpload></items>", "", $data);
         $data = strtolower($data);
 
         if (strpos($data, ".jpg") !== false || strpos($data, ".gif") !== false || strpos($data, ".png") !== false || strpos($data, ".jpeg") !== false) {
-            
+
             $content->UploadedFileType = "image";
             $img = new Image();
             $web = \Model\Webs::GetInstance();
@@ -745,9 +719,9 @@ class Content extends ObjectManager {
             $xml .= "</FileUpload>";
 
             $actualFile = ROOT_PATH . $data;
-                
+
             $newFileNameB = $img->CreateFileName($actualFile, "_b");
-            
+
             $img->Resizer($actualFile, $newFileNameB, $web->BigWidth, $web->BigHeight);
             $newFileNameB = str_replace(ROOT_PATH, "", $newFileNameB);
             $xml .= "<FileUpload_big>";
@@ -768,11 +742,11 @@ class Content extends ObjectManager {
             $xml .= "<![CDATA[" . $newFileNameS . "]]>";
             $xml .= "</FileUpload_small>";
             $xml .= "</items>";
-                
+
             $dataVersion = $this->SelectByCondition("ContentId = $id AND IsLast = 1 AND LangId = $lang");
             if (!empty($dataVersion)) {
                 //echo $dataVersion[0]["Id"]."<br>";
-                $contentVersion = ContentVersion::GetInstance();
+                $contentVersion = \Model\ContentVersion::GetInstance();
                 $contentVersion->GetObjectById($dataVersion[0]["Id"], true);
                 $contentVersion->Data = $xml;
                 $contentVersion->SaveObject();
@@ -788,25 +762,25 @@ class Content extends ObjectManager {
 
         $content->SaveObject();
     }
-    
+
     public function UpdateFile($contentId, $name, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $privileges, $data) {
         $data = $this->PrepareXmlFromArray($data);
         $id = $this->UpdateContentItem($contentId, $name, true, "", 0, true, $noIncludeSearch, $identificator, $privileges, $data, 0, 0, "", $activeFrom, $activeTo);
-        $this->GetFileType($contentId, $data,$_GET["langid"]);
+        $this->GetFileType($contentId, $data, $_GET["langid"]);
         return $id;
     }
-    
-    public function UpdateFileFolder ($contentId, $name, $seoUrl, $AvailableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $privileges) {
+
+    public function UpdateFileFolder($contentId, $name, $seoUrl, $AvailableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $privileges) {
         return $this->UpdateContentItem($contentId, $name, true, $seoUrl, 0, $AvailableOverSeoUrl, $noIncludeSearch, $identificator, $privileges, "", 0, 0, "", $activeFrom, $activeTo);
     }
-    
-    public function UpdateUserItem($contentId, $name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $privileges, $data, $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $formId = 0, $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0,$caching = false,$sort = 99999,$sortRule) {
+
+    public function UpdateUserItem($contentId, $name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $privileges, $data, $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $formId = 0, $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $caching = false, $sort = 99999, $sortRule) {
         $this->SetValidateUserItem();
         $dataTmp = $data;
         $data = $this->PrepareXmlFromArray($data);
-        return $this->UpdateContentItem($contentId, $name, $isActive, $seoUrl, 0, $availableOverSeoUrl, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo, $gallerySettings, $discusionSettings, $connectDiscusion, $sort, $formId, $dataTmp, $noChild, $useTemplateInChild, $childTemplate, $copyDataToChild, $ActivatePager, $FirstItemLoadPager, $NextItemLoadPager, $inquery, $noLoadSubItems,"",$caching,$sortRule);
+        return $this->UpdateContentItem($contentId, $name, $isActive, $seoUrl, 0, $availableOverSeoUrl, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo, $gallerySettings, $discusionSettings, $connectDiscusion, $sort, $formId, $dataTmp, $noChild, $useTemplateInChild, $childTemplate, $copyDataToChild, $ActivatePager, $FirstItemLoadPager, $NextItemLoadPager, $inquery, $noLoadSubItems, "", $caching, $sortRule);
     }
-    
+
     public function CreateFormStatisticItem($lang, $parentid, $data) {
         $user = new \Objects\Users();
         $ar1 = array();
@@ -824,17 +798,17 @@ class Content extends ObjectManager {
         $data[] = $ar1;
         $data = $this->PrepareXmlFromArray($data);
 
-        
-        
+
+
 
         return $this->CreateContentItem("formstatistic-" . StringUtils::GenerateRandomString(), true, "", 0, ContentTypes::FORMSTATISTIC, false, $lang, $parentid, true, "", array(), $data, 0, 0, "", "", "", 0, 0, 0, 99999, 0, false);
     }
-    
+
     public function GetFormStatistic($formId, $langId, $webId) {
         return dibi::query("SELECT  Id, Data FROM FORMSTATISTIC WHERE ParentId= %i ", $formId)->fetchAll();
     }
-    
-       public function PrepareHtml($array, $html) {
+
+    public function PrepareHtml($array, $html) {
         for ($i = 0; $i < count($array); $i++) {
             $key = $array[$i][0];
             $value = $array[$i][1];
@@ -842,11 +816,11 @@ class Content extends ObjectManager {
         }
         return $html;
     }
-    
-       private function PrepareXmlFromArray($array, $mode = "standard") {
-        
+
+    private function PrepareXmlFromArray($array, $mode = "standard") {
+
         $xml = "";
-        
+
         if (!empty($array)) {
             $xml .= "<items>";
             if ($mode == "standard") {
@@ -857,7 +831,7 @@ class Content extends ObjectManager {
                             $id = StringUtils::RemoveString($id, "__ishtmleditor__");
                             $id = StringUtils::RemoveLastChar($id, 5);
                         }
-                        if ($id =="DataItems")
+                        if ($id == "DataItems")
                             $xml .= "<" . $id . ">" . $array[$i][1] . "</" . $id . ">";
                         else
                             $xml .= "<" . $id . "><![CDATA[" . $array[$i][1] . "]]></" . $id . ">";
@@ -888,12 +862,11 @@ class Content extends ObjectManager {
 
     private function Security($privileges, $contentId, $setDefault = true) {
         try {
-            
-            $security =  ContentSecurity::GetInstance();
+
+            $security = \Model\ContentSecurity::GetInstance();
             $user = new \Objects\Users();
             $systemgroup = $user->GetUserGroupByIdeticator("system");
             $security->DeleteByCondition("ObjectId = $contentId", true, false);
-
             $types = array();
             if (!empty($privileges)) {
                 for ($i = 0; $i < count($privileges); $i++) {
@@ -902,6 +875,9 @@ class Content extends ObjectManager {
                     $types[] = $privileges[$i][0];
                     $security->GroupId = $privileges[$i][1];
                     $security->Value = $privileges[$i][2] == "true" ? true : false;
+                    if ($setDefault) {
+                        $setDefault = $privileges[$i][1] == $systemgroup->Id ? false : true;
+                    }
                     $security->SaveObject();
                 }
             }
@@ -944,60 +920,52 @@ class Content extends ObjectManager {
         return $priviles;
     }
 
-    
-     public function CreateVersion ($contentId, $name, $isActive, $userId, $seoUrl, $template, $AvailableOverSeoUrl, $lang, $data, $header, $activeFrom, $activeTo, $testPrivileges = true, $contentType = "", $settings = "") {
+    public function CreateVersion($contentId, $name, $isActive, $userId, $seoUrl, $template, $AvailableOverSeoUrl, $lang, $data, $header, $activeFrom, $activeTo, $testPrivileges = true, $contentType = "", $settings = "") {
         try {
-
+            $model = \Model\ContentVersion::GetInstance();
             if ($lang == 0 && !empty($_GET["langid"])) {
                 $lang = $_GET["langid"];
             }
-
-            /* $lastId = $this->GetLastVersionId($contentId, $lang);
-              if ($lastId >0)
-              {
-              $this->CopyObject($lastId);
-              } */
-             
             $canPublish = $this->HasPrivileges($contentId, PrivilegesType::$CanPublish);
             if ($lang == 0) {
                 dibi::query("UPDATE ContentVersion SET IsLast = 0 WHERE ContentId = %i ", $contentId);
             } else {
                 dibi::query("UPDATE ContentVersion SET IsLast = 0 WHERE ContentId = %i AND LangId =%i ", $contentId, $lang);
             }
-            $this->ContentId = $contentId;
-            $this->Name = $name;
-            $this->PublishUser = 0;
-            
+            $model->ContentId = $contentId;
+            $model->Name = $name;
+            $model->PublishUser = 0;
+
             $isActive = $isActive == "true" ? true : false;
             if ($isActive && ($canPublish || !$testPrivileges)) {
                 $this->DeactiveAllVersion($contentId, $lang);
-                $this->IsActive = TRUE;
-                $this->PublishUser = $userId;
+                $model->IsActive = TRUE;
+                $model->PublishUser = $userId;
             } else {
-                $this->IsActive = FALSE;
+                $model->IsActive = FALSE;
             }
-            
-            $this->IsLast = TRUE;
-            $this->Author = $userId;
-            
-            $this->SeoUrl = ($contentType == ContentTypes::EXTERNAL_LINK || $contentType == ContentTypes::CSS_EXTERNAL_LINK || $contentType == ContentTypes::JS_EXTERNAL_LINK || $contentType == ContentTypes::JAVASCRIPT_ACTION ) ? $seoUrl : $this->ValidateSeoUrl($seoUrl, $name, $contentId, $lang);
-            
-            $this->Template = $template;
-            $this->Header = $header;
-            $this->AvailableOverSeoUrl = $AvailableOverSeoUrl;
-            $this->Date = date('Y-m-d H:i:s');
-            if ($lang > 0) {
-                $this->LangId = $lang;
-            }
-            
 
-            $this->Data = $data;
-            $this->ActiveFrom = $activeFrom;
-            $this->ActiveTo = $activeTo;
-            $this->ContentSettings = $settings;
-            $vesionId = $this->SaveObject($this);
+            $model->IsLast = TRUE;
+            $model->Author = $userId;
+
+            $model->SeoUrl = ($contentType == ContentTypes::EXTERNAL_LINK || $contentType == ContentTypes::CSS_EXTERNAL_LINK || $contentType == ContentTypes::JS_EXTERNAL_LINK || $contentType == ContentTypes::JAVASCRIPT_ACTION ) ? $seoUrl : $this->ValidateSeoUrl($seoUrl, $name, $contentId, $lang);
+
+            $model->Template = $template;
+            $model->Header = $header;
+            $model->AvailableOverSeoUrl = $AvailableOverSeoUrl;
+            $model->Date = date('Y-m-d H:i:s');
+            if ($lang > 0) {
+                $model->LangId = $lang;
+            }
+
+
+            $model->Data = $data;
+            $model->ActiveFrom = $activeFrom;
+            $model->ActiveTo = $activeTo;
+            $model->ContentSettings = $settings;
+            $vesionId = $model->SaveObject();
             if ($vesionId == 0) {
-                //throw xWebExceptions::$SaveVersionError;
+                throw \Types\xWebExceptions::$SaveVersionError;
             }
             return $vesionId;
         } catch (Exception $ex) {
@@ -1005,24 +973,27 @@ class Content extends ObjectManager {
             return 0;
         }
     }
-private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
+
+    private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
+        $model = new \Model\ContentVersion();
         $seoUrl = trim($seoUrl);
         if (empty($seoUrl))
             $seoUrl = $name;
         if (empty($seoUrl))
             $seoUrl = $id;
         $seoUrl = StringUtils::SeoString($seoUrl);
-        
-        $exists = $this->ItemExists("SeoUrl", $seoUrl, $id, "ContentId", $lang);
-        
-        if ($exists || strlen($seoUrl)<=3) {
+
+        $exists = $model->ItemExists("SeoUrl", $seoUrl, $id, "ContentId", $lang);
+
+        if ($exists || strlen($seoUrl) <= 3) {
             $seoUrl = $seoUrl . "-" . $id;
             return $this->ValidateSeoUrl($seoUrl, $name, $id);
         }
-        
+
         return $seoUrl;
     }
-        public function GetTemplateList($groupId, $langId, $onlyTemplate = false, $onlyWidthDomain = false, $search = "", $sort = "") {
+
+    public function GetTemplateList($groupId, $langId, $onlyTemplate = false, $onlyWidthDomain = false, $search = "", $sort = "") {
 
         if (!empty($sort))
             $sort = "ORDER BY $sort";
@@ -1046,8 +1017,8 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function GetCssList($groupId, $langId, $onlyCss = false, $search = "") {
-        
-        
+
+
         if ($search == "") {
             if (!$onlyCss) {
                 $res = dibi::query("SELECT Id,ParentId,Name FROM CSSLIST WHERE  LangId = %i AND GroupId = %i AND IsLast = 1  ", $langId, $groupId)->fetchAll();
@@ -1172,6 +1143,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     public function GetFileList($groupId, $webId, $langId) {
         
     }
+
 //
     public function GetTemplateDetail($groupId, $webId, $langId, $contentId, $versionId = 0) {
         if ($versionId == 0) {
@@ -1194,7 +1166,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function GetInqueryDetail($contentId, $groupId = 0, $webId = 0, $langId = 0, $versionId = 0) {
-        if ($versionId== 0) {
+        if ($versionId == 0) {
             $res = dibi::query("SELECT * FROM INQUERYDETAIL WHERE WebId = %i AND LangId = %i AND GroupId = %i AND Id = %i AND IsLast = 1", $webId, $langId, $groupId, $contentId)->fetchAll();
             return $res;
         } else {
@@ -1216,7 +1188,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     public function GetDataSourceDetail($contentId, $groupId = 0, $webId = 0, $langId = 0, $versionId = 0) {
         if ($langId == 0)
             $langId = $_GET["langid"];
-        
+
         if ($versionId == 0) {
             $res = dibi::query("SELECT * FROM DATASOURCEDETAIL WHERE WebId = %i AND LangId = %i AND GroupId = %i AND Id = %i AND IsLast = 1", $webId, $langId, $groupId, $contentId)->fetchAll();
             return $res;
@@ -1227,7 +1199,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function GetUserItemDetail($contentId, $groupId = 0, $webId = 0, $langId = 0, $versionId = 0, $active = false) {
-        if ($contentId == 0 )
+        if ($contentId == 0)
             return array();
         if ($active) {
             $res = dibi::query("SELECT * FROM USERITEMDETAIL WHERE  Id = %i AND IsActive =1  AND GroupId = %i AND LangId = %i  ", $contentId, $groupId, $langId)->fetchAll();
@@ -1309,10 +1281,10 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function GetFrontendXml($seoUrl) {
-            
+
         $xml = simplexml_load_string($this->XmlDetail($seoUrl));
         $outXml = "";
-        
+
         $xmlStart = trim($xml->DatasourceXmlStart);
         $xmlEnd = trim($xml->DatasourceXmlEnd);
         $xmlItemStart = trim($xml->DatasourceXmlItemStart);
@@ -1324,16 +1296,16 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         $variantItemStart = trim($xml->DatasourceXmlSubItemItemStart);
         $variantItemEnd = trim($xml->DatasourceXmlSubItemItemEnd);
         $variantItem = trim($xml->DatasourceXmlSubItem);
-        $exportCondition =    trim($xml->ExportConditions);   
-        $exportColumnCondition = trim($xml->ExportColumnConditions);   
-        
-        
+        $exportCondition = trim($xml->ExportConditions);
+        $exportColumnCondition = trim($xml->ExportColumnConditions);
+
+
         if (trim($xml->DatasourceType) == "XmlExport") {
             $outXml .= $xmlStart;
             $domain = new \Objects\UserDomains();
             $values = $domain->GetDomainValueList(trim($xml->Domain));
-            $domainItems = new \Objects\UserDomains();
-            $items = $domainItems->GetUserDomainItemById(trim($xml->Domain));
+
+            $items = $domain->GetUserDomainItemById(trim($xml->Domain));
             $items = ArrayUtils::ValueAsKey($items, "Identificator");
             foreach ($values as $row) {
                 $xmlTmp = $xmlItem;
@@ -1344,7 +1316,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                             $val = "<![CDATA[" . $val . "]]>";
                         }
                     }
-                    $xmlTmp = str_replace("{" . $key . "}",  $val, $xmlTmp);
+                    $xmlTmp = str_replace("{" . $key . "}", $val, $xmlTmp);
                 }
 
                 $outXml .= $xmlTmp;
@@ -1356,7 +1328,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         } else if (trim($xml->DatasourceType) == "XmlExportUserItem") {
             $users = new \Objects\Users();
             $langId = $this->GetLangIdByWebUrl();
-            $data = $this->LoadFrontend($xmlUserItem, $users->GetUserGroupId(), $langId, $this->GetActualWeb(),0,"",true,false,false,"","",true,$exportCondition,$exportColumnCondition);
+            $data = $this->LoadFrontend($xmlUserItem, $users->GetUserGroupId(), $langId, $this->GetActualWeb(), 0, "", true, false, false, "", "", true, $exportCondition, $exportColumnCondition);
             $data = ArrayUtils::GetChildToRoot($data, "Child");
             $data = ArrayUtils::GetDataXmlValueToRow($data);
             $detail = $this->GetUserItemDetail($xmlUserItem, $users->GetUserGroupId(), 0, $langId);
@@ -1365,7 +1337,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             $identificator = $domainItems->GetUserDomainByTemplateId($templateId);
             $items = $domainItems->GetUserDomainItems($identificator);
             $items = ArrayUtils::ValueAsKey($items, "Identificator");
-            
+
             $outXml .= $xmlStart;
             foreach ($data as $row) {
                 $xmlTmp = $xmlItem;
@@ -1373,9 +1345,9 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                 foreach ($row as $key => $value) {
                     if ($key == "Data") {
                         $xml = simplexml_load_string($value);
-                        
+
                         if (!empty($xml)) {
-                            
+
                             foreach ($xml as $xkey => $xvalue) {
                                 if (!empty($items[$xkey])) {
                                     if ($items[$xkey]["AddCDATA"] == 1) {
@@ -1386,14 +1358,11 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                             }
                         }
                         break;
-                    }
-                    else if ($key == "SeoUrl") {
+                    } else if ($key == "SeoUrl") {
                         $value = SERVER_NAME_LANG . $value . "/";
+                    } else {
+                        $value = "<![CDATA[" . $value . "]]>";
                     }
-                    else 
-                            {
-                                $value = "<![CDATA[" . $value . "]]>";
-                            }
                     $xmlTmp = str_replace("{" . $key . "}", $value, $xmlTmp);
                 }
                 if (!empty($row["Child"])) {
@@ -1410,19 +1379,16 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                                                 $xvalue = "<![CDATA[" . $xvalue . "]]>";
                                             }
                                         }
-                                        $xmlTmp = str_replace("{" . $xkey . "}",  $xvalue, $xmlTmp);
+                                        $xmlTmp = str_replace("{" . $xkey . "}", $xvalue, $xmlTmp);
                                     }
                                 }
                                 break;
-                            }
-                            else if ($keychild == "SeoUrl") {
+                            } else if ($keychild == "SeoUrl") {
                                 $valuechild = SERVER_NAME_LANG . $valuechild . "/";
-                            }
-                            else 
-                            {
+                            } else {
                                 $valuechild = "<![CDATA[" . $valuechild . "]]>";
                             }
-                            
+
                             $xmlTmpChild = str_replace("{" . $keychild . "}", $valuechild, $xmlTmpChild);
                         }
                         $xmlTmp .= $xmlTmpChild;
@@ -1438,7 +1404,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             $outXml = \Kernel\Page::CompressString($outXml);
             $outXml = str_replace("><", ">\n<", $outXml);
             $outXml = preg_replace('/^[ \t]*[\r\n]+/m', '', $outXml);
-            
+
             return $outXml;
         }
     }
@@ -1489,7 +1455,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         $testColumn = trim($xml->ColumnTest);
         $testColumnUserItem = trim($xml->ColumnTestUserImport);
         $xmlUserItem = trim($xml->SelectedObject);
-        $rootElement = trim($xml->RootElement);   
+        $rootElement = trim($xml->RootElement);
         $xmlContent = file_get_contents($xmlUrl);
         $searchItemName = "";
         $useTemplateId = 0;
@@ -1497,23 +1463,22 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
 
         if (trim($xml->DatasourceType) == "XmlImport") {
 
-            $data = ArrayUtils::XmlToArray($xmlContent,"SimpleXMLElement",LIBXML_NOCDATA);
+            $data = ArrayUtils::XmlToArray($xmlContent, "SimpleXMLElement", LIBXML_NOCDATA);
             if (!empty($data[$rootElement]))
                 $data = $data[$rootElement];
             $newArray = array();
-            foreach ($data as $row)
-            {
+            foreach ($data as $row) {
                 $child = $row[$rootElement];
                 unset($row[$rootElement]);
                 $newArray[] = $row;
                 $childData = ArrayUtils::GetChildToRoot($child, $rootElement);
-                $newArray = array_merge($newArray,$childData);
+                $newArray = array_merge($newArray, $childData);
             }
             $this->ImportXmlData($newArray, $domain, $mode, $testColumn);
         } else if (trim($xml->DatasourceType) == "XmlImportUserItem") {
             if ($mode == "DeleteInsert") {
                 $mode = "Insert";
-                $content = Content::GetInstance();
+                $content = \Model\Content::GetInstance();
                 $content->DeleteByCondition("ParentId = $xmlUserItem");
             }
             $users = new \Objects\Users();
@@ -1611,18 +1576,17 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             }
         }
     }
-    
-    private function PrepareXmlImport($array,$columns) {
+
+    private function PrepareXmlImport($array, $columns) {
         $prepareArray = array();
-        
-        foreach ($array as $key => $value)
-        {
+
+        foreach ($array as $key => $value) {
             
         }
     }
 
     private function ImportXmlData($prepareArray, $domain, $mode, $testColumn) {
-        
+
         if ($mode == "")
             return;
         $ud = new \Objects\UserDomains();
@@ -1634,19 +1598,16 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         $udinfo->GetObjectById($domain);
         $userDomain = $ud->GetUserDomainItemById($domain);
         $valueTest = "";
-        /** 
-         * @var \Model\UserDomainsValues
-         */
-        $values = new \Objects\UserDomains();
+
         if ($mode == "DeleteInsert") {
-            $values->DeleteAllValues($domain);
+            $ud->DeleteAllValues($domain);
             $mode = "Insert";
         }
-       
-        
+
+
         foreach ($prepareArray as $row) {
             $saveData = array();
-            foreach ($row as $key => $value ) {
+            foreach ($row as $key => $value) {
                 $saveData[$key] = $value;
             }
             $objectId = $values->GetObjectId($domain, $testColumn, $saveData[$valueTest]);
@@ -1654,7 +1615,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                 continue;
             if ($objectId == 0 && $mode == "Update")
                 continue;
- 
+
             $saveData["Id"] = $objectId;
             $saveData["DomainIdentificator"] = $udinfo->DomainIdentificator;
             $saveData["DomainId"] = $domain;
@@ -1670,25 +1631,24 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         return $xmlstring = $res[0]["data"];
     }
 
-    public function  LoadFrontendFromIdentificator($identificator, $usergroup, $langId, $webId) {
+    public function LoadFrontendFromIdentificator($identificator, $usergroup, $langId, $webId) {
         $contentId = $this->GetIdByIdentificator($identificator, $webId);
         return $this->LoadFrontend($contentId, $usergroup, $langId, $webId);
     }
 
-    public function LoadFrontend($contentId, $usergroup, $langId, $webId, $limitChild = 0, $sort = "", $subItems = false, $ignoreActiveUrl = false, $addParent = false, $acceptItems = "", $ignoredId = "",$ignoreAlternativeItems = IGNORE_ALTERNATIVE_CONTENT,$where = "",$whereColumn = "") {
-        if (!$ignoreAlternativeItems)
-        {
+    public function LoadFrontend($contentId, $usergroup, $langId, $webId, $limitChild = 0, $sort = "", $subItems = false, $ignoreActiveUrl = false, $addParent = false, $acceptItems = "", $ignoredId = "", $ignoreAlternativeItems = IGNORE_ALTERNATIVE_CONTENT, $where = "", $whereColumn = "") {
+        if (!$ignoreAlternativeItems) {
             $alternativeTest = $this->GetAlternativeItems($contentId, $langId, $usergroup);
             if (!empty($alternativeTest)) {
                 $identificator = $alternativeTest[0]["Identificator"];
                 if (empty($identificator)) {
-                    $res = $this->LoadFrontend($alternativeTest[0]["AlternativeContentId"], $usergroup, $langId, $webId, $limitChild, $sort, $subItems, $ignoreActiveUrl, $addParent, $acceptItems, $ignoredId,$ignoreAlternativeItems,$where ,$whereColumn );
+                    $res = $this->LoadFrontend($alternativeTest[0]["AlternativeContentId"], $usergroup, $langId, $webId, $limitChild, $sort, $subItems, $ignoreActiveUrl, $addParent, $acceptItems, $ignoredId, $ignoreAlternativeItems, $where, $whereColumn);
                     return $res;
                 }
             }
         }
         $columns = "";
-        
+
         $limit = $limitChild == 0 ? "" : "LIMIT 0,$limitChild";
 
         if (!empty($sort)) {
@@ -1703,7 +1663,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                 $sort = "ORDER BY $sort";
             }
         }
-       
+
         $ignoreQuery = "";
         $acceptQuery = "";
         $acceptTable = "";
@@ -1716,7 +1676,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                 $ignoreQuery .= " AND child.Id <> $ar[$y] ";
             }
         }
-        
+
         if (!empty($acceptItems)) {
 
             $ar = explode(",", $acceptItems);
@@ -1729,26 +1689,22 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             }
             $acceptTable = "  WHERE ($acceptQuery) ";
         }
-        
-        if (!empty($whereColumn))
-        {
+
+        if (!empty($whereColumn)) {
             $ar = explode(",", $whereColumn);
-            foreach ($ar as $column)
-            {
-              $columnsWhere .= ", GROUP_CONCAT(if(ItemName = '$column', value, NULL)) AS '$column'";
-                
+            foreach ($ar as $column) {
+                $columnsWhere .= ", GROUP_CONCAT(if(ItemName = '$column', value, NULL)) AS '$column'";
             }
             $columns .= $columnsWhere;
-            if(!empty($where))
-            {
+            if (!empty($where)) {
                 if (empty($acceptTable))
-                    $acceptTable = " WHERE (". $where.")";
-                else 
-                    $acceptTable = " AND (". $where.")";
+                    $acceptTable = " WHERE (" . $where . ")";
+                else
+                    $acceptTable = " AND (" . $where . ")";
             }
         }
-        
-         if (!empty($columns)) {
+
+        if (!empty($columns)) {
             $columns = "LEFT JOIN (           
                             SELECT
                                 ContentData.ContentId
@@ -1760,23 +1716,21 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                             ON child.Id = ContentTable.ContentId  ";
         }
         $loadByParents = "";
-        if (empty($where))
-        {
+        if (empty($where)) {
             $loadByParents = "AND parents.Id = $contentId";
-            
         }
-       
-       
 
-        
+
+
+
         $res = dibi::query("SELECT DISTINCT child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header	,parents.Identificator AS parentIdentificator FROM `FrontendDetail_materialized` AS parents "
                         . " INNER JOIN FrontendDetail_materialized AS child ON parents.Id = child.ParentId  $loadByParents AND (child.GroupId =%i OR (child.ContentType='link' ))  AND child.LangId = %i $ignoreQuery $columns  "
                         . "LEFT JOIN  FRONTENDTEMPLATES ON child.TemplateId =  FRONTENDTEMPLATES.Id   AND FRONTENDTEMPLATES.LangId = %i AND FRONTENDTEMPLATES.GroupId = %i  "
                         . " $acceptTable  $sort $limit", $usergroup, $langId, $langId, $usergroup)->fetchAll();
-       
-        
+
+
         if (empty($res) && !$subItems && !$ignoreActiveUrl) {
-                $res = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FrontendDetail_materialized WHERE  Id  = %i AND  (GroupId =%i OR (ContentType='link' ))AND LangId = %i", $contentId, $usergroup, $langId)->fetchAll();
+            $res = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FrontendDetail_materialized WHERE  Id  = %i AND  (GroupId =%i OR (ContentType='link' ))AND LangId = %i", $contentId, $usergroup, $langId)->fetchAll();
             return $res;
         }
         if ($addParent) {
@@ -1787,8 +1741,8 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         if ($subItems) {
             if (!empty($res)) {
                 foreach ($res as $row) {
-                        
-                    $childs = $this->LoadFrontend($row["Id"], $usergroup, $langId, $webId, $limitChild, $sort, $subItems, $ignoreActiveUrl, $addParent, $acceptItems, $ignoredId,$ignoreAlternativeItems);
+
+                    $childs = $this->LoadFrontend($row["Id"], $usergroup, $langId, $webId, $limitChild, $sort, $subItems, $ignoreActiveUrl, $addParent, $acceptItems, $ignoredId, $ignoreAlternativeItems);
                     if (!empty($childs))
                         $row["Child"] = $childs;
                 }
@@ -1821,7 +1775,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         $langFolderInfo = dibi::query("SELECT CONTENTTREE.Id,  Langs.LangName,CONTENTTREE.ParentId FROM CONTENTTREE 
                                         LEFT JOIN Langs ON CONTENTTREE.LangId =Langs.Id
                 WHERE LangId = %i AND ContentType= 'langfolder' ", $langId)->fetchAll();
-        
+
         if ($parentId == -1) {
             return $langFolderInfo;
         }
@@ -1883,19 +1837,19 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         }
     }
 
-    /*public function GetRepositoryByWebId($id) {
-        
-    }
+    /* public function GetRepositoryByWebId($id) {
 
-    public function CreateWebRepository($webId) {
-        $name = "webrepository_" . $webId;
-        if (!$this->ItemExists("Name", $name)) {
-            $this->CreateContentItem($name, true, "", 0, ContentTypes::$Repository, false, $lang, $parentid, $noIncludeSearch);
-        }
-    }*/
+      }
+
+      public function CreateWebRepository($webId) {
+      $name = "webrepository_" . $webId;
+      if (!$this->ItemExists("Name", $name)) {
+      $this->CreateContentItem($name, true, "", 0, ContentTypes::$Repository, false, $lang, $parentid, $noIncludeSearch);
+      }
+      } */
 
     private function CreateTree($inData, $idColumn, $parentIdColumn, $idP = "", $noConnectedItems = false) {
-        
+
         $outData = array();
         $i = 0;
         foreach ($inData as $row) {
@@ -1905,7 +1859,6 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                 $outData[$i]["child"] = $this->GetChild($inData, $id, $parentIdColumn, $idColumn);
                 $i++;
             }
-            
         }
         return $outData;
     }
@@ -1951,8 +1904,8 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             return FALSE;
         }
 
-        $content = Content::GetInstance();
-        $security = ContentSecurity::GetInstance();
+        $content = \Model\Content::GetInstance();
+        $security = \Model\ContentSecurity::GetInstance();
         $content->DeleteObject($id, false, false);
         $this->DeleteByCondition("ContentId = $id", false, false);
         $security->DeleteByCondition("ObjectId = $id", false, false);
@@ -1973,78 +1926,76 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function HasPrivileges($id, $privilegesName, $checkTree = false, $groupId = 0) {
-        try{
-        $user = new \Objects\Users();
-        if ($this->IsLink($id))
-            return true;
-        if ($groupId == 0) {
-            $groupId = $user->GetUserGroupId();
-        }
-        if ($this->IsFolder($id)) {
-            
-            $web = \Model\Webs::GetInstance();
-            $web->GetObjectById($_GET["webid"]);
-            $xml = $web->WebPrivileges;
-            
-            $ar = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
-            
-            
-            if ($user->IsSystemUser())
+        try {
+            $user = new \Objects\Users();
+            if ($this->IsLink($id))
                 return true;
-            
-            foreach ($ar["item"] as $row) {
+            if ($groupId == 0) {
+                $groupId = $user->GetUserGroupId();
+            }
+            if ($this->IsFolder($id)) {
 
-                if ($row["UserGroup"] == $groupId && $row["PrivilegesName"] == $privilegesName  && ($row["Value"] == "true" || $row["Value"] == true))
+                $web = \Model\Webs::GetInstance();
+                $web->GetObjectById($_GET["webid"]);
+                $xml = $web->WebPrivileges;
+
+                $ar = ArrayUtils::XmlToArray($xml, "SimpleXMLElement", LIBXML_NOCDATA);
+
+
+                if ($user->IsSystemUser())
                     return true;
-            }
-            return false;
-        }
 
+                foreach ($ar["item"] as $row) {
 
-        if (PrivilegesType::$CanPublish == $privilegesName) {
-            
-        }
-        if (PrivilegesType::$CanChangePrivileges == $privilegesName) {
-            
-        }
-
-        $res = dibi::query("SELECT Value FROM ContentSecurity WHERE SecurityType = %s AND ObjectId =%i AND GroupId = %i AND Deleted = 0 ORDER BY Id DESC", $privilegesName, $id, $groupId)->fetchAll();
-
-
-        if (empty($res)) {
-            return false;
-        }
-        foreach ($res as $row) {
-            if ($row["Value"] == 0)
-                return false;
-        }
-        if ($checkTree) {
-            $res = dibi::query("select Id from CONTENTTREE WHERE ParentId =%i AND Deleted= 0", $id)->fetchAll();
-            $out = true;
-            foreach ($res as $row) {
-                $privileges = $this->HasPrivileges($row["Id"], $privilegesName, $checkTree, $groupId);
-                if (!$privileges) {
-
-                    $out = false;
-                    break;
+                    if ($row["UserGroup"] == $groupId && $row["PrivilegesName"] == $privilegesName && ($row["Value"] == "true" || $row["Value"] == true))
+                        return true;
                 }
+                return false;
             }
-            return $out;
-        }
 
-        return true;
-        }
-        catch (Exception $e)
-        
-        {
-            echo $e;die();
+
+            if (PrivilegesType::$CanPublish == $privilegesName) {
+                
+            }
+            if (PrivilegesType::$CanChangePrivileges == $privilegesName) {
+                
+            }
+
+            $res = dibi::query("SELECT Value FROM ContentSecurity WHERE SecurityType = %s AND ObjectId =%i AND GroupId = %i AND Deleted = 0 ORDER BY Id DESC", $privilegesName, $id, $groupId)->fetchAll();
+
+
+            if (empty($res)) {
+                return false;
+            }
+            foreach ($res as $row) {
+                if ($row["Value"] == 0)
+                    return false;
+            }
+            if ($checkTree) {
+                $res = dibi::query("select Id from CONTENTTREE WHERE ParentId =%i AND Deleted= 0", $id)->fetchAll();
+                $out = true;
+                foreach ($res as $row) {
+                    $privileges = $this->HasPrivileges($row["Id"], $privilegesName, $checkTree, $groupId);
+                    if (!$privileges) {
+
+                        $out = false;
+                        break;
+                    }
+                }
+                return $out;
+            }
+
+            return true;
+        } catch (Exception $e) {
+            echo $e;
+            die();
         }
     }
 
     public function IsFolder($contentId) {
         if ($contentId == 0)
             return true;
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         $content->GetObjectById($contentId);
         if ($content->ContentType == ContentTypes::LANGFOLDER)
             return true;
@@ -2052,15 +2003,15 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function GetContentType($contentId) {
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         $content->GetObjectById($contentId);
         return $content->ContentType;
     }
 
     public function LoadTemplateByIdentificator($identificator, $groupId, $langId, $webId) {
-        
-        
-        $res = dibi::query("SELECT TemplateId, Header, data,ContentType,Id,ParentId,Name FROM FRONTENDTEMPLATES WHERE  Identificator =%s AND GroupId = %i  AND  LangId = %i  ",$identificator, $groupId, $langId)->fetchAll();
+
+
+        $res = dibi::query("SELECT TemplateId, Header, data,ContentType,Id,ParentId,Name FROM FRONTENDTEMPLATES WHERE  Identificator =%s AND GroupId = %i  AND  LangId = %i  ", $identificator, $groupId, $langId)->fetchAll();
         return $this->GetFirstRow($res);
     }
 
@@ -2068,7 +2019,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         $res = dibi::query("SELECT TemplateId, Header, data,ContentType,Id,ParentId,Name FROM FRONTENDTEMPLATES WHERE Id =%i AND GroupId = %i AND  LangId = %i ", $id, $groupId, $langId)->fetchAll();
         return $this->GetFirstRow($res);
     }
-    
+
     public function CreateHtml($tree, $isRoot = true, $parentId = "", $showChild = false, $blockMove = false, $setSelectId = true, $dialogId = "") {
         $html = "";
 
@@ -2143,7 +2094,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     public function Move($sourceId, $destinationId) {
         if (!$this->HasPrivileges($sourceId, PrivilegesType::$CanRead, true) || !$this->HasPrivileges($destinationId, PrivilegesType::$CanWrite))
             return FALSE;
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         if ($this->IsLink($destinationId))
             return FALSE;
         $content->MoveItem($sourceId, $destinationId, "ParentId");
@@ -2165,9 +2116,9 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             $connectionObjects = dibi::query("SELECT * FROM CONNECTIONOBJECTS WHERE ObjectId = %i AND  (LangId = %i OR LangId =0 ) ", $sourceId, $langId)->fetchAll();
             $data = $copyData["Data"];
             $destinationId = $this->CreateUserItem($copyData["Name"], "", $copyData["AvailableOverSeoUrl"] == 1 || $copyData["AvailableOverSeoUrl"] == "1" ? true : false, $copyData["NoIncludeSearch"] == 1 || $copyData["NoIncludeSearch"] == "1" ? true : false, "", $copyData["ActiveFrom"], $copyData["ActiveTo"], $copyData["TemplateId"], false, $langId, $destinationId, array(), $data, true, $copyData["GallerySettings"], 3, $copyData["DiscusionId"], $copyData["FormId"], false);
-            $contentConnection = new \Objects\Content();
+
             foreach ($connectionObjects as $obj) {
-                $contentConnection->CreateConnection($destinationId, $obj["ObjectIdConnected"], $obj["ConnectedType"], $obj["SettingConnection"]);
+                $this->CreateConnection($destinationId, $obj["ObjectIdConnected"], $obj["ConnectedType"], $obj["SettingConnection"]);
             }
             if ($copyChild) {
                 $childs = $this->GetTree($langId, $sourceId);
@@ -2200,7 +2151,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
 
         if (empty($identificator))
             return 0;
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         $data = array();
         if ($webid == 0) {
             $data = $content->SelectByCondition("Identificator = '$identificator' AND Deleted= 0");
@@ -2209,11 +2160,8 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
                     LEFT JOIN ContentVersion ON   ContentVersion.ContentId = Content.Id 
                     WHERE Identificator = '$identificator' AND Content.Deleted= 0 AND ContentVersion.WebId = $webid"
                     )->fetchAll();
-            //$data = $content->SelectByCondition("Identificator = '$identificator' AND Deleted= 0");
         }
-        if (empty($data))
-            return 0;
-        return $data[0]["Id"];
+        return empty($data) ? 0 : $data[0]["Id"];
     }
 
     public function GetIdGalleryBySeoUrl($seourl, $langid, $webid) {
@@ -2304,7 +2252,7 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function GetArticleDiscusion($id) {
-        $content = Content::GetInstance();
+        $content = \Model\Content::GetInstance();
         $content->GetObjectById($id);
         return $content->DiscusionId;
     }
@@ -2335,27 +2283,20 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             return $this->GetArticleBySeoUrl($checkalternative[0]["SeoUrl"], $usergroup, $langId, $webId, $preview, $subItems, $where, $colums, $sort, $limitLoad);
         }
         return $res;
-      
-
-        
     }
 
     public function RenderSendEmail($id, $langId, $webId) {
-        $res = dibi::query("SELECT * FROM SENDMAILDETAIL WHERE  WebId = %i AND LangId = %i AND Id = %i  ", $webId, $langId, $id)->fetchAll();
-        return $res;
+        return dibi::query("SELECT * FROM SENDMAILDETAIL WHERE  WebId = %i AND LangId = %i AND Id = %i  ", $webId, $langId, $id)->fetchAll();
     }
 
-    
-
     public function ItemExistsInLang($contentId, $langId) {
-        $res = $this->SelectByCondition(" Deleted = 0 AND ContentId = $contentId AND LangId = $langId","",array("ContentId"));
-        if (empty($res))
-            return FALSE;
-        return TRUE;
+        $model = \Model\ContentVersion::GetInstance();
+        $res = $model->SelectByCondition(" Deleted = 0 AND ContentId = $contentId AND LangId = $langId", "", array("ContentId"));
+        return empty($res) ? false : true;
     }
 
     public function CopyLang($sourceLang, $destinationLang) {
-        
+
         if ($sourceLang == $destinationLang)
             return;
 
@@ -2544,38 +2485,37 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function PublishItem($contentId, $langId) {
-        $users = new \Objects\Users();
+        $user = new \Objects\Users();
+        $model = \Model\ContentVersion::GetInstance();
         if (!$this->HasPrivileges($contentId, PrivilegesType::$CanPublish))
             return false;
-        $res = $this->SelectByCondition("ContentId = $contentId AND IsLast = 1 AND LangId = $langId");
+        $res = $model->SelectByCondition("ContentId = $contentId AND IsLast = 1 AND LangId = $langId");
         if (empty($res))
             return false;
         $id = $res[0]["Id"];
-        $this->GetObjectById($id, true);
+        $model->GetObjectById($id, true);
         $this->DeactiveAllVersion($contentId, $langId);
-        $this->IsActive = true;
-        $this->PublishUser = $user->GetUserId();
-        $this->SaveObject();
-        $xml = $this->Data;
+        $model->IsActive = true;
+        $model->PublishUser = $user->GetUserId();
+        $model->SaveObject();
+        $xml = $model->Data;
         $xmld = simplexml_load_string($xml);
-        foreach ($xmld as $key => $value)
-        {
+        foreach ($xmld as $key => $value) {
             $key = trim($key);
             $value = trim($value);
             /** @var  \Model\ContentData */
-            $contentData = ContentData::GetInstance();
-            $contentData->DeleteByCondition("ContentId = $contentId AND LangId = $langId", true,false);
+            $contentData = \Model\ContentData::GetInstance();
+            $contentData->DeleteByCondition("ContentId = $contentId AND LangId = $langId", true, false);
             $contentData->ContentId = $contentId;
             $contentData->LangId = $langId;
             $contentData->Value = html_entity_decode($value);
             $contentData->ValueNoHtml = strip_tags(html_entity_decode($value));
             $contentData->ItemName = $key;
             $contentData->SaveObject();
-                    
-                }
-        
-        
-        
+        }
+
+
+
         return true;
     }
 
@@ -2590,26 +2530,28 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
     }
 
     public function GetNameObject($id, $langId) {
+        $model = \Model\ContentVersion::GetInstance();
         if (empty($id))
-            $id = 0;
-        $res = $this->GetFirstRow($this->SelectByCondition("ContentId = $id AND LangId = $langId AND IsLast = 1","",array("Name")));
+            return "";
+        $res = $model->GetFirstRow($model->SelectByCondition("ContentId = $id AND LangId = $langId AND IsLast = 1", "", array("Name")));
         return $res["Name"];
     }
-    
+
     public function GetNameObjectBySeoUrl($seoUrl, $langId) {
+        $model = \Model\ContentVersion::GetInstance();
         if (empty($seoUrl))
             return "";
-        
-        $res = $this->GetFirstRow($this->SelectByCondition("SeoUrl = '$seoUrl' AND LangId = $langId AND IsLast = 1","",array("Name")));
+
+        $res = $model->GetFirstRow($model->SelectByCondition("SeoUrl = '$seoUrl' AND LangId = $langId AND IsLast = 1", "", array("Name")));
         return $res["Name"];
     }
 
     public function GetUserItemDomainId($id) {
-        $res = $this->GetFirstRow(dibi::query("SELECT Template.DomainId
+        $res = dibi::query("SELECT Template.DomainId
         FROM Content AS uitem
         JOIN Content AS Template ON uitem.TemplateId = Template.Id
-        WHERE uitem.Id =%i", $id)->fetchAll());
-        return $res["DomainId"];
+        WHERE uitem.Id =%i", $id)->fetchAll();
+        return empty($res) ? 0 : $res[0]["DomainId"];
     }
 
     public function XmlDownload($seourl) {
@@ -2647,9 +2589,9 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             $detail = $this->GetUserItemDetail($xmlUserItem, $users->GetUserGroupId(), 0, $langId);
 
             $templateId = empty($detail[0]["ChildTemplateId"]) ? $detail[0]["TemplateId"] : $detail[0]["ChildTemplateId"];
-            $domainItems = new \Objects\UserDomains();
-            $identificator = $domainItems->GetUserDomainByTemplateId($templateId);
-            $items = $domainItems->GetUserDomainItems($identificator);
+
+            $identificator = $domainItem->GetUserDomainByTemplateId($templateId);
+            $items = $domainItem->GetUserDomainItems($identificator);
             $xml = "";
             $xml .= "<Name>{Name}</Name>";
             $xml .= "<SeoUrl>{SeoUrl}</SeoUrl>";
@@ -2691,11 +2633,9 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         return $res;
     }
 
-    
-
     public function CreateSurveyAnswer($lang, $parentid, $data) {
 
-        $user = Users::GetInstance();
+        $user = \Model\Users::GetInstance();
         $data = $this->PrepareXmlFromArray($data, "keyvalue");
         setcookie("surveyanswer" . $parentid, true, time() + (86400 * 30), "/");
         return $this->CreateContentItem("surveyanswer-" . StringUtils::GenerateRandomString(), true, "", 0, ContentTypes::SURVER_ANSWEB, false, $lang, $parentid, true, "", array(), $data, 0, 0, "", "", "", 0, 0, 0, 99999, 0, false);
@@ -2724,19 +2664,18 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
 
     public function GetIdBySeoUrl($seoUrl, $webId = 0) {
         $res = array();
+        $model = \Model\ContentVersion::GetInstance();
         if ($webId == 0) {
-            $res = $this->SelectByCondition(" SeoUrl = '$seoUrl'  AND IsActive = 1   AND Deleted = 0 ","",array("ContentId"));
+            $res = $model->SelectByCondition(" SeoUrl = '$seoUrl'  AND IsActive = 1   AND Deleted = 0 ", "", array("ContentId"));
         } else {
-            $res = $this->SelectByCondition("SeoUrl = '$seoUrl' AND IsActive = 1   AND Deleted = 0  AND WebId = $webId","",array("ContentId"));
+            $res = $model->SelectByCondition("SeoUrl = '$seoUrl' AND IsActive = 1   AND Deleted = 0  AND WebId = $webId", "", array("ContentId"));
         }
-        if (empty($res))
-            return 0;
-        return $res[0]["ContentId"];
+        return empty($res) ? 0 : $res[0]["ContentId"];
     }
 
-    public function LoadFrontendFromSeoUrl($seourl, $usergroup, $langId, $webid, $limit = 0, $sort = "", $subitems = false, $ignoreActiveUrl = false, $acceptItems = "",$ignoreAlternativeItems =IGNORE_ALTERNATIVE_CONTENT,$where = "",$whereColumn = "") {
+    public function LoadFrontendFromSeoUrl($seourl, $usergroup, $langId, $webid, $limit = 0, $sort = "", $subitems = false, $ignoreActiveUrl = false, $acceptItems = "", $ignoreAlternativeItems = IGNORE_ALTERNATIVE_CONTENT, $where = "", $whereColumn = "") {
         $contentId = $this->GetIdBySeoUrl($seourl, $webid);
-        return $this->LoadFrontend($contentId, $usergroup, $langId, $webid, $limit, $sort, $subitems, $ignoreActiveUrl,false, $acceptItems,"",$ignoreAlternativeItems,$where,$whereColumn);
+        return $this->LoadFrontend($contentId, $usergroup, $langId, $webid, $limit, $sort, $subitems, $ignoreActiveUrl, false, $acceptItems, "", $ignoreAlternativeItems, $where, $whereColumn);
     }
 
     public function HasTemplate($id, $templateIdentificator) {
@@ -2747,18 +2686,18 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
             return false;
         return true;
     }
-    
-    public function GetSeoUrlByIdentificator($identificator,$langId)
-    {
-       $res = dibi::query("SELECT SeoUrl FROM ContentVersion  
-               LEFT JOIN Content ON ContentVersion.ContentId =  Content.Id AND  ContentVersion.LangId =%i  AND ContentVersion.IsLast = 1  WHERE Content.Identificator = %s ",$langId,$identificator)->fetchAll();
-       $lang = Langs::GetInstance();
-       $lang->GetObjectById($langId);
-       if (empty($res)) return "";
-       $url = StringUtils::NormalizeUrl($lang->RootUrl).$res[0]["SeoUrl"];
-       return StringUtils::NormalizeUrl($url);
+
+    public function GetSeoUrlByIdentificator($identificator, $langId) {
+        $res = dibi::query("SELECT SeoUrl FROM ContentVersion  
+               LEFT JOIN Content ON ContentVersion.ContentId =  Content.Id AND  ContentVersion.LangId =%i  AND ContentVersion.IsLast = 1  WHERE Content.Identificator = %s ", $langId, $identificator)->fetchAll();
+        $lang = \Model\Langs::GetInstance();
+        $lang->GetObjectById($langId);
+        if (empty($res))
+            return "";
+        $url = StringUtils::NormalizeUrl($lang->RootUrl) . $res[0]["SeoUrl"];
+        return StringUtils::NormalizeUrl($url);
     }
-    
+
     // ke zruseni 
     public function GetAlternativeItems($contentId, $langId, $groupId = 0) {
 
@@ -2785,75 +2724,57 @@ private function ValidateSeoUrl($seoUrl, $name, $id, $lang = 0) {
         }
         return $res;
     }
-    
-    
-    
-    public function DeleteLangVersion($contentId, $langId)
-    {
-        \dibi::query("UPDATE ContentVersion SET Deleted = 1 WHERE ContentId = %i AND LangId = %i",$contentId, $langId);
+
+    public function DeleteLangVersion($contentId, $langId) {
+        \dibi::query("UPDATE ContentVersion SET Deleted = 1 WHERE ContentId = %i AND LangId = %i", $contentId, $langId);
     }
-    
-    
-    public function GetValueFromContentData($itemId,$langId,$itemName,$noHtml= true)
-    {
-        
+
+    public function GetValueFromContentData($itemId, $langId, $itemName, $noHtml = true) {
+
         $data = array();
-        if ($noHtml)
-        {
-            $data =   dibi::query("SELECT ValueNoHtml AS Data FROM ContentData WHERE ContentId = %i AND LangId = %i AND ItemName = %s ", $itemId,$langId,$itemName)->fetchAll();
-            
-        }
-        else 
-        {
-            $data =   dibi::query("SELECT Value AS Data FROM ContentData WHERE ContentId = %i AND LangId = %i AND ItemName = %s ", $itemId,$langId,$itemName)->fetchAll();
+        if ($noHtml) {
+            $data = dibi::query("SELECT ValueNoHtml AS Data FROM ContentData WHERE ContentId = %i AND LangId = %i AND ItemName = %s ", $itemId, $langId, $itemName)->fetchAll();
+        } else {
+            $data = dibi::query("SELECT Value AS Data FROM ContentData WHERE ContentId = %i AND LangId = %i AND ItemName = %s ", $itemId, $langId, $itemName)->fetchAll();
         }
         if (empty($data))
             return null;
         return $data[0]["Data"];
-            }
-    public function UpdateValue($contentId,$key,$value)
-    {
-        $lang = Langs::GetInstance();
-        $langList = $lang->Select();
-        foreach ($langList as $row)
-         {
-            $exist = $this->ItemExistsInLang($contentId,$row["Id"]);
-            
-            if($exist)
-            {
-                $res = $this->SelectByCondition("ContentId = $contentId AND IsLast = 1 AND LangId = ".$row["Id"],"","Data");
-                $xml =$res[0]["Data"];
-                $dataAr = ArrayUtils::XmlToArray($xml,"SimpleXMLElement",LIBXML_NOCDATA);
-                $saveXml = "<items>";
-                \Dibi::query("UPDATE ContentData SET Value = %s, ValueNoHtml =%s WHERE ContentId = %i AND LangId =%i AND ItemName = %s ",$value, strip_tags(html_entity_decode($value)),$contentId, $row["Id"],$key);
-                $dataAr[$key] = $value;
-                
-                foreach ($dataAr as $keyx => $valuex)
-                {
-                    $saveXml .= "<$keyx><![CDATA[".$valuex."]]></$keyx>";
-                }
-                $saveXml .= "</items>";
-                \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND LangId =%i AND IsLast = 1",$saveXml, $contentId, $row["Id"]);
-                \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND LangId =%i AND IsActive = 1",$saveXml, $contentId, $row["Id"]);
-            }
-            
-        }
-        $this->UpdateMaterializedView("FrontendDetail");
-    }
-    
-    public function UpdateFormStatisticItem($contentId,$key,$value)
-    {
-        $res = $this->SelectByCondition("ContentId = $contentId AND IsLast = 1 ","","Data");
-        $xml =$res[0]["Data"];
-        $info = simplexml_load_string($xml);
-        $info[0]->$key = "<![CDATA[".$value."]]>";
-        \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND IsLast = 1",$info->asXML(), $contentId);  
     }
 
-    
-    
-    
-   
-    
- 
+    public function UpdateValue($contentId, $key, $value) {
+        $lang = \Model\Langs::GetInstance();
+        $model = \Model\ContentVersion::GetInstance();
+        $langList = $lang->Select();
+        foreach ($langList as $row) {
+            $exist = $this->ItemExistsInLang($contentId, $row["Id"]);
+
+            if ($exist) {
+                $res = $model->SelectByCondition("ContentId = $contentId AND IsLast = 1 AND LangId = " . $row["Id"], "", "Data");
+                $xml = $res[0]["Data"];
+                $dataAr = ArrayUtils::XmlToArray($xml, "SimpleXMLElement", LIBXML_NOCDATA);
+                $saveXml = "<items>";
+                \Dibi::query("UPDATE ContentData SET Value = %s, ValueNoHtml =%s WHERE ContentId = %i AND LangId =%i AND ItemName = %s ", $value, strip_tags(html_entity_decode($value)), $contentId, $row["Id"], $key);
+                $dataAr[$key] = $value;
+
+                foreach ($dataAr as $keyx => $valuex) {
+                    $saveXml .= "<$keyx><![CDATA[" . $valuex . "]]></$keyx>";
+                }
+                $saveXml .= "</items>";
+                \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND LangId =%i AND IsLast = 1", $saveXml, $contentId, $row["Id"]);
+                \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND LangId =%i AND IsActive = 1", $saveXml, $contentId, $row["Id"]);
+            }
+        }
+        $model->UpdateMaterializedView("FrontendDetail");
+    }
+
+    public function UpdateFormStatisticItem($contentId, $key, $value) {
+        $model = \Model\ContentVersion::GetInstance();
+        $res = $model->SelectByCondition("ContentId = $contentId AND IsLast = 1 ", "", "Data");
+        $xml = $res[0]["Data"];
+        $info = simplexml_load_string($xml);
+        $info[0]->$key = "<![CDATA[" . $value . "]]>";
+        \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND IsLast = 1", $info->asXML(), $contentId);
+    }
+
 }

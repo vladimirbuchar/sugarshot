@@ -22,7 +22,7 @@ use Utils\Files;
 
 
 
-class Forms extends GlobalClass { 
+class Forms extends \Kernel\GlobalClass { 
     
     private $_errors = array();
     private $_isError = false;
@@ -437,19 +437,14 @@ class Forms extends GlobalClass {
         }
         $userDomainItem = new \Objects\UserDomains();;
         $domainItems = $userDomainItem->GetUserDomainItems($domainIdentificator,$groupId,$this->ShowElementId);
-        
-        $ud = new \Objects\UserDomains();
-        $udi = $ud->GetDomainInfo($domainIdentificator);
-        $addiction = new \Objects\UserDomains();
-        $addictionList = $addiction->GetAddictionDomain($udi["Id"]);
+        $udi = $userDomainItem->GetDomainInfo($domainIdentificator);
+        $addictionList = $userDomainItem->GetAddictionDomain($udi["Id"]);
         $html = "";
         $script = "";
         $script .=$this->GenerateAddictionScript($addictionList);
         $domainValue = array();
         if ($dataId > 0) {
-            
-            $userDomainValue = new \Objects\UserDomains();
-            $domainValue = $userDomainValue->GetDomainValue($domainIdentificator, $dataId);
+            $domainValue = $userDomainItem->GetDomainValue($domainIdentificator, $dataId);
             $domainValue = ArrayUtils::ValueAsKey($domainValue, "ItemId",true);
             $hiddenItem = new HiddenInput();
             $hiddenItem->Id = "ObjectId_$domainIdentificator";
@@ -567,8 +562,8 @@ class Forms extends GlobalClass {
                     else if ($dItem["DomainSettings"] == "1n" || $dItem["DomainSettings"] == "mn")
                     { 
                         
-                        $userDomainData = new \Objects\UserDomains();
-                        $domainData = $userDomainData->GetDomainValueList($nDomain->Id);
+                        
+                        $domainData = $userDomainItem->GetDomainValueList($nDomain->Id);
                         $showName = $nDomain->ShowNameInSubDomain;
                         $itemHtml .= $label->RenderHtml($label);
                         foreach ($domainData as $rowInDomain)
@@ -625,8 +620,8 @@ class Forms extends GlobalClass {
                         $dataList = new Datalist();
                         $dataList->Id = "list".$htmlItemId;
                         $dataList->Style="display:none;";
-                        $userDomainsAutoComplete =  new \Objects\UserDomains();
-                        $complList = $userDomainsAutoComplete->GetItemAutoComplected($dItem["Id"]);
+                        
+                        $complList = $userDomainItem->GetItemAutoComplected($dItem["Id"]);
                         foreach ($complList as $row)
                         {
                             $option = new Option();
@@ -809,7 +804,7 @@ class Forms extends GlobalClass {
                     $labelMain = new Label();
                     $labelMain->Html = $dItem["ShowName"];
                     $labelMain->CssClass = "control-label col-sm-2";
-                    $userDomainData = new \Objects\UserDomains();
+                    
                     $showName = $nDomain->ShowNameInSubDomain;
                     $identificatorD =  $nDomain->DomainIdentificator;
                     
@@ -818,7 +813,7 @@ class Forms extends GlobalClass {
                         $divCol10->CssClass = "col-md-10";
                     else 
                         $divCol10->CssClass = "col-md-12";
-                    $domainData = $userDomainData->GetDomainValueList($nDomain->Id);
+                    $domainData = $userDomainItem->GetDomainValueList($nDomain->Id);
                     foreach ($domainData as $rowInDomain)
                     {
                         $tmpShowName = $showName;
@@ -1054,15 +1049,10 @@ class Forms extends GlobalClass {
         $content = new \Objects\Content();
         $mail = new Mail();
         $userEmail = "";
-        
-        
-         
-        $userDomaiItems = new \Objects\UserDomains();
-        $userDomainValues = new \Objects\UserDomains();
         $userDomain = \Model\UserDomains::GetInstance();
         foreach ($domainNames as $identifcator)
         {
-            $domainItems = $userDomaiItems->GetUserDomainItemsOnlyMn($identifcator);
+            $domainItems = $ud->GetUserDomainItemsOnlyMn($identifcator);
             foreach ($domainItems as $row)
             {
                 $x = 0;
@@ -1074,7 +1064,7 @@ class Forms extends GlobalClass {
                     if ($rowSave[0] == $iden)
                     {
                         $valueId = $rowSave[1];
-                        $value = $userDomainValues->GetDomainValueByDomainId($domainId, $valueId);
+                        $value = $ud->GetDomainValueByDomainId($domainId, $valueId);
                         $userDomain->GetObjectById($domainId);
                         $nameItem = $userDomain->ShowNameInSubDomain;
                         foreach ($value as $k => $v)
@@ -1098,7 +1088,7 @@ class Forms extends GlobalClass {
             {
                 
                 $ar = explode("_", $key);
-                $dataInfo = $userDomainValues->GetDomainValue($ar[0],$value);  
+                $dataInfo = $ud->GetDomainValue($ar[0],$value);  
                 
                 if (count($dataInfo) > 0)
                 {
@@ -1370,8 +1360,7 @@ class Forms extends GlobalClass {
             foreach ($domainsItems as  $key => $value)
             {
                 $domainItem->GetObjectById($value);
-                $domainValues =  new \Objects\UserDomains();
-                $vals = $domainValues->GetDomainValueList($value);
+                $vals = $userDomainItems->GetDomainValueList($value);
                 $vals = ArrayUtils::ValueAsKey($vals, "ObjectId");
                 $showName = $domainItem->ShowNameInSubDomain;
                 foreach ($formStatistic as $row)

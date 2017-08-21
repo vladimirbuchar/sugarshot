@@ -11,14 +11,7 @@ class WordGroups  extends DatabaseTable implements \Inteface\iDataTable{
         $this->ObjectName = "WordGroups";
     }
     
-    public function AddColumnLang($wordIndetificator)
-    {
-        if (!empty($wordIndetificator))
-        {
-            $this->AddColumn(new DataTableColumn("Word$wordIndetificator", \Types\DataColumnsTypes::TEXT, "", true));
-            $this->SaveNewColums();
-        }
-    }
+    
     
     public function OnCreateTable() {
         $this->AddColumn(new DataTableColumn("GroupName", \Types\DataColumnsTypes::VARCHAR, "", FALSE, 50));

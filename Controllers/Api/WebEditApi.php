@@ -77,6 +77,10 @@ class WebEditApi extends ApiController {
         $this->SetApiFunction("GetRootId", array("system", "Administrators"));
         $this->SetApiFunction("DeleteLangVersion", array("system", "Administrators"));
         $this->SetApiFunction("UpdateFormStatisticItem", array("system", "Administrators"));
+        $this->SetApiFunction("CreateTreeDiscusion", array("system", "Administrators"));
+        $this->SetApiFunction("CreateTreeInqury", array("system", "Administrators"));
+        
+        
     }
 
     public function GetAlernativeArticle() {
@@ -845,5 +849,10 @@ class WebEditApi extends ApiController {
         $content = new \Objects\Content();
         $content->UpdateFormStatisticItem($ajaxParametrs["Id"], $ajaxParametrs["ItemId"], $ajaxParametrs["ItemValue"]);
     }
-
+    public function CreateTreeDiscusion($search = "") {
+        return \Utils\TreeUtils::CreateTreeDiscusion(self::$User->GetUserGroupId(), $this->LangId, $search);
+    }
+    public function CreateTreeInqury($search = "") {
+        return \Utils\TreeUtils::CreateTreeInqury(self::$User->GetUserGroupId(), $this->LangId, $search);
+    }
 }

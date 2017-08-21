@@ -124,9 +124,7 @@ class Page {
         $templateSystem = null;
 
         if (self::IsSmarty()) {
-            include_once './Kernel/ExternalApi/smarty/Smarty.class.php';
             $templateSystem = new Smarty();
-
             $templateSystem->left_delimiter = '<!--{';
             $templateSystem->right_delimiter = '}-->';
             $templateSystem->cache_lifetime = 600;

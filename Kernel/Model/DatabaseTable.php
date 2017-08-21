@@ -313,7 +313,7 @@ class DatabaseTable extends SqlDatabase {
     /**
      * @param string $column column name
      */
-    protected function AddColumn($column) {
+    public function AddColumn($column) {
         if (!$this->ColumnExists($column->Name))
             $this->_columnsInfo[] = $column;
     }
@@ -788,7 +788,7 @@ class DatabaseTable extends SqlDatabase {
     private function CallModelFunction($action, $parametrs = null) {
         foreach ($this->_callModelFunction as $row) {
             if ($row->Type == $action) {
-                $className = "Model\\" . $row->Class;
+                $className = "Objects\\" . $row->Class;
                 $class = new $className();
                 $function = $row->Function;
                 if (empty($parametrs))

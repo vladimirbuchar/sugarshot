@@ -88,7 +88,7 @@ class UsersItem extends AdminController {
         $table->Header = $header;
         $table->AddAction = "AddUserGroup";
         $table->HideColumns = array("Id");
-        $table->ModelName = "usergroups";
+        $table->ModelName = "UserGroups";
         $table->AddDialog = "./AddUserGroup.html";
         $table->ColName = "GroupName";
         $table->IdColumn = "Id";

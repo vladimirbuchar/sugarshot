@@ -157,7 +157,6 @@ class Files {
 
     public static function CreatePDF($html, $fileName) {
         try {
-            include_once './Kernel/ExternalApi/mpdf60/mpdf.php';
             self::CreateHtmlFile($html, $fileName);
             $mpdf = new mPDF('utf-8', 'A4', '', '', 0, 0, 0, 0, 0, 0);
             $mpdf->SetDisplayMode('fullpage');

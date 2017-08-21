@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     'RobRichards\\XMLSecLibs\\' => array($vendorDir . '/robrichards/xmlseclibs/src'),
     'RobRichards\\WsePhp\\' => array($vendorDir . '/robrichards/wse-php/src'),
+    'MetzWeb\\Instagram\\' => array($vendorDir . '/cosenary/instagram/src'),
 );

@@ -2,6 +2,8 @@
 
 namespace Objects;
 use Dibi;
+use Utils\ArrayUtils;
+use Utils\StringUtils;
 class UserDomains extends ObjectManager{
     private $DomainValidateErrors = array();
     public function __construct() {
@@ -9,14 +11,14 @@ class UserDomains extends ObjectManager{
     }
     public function GetDomainInfo($identificator)
     {
-        $model = new Model\UserDomains();
+        $model = new \Model\UserDomains();
         return $model->GetFirstRow($model->SelectByCondition(" DomainIdentificator = '$identificator'"));
     }
     
     //UserDomainAddiction
     public function  SaveAddiction($id,$domainId,$name,$item1,$ruleName,$item1Value,$actionName,$itemXValue,$itemX,$priority)
     {
-        $model = new Model\UserDomainsAddiction();
+        $model = new \Model\UserDomainsAddiction();
         $model->Id = $id;
         $model->DomainId = $domainId;
         $model->AddictionName = $name;
@@ -67,7 +69,7 @@ class UserDomains extends ObjectManager{
     
     public function SaveGroup($id,$name,$domainId)
     {
-        $model = new Model\UserDomainsGroups();
+        $model = new \Model\UserDomainsGroups();
         $model->Id = $id;
         $model->GroupName = $name;
         $model->DomainId = $domainId;
@@ -202,8 +204,8 @@ class UserDomains extends ObjectManager{
     public function GetFiles($domainIdentificator,$data)
     {
         $filesList = array();
-        $domain =  new \Objects\UserDomains();
-        $domainData = $domain->GetUserDomainItems($domainIdentificator);
+        
+        $domainData = $this->GetUserDomainItems($domainIdentificator);
         $domainData = ArrayUtils::ValueAsKey($domainData,"Identificator");
         $x = 0;
         foreach ($data as $key=>$value)
@@ -230,12 +232,11 @@ class UserDomains extends ObjectManager{
     public function IsValidValue($domainIdentificator,$data,$groupId = 0)
     {
         $isvalid = TRUE;
-        $domain =  new \Objects\UserDomains();
         $domainData = array();
         if ($groupId == 0)
-            $domainData = $domain->GetUserDomainItems($domainIdentificator);
+            $domainData = $this->GetUserDomainItems($domainIdentificator);
         else 
-            $domainData = $domain->GetUserDomainItems($domainIdentificator,$groupId);
+            $domainData = $this->GetUserDomainItems($domainIdentificator,$groupId);
         $values = $this->GetAllValuesByIdentificator($domainIdentificator);
         
         $domainData = ArrayUtils::ValueAsKey($domainData,"Identificator");
@@ -330,35 +331,34 @@ class UserDomains extends ObjectManager{
     
     public function  SaveDomainValue($DomainIdentifcator,$ObjectId,$data)
     {
-        $domain =  new \Objects\UserDomains();
-        $domainInfo = $domain->GetDomainInfo($DomainIdentifcator);
-
-        $this->DomainId = $domainInfo["Id"];
-        $this->ObjectId = $ObjectId;
-        $this->DeleteByCondition("DomainId = ".$domainInfo["Id"]. " AND ObjectId = ".$ObjectId,true,false);
+        $model = \Model\UserDomainsValues::GetInstance();
+        $domainInfo = $this->GetDomainInfo($DomainIdentifcator);
+        $model->DomainId = $domainInfo["Id"];
+        $model->ObjectId = $ObjectId;
+        $model->DeleteByCondition("DomainId = ".$domainInfo["Id"]. " AND ObjectId = ".$ObjectId,true,false);
         
         foreach ($data as $row)
         {
-            $this->Id = $row->ValueId;
-            $this->ItemId = $row->ItemId;
-            $this->Value = $row->Value;
-            $this->SaveObject($this);
+            $model->Id = $row->ValueId;
+            $model->ItemId = $row->ItemId;
+            $model->Value = $row->Value;
+            $model->SaveObject();
         }
     }
     
     public function SaveUserDomainData($data)
     {
+        $model = new \Model\UserDomainsValues();
         $objectId =  $data["Id"];
         $domainIdentificator = $data["DomainIdentificator"];
-        $userDomain =  \Model\UserDomains::GetInstance();
-        $udInfo = $userDomain->GetDomainInfo($domainIdentificator);
+        $udInfo = $this->GetDomainInfo($domainIdentificator);
         $domainId = $udInfo["Id"];
         if(empty($objectId))
         {
             $objectId = $this->GenerateObjectId($domainId);
         }
-        $userDomainItems = new \Objects\UserDomains();
-        $items = $userDomainItems->GetUserDomainItems($domainIdentificator);
+        
+        $items = $this->GetUserDomainItems($domainIdentificator);
         $items = ArrayUtils::ValueAsKey($items, "Identificator");
         unset($data["Id"]);
         unset($data["DomainIdentificator"]);
@@ -366,12 +366,12 @@ class UserDomains extends ObjectManager{
         foreach ($data as $key => $value)
         {
             if (empty($items[$key]["Id"])) continue;
-            $this->Id =  $this->SetId($domainId,$items[$key]["Id"],$objectId);
-            $this->DomainId = $domainId;
-            $this->ObjectId = $objectId;
-            $this->ItemId = $items[$key]["Id"];
-            $this->Value = $value;
-            $this->SaveObject($this);   
+            $model->Id =  $this->SetId($domainId,$items[$key]["Id"],$objectId);
+            $model->DomainId = $domainId;
+            $model->ObjectId = $objectId;
+            $model->ItemId = $items[$key]["Id"];
+            $model->Value = $value;
+            $model->SaveObject();   
         }
         return $objectId;
     }

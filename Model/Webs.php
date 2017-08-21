@@ -48,8 +48,6 @@ class Webs extends DatabaseTable  implements \Inteface\iDataTable{
     public $SiteMapItemVideo;
     public $SiteMapItemStart;
     public $SiteMapItemEnd;
-    //private static $_instance = null;
-
     public function __construct() {
         parent::__construct();
         $this->ObjectName = "Webs";

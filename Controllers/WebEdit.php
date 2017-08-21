@@ -109,11 +109,7 @@ class WebEdit extends AdminController {
     }
 
     public function CreateTreeDiscusion($search = "") {
-
-        $content = new \Objects\Content();
-        $cssList = $content->GetDiscusionList(self::$User->GetUserGroupId(), $this->LangId, false, $search);
-        $html = $content->CreateHtml($cssList);
-        return $html;
+        return \Utils\TreeUtils::CreateTreeDiscusion(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 
     public function CreateTreeForms($search = "") {
@@ -596,14 +592,11 @@ class WebEdit extends AdminController {
         $ug = new \Objects\Users();
         $groupList = $ug->GetUserGroups(array("system"));
         if (empty($data)) {
-
             $web = \Model\Webs::GetInstance();
-            $web->GetObjectById($this->WebId);
-            $xml = $web->WebPrivileges;
-            $ar = ArrayUtils::XmlToArray($xml);
+            $web->GetObjectById($this->WebId,true,array("WebPrivileges"),LIBXML_NOCDATA);
+            $ar = ArrayUtils::XmlToArray($web->WebPrivileges);
             $data = $ar["item"];
-            //$data = ArrayUtils::ValueAsKey($data, "UserGroup");
-            //print_r($data);
+            
             foreach ($groupList as $row) {
                 $row["canread_checked"] = false;
                 $row["canwrite_checked"] = false;
@@ -620,14 +613,11 @@ class WebEdit extends AdminController {
                     if ($row["Id"] == $drow["UserGroup"]) {
 
                         $rowname = strtolower($drow["PrivilegesName"]);
-
                         $row[$rowname . "_checked"] = $drow["Value"] == 1 ? "checked =  'checked'" : "";
                         $row[$rowname] = $drow["Value"] == "true" ? TRUE : FALSE;
                     }
                 }
             }
-            //print_r($groupList);
-            //$data = ArrayUtils::RenameColumn($data, "UserGroup", "Id");
             return $groupList;
         }
         foreach ($groupList as $row) {
@@ -846,61 +836,10 @@ class WebEdit extends AdminController {
         $this->SetTemplateData("MailList", $mailList);
         $ud = new \Objects\UserDomains();
         $domainDetail = $ud->GetDomainInfo("Mailinggroups");
-        $udv = new \Objects\UserDomains();
-        $mailingGroups = $udv->GetDomainValueList($domainDetail["Id"]);
+        $mailingGroups = $ud->GetDomainValueList($domainDetail["Id"]);
         $mailingGroups = ArrayUtils::SortArray($mailingGroups, "MailingGroupName", SORT_ASC);
         $this->SetTemplateData("MailingGroup", $mailingGroups);
     }
-
-    /* public function MailingContacts()
-      {
-      $this->SetStateTitle($this->GetWord("word551"));
-      $this->SetLeftMenu("contentMenu", "contentMenuMailing");
-      $mailinig = new  MailingContacts();
-      $contacts = $mailinig->GetMailingList($this->WebId);
-      $this->SetTemplateData("contacts", $contacts);
-      $ud = new UserDomains();
-      $info = $ud->GetDomainInfo("Mailinggroups");
-      $udv = new UserDomainsValues();
-      $values = $udv->GetDominValueList($info["Id"], false);
-      $this->SetTemplateData("MailingGroups", $values);
-      } */
-
-    /* public function GetMailingItemDetail()
-      {
-      $ajaxParametrs = $this->PrepareAjaxParametrs();
-      if (empty($ajaxParametrs))
-      return;
-      $out = array();
-      $mailinig = new  MailingContacts();
-      $detail = $mailinig->GetMailingDetail($ajaxParametrs["Id"]);
-      $malingGroups = $mailinig->GetUserMailingGroups($ajaxParametrs["Id"]);
-      $out["Detail"] = $detail[0];
-      $out["MailingGroups"] = $malingGroups;
-      return $out;
-      } */
-
-    /* public function SaveMailinContact()
-      {
-      $ajaxParametrs = $this->PrepareAjaxParametrs();
-      if (empty($ajaxParametrs))
-      return;
-      $id = empty($ajaxParametrs["Id"]) ? 0:$ajaxParametrs["Id"];
-      $mailinig = new  MailingContacts();
-
-
-      if ($id == 0)
-      {
-      $id =   $mailinig->AddContact($ajaxParametrs["Email"]);
-      }
-      else
-      {
-      $id = $mailinig->UpdateContact($id,$ajaxParametrs["Email"]);
-      }
-      $mg = new MailingContactsInGroups();
-
-      $mg->AddContactToMailingGroup($id, $ajaxParametrs["MailingGroups"]);
-      } */
 
     public function DataSource() {
         $this->SetStateTitle($this->GetWord("word565"));
@@ -972,10 +911,7 @@ class WebEdit extends AdminController {
     }
 
     public function CreateTreeInqury($search = "") {
-        $content = new \Objects\Content();
-        $cssList = $content->GetInquryList(self::$User->GetUserGroupId(), $this->LangId, false, $search);
-        $html = $content->CreateHtml($cssList);
-        return $html;
+        return \Utils\TreeUtils::CreateTreeInqury(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 
     public function InqueryDetail() {

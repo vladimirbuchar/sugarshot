@@ -62,4 +62,24 @@ class Langs extends ObjectManager{
         return self::$SessionManager->GetSessionValue("WebInfo",$web);
         
     }
+    
+    public function CreateLangFolder($id)
+    {
+        $content = new \Objects\Content();
+        $model = \Model\Langs::GetInstance();
+        $obj = $model->GetObjectById($id);
+        
+        $folderId = $content->GetIdByIdentificator("langfolder",$_GET["webid"]);
+        
+        $name = $obj->LangName;
+        if ($folderId == 0)
+        {
+            $content->CreateContentItem($name, true,  "langfolder$id", "", "langfolder",false,$id,0,true,"langfolder",array(),"", 0, 0, "", "", "", 0,  0,  0,  99999, 0,false);
+        }
+        else 
+        {
+            $user = new \Objects\Users();
+            $content->CreateVersion($folderId, $name, true, $user->GetUserId(), "langfolder$id", 0, false, $id, "", "", "", "", false, "");
+        }
+    }
 }

@@ -79,7 +79,7 @@ class SettingsApi extends ApiController {
         $deleted = $ajaxParametrs["ShowItem"] == "DeleteItem" ? TRUE : FALSE;
         $domainid = $_GET["objectid"];
         $userDomainValue = new \Objects\UserDomains();
-        $values = $userDomainItem->GetDomainValueList($domainid, $deleted);
+        $values = $userDomainValue->GetDomainValueList($domainid, $deleted);
         return $values;
     }
 
@@ -134,7 +134,7 @@ class SettingsApi extends ApiController {
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
-        $group = UserDomainsGroups::GetInstance();
+        $group = new \Objects\UserDomains();
         $out["Id"] = $group->SaveGroup($ajaxParametrs["Id"], $ajaxParametrs["GroupName"], $ajaxParametrs["DomainId"]);
         return $out;
     }

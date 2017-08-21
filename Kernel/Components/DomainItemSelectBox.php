@@ -82,8 +82,8 @@ class DomainItemSelectBox extends UserComponents {
             if (empty($this->SelectedValue) || $this->SelectedValue == "{". $this->SelectId."}")
                 $this->SelectedValue = $this->DefalutSelectedValue;
             
-            $domainInfo =  new \Objects\UserDomains();
-            $info = $domainInfo->GetDomainInfo($this->DomainIdentificator);
+            
+            $info = $ud->GetDomainInfo($this->DomainIdentificator);
             $data = $ud->GetDomainValueList($info["Id"]);
             foreach ($data as $row)
             {

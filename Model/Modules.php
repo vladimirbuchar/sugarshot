@@ -2,6 +2,7 @@
 namespace Model;
 use Types\RuleType;
 use Types\DataTableColumn;
+use Types\DatabaseActions;
 
 class Modules  extends DatabaseTable implements \Inteface\iDataTable{
     public $ModuleName;
@@ -13,7 +14,6 @@ class Modules  extends DatabaseTable implements \Inteface\iDataTable{
     {
         parent::__construct();
         $this->ObjectName = "Modules";
-        $this->MultiWeb = true;
         $this->SetSelectColums(array("ModuleName","ModuleControler","ModuleView"));
         $this->SetDefaultSelectColumns();
         
@@ -32,7 +32,7 @@ class Modules  extends DatabaseTable implements \Inteface\iDataTable{
         $this->SetValidateRule("ModuleName", RuleType::$NoEmpty,$this->GetWord("word150"));
         $this->SetValidateRule("ModuleControler", RuleType::$NoEmpty,$this->GetWord("word151"));
         $this->SetValidateRule("ModuleView", RuleType::$NoEmpty,$this->GetWord("word152"));
-        $this->SetCallModelFunction("Modules","SetupModule",array(),DatabaseActions::$Insert);
+        $this->SetCallModelFunction("Modules","SetupModule",array(),DatabaseActions::INSERT);
     }
     public function TableMigrate()
     {

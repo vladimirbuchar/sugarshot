@@ -7,27 +7,28 @@ class Discusion extends ObjectManager{
     }
     public function  AddNewDiscusionItem($subject,$text,$showUserName,$parent,$discusionId,$historyId)
     {
+        $model = \Model\DiscusionItems::GetInstance();
         if(empty($historyId)) $historyId = 0;
         $user = new \Objects\Users();
         if ($user->UserHasBlockDiscusion())
             return;
-        dibi::query("UPDATE DiscusionItems SET IsLast = 0 WHERE VersionId = %i",$historyId);
-        $this->SubjectDiscusion = $subject;
-        $this->TextDiscusion = $text;
-        $this->ShowUserName = $showUserName;
-        $this->IsLast = true;
-        $this->ParentIdDiscusion = $parent;
-        $this->DiscusionId = $discusionId;
-        $this->VersionId = $historyId;
+        \dibi::query("UPDATE DiscusionItems SET IsLast = 0 WHERE VersionId = %i",$historyId);
+        $model->SubjectDiscusion = $subject;
+        $model->TextDiscusion = $text;
+        $model->ShowUserName = $showUserName;
+        $model->IsLast = true;
+        $model->ParentIdDiscusion = $parent;
+        $model->DiscusionId = $discusionId;
+        $model->VersionId = $historyId;
         $badWords = $this->CheckBadWords();
         if ($badWords)
         {
-            $id = $this->SaveObject($this);    
+            $id = $model->SaveObject();    
             if ($historyId == 0)
             {
-                $this->GetObjectById($id,true);
-                $this->VersionId = $id;
-                $this->SaveObject($this);
+                $model->GetObjectById($id,true);
+                $model->VersionId = $id;
+                $model->SaveObject();
             }
         }
     }
@@ -42,13 +43,14 @@ class Discusion extends ObjectManager{
         {
             $limit = "";
         }
-        $res = dibi::query("SELECT * FROM DISCUSIONITEMSLIST WHERE DiscusionId = %i  ORDER BY Id DESC $limit",$id)->fetchAll();
+        $res = \dibi::query("SELECT * FROM DISCUSIONITEMSLIST WHERE DiscusionId = %i  ORDER BY Id DESC $limit",$id)->fetchAll();
         return $res;
     }
     
      public function GetHistoryItemDetail($id)
     {
-        $out =  $this->SelectByCondition("VersionId = $id AND IsLast = 0");
+         $model = \Model\DiscusionItems::GetInstance();
+        $out =  $model->SelectByCondition("VersionId = $id AND IsLast = 0");
         foreach ($out as $row)
         {
             $row["DateTime"] = date("m-d-Y H:m:s",$row["DateTime"]);
@@ -61,8 +63,7 @@ class Discusion extends ObjectManager{
     private function CheckBadWords()
     {
         $domainsValues = new \Objects\UserDomains();
-        $userDomain = new \Objects\UserDomains();
-        $domainInfo = $userDomain->GetDomainInfo("BadWords");
+        $domainInfo = $domainsValues->GetDomainInfo("BadWords");
         $badWords = $domainsValues->GetDomainValueList($domainInfo["Id"],false);
         foreach ($badWords as $row)
         {
