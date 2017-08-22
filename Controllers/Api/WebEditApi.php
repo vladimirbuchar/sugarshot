@@ -638,7 +638,8 @@ class WebEditApi extends ApiController {
         if ($ajaxParametrs["Publish"]) {
             $canPublish = $content->HasPrivileges($id, \Types\PrivilegesType::$CanPublish);
             if ($canPublish) {
-                $content->UpdateMaterializedView("FrontendDetail");
+                $contentVersion = \Model\ContentVersion::GetInstance();
+                $contentVersion->UpdateMaterializedView("FrontendDetail");
             }
         }
         return $id;

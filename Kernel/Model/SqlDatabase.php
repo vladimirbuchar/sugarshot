@@ -332,7 +332,7 @@ class SqlDatabase {
             $fileName = './Temp/ExportFile' . $time . '.xml';
             Files::WriteFile($fileName, $xml);
         } else if ($mode == "xmlcdata") {
-            $xml = ArrayUtils::ArrayToXml($data, true);
+            $xml = ArrayUtils::ArrayToXml($data, true,"root","",array("Data"));
             $fileName = './Temp/ExportFile' . $time . '.xml';
             Files::WriteFile($fileName, $xml);
         }

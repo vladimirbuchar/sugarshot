@@ -59,6 +59,7 @@ class ProductsInOrder extends UserComponents{
             $items = array_merge($items,$data);
             foreach ($items as $key => $value)
             {
+                if (!is_array($value))
                 $generetedName = str_replace("{".$key."}", $value, $generetedName);
             }
             // name

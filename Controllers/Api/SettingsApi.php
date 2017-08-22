@@ -181,9 +181,9 @@ class SettingsApi extends ApiController {
         }
 
         if ($ajaxParametrs["DeleteUsers"]) {
-            $obj = new Users();
+            $obj = new \Model\Users();
             $deletedUsers = $obj->SelectByCondition("Deleted = 1");
-            $usersInGroup = new UsersInGroup();
+            $usersInGroup = new \Model\UsersInGroup();
             foreach ($deletedUsers as $row) {
                 $usersInGroup->DeleteByCondition("UserId = ".$row["Id"]);
             }
@@ -191,11 +191,11 @@ class SettingsApi extends ApiController {
             $obj->Clean();
         }
         if ($ajaxParametrs["DeleteUsersGroups"]) {
-            $obj = UserGroups::GetInstance();
+            $obj = \Model\UserGroups::GetInstance();
             $deletedUserGroups = $obj->SelectByCondition("Deleted = 1");
-            $usersInGroup = new UsersInGroup();
-            $userGroupModules = new UserGroupsModules();
-            $userGroupWeb = new UserGroupsModules();
+            $usersInGroup = new \Model\UsersInGroup();
+            $userGroupModules = new \Model\UserGroupsModules();
+            $userGroupWeb = new \Model\UserGroupsModules();
             foreach ($deletedUserGroups as $row) {
                 
                 $usersInGroup->DeleteByCondition("GroupId = ".$row["Id"]);
@@ -218,31 +218,31 @@ class SettingsApi extends ApiController {
             $obj->Clean();
         }
         if ($ajaxParametrs["DeleteLangs"]) {
-            $obj = Langs::GetInstance();
+            $obj = \Model\Langs::GetInstance();
             $obj->Clean();
         }
         if ($ajaxParametrs["DeleteAdminLangs"]) {
-            $obj = AdminLangs::GetInstance();
+            $obj = \Model\AdminLangs::GetInstance();
             $obj->Clean();
         }
         if ($ajaxParametrs["DeleteWords"]) {
-            $obj = new WordGroups();
+            $obj = new \Model\WordGroups();
             $obj->Clean();
         }
         if ($ajaxParametrs["DeleteModules"]) {
-            $obj = new Modules();
+            $obj = new \Model\Modules();
             $obj->Clean();
         }
         if ($ajaxParametrs["DeleteDomains"]) {
-            $obj = UserDomains::GetInstance();
+            $obj = \Model\UserDomains::GetInstance();
             $obj->Clean();
-            $obj = UserDomainsGroups::GetInstance();
+            $obj = \Model\UserDomainsGroups::GetInstance();
             $obj->Clean();
-            $obj = UserDomainsItems::GetInstance();
+            $obj = \Model\UserDomainsItems::GetInstance();
             $obj->Clean();
-            $obj = UserDomainsItemsInGroups::GetInstance();
+            $obj = \Model\UserDomainsItemsInGroups::GetInstance();
             $obj->Clean();
-            $obj = UserDomainsValues::GetInstance();
+            $obj = \Model\UserDomainsValues::GetInstance();
             $obj->Clean();
         }
     }
@@ -251,7 +251,7 @@ class SettingsApi extends ApiController {
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
-        $userDomAd = UserDomainsAddiction::GetInstance();
+        $userDomAd = \Model\UserDomainsAddiction::GetInstance();
         return $userDomAd->GetObjectById($ajaxParametrs["Id"]);
     }
 
@@ -270,7 +270,7 @@ class SettingsApi extends ApiController {
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         if (empty($ajaxParametrs))
             return;
-        $udg = UserDomainsAddiction::GetInstance();
+        $udg = \Model\UserDomainsAddiction::GetInstance();
         $deleted = $ajaxParametrs["ShowItem"] == "DeleteItem" ? TRUE : FALSE;
         if ($deleted)
             return $udg->SelectByCondition("Deleted= 1 AND DomainId = $domainid");
@@ -283,7 +283,7 @@ class SettingsApi extends ApiController {
         if (empty($ajaxParametrs))
             return;
         $id = $ajaxParametrs["Id"];
-        $userDomainValue = UserDomainsAddiction::GetInstance();
+        $userDomainValue = \Model\UserDomainsAddiction::GetInstance();
         $userDomainValue->DeleteObject($id);
     }
 

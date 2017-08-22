@@ -128,9 +128,9 @@
         <!--{include file=$AddDialog}-->
         <div class="modal-footer">
             <!--{if !empty($ViewNameClass)}-->
-            <button type="button" class="btn btn-primary" onclick="if (SaveItem('<!--{$JoinAddDialogId}-->','<!--{$ControllerName}-->','<!--{$AddAction}-->','<!--{$ModelName}-->')){ ShowLoading(); <!--{$AddScriptAction}--> GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ViewNameClass}-->',undefined,undefined);CloseDialog('<!--{$JoinAddDialogId}-->');HideLoading();}"><!--{$word371}--></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="if (SaveItem('<!--{$JoinAddDialogId}-->','<!--{$ControllerName}-->','<!--{$AddAction}-->','<!--{$ModelName}-->')){ ShowLoading(); <!--{$AddScriptAction}--> GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ViewNameClass}-->',undefined,undefined);CloseDialog('<!--{$JoinAddDialogId}-->');HideLoading();}"><!--{$word371}--></button>
             <!--{else}-->
-            <button type="button" class="btn btn-primary" onclick="if (SaveItem('<!--{$JoinAddDialogId}-->','<!--{$ControllerName}-->','<!--{$AddAction}-->','<!--{$ModelName}-->')){ShowLoading(); <!--{$AddScriptAction}--> GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('<!--{$JoinAddDialogId}-->');HideLoading();}"><!--{$word371}--></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="if (SaveItem('<!--{$JoinAddDialogId}-->','<!--{$ControllerName}-->','<!--{$AddAction}-->','<!--{$ModelName}-->')){ShowLoading(); <!--{$AddScriptAction}--> GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('<!--{$JoinAddDialogId}-->');HideLoading();}"><!--{$word371}--></button>
             <!--{/if}-->
             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('<!--{$JoinAddDialogId}-->')"><!--{$word369}--></button>
         
@@ -156,7 +156,7 @@
                 
             </div>
                     <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="ShowLoading();DeleteDomianItem('<!--{$ControllerName}-->','<!--{$DeleteAction}-->',$('#deleteId').val(),'<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('DeleteDialog'); HideLoading();"><!--{$word373}--></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowLoading();DeleteDomianItem('<!--{$ControllerName}-->','<!--{$DeleteAction}-->',$('#deleteId').val(),'<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('DeleteDialog'); HideLoading();"><!--{$word373}--></button>
             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('DeleteDialog')"><!--{$word374}--></button>
         
       </div>
@@ -210,7 +210,7 @@
                 
             </div>
                     <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="ShowLoading();Recovery('<!--{$ControllerName}-->','<!--{$RecoveryServerAction}-->',$('#recoveryId').val(),'<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('RecoveryDialog');HideLoading();"><!--{$word373}--></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowLoading();Recovery('<!--{$ControllerName}-->','<!--{$RecoveryServerAction}-->',$('#recoveryId').val(),'<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('RecoveryDialog');HideLoading();"><!--{$word373}--></button>
             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('RecoveryDialog')"><!--{$word374}--></button>
         
       </div>
@@ -238,7 +238,7 @@
             </div>
                     <div class="modal-footer">
                         <div class=" SelectedItem dn">
-            <button type="button" class="btn btn-primary" onclick="ShowLoading();RecoveryMultiSelect('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','<!--{$RecoveryServerAction}-->','row-','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-',,'<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiRecovery');HideLoading();"><!--{$word373}--></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowLoading();RecoveryMultiSelect('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','<!--{$RecoveryServerAction}-->','row-','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-',,'<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiRecovery');HideLoading();"><!--{$word373}--></button>
             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiRecovery')"><!--{$word374}--></button>
                         </div>
                         <div class="NoSelectedItem dn">
@@ -264,7 +264,7 @@
                 
             </div>
                     <div class="modal-footer">
-            <button type="button" class="btn btn-primary" onclick="ShowLoading();CopyRow($('#copyId').val(),'<!--{$ControllerName}-->','<!--{$CopyServerAction}-->','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('CopyDialog'); HideLoading();"><!--{$word381}--></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowLoading();CopyRow($('#copyId').val(),'<!--{$ControllerName}-->','<!--{$CopyServerAction}-->','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('CopyDialog'); HideLoading();"><!--{$word381}--></button>
             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('CopyDialog')"><!--{$word369}--></button>
         
       </div>
@@ -293,7 +293,7 @@
             </div>
                     <div class="modal-footer">
                         <div class="SelectedItem dn">
-            <button type="button" class="btn btn-primary" onclick="ShowLoading();MultiCopy('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','row-','<!--{$CopyServerAction}-->','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiCopyDialog');HideLoading();">Ano</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowLoading();MultiCopy('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','row-','<!--{$CopyServerAction}-->','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiCopyDialog');HideLoading();">Ano</button>
             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiCopyDialog')"><!--{$word369}--></button>
             </div>
                         <div class="NoSelectedItem dn">

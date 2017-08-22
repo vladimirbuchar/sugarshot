@@ -1380,6 +1380,7 @@ class Forms extends \Kernel\GlobalClass {
                     }
                     try{
                         $xml->addChild("Id", $row["Id"]);
+                        $row = ArrayUtils::ToArray($row);
                         $row = array_merge($row,ArrayUtils::ObjectToArray($xml)); 
                         $row["Data"] = $xml->asXML();
                     }
@@ -1759,7 +1760,8 @@ class Forms extends \Kernel\GlobalClass {
     {
        foreach ($array as $key =>$value)
         {
-            $html = str_replace("{".$key."}", $value, $html);
+           if (!is_array($value))
+                $html = str_replace("{".$key."}", $value, $html);
             
         }
         return $html;

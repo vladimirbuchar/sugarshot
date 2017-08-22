@@ -40,11 +40,11 @@ class Content extends ObjectManager {
         /**
          * @var \Model\ContentConnection
          */
-        $model = ContentConnection:: GetInstance();
+        $model = \Model\ContentConnection:: GetInstance();
         $model->TransactionBegin();
         try {
             $contentVersion = \Model\ContentVersion::GetInstance();
-            if (!$contentVersion->HasPrivileges($ObjectId, PrivilegesType::$CanWrite))
+            if (!$this->HasPrivileges($ObjectId, PrivilegesType::$CanWrite))
                 return;
 
 
@@ -132,7 +132,7 @@ class Content extends ObjectManager {
             if (empty($type)) {
                 $res = $connectionobjects->SelectByCondition("ObjectId = %i AND  (LangId = %i OR LangId =0 )", "", array("Name", "Data", "SeoUrl", "ConnectedType", "SettingConnection"), array($objectId, $langId));
             } else {
-                $res = dibi::query("SELECT Name,Data,SeoUrl,ConnectedType,SettingConnection FROM CONNECTIONOBJECTS WHERE ObjectId = %i AND (LangId = %i OR LangId =0 ) AND ($queryType)", $objectId, $langId)->fetchAll();
+                $res = \dibi::query("SELECT Name,Data,SeoUrl,ConnectedType,SettingConnection FROM CONNECTIONOBJECTS WHERE ObjectId = %i AND (LangId = %i OR LangId =0 ) AND ($queryType)", $objectId, $langId)->fetchAll();
             }
         }
 
@@ -186,13 +186,13 @@ class Content extends ObjectManager {
     public function CreateContentItem($name, $isActive, $seoUrl, $template, $contentType, $AvailableOverSeoUrl, $lang, $parentid, $noIncludeSearch = true, $identificator = "", $privileges = array(), $data = "", $domainId = 0, $templateId = 0, $header = "", $activeFrom = "", $activeTo = "", $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $sort = 99999, $formId = 0, $testPrivileges = true, $dataArray = array(), $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $settings = "", $caching = false, $sortRule = "") {
         try {
 
-            dibi::begin();
+            \dibi::begin();
             if ($this->IsLink($parentid) || (!$this->CanHaveChild($parentid) && ($contentType != ContentTypes::FORMSTATISTIC && $contentType != ContentTypes::SURVER_ANSWEB) )) {
                 $parentid = $this->GetParent($parentid);
             }
 
             if (!$this->HasPrivileges($parentid, PrivilegesType::$CanWrite) && $testPrivileges) {
-                dibi::rollback();
+                \dibi::rollback();
                 return 0;
             }
 
@@ -228,7 +228,7 @@ class Content extends ObjectManager {
 
             if ($contentId == 0) {
 
-                dibi::rollback();
+                \dibi::rollback();
                 return 0;
             }
 
@@ -238,7 +238,7 @@ class Content extends ObjectManager {
                 }
                 $security = $this->Security($privileges, $contentId);
                 if (!$security) {
-                    dibi::rollback();
+                    \dibi::rollback();
                     return 0;
                 }
             } else {
@@ -2769,6 +2769,9 @@ class Content extends ObjectManager {
         $info = simplexml_load_string($xml);
         $info[0]->$key = "<![CDATA[" . $value . "]]>";
         \Dibi::query("UPDATE ContentVersion SET Data = %s WHERE ContentId = %i AND IsLast = 1", $info->asXML(), $contentId);
+    }
+        public function GetFromStatisticDetail($id, $langId) {
+        return \dibi::query("SELECT Data FROM FORMSTATISTIC WHERE   Id =%i  ", $id)->fetchAll();
     }
 
 }

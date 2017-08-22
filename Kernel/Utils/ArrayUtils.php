@@ -15,16 +15,27 @@ class ArrayUtils  {
      * @param type $data - array
      * @return string
      */
-    public static function ArrayToXml($data, $addCdata = false,$rootName ="root",$subXml = "") {
+    public static function ArrayToXml($data, $addCdata = false,$rootName ="root",$subXml = "",$entityEncodeColumn =array()) {
         if (empty($data))
-            return"";
+            return"<$rootName></$rootName>\n";
         $outString = "<$rootName>\n";
         foreach ($data as $row) {
             $outString.= "\t<item>\n";
             foreach ($row as $key => $value) {
+                
+                
                 if ($addCdata && $key != "DataItems") {
+                    $value = \Utils\ArrayUtils::RemoveCData($value);
+                    if (in_array($key, $entityEncodeColumn))
+                    {
+                        $value = htmlentities($value);
+                    }
                     $outString.= "\t\t<$key><![CDATA[$value]]></$key>\n";
                 } else {
+                    if (in_array($key, $entityEncodeColumn))
+                    {
+                        $value = htmlentities($value);
+                    }
                     $outString.= "\t\t<$key>$value</$key>\n";
                 }
             }
@@ -171,7 +182,8 @@ class ArrayUtils  {
                             $value = trim($xmlLoad->$item);
                         else 
                         {
-                            $value = $row[$item];
+                            if (!empty($row[$item]))
+                                $value = $row[$item];
                         }
                         if (empty($value)) $value = "&nbsp;";
                         $td = new HtmlTableTd();

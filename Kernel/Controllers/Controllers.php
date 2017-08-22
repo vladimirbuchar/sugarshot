@@ -91,6 +91,19 @@ class Controllers extends GlobalClass {
         return $langItem->GetRootUrl($this->LangId);
     }
     
+    // FOR WEB EIDT
+    protected function GetLastEditLangVersion($clear = true) {
+        $lang = 0;
+        if (!self::$SessionManager->IsEmpty("lastEditLang")) {
+            $lang = self::$SessionManager->GetSessionValue("lastEditLang");
+            if ($clear) {
+                self::$SessionManager->UnsetKey("lastEditLang");
+            }
+        }
+        return $lang;
+    }
+    
+    
     // UPLNE PŘEDĚLAT 
     protected function ReplaceHtmlWord($data) {
         foreach ($data as $row) {
@@ -117,5 +130,7 @@ class Controllers extends GlobalClass {
         }
         $this->SetTemplateData("AdminLang", $adminLangData);
     }  
+    
+    
 
 }

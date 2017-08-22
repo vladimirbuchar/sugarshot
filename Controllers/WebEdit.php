@@ -694,16 +694,7 @@ class WebEdit extends AdminController {
         return $contentSecurity->CanPrivileges($parentId, self::$UserGroupId, "canWrite");
     }
 
-    private function GetLastEditLangVersion($clear = true) {
-        $lang = 0;
-        if (!self::$SessionManager->IsEmpty("lastEditLang")) {
-            $lang = self::$SessionManager->GetSessionValue("lastEditLang");
-            if ($clear) {
-                self::$SessionManager->UnsetKey("lastEditLang");
-            }
-        }
-        return $lang;
-    }
+    
 
     private function SetLangList($content, $id) {
         $lang = Langs::GetInstance();
