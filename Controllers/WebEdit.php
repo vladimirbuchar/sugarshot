@@ -144,10 +144,7 @@ class WebEdit extends AdminController {
     }
 
     public function CreateTreeJs($search = "") {
-        $content = new \Objects\Content();
-        $cssList = $content->GetJsList(self::$User->GetUserGroupId(), $this->LangId, false, $search);
-        $html = $content->CreateHtml($cssList);
-        return $html;
+        return \Utils\TreeUtils::CreateTreeJs(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 
     public function FileFolder() {

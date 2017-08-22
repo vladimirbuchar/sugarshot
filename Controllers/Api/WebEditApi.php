@@ -83,8 +83,7 @@ class WebEditApi extends ApiController {
         $this->SetApiFunction("CreateTreeMailing", array("system", "Administrators"));
         $this->SetApiFunction("CreateTreeMail", array("system", "Administrators"));
         $this->SetApiFunction("CreateTreeForms", array("system", "Administrators"));
-        
-        
+        $this->SetApiFunction("CreateTreeJs", array("system", "Administrators"));
     }
 
     public function GetAlernativeArticle() {
@@ -871,5 +870,8 @@ class WebEditApi extends ApiController {
     }
     public function CreateTreeForms($search = "") {
         return \Utils\TreeUtils::CreateTreeForms(self::$User->GetUserGroupId(), $this->LangId, $search);
+    }
+    public function CreateTreeJs($search = "") {
+        return \Utils\TreeUtils::CreateTreeJs(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 }

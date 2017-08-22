@@ -56,4 +56,11 @@ class TreeUtils {
         $html = $content->CreateHtml($cssList);
         return $html;
     }
+    
+    public static function CreateTreeJs($userGroup,$langid,$search) {
+        $content = new \Objects\Content();
+        $cssList = $content->GetJsList($userGroup,$langid, false, $search);
+        $html = $content->CreateHtml($cssList);
+        return $html;
+    }
  }
