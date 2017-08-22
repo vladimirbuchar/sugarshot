@@ -9,10 +9,10 @@
         <xWeb:Component Type="xLink" Controller="WebEdit" View="CssEditor" Prefix="xadm" Text="word452" OnClick="LoadLinkDialogCss();return false;" DataToggle="modal" DataTarget="#LinkDialog"/>
     </li>
         <li  id="editObject" class="btn btn-default disabled dn" OnClick="EditItem('WebEdit','CssEditor','/xadm');return false;">
-            <xWeb:Component Type="xLink" Controller="WebEdit" View="CssEditor" Prefix="xadm" Text="word284" />
+            <xWeb:Component Type="xLink" Controller="WebEdit" View="CssEditor" Prefix="xadm" Text="word284"  OnClick="EditItem('WebEdit','CssEditor','/xadm');return false;"/>
     </li>
-    <li class="btn btn-default disabled" id="deleteObject" OnClick="DeleteDialog();return false;">
-        <xWeb:Component Type="xLink" Controller="WebEdit" View="CssEditor" Prefix="xadm" Text="word286"  DataToggle="modal" DataTarget="#DeleteDialog" />
+    <li class="btn btn-default disabled" id="deleteObject" >
+        <xWeb:Component Type="xLink" Controller="WebEdit" View="CssEditor" Prefix="xadm" Text="word286"  DataToggle="modal" DataTarget="#DeleteDialog" OnClick="DeleteDialog();return false;"/>
         
         
     </li>

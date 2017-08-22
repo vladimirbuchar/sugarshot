@@ -17,33 +17,32 @@ class WebEdit extends AdminController {
         $this->CheckWebPrivileges();
         $this->SetTemplateData("controllerName", $this->ControllerName);
         $this->AddScript("/Scripts/ContentTree.js");
-        $this->SetViewSettings("Tree", array("system", "Administrators"),true,true);
-        $this->SetViewSettings("TemplateEditor", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("Tree", array("system", "Administrators"), true, true);
+        $this->SetViewSettings("TemplateEditor", array("system", "Administrators"), true, true);
         $this->SetViewSettings("Detail", array("system", "Administrators"));
         $this->SetViewSettings("TemplateDetail", array("system", "Administrators"));
-        $this->SetViewSettings("CssList", array("system", "Administrators"),true,true);
-        $this->SetViewSettings("FormsList", array("system", "Administrators"),true,true);
-        $this->SetViewSettings("MailList", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("CssList", array("system", "Administrators"), true, true);
+        $this->SetViewSettings("FormsList", array("system", "Administrators"), true, true);
+        $this->SetViewSettings("MailList", array("system", "Administrators"), true, true);
         $this->SetViewSettings("CssEditor", array("system", "Administrators"));
         $this->SetViewSettings("FileFolder", array("system", "Administrators"));
         $this->SetViewSettings("FileUploader", array("system", "Administrators"));
         $this->SetViewSettings("Discusion", array("system", "Administrators"));
-        $this->SetViewSettings("JsList", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("JsList", array("system", "Administrators"), true, true);
         $this->SetViewSettings("JsEditor", array("system", "Administrators"));
         $this->SetViewSettings("FormEditor", array("system", "Administrators"));
         $this->SetViewSettings("MailEditor", array("system", "Administrators"));
-        $this->SetViewSettings("SendMailList", array("system", "Administrators"),true,true);
-        $this->SetViewSettings("Trash", array("system", "Administrators"),true,true);
-        $this->SetViewSettings("NoPublishItems", array("system", "Administrators"),true,true);
-        $this->SetViewSettings("Mailing", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("SendMailList", array("system", "Administrators"), true, true);
+        $this->SetViewSettings("Trash", array("system", "Administrators"), true, true);
+        $this->SetViewSettings("NoPublishItems", array("system", "Administrators"), true, true);
+        $this->SetViewSettings("Mailing", array("system", "Administrators"), true, true);
         $this->SetViewSettings("MailingDetail", array("system", "Administrators"));
-        $this->SetViewSettings("DataSource", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("DataSource", array("system", "Administrators"), true, true);
         $this->SetViewSettings("DataSourceDetail", array("system", "Administrators"));
-        $this->SetViewSettings("InquryList", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("InquryList", array("system", "Administrators"), true, true);
         $this->SetViewSettings("InqueryDetail", array("system", "Administrators"));
-        $this->SetViewSettings("FileManager", array("system", "Administrators"),true,true);
-        $this->SetViewSettings("DiscusionList", array("system", "Administrators"),true,true);
-        
+        $this->SetViewSettings("FileManager", array("system", "Administrators"), true, true);
+        $this->SetViewSettings("DiscusionList", array("system", "Administrators"), true, true);
     }
 
     public function Mailing() {
@@ -436,18 +435,18 @@ class WebEdit extends AdminController {
         $this->ExitQuestion = true;
         $this->SetStateTitle($this->GetWord("word288"));
         $this->joinCodeMirror();
-        /*$this->AddStyle("/Styles/show-hint.css");
-        $this->AddStyle("/Styles/codemirror.css");
-        $this->AddScript("/Scripts/ExternalApi/codemirror.js");
-        $this->AddScript("/Scripts/ExternalApi/show-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/xml-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/html-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/xml/xml.js");
-        $this->AddScript("/Scripts/ExternalApi/javascript/javascript.js");
-        $this->AddScript("/Scripts/ExternalApi/css/css.js");
-        $this->AddScript("/Scripts/ExternalApi/htmlmixed/htmlmixed.js");
-        $this->AddScript("/Scripts/ExternalApi/show-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/css-hint.js");*/
+        /* $this->AddStyle("/Styles/show-hint.css");
+          $this->AddStyle("/Styles/codemirror.css");
+          $this->AddScript("/Scripts/ExternalApi/codemirror.js");
+          $this->AddScript("/Scripts/ExternalApi/show-hint.js");
+          $this->AddScript("/Scripts/ExternalApi/xml-hint.js");
+          $this->AddScript("/Scripts/ExternalApi/html-hint.js");
+          $this->AddScript("/Scripts/ExternalApi/xml/xml.js");
+          $this->AddScript("/Scripts/ExternalApi/javascript/javascript.js");
+          $this->AddScript("/Scripts/ExternalApi/css/css.js");
+          $this->AddScript("/Scripts/ExternalApi/htmlmixed/htmlmixed.js");
+          $this->AddScript("/Scripts/ExternalApi/show-hint.js");
+          $this->AddScript("/Scripts/ExternalApi/css-hint.js"); */
         $this->SetLeftMenu("contentMenu", "contentMenuCss");
         $id = $this->GetObjectId();
         $content = new \Objects\Content();
@@ -478,14 +477,14 @@ class WebEdit extends AdminController {
         $this->SetStateTitle($this->GetWord("word496"));
         $this->SetLeftMenu("contentMenu", "contentMenuJs");
         $this->joinCodeMirror();
-        /*$this->AddStyle("/Styles/codemirror.css");
-        $this->AddStyle("/Styles/show-hint.css");
-        $this->AddScript("/Scripts/ExternalApi/codemirror.js");
-        $this->AddScript("/Scripts/ExternalApi/edit/matchbrackets.js");
-        $this->AddScript("/Scripts/ExternalApi/comment/continuecomment.js");
-        $this->AddScript("/Scripts/ExternalApi/comment/comment.js");
-        $this->AddScript("/Scripts/ExternalApi/javascript.js");
-        $this->AddScript("/Scripts/ExternalApi/javascript-hint.js");*/
+        /* $this->AddStyle("/Styles/codemirror.css");
+          $this->AddStyle("/Styles/show-hint.css");
+          $this->AddScript("/Scripts/ExternalApi/codemirror.js");
+          $this->AddScript("/Scripts/ExternalApi/edit/matchbrackets.js");
+          $this->AddScript("/Scripts/ExternalApi/comment/continuecomment.js");
+          $this->AddScript("/Scripts/ExternalApi/comment/comment.js");
+          $this->AddScript("/Scripts/ExternalApi/javascript.js");
+          $this->AddScript("/Scripts/ExternalApi/javascript-hint.js"); */
         $id = $this->GetObjectId();
         $content = new \Objects\Content();
         $data = $content->GetJsDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId, $this->GetVersionId());
@@ -512,16 +511,16 @@ class WebEdit extends AdminController {
     public function TemplateDetail() {
         $this->ExitQuestion = true;
         $this->joinCodeMirror();
-        /*$this->AddStyle("/Styles/codemirror.css");
-        $this->AddStyle("/Styles/show-hint.css");
-        $this->AddScript("/Scripts/ExternalApi/codemirror.js");
-        $this->AddScript("/Scripts/ExternalApi/show-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/xml-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/html-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/xml/xml.js");
-        $this->AddScript("/Scripts/ExternalApi/javascript/javascript.js");
-        $this->AddScript("/Scripts/ExternalApi/css/css.js");
-        $this->AddScript("/Scripts/ExternalApi/htmlmixed/htmlmixed.js");*/
+        /* $this->AddStyle("/Styles/codemirror.css");
+          $this->AddStyle("/Styles/show-hint.css");
+          $this->AddScript("/Scripts/ExternalApi/codemirror.js");
+          $this->AddScript("/Scripts/ExternalApi/show-hint.js");
+          $this->AddScript("/Scripts/ExternalApi/xml-hint.js");
+          $this->AddScript("/Scripts/ExternalApi/html-hint.js");
+          $this->AddScript("/Scripts/ExternalApi/xml/xml.js");
+          $this->AddScript("/Scripts/ExternalApi/javascript/javascript.js");
+          $this->AddScript("/Scripts/ExternalApi/css/css.js");
+          $this->AddScript("/Scripts/ExternalApi/htmlmixed/htmlmixed.js"); */
         $this->SetStateTitle($this->GetWord("word269"));
         $this->SetLeftMenu("contentMenu", "contentMenuTemplate");
 
@@ -581,10 +580,10 @@ class WebEdit extends AdminController {
         $groupList = $ug->GetUserGroups(array("system"));
         if (empty($data)) {
             $web = \Model\Webs::GetInstance();
-            $web->GetObjectById($this->WebId,true,array("WebPrivileges"));
+            $web->GetObjectById($this->WebId, true, array("WebPrivileges"));
             $ar = ArrayUtils::XmlToArray($web->WebPrivileges);
             $data = $ar["item"];
-            
+
             foreach ($groupList as $row) {
                 $row["canread_checked"] = false;
                 $row["canwrite_checked"] = false;
@@ -838,9 +837,8 @@ class WebEdit extends AdminController {
     public function CreateTreeDataSource($search = "") {
         return \Utils\TreeUtils::CreateTreeDataSource(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
-    
-    private function joinCodeMirror()
-    {
+
+    private function joinCodeMirror() {
         $this->AddStyle("/node_modules/codemirror/lib/codemirror.css");
         $this->AddStyle("/node_modules/codemirror/addon/hint/show-hint.css");
         $this->AddScript("/node_modules/codemirror/lib/codemirror.js");
@@ -1067,6 +1065,10 @@ class WebEdit extends AdminController {
         /** @var \Model\Content */
         $content = \Model\Content::GetInstance();
         return $content->GetMaxValue("Sort", "ContentType = '$contentType' AND ParentId = $parentId AND Sort <> 99999  AND Deleted = 0") + 1;
+    }
+
+    public function CreateTree($search = "") {
+        return \Utils\TreeUtils::CreateTree(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 
 }

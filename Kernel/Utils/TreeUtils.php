@@ -70,4 +70,18 @@ class TreeUtils {
         $html = $content->CreateHtml($cssList);
         return $html;
     }
+    
+    public static function  CreateTree($userGroup,$langid,$search) {
+        $content = new \Objects\Content();
+        $templatesList = $content->GetTemplateList($userGroup, $langid, false, false, $search, "Name ASC");
+
+        if (empty($templatesList)) {
+            $langInfo = $content->GetTree($this->LangId, -1);
+            $langInfo[0]["Name"] = $langInfo[0]["LangName"];
+            $templatesList = $langInfo;
+        }
+
+        $html = $content->CreateHtml($templatesList);
+        return $html;
+    }
  }

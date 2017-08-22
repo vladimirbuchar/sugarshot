@@ -553,17 +553,7 @@ class WebEditApi extends ApiController {
     }
 
     public function CreateTree($search = "") {
-        $content = new \Objects\Content();
-        $templatesList = $content->GetTemplateList(self::$User->GetUserGroupId(), $this->LangId, false, false, $search, "Name ASC");
-
-        if (empty($templatesList)) {
-            $langInfo = $content->GetTree($this->LangId, -1);
-            $langInfo[0]["Name"] = $langInfo[0]["LangName"];
-            $templatesList = $langInfo;
-        }
-
-        $html = $content->CreateHtml($templatesList);
-        return $html;
+        return \Utils\TreeUtils::CreateTree(self::$User->GetUserGroupId(), $this->LangId,$search);
     }
 
     public function DeleteTemplate() {
