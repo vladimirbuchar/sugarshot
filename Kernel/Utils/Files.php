@@ -79,15 +79,15 @@ class Files {
                     return self::FileUpload();
                 } else {
                     rename($uploadPath, "res/" . $newName);
-                    
-                    if (strpos($newName, ".jpg") !== false || strpos($newName, ".gif") !== false || strpos($newName, ".png") !== false || strpos($newName, ".jpeg") !== false) {
+                    $tmpName = ROOT_PATH . "res/" . $newName;
+                    if (@is_array(getimagesize($tmpName))) {
                         $img = new Image();
                         $web = \Model\Webs::GetInstance();
                         $webId = empty($_GET["webid"]) ? 0 : $_GET["webid"];
                         if ($webId > 0) {
-                            $web->GetObjectById($webId);
-                            $tmpName = ROOT_PATH . "res/" . $newName;
+                            $web->GetObjectById($webId,true,array("BigWidth","BigHeight","MediumWidth","MediumHeight","SmallWidth","SmallHeight"));
                             $newFileNameB = $img->CreateFileName($tmpName, "_b");
+
                             $img->Resizer($tmpName, $newFileNameB, $web->BigWidth, $web->BigHeight);
                             $newFileNameM = $img->CreateFileName($tmpName, "_m");
                             $img->Resizer($tmpName, $newFileNameM, $web->MediumWidth, $web->MediumHeight);

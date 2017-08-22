@@ -1,0 +1,13 @@
+{
+    "name": "thebingservices/codemirror",
+    "description": "This ist a fork of CodeMirror (https://github.com/marijnh/codemirror). In-browser code editor.",
+    "keywords": ["thebingservices", "codemirror", "js editor", "html editor", "editor", "code editor"],
+    "license": "MIT",
+	"authors": [
+        {
+            "name": "Marijn Haverbeke - marijnh",
+            "homepage": "http://codemirror.net/"
+        }
+    ],
+    "target-dir": "CodeMirror"
+}

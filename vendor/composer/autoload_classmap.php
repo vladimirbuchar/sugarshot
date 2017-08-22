@@ -68,6 +68,8 @@ return array(
     'Dibi\\Type' => $vendorDir . '/dibi/dibi/src/Dibi/Type.php',
     'Dibi\\UniqueConstraintViolationException' => $vendorDir . '/dibi/dibi/src/Dibi/exceptions.php',
     'EasyPeasyICS' => $vendorDir . '/phpmailer/phpmailer/extras/EasyPeasyICS.php',
+    'Eventviva\\ImageResize' => $vendorDir . '/eventviva/php-image-resize/lib/ImageResize.php',
+    'Eventviva\\ImageResizeException' => $vendorDir . '/eventviva/php-image-resize/lib/ImageResize.php',
     'FPDF_TPL' => $vendorDir . '/setasign/fpdi/fpdf_tpl.php',
     'FPDI' => $vendorDir . '/setasign/fpdi/fpdi.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',

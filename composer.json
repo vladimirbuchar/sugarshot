@@ -7,6 +7,8 @@
         "smarty/smarty": "^3.1",
         "mpdf/mpdf": "^6.1",
         "phpoffice/phpexcel": "^1.8",
-        "phpunit/phpunit": "^6.3"
+        "phpunit/phpunit": "^6.3",
+        "thebingservices/codemirror": "^5.10",
+        "eventviva/php-image-resize": "^1.6"
     }
 }

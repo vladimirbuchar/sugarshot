@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8774d361ff1923883e58ea1343d77b44",
-    "content-hash": "f678eb7afa886ef1431f29a00f194b4a",
+    "hash": "3b22d8bd6c9f42db15afc5715aaa8936",
+    "content-hash": "8430eed7962923d072ffcca5d8bdecc4",
     "packages": [
         {
             "name": "cosenary/instagram",
@@ -170,6 +170,53 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "eventviva/php-image-resize",
+            "version": "1.6.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eventviva/php-image-resize.git",
+                "reference": "6c3adec1b5aa47a9abf8d0b3a0cc61fde390f9b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eventviva/php-image-resize/zipball/6c3adec1b5aa47a9abf8d0b3a0cc61fde390f9b5",
+                "reference": "6c3adec1b5aa47a9abf8d0b3a0cc61fde390f9b5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "suggest": {
+                "ext-exif": "Auto-rotate jpeg files"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aditya Patadia",
+                    "homepage": "http://aditya.patadia.org/"
+                }
+            ],
+            "description": "PHP class to re-size and scale images",
+            "homepage": "https://github.com/eventviva/php-image-resize",
+            "keywords": [
+                "image",
+                "php",
+                "resize",
+                "scale"
+            ],
+            "time": "2017-08-02 12:34:29"
         },
         {
             "name": "filipsedivy/php-eet",
@@ -1893,6 +1940,43 @@
                 "templating"
             ],
             "time": "2016-12-14 21:57:25"
+        },
+        {
+            "name": "thebingservices/codemirror",
+            "version": "v5.10.0",
+            "target-dir": "CodeMirror",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ThebingServices/CodeMirror.git",
+                "reference": "ca45cbc7e0aaa50b26181cde322b46f55447feff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ThebingServices/CodeMirror/zipball/ca45cbc7e0aaa50b26181cde322b46f55447feff",
+                "reference": "ca45cbc7e0aaa50b26181cde322b46f55447feff",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marijn Haverbeke - marijnh",
+                    "homepage": "http://codemirror.net/"
+                }
+            ],
+            "description": "This ist a fork of CodeMirror (https://github.com/marijnh/codemirror). In-browser code editor.",
+            "keywords": [
+                "code editor",
+                "codemirror",
+                "editor",
+                "html editor",
+                "js editor",
+                "thebingservices"
+            ],
+            "time": "2015-12-22 10:24:29"
         },
         {
             "name": "theseer/tokenizer",

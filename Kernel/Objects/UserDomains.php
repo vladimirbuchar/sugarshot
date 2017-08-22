@@ -503,7 +503,7 @@ class UserDomains extends ObjectManager{
     }
     public function DeleteAllValues($domainId)
     {
-        $model = new Model\UserDomainsValues();
+        $model = new \Model\UserDomainsValues();
         $model->DeleteByCondition("DomainId = $domainId",true,false);
     }
     

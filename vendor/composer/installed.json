@@ -2051,5 +2051,93 @@
             "testing",
             "xunit"
         ]
+    },
+    {
+        "name": "thebingservices/codemirror",
+        "version": "v5.10.0",
+        "version_normalized": "5.10.0.0",
+        "target-dir": "CodeMirror",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ThebingServices/CodeMirror.git",
+            "reference": "ca45cbc7e0aaa50b26181cde322b46f55447feff"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ThebingServices/CodeMirror/zipball/ca45cbc7e0aaa50b26181cde322b46f55447feff",
+            "reference": "ca45cbc7e0aaa50b26181cde322b46f55447feff",
+            "shasum": ""
+        },
+        "time": "2015-12-22 10:24:29",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Marijn Haverbeke - marijnh",
+                "homepage": "http://codemirror.net/"
+            }
+        ],
+        "description": "This ist a fork of CodeMirror (https://github.com/marijnh/codemirror). In-browser code editor.",
+        "keywords": [
+            "code editor",
+            "codemirror",
+            "editor",
+            "html editor",
+            "js editor",
+            "thebingservices"
+        ]
+    },
+    {
+        "name": "eventviva/php-image-resize",
+        "version": "1.6.7",
+        "version_normalized": "1.6.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/eventviva/php-image-resize.git",
+            "reference": "6c3adec1b5aa47a9abf8d0b3a0cc61fde390f9b5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/eventviva/php-image-resize/zipball/6c3adec1b5aa47a9abf8d0b3a0cc61fde390f9b5",
+            "reference": "6c3adec1b5aa47a9abf8d0b3a0cc61fde390f9b5",
+            "shasum": ""
+        },
+        "require": {
+            "ext-gd": "*",
+            "php": ">=5.3.0"
+        },
+        "suggest": {
+            "ext-exif": "Auto-rotate jpeg files"
+        },
+        "time": "2017-08-02 12:34:29",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "lib"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Aditya Patadia",
+                "homepage": "http://aditya.patadia.org/"
+            }
+        ],
+        "description": "PHP class to re-size and scale images",
+        "homepage": "https://github.com/eventviva/php-image-resize",
+        "keywords": [
+            "image",
+            "php",
+            "resize",
+            "scale"
+        ]
     }
 ]

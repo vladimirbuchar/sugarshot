@@ -450,7 +450,8 @@ class WebEdit extends AdminController {
     public function CssEditor() {
         $this->ExitQuestion = true;
         $this->SetStateTitle($this->GetWord("word288"));
-        $this->AddStyle("/Styles/show-hint.css");
+        $this->joinCodeMirror();
+        /*$this->AddStyle("/Styles/show-hint.css");
         $this->AddStyle("/Styles/codemirror.css");
         $this->AddScript("/Scripts/ExternalApi/codemirror.js");
         $this->AddScript("/Scripts/ExternalApi/show-hint.js");
@@ -461,7 +462,7 @@ class WebEdit extends AdminController {
         $this->AddScript("/Scripts/ExternalApi/css/css.js");
         $this->AddScript("/Scripts/ExternalApi/htmlmixed/htmlmixed.js");
         $this->AddScript("/Scripts/ExternalApi/show-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/css-hint.js");
+        $this->AddScript("/Scripts/ExternalApi/css-hint.js");*/
         $this->SetLeftMenu("contentMenu", "contentMenuCss");
         $id = $this->GetObjectId();
         $content = new \Objects\Content();
@@ -491,14 +492,15 @@ class WebEdit extends AdminController {
         $this->ExitQuestion = true;
         $this->SetStateTitle($this->GetWord("word496"));
         $this->SetLeftMenu("contentMenu", "contentMenuJs");
-        $this->AddStyle("/Styles/codemirror.css");
+        $this->joinCodeMirror();
+        /*$this->AddStyle("/Styles/codemirror.css");
         $this->AddStyle("/Styles/show-hint.css");
         $this->AddScript("/Scripts/ExternalApi/codemirror.js");
         $this->AddScript("/Scripts/ExternalApi/edit/matchbrackets.js");
         $this->AddScript("/Scripts/ExternalApi/comment/continuecomment.js");
         $this->AddScript("/Scripts/ExternalApi/comment/comment.js");
         $this->AddScript("/Scripts/ExternalApi/javascript.js");
-        $this->AddScript("/Scripts/ExternalApi/javascript-hint.js");
+        $this->AddScript("/Scripts/ExternalApi/javascript-hint.js");*/
         $id = $this->GetObjectId();
         $content = new \Objects\Content();
         $data = $content->GetJsDetail($id, self::$User->GetUserGroupId(), $this->WebId, $this->LangId, $this->GetVersionId());
@@ -524,7 +526,8 @@ class WebEdit extends AdminController {
 
     public function TemplateDetail() {
         $this->ExitQuestion = true;
-        $this->AddStyle("/Styles/codemirror.css");
+        $this->joinCodeMirror();
+        /*$this->AddStyle("/Styles/codemirror.css");
         $this->AddStyle("/Styles/show-hint.css");
         $this->AddScript("/Scripts/ExternalApi/codemirror.js");
         $this->AddScript("/Scripts/ExternalApi/show-hint.js");
@@ -533,7 +536,7 @@ class WebEdit extends AdminController {
         $this->AddScript("/Scripts/ExternalApi/xml/xml.js");
         $this->AddScript("/Scripts/ExternalApi/javascript/javascript.js");
         $this->AddScript("/Scripts/ExternalApi/css/css.js");
-        $this->AddScript("/Scripts/ExternalApi/htmlmixed/htmlmixed.js");
+        $this->AddScript("/Scripts/ExternalApi/htmlmixed/htmlmixed.js");*/
         $this->SetStateTitle($this->GetWord("word269"));
         $this->SetLeftMenu("contentMenu", "contentMenuTemplate");
 
@@ -850,21 +853,25 @@ class WebEdit extends AdminController {
     public function CreateTreeDataSource($search = "") {
         return \Utils\TreeUtils::CreateTreeDataSource(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
+    
+    private function joinCodeMirror()
+    {
+        $this->AddStyle("/node_modules/codemirror/lib/codemirror.css");
+        $this->AddStyle("/node_modules/codemirror/addon/hint/show-hint.css");
+        $this->AddScript("/node_modules/codemirror/lib/codemirror.js");
+        $this->AddScript("/node_modules/codemirror/addon/hint/xml-hint.js");
+        $this->AddScript("/node_modules/codemirror/addon/hint/html-hint.js");
+        $this->AddScript("/node_modules/codemirror/mode/xml/xml.js");
+        $this->AddScript("/node_modules/codemirror/mode/javascript/javascript.js");
+        $this->AddScript("/node_modules/codemirror/mode/css/css.js");
+        $this->AddScript("/node_modules/codemirror/mode/htmlmixed/htmlmixed.js");
+    }
 
     public function DataSourceDetail() {
         $this->ExitQuestion = true;
         $this->SetStateTitle($this->GetWord("word566"));
         $this->SetLeftMenu("contentMenu", "contentMenuDatasource");
-        $this->AddStyle("/Styles/codemirror.css");
-        $this->AddStyle("/Styles/show-hint.css");
-        $this->AddScript("/Scripts/ExternalApi/codemirror.js");
-        $this->AddScript("/Scripts/ExternalApi/show-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/xml-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/html-hint.js");
-        $this->AddScript("/Scripts/ExternalApi/xml/xml.js");
-        $this->AddScript("/Scripts/ExternalApi/javascript/javascript.js");
-        $this->AddScript("/Scripts/ExternalApi/css/css.js");
-        $this->AddScript("/Scripts/ExternalApi/htmlmixed/htmlmixed.js");
+        $this->joinCodeMirror();
         $templateData = array();
         $id = $this->GetObjectId();
         $content = new \Objects\Content();

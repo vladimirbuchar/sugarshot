@@ -264,8 +264,8 @@ class Content extends ObjectManager {
             dibi::commit();
             return $contentId;
         } catch (Exception $e) {
-            echo $e;
-            die();
+            \Kernel\Page::ApplicationError($e);
+            
         }
     }
 
@@ -742,10 +742,9 @@ class Content extends ObjectManager {
             $xml .= "<![CDATA[" . $newFileNameS . "]]>";
             $xml .= "</FileUpload_small>";
             $xml .= "</items>";
-
-            $dataVersion = $this->SelectByCondition("ContentId = $id AND IsLast = 1 AND LangId = $lang");
+            $contentVersion = \Model\ContentVersion::GetInstance();
+            $dataVersion = $contentVersion->SelectByCondition("ContentId = $id AND IsLast = 1 AND LangId = $lang");
             if (!empty($dataVersion)) {
-                //echo $dataVersion[0]["Id"]."<br>";
                 $contentVersion = \Model\ContentVersion::GetInstance();
                 $contentVersion->GetObjectById($dataVersion[0]["Id"], true);
                 $contentVersion->Data = $xml;
@@ -1474,6 +1473,7 @@ class Content extends ObjectManager {
                 $childData = ArrayUtils::GetChildToRoot($child, $rootElement);
                 $newArray = array_merge($newArray, $childData);
             }
+            
             $this->ImportXmlData($newArray, $domain, $mode, $testColumn);
         } else if (trim($xml->DatasourceType) == "XmlImportUserItem") {
             if ($mode == "DeleteInsert") {
@@ -1589,31 +1589,32 @@ class Content extends ObjectManager {
          *  
          */
         $udinfo = \Model\UserDomains::GetInstance();
-        $udinfo->GetObjectById($domain);
+        
+        $udinfo->GetObjectById($domain,true,array("DomainIdentificator"));
         $userDomain = $ud->GetUserDomainItemById($domain);
-        $valueTest = "";
-
+        $userDomain = ArrayUtils::ValueAsKey($userDomain, "Id");
+        $valueTest = $userDomain[$testColumn]["Identificator"];
         if ($mode == "DeleteInsert") {
             $ud->DeleteAllValues($domain);
             $mode = "Insert";
         }
-
+        
 
         foreach ($prepareArray as $row) {
             $saveData = array();
             foreach ($row as $key => $value) {
                 $saveData[$key] = $value;
             }
-            $objectId = $values->GetObjectId($domain, $testColumn, $saveData[$valueTest]);
+            $objectId = $ud->GetObjectId($domain, $testColumn, $saveData[$valueTest]);
+            
             if ($objectId > 0 && $mode == "Insert")
                 continue;
             if ($objectId == 0 && $mode == "Update")
                 continue;
-
             $saveData["Id"] = $objectId;
             $saveData["DomainIdentificator"] = $udinfo->DomainIdentificator;
             $saveData["DomainId"] = $domain;
-            $values->SaveUserDomainData($saveData);
+            $ud->SaveUserDomainData($saveData);
         }
     }
 
@@ -1981,8 +1982,8 @@ class Content extends ObjectManager {
 
             return true;
         } catch (Exception $e) {
-            echo $e;
-            die();
+            \Kernel\Page::ApplicationError($e);
+            
         }
     }
 
