@@ -745,6 +745,7 @@ class WebEditApi extends ApiController {
         $data = $ajaxParametrs["Parametrs"];
         if ($id == 0) {
             $id = $content->CreateFile($ajaxParametrs["Name"], $_GET["langid"], $_GET["param1"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $privileges, $data);
+            
         } else {
             $id = $content->UpdateFile($id, $ajaxParametrs["Name"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $privileges, $data);
         }

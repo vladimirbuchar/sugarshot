@@ -226,7 +226,6 @@ class Content extends ObjectManager {
             $content->SortRule = $sortRule;
             $contentId = $content->SaveObject();
 
-
             if ($contentId == 0) {
 
                 dibi::rollback();
@@ -255,12 +254,10 @@ class Content extends ObjectManager {
 
 
 
-
             if (!$this->SaveData($dataArray, $contentId, $lang)) {
                 dibi::rollback();
                 return 0;
             }
-
             dibi::commit();
             return $contentId;
         } catch (Exception $e) {
@@ -695,13 +692,14 @@ class Content extends ObjectManager {
     public function CreateFile($name, $lang, $parentid, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $privileges, $data) {
         $data = $this->PrepareXmlFromArray($data);
         $id = $this->CreateContentItem($name, true, "", 0, ContentTypes::FILEUPLOAD, true, $lang, $parentid, $noIncludeSearch, $identificator, $privileges, $data, 0, 0, "", $activeFrom, $activeTo);
+        
         $this->GetFileType($id, $data, $lang);
         return $id;
     }
 
     private function GetFileType($id, $data, $lang) {
         $content = \Model\Content::GetInstance();
-        $content->GetObjectById($id, true,array("UploadedFileType"));
+        $content->GetObjectById($id, true);
 
         $data = str_replace("<items><FileUpload><![CDATA[", "", $data);
         $data = str_replace("]]></FileUpload></items>", "", $data);
