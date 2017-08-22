@@ -63,4 +63,11 @@ class TreeUtils {
         $html = $content->CreateHtml($cssList);
         return $html;
     }
+    
+    public static function CreateTreeCss($userGroup,$langid,$search) {
+        $content = new \Objects\Content();
+        $cssList = $content->GetCssList($userGroup,$langid,false, $search);
+        $html = $content->CreateHtml($cssList);
+        return $html;
+    }
  }

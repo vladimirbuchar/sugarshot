@@ -1018,7 +1018,7 @@ class Content extends ObjectManager {
 
         if ($search == "") {
             if (!$onlyCss) {
-                $res = dibi::query("SELECT Id,ParentId,Name FROM CSSLIST WHERE  LangId = %i AND GroupId = %i AND IsLast = 1  ", $langId, $groupId)->fetchAll();
+                $res = dibi::query("SELECT Id,ParentId,Name,ContentType FROM CSSLIST WHERE  LangId = %i AND GroupId = %i AND IsLast = 1  ", $langId, $groupId)->fetchAll();
                 return $this->CreateTree($res, "Id", "ParentId");
             }
             return dibi::query("SELECT Id,ParentId,Name FROM CSSLIST WHERE  LangId = %i AND (ContentType =  'Css' OR ContentType = 'CssExternalLink')  AND GroupId = %i AND IsLast = 1", $langId, $groupId)->fetchAll();
@@ -1842,7 +1842,7 @@ class Content extends ObjectManager {
       } */
 
     private function CreateTree($inData, $idColumn, $parentIdColumn, $idP = "", $noConnectedItems = false) {
-
+            
         $outData = array();
         $i = 0;
         foreach ($inData as $row) {
