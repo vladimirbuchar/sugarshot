@@ -82,8 +82,7 @@ class WebEditApi extends ApiController {
         $this->SetApiFunction("CreateTreeDataSource", array("system", "Administrators"));
         $this->SetApiFunction("CreateTreeMailing", array("system", "Administrators"));
         $this->SetApiFunction("CreateTreeMail", array("system", "Administrators"));
-        
-        
+        $this->SetApiFunction("CreateTreeForms", array("system", "Administrators"));
         
         
     }
@@ -869,5 +868,8 @@ class WebEditApi extends ApiController {
     }
     public function CreateTreeMail($search = "") {
         return \Utils\TreeUtils::CreateTreeMail(self::$User->GetUserGroupId(), $this->LangId, $search);
+    }
+    public function CreateTreeForms($search = "") {
+        return \Utils\TreeUtils::CreateTreeForms(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 }

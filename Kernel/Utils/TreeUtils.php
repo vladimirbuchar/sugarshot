@@ -49,4 +49,11 @@ class TreeUtils {
         $html = $content->CreateHtml($cssList);
         return $html;
     }
+    
+    public static function CreateTreeForms($userGroup,$langid,$search) {
+        $content = new \Objects\Content();
+        $cssList = $content->GetFormsList($userGroup,$langid,false,$search);
+        $html = $content->CreateHtml($cssList);
+        return $html;
+    }
  }

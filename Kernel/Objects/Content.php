@@ -554,7 +554,7 @@ class Content extends ObjectManager {
     }
 
     private function SetValidateUserItem() {
-        $model = new ContentVersion();
+        $model = new \Model\ContentVersion();
         $model->SetValidateRule("SeoUrl", RuleType::$NoEmpty);
         $model->SetValidateRule("SeoUrl", RuleType::$SeoString);
         $model->SetValidateRule("SeoUrl", RuleType::$Unique);

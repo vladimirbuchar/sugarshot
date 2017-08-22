@@ -113,10 +113,7 @@ class WebEdit extends AdminController {
     }
 
     public function CreateTreeForms($search = "") {
-        $content = new \Objects\Content();
-        $cssList = $content->GetFormsList(self::$User->GetUserGroupId(), $this->LangId, false, $search);
-        $html = $content->CreateHtml($cssList);
-        return $html;
+        return \Utils\TreeUtils::CreateTreeForms(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 
     public function CreateTreeMailing($search = "") {
