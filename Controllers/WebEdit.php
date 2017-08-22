@@ -596,7 +596,7 @@ class WebEdit extends AdminController {
         $groupList = $ug->GetUserGroups(array("system"));
         if (empty($data)) {
             $web = \Model\Webs::GetInstance();
-            $web->GetObjectById($this->WebId,true,array("WebPrivileges"),LIBXML_NOCDATA);
+            $web->GetObjectById($this->WebId,true,array("WebPrivileges"));
             $ar = ArrayUtils::XmlToArray($web->WebPrivileges);
             $data = $ar["item"];
             

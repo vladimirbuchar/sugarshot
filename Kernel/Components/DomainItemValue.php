@@ -84,7 +84,7 @@ class DomainItemValue extends UserComponents{
                      * @var Model\UserDomains
                      */
                     $userDomain = \Model\UserDomains::GetInstance();
-                    $userDomain->GetObjectById($data[0]["Domain"]);
+                    $userDomain->GetObjectById($data[0]["Domain"],true,array("DomainIdentificator"));
                     /** 
                      * @var Model\UserDomainsValues
                      */

@@ -34,7 +34,8 @@ class Users extends ObjectManager{
         {
             $web = \Model\Webs::GetInstance();
             $webId = $this->GetActualWeb();
-            $web->GetObjectById($webId);
+            $web->GetObjectById($webId,true,array("AdminUserActive","UserEmailActivate","SendInfoEmailToAdmin","AdminInfoEmail","AdmiInfoMailId","AdminUserActive"
+                ,"AdminUserActive","SendInfoEmailToUser","UserInfoEmailFrom","UserInfoMailId","UserEmailActivate"));
             $isActive = $web->AdminUserActive || $web->UserEmailActivate  ? false: true;
             $sendEmailAdmin = $web->SendInfoEmailToAdmin;
             $adminMail = $web->AdminInfoEmail;

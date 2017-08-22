@@ -45,7 +45,7 @@ class Forms extends \Kernel\GlobalClass {
         $sendButtonValue = "";
         $domain =  \Model\UserDomains::GetInstance();
         
-        $domain->GetObjectById($template[0]["DomainId"]);
+        $domain->GetObjectById($template[0]["DomainId"],true,array("DomainIdentificator"));
         $useBootstrap = false;
         $buttonCssClass = "";
         $catcha = false;
@@ -359,12 +359,12 @@ class Forms extends \Kernel\GlobalClass {
             {
                 
                 $domainInfo1 = \Model\UserDomains::GetInstance();
-                $domainInfo1->GetObjectById($row["DomainId1"]);
+                $domainInfo1->GetObjectById($row["DomainId1"],true,array("DomainIdentificator"));
                 $domainIdent1 = $domainInfo1->DomainIdentificator;
                 if ($isDomainX)
                 {
                     $domainInfoX = \Model\UserDomains::GetInstance();
-                    $domainInfoX->GetObjectById($row["DomainIdX"]);
+                    $domainInfoX->GetObjectById($row["DomainIdX"],true,array("DomainIdentificator"));
                     $itemX = $domainInfoX->DomainIdentificator;
                 }
                 $script.= $this->GenerateActionScript($domainIdent1,$ruleName,$item1Value,$actionName,$itemX,$itemXValue,true);
@@ -554,7 +554,7 @@ class Forms extends \Kernel\GlobalClass {
                     
                     
                     $nDomain = \Model\UserDomains::GetInstance();
-                    $nDomain->GetObjectById($dItem["Domain"]);
+                    $nDomain->GetObjectById($dItem["Domain"],true);
                     if ($dItem["DomainSettings"] == "standard")
                     {   
                         $itemHtml.= $this->GetUserDomain($nDomain->DomainIdentificator, $dataId, $addDomainIdentificator, $data, $disabled, $templateHtml,"?".$nDomain->DomainIdentificator."?","",0,true);
@@ -757,7 +757,7 @@ class Forms extends \Kernel\GlobalClass {
                 $changeEvent = "";
                 if (!empty($dItem["OnChangeEvent"]))
                     $changeEvent = $dItem["OnChangeEvent"]."(this)";
-                $nDomain->GetObjectById($dItem["Domain"]);
+                $nDomain->GetObjectById($dItem["Domain"],true);
                 if ($dItem["DomainSettings"] == "standard")
                 {
                     
@@ -1065,7 +1065,7 @@ class Forms extends \Kernel\GlobalClass {
                     {
                         $valueId = $rowSave[1];
                         $value = $ud->GetDomainValueByDomainId($domainId, $valueId);
-                        $userDomain->GetObjectById($domainId);
+                        $userDomain->GetObjectById($domainId,true,array("ShowNameInSubDomain"));
                         $nameItem = $userDomain->ShowNameInSubDomain;
                         foreach ($value as $k => $v)
                         {
@@ -1093,7 +1093,7 @@ class Forms extends \Kernel\GlobalClass {
                 if (count($dataInfo) > 0)
                 {
                     $domain = \Model\UserDomains::GetInstance();
-                    $domain->GetObjectById($dataInfo[0]["DomainId"]);
+                    $domain->GetObjectById($dataInfo[0]["DomainId"],true,array("ShowNameInSubDomain"));
                     $tmp = $domain->ShowNameInSubDomain;
                     
                     foreach ($dataInfo as $key => $value)
@@ -1346,7 +1346,7 @@ class Forms extends \Kernel\GlobalClass {
                 {
                     
                     $ud = \Model\UserDomains::GetInstance();
-                    $ud->GetObjectById($row["Domain"],true);
+                    $ud->GetObjectById($row["Domain"],true,array("DomainIdentificator"));
                     $ignored[] = trim($ud->DomainIdentificator);
                     
                 }
@@ -1359,7 +1359,7 @@ class Forms extends \Kernel\GlobalClass {
             $domainItem = \Model\UserDomains::GetInstance();
             foreach ($domainsItems as  $key => $value)
             {
-                $domainItem->GetObjectById($value);
+                $domainItem->GetObjectById($value,true,array("ShowNameInSubDomain"));
                 $vals = $userDomainItems->GetDomainValueList($value);
                 $vals = ArrayUtils::ValueAsKey($vals, "ObjectId");
                 $showName = $domainItem->ShowNameInSubDomain;
@@ -1409,7 +1409,7 @@ class Forms extends \Kernel\GlobalClass {
 
     public function GetHeader($templateId,$all=false,$autoColumn = array()) {
         $content =  \Model\Content::GetInstance();
-        $content->GetObjectById($templateId);
+        $content->GetObjectById($templateId,true,array("DomainId"));
         $domainId = $content->DomainId;
         $domain = new \Objects\UserDomains();
         $domainItems = $domain->GetUserDomainItemById($domainId);

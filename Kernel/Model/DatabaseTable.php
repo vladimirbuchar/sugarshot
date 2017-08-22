@@ -209,7 +209,7 @@ class DatabaseTable extends SqlDatabase {
         $res = array();
         $historyWebId = 0;
         if (!empty(($id))) {
-            $res = $this->GetObjectById($id);
+            $res = $this->GetObjectById($id,true);
             if (!empty($res)) {
                 $insert = FALSE;
                 if ($res->Deleted) {
@@ -644,7 +644,7 @@ class DatabaseTable extends SqlDatabase {
                         }
                     }
                     if ($row->RuleType == RuleType::$NoUpdate) {
-                        $res = $this->GetObjectById($noTestId);
+                        $res = $this->GetObjectById($noTestId,true,array($columnName));
                         if (!empty($res)) {
                             if ($res->$columnName != $value) {
                                 $value = $res->$columnName;

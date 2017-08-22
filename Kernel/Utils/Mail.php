@@ -20,7 +20,7 @@ class Mail extends GlobalClass{
                 $to = DEVEL_EMAIL;
             }
             $web = \Model\Webs::GetInstance();
-            $web->GetObjectById($this->WebId);
+            $web->GetObjectById($this->WebId,true,array("BlockSendEmails"));
             if (!$web->BlockSendEmails)
             {
                

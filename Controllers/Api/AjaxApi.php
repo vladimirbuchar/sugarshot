@@ -103,7 +103,7 @@ class AjaxApi extends ApiController {
     public function UserLogin() {
         $ajax = $this->PrepareAjaxParametrs();
         $web = \Model\Webs::GetInstance();
-        $web->GetObjectById($this->WebId);
+        $web->GetObjectById($this->WebId,true,array("AfterLoginAction","AfterLoginUrl","EmailUserLogin"));
         $outData = array();
         $outData["Error"] = "";
         $outData["AfterLoginAction"] = "";

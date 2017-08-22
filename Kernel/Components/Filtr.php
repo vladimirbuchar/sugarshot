@@ -104,7 +104,7 @@ class Filtr extends UserComponents{
                     if ($isdomain)
                     {
                         $domainInfo = UserDomains::GetInstance();
-                        $domainInfo->GetObjectById($row["Domain"]);
+                        $domainInfo->GetObjectById($row["Domain"],true,array("ShowNameInSubDomain","DomainIdentificator"));
                         $values = $userDomainItems->GetDomainValueList($row["Domain"]);
                         $showName = $domainInfo->ShowNameInSubDomain;
                         $domainName = $domainInfo->DomainIdentificator;
@@ -191,7 +191,7 @@ class Filtr extends UserComponents{
                 if ($isdomain)
                 {
                     $domainInfo = UserDomains::GetInstance();
-                    $domainInfo->GetObjectById($row["Domain"]);
+                    $domainInfo->GetObjectById($row["Domain"],true,array("ShowNameInSubDomain","DomainIdentificator"));
                     $values = $userDomainItems->GetDomainValueList($row["Domain"]);
                     $showName = $domainInfo->ShowNameInSubDomain;
                     $domainName = $domainInfo->DomainIdentificator;

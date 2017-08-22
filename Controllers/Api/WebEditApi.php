@@ -219,7 +219,7 @@ class WebEditApi extends ApiController {
 
         $id = $_POST["params"];
         $lang = Langs::GetInstance();
-        $lang->GetObjectById($this->LangId);
+        $lang->GetObjectById($this->LangId,true,array("RootUrl"));
         $content = new \Objects\Content();
         $detail = $content->GetUserItemDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         return $lang->RootUrl . "preview/" . $detail[0]["SeoUrl"] . "/";

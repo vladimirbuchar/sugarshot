@@ -75,7 +75,7 @@ class Content extends ObjectManager {
                         $content->SaveObject();
                     } else {
                         $nContent = \Model\Content::GetInstance();
-                        $nContent->GetObjectById($ObjectIdConnected);
+                        $nContent->GetObjectById($ObjectIdConnected,true,array("GalleryId"));
                         $this->CreateConnection($ObjectId, $nContent->GalleryId, $ConnectedType, $Data);
                     }
                     return;
@@ -156,7 +156,7 @@ class Content extends ObjectManager {
 
     private function IsLink($id) {
         $content = \Model\Content::GetInstance();
-        $content->GetObjectById($id);
+        $content->GetObjectById($id,true,array("ContentType"));
         return $content->ContentType == ContentTypes::EXTERNAL_LINK || $content->ContentType == ContentTypes::LINK ||
                 $content->ContentType == ContentTypes::JAVASCRIPT_ACTION ? true : false;
     }
@@ -167,7 +167,7 @@ class Content extends ObjectManager {
 
     private function CanHaveChild($id) {
         $content = \Model\Content::GetInstance();
-        $content->GetObjectById($id);
+        $content->GetObjectById($id,true,array("ContentType"));
         if ($content->ContentType == ContentTypes::CSS || $content->ContentType == ContentTypes::JAVASCRIPT || $content->ContentType == ContentTypes::FORM ||
                 $content->ContentType == ContentTypes::MAIL || $content->ContentType == ContentTypes::MAILING || $content->ContentType == ContentTypes::DATASOURCE || $content->ContentType == ContentTypes::JAVASCRIPT_ACTION || $content->ContentType == ContentTypes::TEMPLATE
         )
@@ -179,7 +179,7 @@ class Content extends ObjectManager {
 
     public function GetParent($id) {
         $content = \Model\Content::GetInstance();
-        $content->GetObjectById($id);
+        $content->GetObjectById($id,true,array("ParentId"));
         return $content->ParentId;
     }
 
@@ -317,7 +317,7 @@ class Content extends ObjectManager {
             }
         } else {
             $web = \Model\Webs::GetInstance();
-            $web->GetObjectById(empty($_GET["webid"]) ? 0 : $_GET["webid"]);
+            $web->GetObjectById(empty($_GET["webid"]) ? 0 : $_GET["webid"],true,array("WebPrivileges"));
             $xml = $web->WebPrivileges;
             $resXml = ArrayUtils::XmlToArray($xml, "SimpleXMLElement", LIBXML_NOCDATA);
             $i = 0;
@@ -701,7 +701,7 @@ class Content extends ObjectManager {
 
     private function GetFileType($id, $data, $lang) {
         $content = \Model\Content::GetInstance();
-        $content->GetObjectById($id, true);
+        $content->GetObjectById($id, true,array("UploadedFileType"));
 
         $data = str_replace("<items><FileUpload><![CDATA[", "", $data);
         $data = str_replace("]]></FileUpload></items>", "", $data);
@@ -712,7 +712,7 @@ class Content extends ObjectManager {
             $content->UploadedFileType = "image";
             $img = new Image();
             $web = \Model\Webs::GetInstance();
-            $web->GetObjectById(empty($_GET["webid"]) ? 0 : $_GET["webid"]);
+            $web->GetObjectById(empty($_GET["webid"]) ? 0 : $_GET["webid"],true,array("BigWidth","BigHeight","MediumWidth","MediumHeight","SmallWidth","SmallHeight"));
             $xml = "<items>";
             $xml .= "<FileUpload>";
             $xml .= "<![CDATA[" . $data . "]]>";
@@ -1931,7 +1931,7 @@ class Content extends ObjectManager {
             if ($this->IsFolder($id)) {
 
                 $web = \Model\Webs::GetInstance();
-                $web->GetObjectById($_GET["webid"]);
+                $web->GetObjectById($_GET["webid"],true,array("WebPrivileges"));
                 $xml = $web->WebPrivileges;
 
                 $ar = ArrayUtils::XmlToArray($xml, "SimpleXMLElement", LIBXML_NOCDATA);
@@ -1991,7 +1991,7 @@ class Content extends ObjectManager {
         if ($contentId == 0)
             return true;
         $content = \Model\Content::GetInstance();
-        $content->GetObjectById($contentId);
+        $content->GetObjectById($contentId,true,array("ContentType"));
         if ($content->ContentType == ContentTypes::LANGFOLDER)
             return true;
         return false;
@@ -1999,7 +1999,7 @@ class Content extends ObjectManager {
 
     public function GetContentType($contentId) {
         $content = \Model\Content::GetInstance();
-        $content->GetObjectById($contentId);
+        $content->GetObjectById($contentId,true,array("ContentType"));
         return $content->ContentType;
     }
 
@@ -2246,7 +2246,7 @@ class Content extends ObjectManager {
 
     public function GetArticleDiscusion($id) {
         $content = \Model\Content::GetInstance();
-        $content->GetObjectById($id);
+        $content->GetObjectById($id,true,array("DiscusionId"));
         return $content->DiscusionId;
     }
 
@@ -2687,7 +2687,7 @@ class Content extends ObjectManager {
         $res = dibi::query("SELECT SeoUrl FROM ContentVersion  
                LEFT JOIN Content ON ContentVersion.ContentId =  Content.Id AND  ContentVersion.LangId =%i  AND ContentVersion.IsLast = 1  WHERE Content.Identificator = %s ", $langId, $identificator)->fetchAll();
         $lang = \Model\Langs::GetInstance();
-        $lang->GetObjectById($langId);
+        $lang->GetObjectById($langId,true,array("RootUrl"));
         if (empty($res))
             return "";
         $url = StringUtils::NormalizeUrl($lang->RootUrl) . $res[0]["SeoUrl"];

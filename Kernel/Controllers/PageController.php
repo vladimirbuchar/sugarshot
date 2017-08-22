@@ -196,7 +196,7 @@ abstract class PageController extends ViewController {
         $content = new \Objects\Content();
         $out = $content->RenderSendEmail ($id,$this->LangId,$this->WebId);
         $template = new Content();
-        $template->GetObjectById($out[0]["TemplateId"]);
+        $template->GetObjectById($out[0]["TemplateId"],true,array("TemplateId"));
         return $this->LoadPageById($template->TemplateId, $this->PrepareHtml($out));
     }
     
@@ -204,11 +204,11 @@ abstract class PageController extends ViewController {
     {
         $replacedata = array();
         $lang =  Langs::GetInstance();
-        $lgInfo = $lang->GetObjectById($this->LangId);
-        $replacedata["Name"] = $lgInfo->Title;
-        $replacedata["keywords"] = $lgInfo->Keywords;
-        $replacedata["description"] = $lgInfo->Description;
-        $replacedata["categorypage"] = $lgInfo->CategoryPage;
+        $lang->GetObjectById($this->LangId,true,array("Title","Keywords","Description","CategoryPage"));
+        $replacedata["Name"] = $lang->Title;
+        $replacedata["keywords"] = $lang->Keywords;
+        $replacedata["description"] = $lang->Description;
+        $replacedata["categorypage"] = $lang->CategoryPage;
         if (!empty($_GET["seourl"]))
         {
             $contemt =  new \Objects\Content();

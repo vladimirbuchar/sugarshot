@@ -19,7 +19,7 @@ class Langs extends ObjectManager{
         {
             $webid= $res[0]["WebId"];
             $web =  Webs::GetInstance();
-            $web->GetObjectById($webid);
+            $web->GetObjectById($webid,true,array("BlockAdmin"));
             return $web->BlockAdmin;
         }
         return false;
@@ -28,7 +28,7 @@ class Langs extends ObjectManager{
     public function GetRootUrl($langId)
     {
         $model = new \Model\Langs();
-        $model ->GetObjectById($langId,true);
+        $model ->GetObjectById($langId,true,array("RootUrl"));
         if (!StringUtils::StartWidth($model->RootUrl, SERVER_PROTOCOL))
         {
             $model->RootUrl = SERVER_PROTOCOL.$model->RootUrl;
@@ -67,7 +67,7 @@ class Langs extends ObjectManager{
     {
         $content = new \Objects\Content();
         $model = \Model\Langs::GetInstance();
-        $obj = $model->GetObjectById($id);
+        $obj = $model->GetObjectById($id,true,array("LangName"));
         
         $folderId = $content->GetIdByIdentificator("langfolder",$_GET["webid"]);
         

@@ -16,7 +16,7 @@ class Caching extends Timers {
          
         foreach ($res as $row)
         {
-            $lgInfo = $lang->GetObjectById($row["LangId"]);
+            $lgInfo = $lang->GetObjectById($row["LangId"],true,array("RootUrl"));
             $langUrl = Utils\StringUtils::NormalizeUrl($lgInfo->RootUrl);
             $langUrls[] = $langUrl;
             $articleUrl = $langUrl.$row["SeoUrl"]."/";
