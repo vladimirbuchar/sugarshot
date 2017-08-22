@@ -120,17 +120,11 @@ class WebEdit extends AdminController {
     }
 
     public function CreateTreeMailing($search = "") {
-        $content = new \Objects\Content();
-        $cssList = $content->GetMailingList(self::$User->GetUserGroupId(), $this->LangId, false, $search);
-        $html = $content->CreateHtml($cssList);
-        return $html;
+        return \Utils\TreeUtils::CreateTreeMailing(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 
     public function CreateTreeMail($search = "") {
-        $content = new \Objects\Content();
-        $cssList = $content->GetMailList(self::$User->GetUserGroupId(), $this->LangId, false, $search);
-        $html = $content->CreateHtml($cssList);
-        return $html;
+        return \Utils\TreeUtils::CreateTreeMail(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 
     public function CreateTreeSendMail() {
@@ -243,7 +237,7 @@ class WebEdit extends AdminController {
     }
 
     public function Detail() {
-        $this->AddScript("/Scripts/ExternalApi/tinymce/tinymce.min.js");
+        $this->AddScript("/node_modules/tinymce/tinymce.min.js");
         $this->ExitQuestion = true;
         $this->SetStateTitle($this->GetWord("word236"));
         $this->SetLeftMenu("contentMenu", "contentMenuWeb");
@@ -401,7 +395,7 @@ class WebEdit extends AdminController {
 
     public function MailEditor() {
         $this->ExitQuestion = true;
-        $this->AddScript("/Scripts/ExternalApi/tinymce/tinymce.min.js");
+        $this->AddScript("/node_modules/tinymce/tinymce.min.js");
         $this->SetStateTitle($this->GetWord("word236"));
         $this->SetLeftMenu("contentMenu", "contentMenuMailList");
         $userGroup = new \Objects\Users();

@@ -35,4 +35,18 @@ class TreeUtils {
         $html = $content->CreateHtml($cssList);
         return $html;
     }
+    
+    public static function CreateTreeMailing($userGroup,$langid,$search){
+        $content = new \Objects\Content();
+        $cssList = $content->GetMailingList($userGroup,$langid,false,$search);
+        $html = $content->CreateHtml($cssList);
+        return $html;
+    }
+    
+    public static  function CreateTreeMail($userGroup,$langid,$search) {
+        $content = new \Objects\Content();
+        $cssList = $content->GetMailList($userGroup,$langid,false,$search);
+        $html = $content->CreateHtml($cssList);
+        return $html;
+    }
  }

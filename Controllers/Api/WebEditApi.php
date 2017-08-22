@@ -80,6 +80,9 @@ class WebEditApi extends ApiController {
         $this->SetApiFunction("CreateTreeDiscusion", array("system", "Administrators"));
         $this->SetApiFunction("CreateTreeInqury", array("system", "Administrators"));
         $this->SetApiFunction("CreateTreeDataSource", array("system", "Administrators"));
+        $this->SetApiFunction("CreateTreeMailing", array("system", "Administrators"));
+        $this->SetApiFunction("CreateTreeMail", array("system", "Administrators"));
+        
         
         
         
@@ -153,7 +156,7 @@ class WebEditApi extends ApiController {
     public function ReSendMails() {
         $ajaxParametrs = $this->PrepareAjaxParametrs();
         $mailsid = $ajaxParametrs["Mails"];
-        $mail = new Mail();
+        $mail = new \Utils\Mail();
         foreach ($mailsid as $mailid) {
             if (!empty($mailid))
                 $mail->SendEmailById($mailid);
@@ -859,5 +862,12 @@ class WebEditApi extends ApiController {
     }
         public function CreateTreeDataSource($search = "") {
         return \Utils\TreeUtils::CreateTreeDataSource(self::$User->GetUserGroupId(), $this->LangId, $search);
+    }
+    
+    public function CreateTreeMailing($search = "") {
+        return \Utils\TreeUtils::CreateTreeMailing(self::$User->GetUserGroupId(), $this->LangId, $search);
+    }
+    public function CreateTreeMail($search = "") {
+        return \Utils\TreeUtils::CreateTreeMail(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 }

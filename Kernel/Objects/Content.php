@@ -147,7 +147,7 @@ class Content extends ObjectManager {
     }
 
     public function CanPrivileges($objectId, $userGroup, $privilegesName) {
-        $model = ContentSecurity:: GetInstance();
+        $model = \Model\ContentSecurity:: GetInstance();
         $data = $model->SelectByCondition("Value = 1 AND ObjectId = $objectId AND  GroupId = $userGroup AND SecurityType = '$privilegesName'");
         if (empty($data))
             return FALSE;

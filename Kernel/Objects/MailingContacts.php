@@ -1,6 +1,7 @@
 <?php
 
 namespace Objects;
+use Utils\StringUtils;
 class MailingContacts extends ObjectManager{
     public function __construct() {
         parent::__construct();
@@ -35,23 +36,26 @@ class MailingContacts extends ObjectManager{
     }
     public function GetUserMailingGroups($id)
     {
-        return dibi::query("SELECT * FROM MailingContactsInGroups WHERE ContactId = %i",$id)->fetchAll();
+        return \dibi::query("SELECT * FROM MailingContactsInGroups WHERE ContactId = %i",$id)->fetchAll();
     }
     
     public function GetMailingList($webId)
     {
-        return $this->SelectByCondition("Deleted = 0 AND WebId = $webId");
+        $model = \Model\MailingContacts::GetInstance();
+        return $model->SelectByCondition("Deleted = 0 AND WebId = $webId");
     }
     public function GetMailingDetail($id)
     {
-        return $this->SelectByCondition("Id = $id");
+        $model = \Model\MailingContacts::GetInstance();
+        return $model->SelectByCondition("Id = $id");
     }
     
     // groups 
     
     public function AddContactToMailingGroup($contactId,$mailingGroupId)
     {
-        $this->DeleteByCondition("ContactId = $contactId",true);
+        $model = \Model\MailingContactsInGroups::GetInstance();
+        $model->DeleteByCondition("ContactId = $contactId",true);
         for ($i= 0; $i< count($mailingGroupId);$i++)
         {
                
@@ -65,15 +69,16 @@ class MailingContacts extends ObjectManager{
     
     public function SaveContactToMailingGroup($contactId,$groupId)       
     {
-        $this->ContactId = $contactId;
+        $model = \Model\MailingContactsInGroups::GetInstance();
+        $model->ContactId = $contactId;
         $groupId = StringUtils::RemoveString($groupId,"MailingGroupName_");
-        $this->GroupId = $groupId;
-        $this->SaveObject();
+        $model->GroupId = $groupId;
+        $model->SaveObject();
     }
     
     public function GetMailsInMailingGroups($mailingGroupId)
     {
-        return dibi::query("SELECT MailingContacts.* FROM MailingContacts 
+        return \dibi::query("SELECT MailingContacts.* FROM MailingContacts 
                 JOIN MailingContactsInGroups ON MailingContacts.Id = MailingContactsInGroups.ContactId AND MailingContactsInGroups.GroupId = %i
                 ",$mailingGroupId)->fetchAll();
     }
