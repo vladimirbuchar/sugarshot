@@ -8,27 +8,16 @@
         <!--{foreach from=$styles key=keyout item=itemout}-->
             <link rel="stylesheet" type="text/css" href="<!--{$itemout}-->?version={VERSION}" >
          <!--{/foreach}-->
-         <link rel="stylesheet" type="text/css" href="/Styles/jquery.datetimepicker.css?version={VERSION}" >
-         <link rel="stylesheet" type="text/css" href="/Styles/jquery.treegrid.css?version={VERSION}" >
-             <!-- Bootstrap Core CSS --> 
-             
-    <link  href="/Styles/Bootsrap/css/bootstrap.min.css?version={VERSION}" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="/Styles/metisMenu/metisMenu.min.css?version={VERSION}" rel="stylesheet">
-
-    <!-- Timeline CSS -->
-    <link href="/Styles/Admin/timeline.css?version={VERSION}" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/Styles/Admin/sb-admin-2.css?version={VERSION}" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="/Styles/morrisjs/morris.css?version={VERSION}" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="/Styles/font-awesome/css/font-awesome.min.css?version={VERSION}" rel="stylesheet" type="text/css">
-    <link  href="/Styles/jsTree/style.min.css?version={VERSION}"  rel="stylesheet" type="text/css">
+         <link rel="stylesheet" type="text/css" href="/node_modules/jquery-datetimepicker/jquery.datetimepicker.css" >
+         <link rel="stylesheet" type="text/css" href="/node_modules/jquery-treegrid/css/jquery.treegrid.css" >
+        <link  href="/node_modules/bootstrap/dist/css/bootstrap.min.css?version={VERSION}" rel="stylesheet">
+        <link href="/node_modules/metismenu/dist/metisMenu.min.css" rel="stylesheet">
+        <!-- Timeline CSS -->
+        <!--<link href="/Styles/Admin/timeline.css?version={VERSION}" rel="stylesheet">--->
+        <!-- Custom CSS -->
+        <link href="/Styles/Admin/sb-admin-2.css?version={VERSION}" rel="stylesheet">
+        <link href="/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link  href="/node_modules/jstree/dist/themes/default/style.min.css"  rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,28 +25,20 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
-       <!-- jQuery -->
-    <script src="/Scripts/ExternalApi/jQuery.js?version={VERSION}"></script>
-    <script src="/Scripts/ExternalApi/js.cookie.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/Scripts/ExternalApi/Bootsrap/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="/Scripts/ExternalApi/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="/Scripts/ExternalApi/raphael/raphael-min.js?version={VERSION}"></script>
-    <script type="text/javascript" src="/Scripts/ExternalApi/jquery.treegrid.js?version={VERSION}"></script>
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/jquery.cookie/jquery.cookie.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/node_modules/metismenu/dist/metisMenu.min.js"></script>
+    <script type="text/javascript" src="/node_modules/jquery-treegrid/js/jquery.treegrid.js"></script>
+    
+    
     
 
     <!-- Custom Theme JavaScript -->
     <script src="/Scripts/ExternalApi/sb-admin-2.js?version={VERSION}"></script>
     <script type="text/javascript" src="/Scripts/Core.js?version={VERSION}" ></script>
-    <script type="text/javascript" src="/Scripts/ExternalApi/jquery-ui.min.js?version={VERSION}" ></script>
     
-    <script type="text/javascript" src="/Scripts/ExternalApi/jquery.datetimepicker.js?version={VERSION}" ></script>
-    <script type="text/javascript" src="/Scripts/ExternalApi/jquery.doubletap.js?version={VERSION}" ></script>
+    <script type="text/javascript" src="/Scripts/jquery.doubletap.js?version={VERSION}" ></script>
     
          <!--{foreach from=$scripts key=keyout item=itemout}-->
             <script type="text/javascript" src="<!--{$itemout}-->?version={VERSION}" ></script>

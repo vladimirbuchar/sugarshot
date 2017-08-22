@@ -4,6 +4,7 @@ namespace Objects;
 use Dibi;
 use Utils\ArrayUtils;
 class Users extends ObjectManager{
+    public $IsBadLogin;
     public function __construct() {
         parent::__construct();
     }
