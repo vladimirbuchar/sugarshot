@@ -36,6 +36,10 @@ function xAutoLoader($className)
     {
         require_once $components.$className.".php";
     }
+    if (file_exists($components.$className."/".$className.".php"))
+    {
+        require_once $components.$className."/".$className.".php";
+    }
     if (file_exists($htmlComponents.$className.".php"))
     {
         require_once $htmlComponents.$className.".php";
@@ -67,6 +71,10 @@ function xAutoLoader($className)
     if (file_exists($components."Plugins/".$className.".php"))
     {
         require_once $components."Plugins/".$className.".php";
+    }
+    if (file_exists($components."Plugins/".$className."/".$className.".php"))
+    {
+        require_once $components."Plugins/".$className."/".$className.".php";
     }
     if (file_exists($htmlComponents."Plugins/".$className.".php"))
     {

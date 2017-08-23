@@ -678,7 +678,7 @@ class Forms extends \Kernel\GlobalClass {
                     
                     if ($this->IsJquery())
                         {
-                            if (self::$IsAjax)
+                            if (self::$IsApi)
                             {
                                 $script .= "$('#$htmlItemId').change(function(){
                                     $('#result_$htmlItemId').html($(this).val());
@@ -884,7 +884,7 @@ class Forms extends \Kernel\GlobalClass {
         }
         if (!empty($script))
         {
-            if (self::$IsAjax)
+            if (self::$IsApi)
             {
             $script = "<script type=\"text/javascript\">
                 $script

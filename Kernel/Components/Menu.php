@@ -84,7 +84,7 @@ class Menu extends UserComponents{
             $link->Html = $row["Name"];
             $link->Title = $row["Name"];
             
-            $isActive = "/".$lang.$_GET["seourl"]."/" == $link->Href;
+            $isActive = empty($_GET["seourl"]) ? "":"/".$lang.$_GET["seourl"]."/" == $link->Href;
             if (!$isActive && !self::$SessionManager->IsEmpty("LastActiveUrl"))
             {
                 $isActive = self::$SessionManager->GetSessionValue("LastActiveUrl") == $link->Href;

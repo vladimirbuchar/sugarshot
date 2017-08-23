@@ -24,6 +24,7 @@
         
         
     <!--{/if}-->
+    <!--{if empty($JsScript)}-->
     <!--{section name=data loop=$JsScript}-->
     <!--{if $JsScript[data].ContentType =="Javascript"}-->
     <script type="text/javascript"  src="/js/<!--{$langId}-->/<!--{$JsScript[data].Id}-->/<!--{$JsScript[data].Name}-->.js" ></script>
@@ -31,7 +32,9 @@
     <!--{if $JsScript[data].ContentType =="JsExternalLink"}-->
     <script type="text/javascript"  src="<!--{$JsScript[data].Name}-->"></script>
     <!--{/if}--> 
+    
     <!--{/section}--> 
+    <!--{/if}-->
     <!--{if $ajaxLinks}--> 
     <script type="text/javascript" src="/Scripts/AjaxLinks.js"></script>  
     

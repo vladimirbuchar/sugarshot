@@ -11,7 +11,7 @@ class ContentFrontend extends Content {
     public $Id = 0;
     public $SeoUrl = "";
     public $DataSource = "";
-    public $CheckAlternativeContent = ENABLE_ALTERNATIVE_CONTENT;
+    public $CheckAlternativeContent = false;
     public $Limit = 0;
     public $Sort = "";
     public $LoadSubItems = false;
@@ -79,7 +79,7 @@ class ContentFrontend extends Content {
                                 FROM ContentData
                                 GROUP BY ContentId
                                ) AS ContentTable
-                            ON child.Id = ContentTable.ContentId";
+                            ON child.Id = ContentTab    le.ContentId";
         }
         $ignoreQuery = "";
         $acceptQuery = "";
@@ -125,13 +125,13 @@ class ContentFrontend extends Content {
             
             if (empty($acceptTable))
             {
-                $res = dibi::query("SELECT DISTINCT child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header,parents.Identificator AS parentIdentificator FROM `FrontendDetail_materialized` AS parents "
+                $res = dibi::query("SELECT DISTINCT child.ContentType, child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header,parents.Identificator AS parentIdentificator FROM `FrontendDetail_materialized` AS parents "
                         . " INNER JOIN FrontendDetail_materialized AS child ON parents.Id = child.ParentId AND $parentQuery AND (child.GroupId =%i OR (child.ContentType='link' ))  AND child.LangId = %i $ignoreQuery $columns  "
                         . " $acceptTable  $sort $limit", $this->UserGroupId, $this->LangId)->fetchAll();
             }
             else 
             {
-                $res = dibi::query("SELECT DISTINCT child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header	,parents.Identificator AS parentIdentificator FROM `FrontendDetail_materialized` AS parents "
+                $res = dibi::query("SELECT DISTINCT child.ContentType,child.Date,child.Sort,child.TemplateId,child.Id,child.Name,child.SeoUrl,child.Data,child.Header	,parents.Identificator AS parentIdentificator FROM `FrontendDetail_materialized` AS parents "
                         . " INNER JOIN FrontendDetail_materialized AS child ON parents.Id = child.ParentId AND $parentQuery AND (child.GroupId =%i OR (child.ContentType='link' ))  AND child.LangId = %i $ignoreQuery $columns  "
                         . "LEFT JOIN  FRONTENDTEMPLATES ON child.TemplateId =  FRONTENDTEMPLATES.Id  AND FRONTENDTEMPLATES.LangId = %i AND FRONTENDTEMPLATES.GroupId = %i  "
                         . " $acceptTable  $sort $limit", $this->UserGroupId, $this->LangId, $this->LangId, $this->UserGroupId)->fetchAll();
@@ -150,7 +150,7 @@ class ContentFrontend extends Content {
             
             
                 
-            $res = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FrontendDetail_materialized WHERE  $parentQuery  AND LangId = %i AND  (GroupId =%i OR (ContentType='link' )) ",  $this->LangId,$this->UserGroupId)->fetchAll();
+            $res = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header,ContentType FROM FrontendDetail_materialized WHERE  $parentQuery  AND LangId = %i AND  (GroupId =%i OR (ContentType='link' )) ",  $this->LangId,$this->UserGroupId)->fetchAll();
             return $res;
         }
         if ($this->AddParent) {
@@ -161,7 +161,7 @@ class ContentFrontend extends Content {
                 $parentQuery .= "  Identificator = '$this->DataSource' ";
             else if ($this->_mode == "SeoUrl")
                 $parentQuery .= "  SeoUrl =  '$this->SeoUrl' ";
-            $resParent = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header FROM FrontendDetail_materialized WHERE $parentQuery   AND LangId = %i AND (GroupId =%i OR (ContentType='link' ))", $this->LangId,$this->UserGroupId)->fetchAll();
+            $resParent = dibi::query("SELECT Date,Sort,TemplateId,Id, GroupId,WebId,LangId,Name,SeoUrl,Data,Header,ContentType FROM FrontendDetail_materialized WHERE $parentQuery   AND LangId = %i AND (GroupId =%i OR (ContentType='link' ))", $this->LangId,$this->UserGroupId)->fetchAll();
             $res = array_merge($resParent, $res);
         }
         $tmpLevel++;
@@ -305,7 +305,7 @@ class ContentFrontend extends Content {
     }
 
 
-    private function GetAlternativeItems() {
+    /*public function GetAlternativeItems() {
 
         $userGroup = new \Objects\Users();
         $tmp = $userGroup->ChangeSystemGroupToAdmin();
@@ -319,6 +319,6 @@ class ContentFrontend extends Content {
             ", $contentId, $langId, $groupId)->fetchAll();
 
         return $res;
-    }
+    }*/
 
 }

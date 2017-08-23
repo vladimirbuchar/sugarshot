@@ -204,7 +204,7 @@ abstract class PageController extends ViewController {
     {
         $replacedata = array();
         $lang =  Langs::GetInstance();
-        $lang->GetObjectById($this->LangId,true,array("Title","Keywords","Description","CategoryPage"));
+        $lang->GetObjectById($this->LangId,true,array("Title","Keywords","Description","CategoryPage","Id"));
         $replacedata["Name"] = $lang->Title;
         $replacedata["keywords"] = $lang->Keywords;
         $replacedata["description"] = $lang->Description;
@@ -230,7 +230,7 @@ abstract class PageController extends ViewController {
                 }
             }
             
-            $replacedata["Name"] = $contemt->GetNameObjectBySeoUrl($_GET["seourl"], $lgInfo->Id);
+            $replacedata["Name"] = $contemt->GetNameObjectBySeoUrl($_GET["seourl"], $lang->Id);
             
             }       
         }

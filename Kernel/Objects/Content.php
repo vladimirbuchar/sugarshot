@@ -1021,9 +1021,9 @@ class Content extends ObjectManager {
                 $res = dibi::query("SELECT Id,ParentId,Name,ContentType FROM CSSLIST WHERE  LangId = %i AND GroupId = %i AND IsLast = 1  ", $langId, $groupId)->fetchAll();
                 return $this->CreateTree($res, "Id", "ParentId");
             }
-            return dibi::query("SELECT Id,ParentId,Name FROM CSSLIST WHERE  LangId = %i AND (ContentType =  'Css' OR ContentType = 'CssExternalLink')  AND GroupId = %i AND IsLast = 1", $langId, $groupId)->fetchAll();
+            return dibi::query("SELECT Id,ParentId,Name,ContentType FROM CSSLIST WHERE  LangId = %i AND (ContentType =  'Css' OR ContentType = 'CssExternalLink')  AND GroupId = %i AND IsLast = 1", $langId, $groupId)->fetchAll();
         } else {
-            $res = dibi::query("SELECT Id,ParentId,Name FROM CSSLIST WHERE  LangId = %i   AND (Name LIKE %~like~ OR ContentType = 'LangFolder') AND GroupId = %i AND IsLast = 1", $langId, $groupId, $search)->fetchAll();
+            $res = dibi::query("SELECT Id,ParentId,Name,ContentType FROM CSSLIST WHERE  LangId = %i   AND (Name LIKE %~like~ OR ContentType = 'LangFolder') AND GroupId = %i AND IsLast = 1", $langId, $groupId, $search)->fetchAll();
             return $this->CreateTree($res, "Id", "ParentId");
         }
     }
@@ -1130,9 +1130,9 @@ class Content extends ObjectManager {
                 $res = dibi::query("SELECT * FROM JSLIST WHERE  LangId = %i AND GroupId = %i AND IsLast = 1  ", $langId, $groupId)->fetchAll();
                 return $this->CreateTree($res, "Id", "ParentId");
             }
-            return dibi::query("SELECT DISTINCT Id,Name,ParentId FROM JSLIST WHERE  LangId = %i  AND (ContentType = 'Javascript'  OR ContentType = 'JsExternalLink') AND GroupId = %i AND IsLast = 1", $langId, $groupId)->fetchAll();
+            return dibi::query("SELECT DISTINCT Id,Name,ParentId,ContentType FROM JSLIST WHERE  LangId = %i  AND (ContentType = 'Javascript'  OR ContentType = 'JsExternalLink') AND GroupId = %i AND IsLast = 1", $langId, $groupId)->fetchAll();
         } else {
-            $res = dibi::query("SELECT Id,Name,ParentId FROM JSLIST WHERE  LangId = %i AND (Name LIKE %~like~ OR ContentType = 'LangFolder') AND GroupId = %i AND IsLast = 1  ", $langId, $groupId, $search)->fetchAll();
+            $res = dibi::query("SELECT Id,Name,ParentId,ContentType FROM JSLIST WHERE  LangId = %i AND (Name LIKE %~like~ OR ContentType = 'LangFolder') AND GroupId = %i AND IsLast = 1  ", $langId, $groupId, $search)->fetchAll();
             return $this->CreateTree($res, "Id", "ParentId");
         }
     }
@@ -1685,6 +1685,7 @@ class Content extends ObjectManager {
 
         if (!empty($whereColumn)) {
             $ar = explode(",", $whereColumn);
+            $columnsWhere="";
             foreach ($ar as $column) {
                 $columnsWhere .= ", GROUP_CONCAT(if(ItemName = '$column', value, NULL)) AS '$column'";
             }
