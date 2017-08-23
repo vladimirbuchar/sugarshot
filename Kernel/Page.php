@@ -339,7 +339,7 @@ class Page {
                 $html = self::CompressString($html);
             }
         }
-        $html = str_replace("http://", "https://", $html);
+        $html = str_replace("http://", SERVER_PROTOCOL, $html);
         if (self::IsSmarty()) {
             $templateSystem->display('string:' . $html);
         }

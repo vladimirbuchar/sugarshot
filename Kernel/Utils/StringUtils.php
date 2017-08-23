@@ -106,7 +106,6 @@ class StringUtils {
         {
             $url = $url."/";
         }
-        
         return $url;
     }
     

@@ -19,6 +19,9 @@ use Components\FileUploader;
 use Utils\Mail;
 use HtmlComponents\Option;
 use Utils\Files;
+use Gregwar\Captcha\CaptchaBuilder;
+use Gregwar\Captcha\PhraseBuilder;
+
 
 
 
@@ -1432,54 +1435,12 @@ class Forms extends \Kernel\GlobalClass {
     {
         $captchaString = StringUtils::GenerateRandomString(5);
         self::$SessionManager->SetSessionValue("formCaptcha", $captchaString, $formId);
-        $size_x = 200;
-        $size_y = 75;
-
-        $code = "";
-        $pocet_znaku = strlen($captchaString); 
-        $znaky = str_split($captchaString);
-
-        $space_per_char = $size_x / ($pocet_znaku + 0.5);
-
-        $font = ROOT_PATH."fonts/verdana.ttf";
         $image_name = mktime(Date("H"),Date("i"),Date("s"),Date("Y"),Date("m"),Date("d")); 
         $save_as = TEMP_CAPTCHA_PATH . $image_name . ".jpg" ; // kam se obrázek uloží
-
-
-        /* vytvořit plátno */
-        $img = imagecreatetruecolor($size_x, $size_y);
-
-        /* definice barev */
-        $background = imagecolorallocate($img, 255, 255, 255);
-        $border = imagecolorallocate($img, 200, 200, 200);
-        $colors[] = imagecolorallocate($img, 128, 64, 192);
-        $colors[] = imagecolorallocate($img, 192, 64, 128);
-        $colors[] = imagecolorallocate($img, 108, 192, 64);
-
-        /* nakreslit pozadí */
-        imagefilledrectangle($img, 1, 1, $size_x - 2, $size_y - 2, $background);
-        imagerectangle($img, 0, 0, $size_x - 1, $size_y - 1, $border);
-
-        /* vykreslit text */
-        for ($i = 0; $i < $pocet_znaku; $i++) {
-            $color = $colors[$i % count($colors)];
-            $znak = $znaky[$i];
-            imagettftext($img, 28 + rand(0, 8), -20 + rand(0, 40), ($i + 0.5) * $space_per_char, 50 + rand(0, 10), $color, $font, $znak);
-            $code .= $znak;
-        }
-
-        /* zkreslení */
-        imageantialias($img, true);
-        for ($i = 0; $i < 1000; $i++) {
-            $x1 = rand(5, $size_x - 5);
-            $y1 = rand(5, $size_y - 5);
-            $x2 = $x1 - 4 + rand(0, 8);
-            $y2 = $y1 - 4 + rand(0, 8);
-            imageline($img, $x1, $y1, $x2, $y2, $colors[rand(0, count($colors) - 1)]);
-        }
-
-        /* uložit soubor */
-        imagepng($img, $save_as);
+        $captcha = new CaptchaBuilder($captchaString);
+        $captcha->tempDir="/Temp";
+        $captcha->build();
+        $captcha->save($save_as);
         return SERVER_NAME."res/captcha/" . "$image_name.jpg";
     }
     

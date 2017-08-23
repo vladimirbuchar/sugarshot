@@ -57,7 +57,11 @@ class Setup extends PageController {
         }
 
         if (!$this->isSetupExtensions("gd")) {
-            echo "Install xml - sudo apt-get install php-gd;service apache2 restart;";
+            echo "Install gd - sudo apt-get install php-gd;service apache2 restart;";
+        }
+        
+        if (!$this->isSetupExtensions("gd2")) {
+            echo "Install gd2 - sudo apt-get install php-gd2;service apache2 restart;";
         }
     }
 

@@ -250,7 +250,7 @@ class Users extends ObjectManager {
             return self::$SessionManager->GetSessionValue("UserId");
 
         if (self::$SessionManager->IsEmpty("AnonymousUserId")) {
-            $res = $user->GetFirsow($user->SelectByCondition("UserName = 'anonymous'", "", array("Id")));
+            $res = $user->GetFirstRow($user->SelectByCondition("UserName = 'anonymous'", "", array("Id")));
             self::$SessionManager->SetSessionValue("AnonymousUserId", $res["Id"]);
         }
         return self::$SessionManager->GetSessionValue("AnonymousUserId");

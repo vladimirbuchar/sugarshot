@@ -10,8 +10,4 @@ class PriceVat extends \TemplateFunction\TemplateFunction {
         $vat = self::$Parametrs[3];
         return \Utils\StringUtils::PriceFormat(\Utils\Utils::GetPriceVat($price, $vat),$format,$locale);
     }
-    
-    
-    
-    
 }

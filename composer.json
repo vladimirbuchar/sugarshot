@@ -9,6 +9,7 @@
         "phpoffice/phpexcel": "^1.8",
         "phpunit/phpunit": "^6.3",
         "thebingservices/codemirror": "^5.10",
-        "eventviva/php-image-resize": "^1.6"
+        "eventviva/php-image-resize": "^1.6",
+        "gregwar/captcha": "^1.1"
     }
 }
