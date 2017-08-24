@@ -64,7 +64,7 @@ class ContentVersion extends DatabaseTable  implements \Inteface\iDataTable{
     }
 
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("Data", RuleType::$RemoveEntity);
+        $this->SetValidateRule("Data", RuleType::REMOVEENTITY);
     }
 
 }

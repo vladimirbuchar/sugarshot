@@ -25,7 +25,6 @@ try {
 
     $ajaxMode = (!empty($_GET["ajax"]) || !empty($_POST["ajax"])) ? true : false;
     $fileUpload = (!empty($_GET["fileUpload"]) || !empty($_POST["fileUpload"])) ? true : false;
-    $fileExplorer = (!empty($_GET["fileExplorer"]) || !empty($_POST["fileExplorer"])) ? true : false;
     $iscss = (!empty($_GET["css"]) || !empty($_POST["css"])) ? true : false;
     $isjs = (!empty($_GET["js"]) || !empty($_POST["js"])) ? true : false;
     $isxml = (!empty($_GET["xml"]) || !empty($_POST["xml"])) ? true : false;
@@ -95,10 +94,7 @@ try {
     } else if ($fileUpload) {
         \Kernel\Page::SetOrigin ();
         echo \Utils\Files::FileUpload();
-    } else if ($fileExplorer) {
-        \Kernel\Page::SetOrigin ();
-        echo \Utils\Folders::FileExplorer();
-    } else if ($iscss) {
+    }  else if ($iscss) {
         \Kernel\Page::SetOrigin ();
         echo \Kernel\Page::LoadCss();
     } else if ($isjs) {

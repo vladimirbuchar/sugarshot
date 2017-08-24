@@ -33,7 +33,6 @@ RewriteRule   ajax\/([A-Za-z]*)[\/]([A-Za-z]*)[\/]([A-Za-z]*)[\/] /index.php?aja
 # ohers 
 RewriteRule   fileupload[\/]([0-9]*)[\/] /index.php?fileUpload=true&webid=$1
 RewriteRule   filesupload[\/]([0-9]*)[\/]([0-9]*)[\/]([0-9]*)[\/] /index.php?multiuaploadfiles=true&langId=$1&parentId=$2&webid=$3
-RewriteRule   fileexplorer[\/] /index.php?fileExplorer=true
 RewriteRule   renderhtml[\/]([0-9]*)[\/]$   /index.php?Template=Index&View=IndexPage&Controller=IndexWeb&id=$1&renderHtml=TRUE
 RewriteRule   css[\/]([0-9]*)[\/]([0-9]*)[\/]([A-Za-z]*)\.css /index.php?css=true&id=$2&name=$3&langId=$1
 RewriteRule   xml[\/]([A-Za-z]{2,3})[\/]([A-Za-z0-9\-]*)\.xml /index.php?xml=true&SeoUrl=$2&lang=$1

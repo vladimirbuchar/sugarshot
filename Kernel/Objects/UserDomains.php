@@ -58,10 +58,9 @@ class UserDomains extends ObjectManager{
         return $res;
     }
     
-    /// UserDomainsAutoComplete
     public function GetItemAutoComplected($itemId)
     {
-        $model = new Model\UserDomainsAutoComplete();
+        $model = new \Model\UserDomainsAutoComplete();
         return $model->SelectByCondition("DomainItemId = $itemId AND Deleted = 0");
     }
     

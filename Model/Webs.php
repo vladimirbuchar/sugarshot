@@ -110,8 +110,8 @@ class Webs extends DatabaseTable  implements \Inteface\iDataTable{
     }
 
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("WebName", RuleType::$NoEmpty, $this->GetWord("word88"));
-        $this->SetValidateRule("WebName", RuleType::$Unique, $this->GetWord("word89"));
+        $this->SetValidateRule("WebName", RuleType::NOEMPTY, $this->GetWord("word88"));
+        $this->SetValidateRule("WebName", RuleType::UNIQUE, $this->GetWord("word89"));
     }
     public function TableMigrate()
     {

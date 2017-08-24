@@ -1,5 +1,7 @@
 <?php
+
 namespace Utils;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,66 +14,64 @@ namespace Utils;
  * @author vlada
  */
 class TreeUtils {
-    public static function CreateTreeDiscusion($userGroup,$langid,$search)
-    {
+
+    public static function CreateTreeDiscusion($userGroup, $langid, $search) {
         $content = new \Objects\Content();
         $cssList = $content->GetDiscusionList($userGroup, $langid, false, $search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
-    
-    public static function CreateTreeInqury($userGroup,$langid,$search)
-    {
+
+    public static function CreateTreeInqury($userGroup, $langid, $search) {
         $content = new \Objects\Content();
         $cssList = $content->GetInquryList($userGroup, $langid, false, $search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
-    
-    public static function CreateTreeDataSource($userGroup,$langid,$search)
-    {
+
+    public static function CreateTreeDataSource($userGroup, $langid, $search) {
         $content = new \Objects\Content();
         $cssList = $content->GetDataSourceList($userGroup, $langid, false, $search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
-    
-    public static function CreateTreeMailing($userGroup,$langid,$search){
+
+    public static function CreateTreeMailing($userGroup, $langid, $search) {
         $content = new \Objects\Content();
-        $cssList = $content->GetMailingList($userGroup,$langid,false,$search);
+        $cssList = $content->GetMailingList($userGroup, $langid, false, $search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
-    
-    public static  function CreateTreeMail($userGroup,$langid,$search) {
+
+    public static function CreateTreeMail($userGroup, $langid, $search) {
         $content = new \Objects\Content();
-        $cssList = $content->GetMailList($userGroup,$langid,false,$search);
+        $cssList = $content->GetMailList($userGroup, $langid, false, $search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
-    
-    public static function CreateTreeForms($userGroup,$langid,$search) {
+
+    public static function CreateTreeForms($userGroup, $langid, $search) {
         $content = new \Objects\Content();
-        $cssList = $content->GetFormsList($userGroup,$langid,false,$search);
+        $cssList = $content->GetFormsList($userGroup, $langid, false, $search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
-    
-    public static function CreateTreeJs($userGroup,$langid,$search) {
+
+    public static function CreateTreeJs($userGroup, $langid, $search) {
         $content = new \Objects\Content();
-        $cssList = $content->GetJsList($userGroup,$langid, false, $search);
+        $cssList = $content->GetJsList($userGroup, $langid, false, $search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
-    
-    public static function CreateTreeCss($userGroup,$langid,$search) {
+
+    public static function CreateTreeCss($userGroup, $langid, $search) {
         $content = new \Objects\Content();
-        $cssList = $content->GetCssList($userGroup,$langid,false, $search);
+        $cssList = $content->GetCssList($userGroup, $langid, false, $search);
         $html = $content->CreateHtml($cssList);
         return $html;
     }
-    
-    public static function  CreateTree($userGroup,$langid,$search) {
+
+    public static function CreateTree($userGroup, $langid, $search) {
         $content = new \Objects\Content();
         $templatesList = $content->GetTemplateList($userGroup, $langid, false, false, $search, "Name ASC");
 
@@ -84,4 +84,5 @@ class TreeUtils {
         $html = $content->CreateHtml($templatesList);
         return $html;
     }
- }
+
+}

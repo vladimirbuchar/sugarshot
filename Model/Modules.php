@@ -29,9 +29,9 @@ class Modules  extends DatabaseTable implements \Inteface\iDataTable{
     }
 
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("ModuleName", RuleType::$NoEmpty,$this->GetWord("word150"));
-        $this->SetValidateRule("ModuleControler", RuleType::$NoEmpty,$this->GetWord("word151"));
-        $this->SetValidateRule("ModuleView", RuleType::$NoEmpty,$this->GetWord("word152"));
+        $this->SetValidateRule("ModuleName", RuleType::NOEMPTY,$this->GetWord("word150"));
+        $this->SetValidateRule("ModuleControler", RuleType::NOEMPTY,$this->GetWord("word151"));
+        $this->SetValidateRule("ModuleView", RuleType::NOEMPTY,$this->GetWord("word152"));
         $this->SetCallModelFunction("Modules","SetupModule",array(),DatabaseActions::INSERT);
     }
     public function TableMigrate()

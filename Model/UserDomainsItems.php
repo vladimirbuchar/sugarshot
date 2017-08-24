@@ -86,9 +86,9 @@ class UserDomainsItems  extends DatabaseTable implements \Inteface\iDataTable{
 
     
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("ShowName", RuleType::$NoEmpty,$this->GetWord("word227"));
-        $this->SetValidateRule("Identificator", RuleType::$NoEmpty,$this->GetWord("word228"));
-        $this->SetValidateRule("Type", RuleType::$NoEmpty,$this->GetWord("word230"));
+        $this->SetValidateRule("ShowName", RuleType::NOEMPTY,$this->GetWord("word227"));
+        $this->SetValidateRule("Identificator", RuleType::NOEMPTY,$this->GetWord("word228"));
+        $this->SetValidateRule("Type", RuleType::NOEMPTY,$this->GetWord("word230"));
     }
     public function TableMigrate()
     {

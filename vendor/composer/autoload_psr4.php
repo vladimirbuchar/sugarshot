@@ -10,8 +10,13 @@ return array(
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'RobRichards\\XMLSecLibs\\' => array($vendorDir . '/robrichards/xmlseclibs/src'),
     'RobRichards\\WsePhp\\' => array($vendorDir . '/robrichards/wse-php/src'),
+    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'PhpDocReader\\' => array($vendorDir . '/php-di/phpdoc-reader/src/PhpDocReader'),
     'MetzWeb\\Instagram\\' => array($vendorDir . '/cosenary/instagram/src'),
+    'Invoker\\' => array($vendorDir . '/php-di/invoker/src'),
+    'Interop\\Container\\' => array($vendorDir . '/container-interop/container-interop/src/Interop/Container'),
     'Gregwar\\Captcha\\' => array($vendorDir . '/gregwar/captcha'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
+    'DI\\' => array($vendorDir . '/php-di/php-di/src/DI'),
 );

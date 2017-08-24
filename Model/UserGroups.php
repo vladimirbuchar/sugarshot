@@ -34,8 +34,8 @@ class UserGroups  extends DatabaseTable implements \Inteface\iDataTable{
 
     
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("GroupName", RuleType::$NoEmpty,$this->GetWord("word90"));
-        $this->SetValidateRule("GroupName", RuleType::$Unique,$this->GetWord("word91"));
+        $this->SetValidateRule("GroupName", RuleType::NOEMPTY,$this->GetWord("word90"));
+        $this->SetValidateRule("GroupName", RuleType::UNIQUE,$this->GetWord("word91"));
     }
     public function TableMigrate()
     {

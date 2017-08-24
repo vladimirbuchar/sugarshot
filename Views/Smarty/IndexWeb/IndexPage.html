@@ -17,12 +17,14 @@
     <!--{/section}-->
     
     <!--{if $FrameworkMode == "jquery"}-->
-        <script type="text/javascript"  src="/Scripts/ExternalApi/jQuery.js"></script>
+        <script type="text/javascript"  src="/node_modules/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="/node_modules/bootstrap-validator/dist/validator.min.js"></script> 
+        <script src="/node_modules/slick-carousel/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="/node_modules/slick-carousel/slick/slick.css">
+        <link rel="stylesheet" type="text/css" href="/node_modules/slick-carousel/slick/slick-theme.css">
+        
         <script type="text/javascript"  src="/Scripts/Core.js"></script>
-        <script type="text/javascript" src="/Scripts/ExternalApi/validator.js"></script> 
         <script type="text/javascript"  src="/Scripts/frontedScripts.js"></script>
-        
-        
     <!--{/if}-->
     <!--{if empty($JsScript)}-->
     <!--{section name=data loop=$JsScript}-->

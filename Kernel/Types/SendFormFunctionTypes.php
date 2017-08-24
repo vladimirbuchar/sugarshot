@@ -1,7 +1,7 @@
 <?php
 namespace Types{
     class SendFormFunctionTypes{
-        public static $After = "after";
-        public static $Before = "before";
+        const AFTER = "after";
+        const BEFORE = "before";
     }
 }

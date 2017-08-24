@@ -45,11 +45,7 @@ class Files {
      * @param $path string cesta k souboru 
      */
     public static function FileExists($path) {
-        if (file_exists($path))
-            return true;
-        else {
-            return false;
-        }
+        return file_exists($path);
     }
 
     /** metoda pro zápis do logu */
@@ -85,7 +81,7 @@ class Files {
                         $web = \Model\Webs::GetInstance();
                         $webId = empty($_GET["webid"]) ? 0 : $_GET["webid"];
                         if ($webId > 0) {
-                            $web->GetObjectById($webId,true,array("BigWidth","BigHeight","MediumWidth","MediumHeight","SmallWidth","SmallHeight"));
+                            $web->GetObjectById($webId, true, array("BigWidth", "BigHeight", "MediumWidth", "MediumHeight", "SmallWidth", "SmallHeight"));
                             $newFileNameB = $img->CreateFileName($tmpName, "_b");
 
                             $img->Resizer($tmpName, $newFileNameB, $web->BigWidth, $web->BigHeight);
@@ -104,10 +100,10 @@ class Files {
     }
 
     public static function UploadFiles() {
-        
+
         $filePath = self::FileUpload();
         $content = new \Objects\Content();
-        //$data="<items><FileUpload><![CDATA[$filePath]]></FileUpload></items>";
+
         $data[0][0] = "FileUpload";
         $data[0][1] = "$filePath";
         $name = basename($filePath);
@@ -116,26 +112,19 @@ class Files {
 
     /** otestování zda se jedná o xml */
     public static function IsXml($file) {
-        $info = pathinfo($file);
-        if ($info["extension"] == "xml")
-            return true;
-        return false;
+        return self::GetFileExtension($file) == "xml";
     }
 
     private static function IsPHP($file) {
-        $info = pathinfo($file);
-        if ($info["extension"] == "php")
-            return true;
-        return false;
+
+        return self::GetFileExtension($file) == "php";
     }
 
     /*     * test zda se jedná o excel */
 
     public static function IsExcel($file) {
-        $info = pathinfo($file);
-        if ($info["extension"] == "xls" || $info["extension"] == "xlsx")
-            return true;
-        return false;
+        $info = self::GetFileExtension($file);
+        return ($info == "xls" || $info == "xlsx");
     }
 
     /** načtení xls souboru */
@@ -148,12 +137,8 @@ class Files {
     }
 
     public static function GetFileExtension($file) {
-        try {
-            $info = pathinfo($file);
-            return $info["extension"];
-        } catch (Exception $ex) {
-            Page::ApplicationError($ex);
-        }
+        $info = pathinfo($file);
+        return $info["extension"];
     }
 
     public static function CreatePDF($html, $fileName) {

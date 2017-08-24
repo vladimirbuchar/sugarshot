@@ -56,10 +56,10 @@ class Langs  extends DatabaseTable implements \Inteface\iDataTable{
     
 
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("LangName", RuleType::$NoEmpty,$this->GetWord("word85"));
-        $this->SetValidateRule("RootUrl", RuleType::$NoEmpty,  $this->GetWord("word86"));
-        $this->SetValidateRule("RootUrl", RuleType::$Unique,$this->GetWord("word87"));
-        $this->SetValidateRule("LangIdentificator", RuleType::$Unique,$this->GetWord("word87"));
+        $this->SetValidateRule("LangName", RuleType::NOEMPTY,$this->GetWord("word85"));
+        $this->SetValidateRule("RootUrl", RuleType::NOEMPTY,  $this->GetWord("word86"));
+        $this->SetValidateRule("RootUrl", RuleType::UNIQUE,$this->GetWord("word87"));
+        $this->SetValidateRule("LangIdentificator", RuleType::UNIQUE,$this->GetWord("word87"));
         $this->SetCallModelFunction("Langs","CreateLangFolder","",DatabaseActions::INSERT);   
     }
     public function TableExportSettings()

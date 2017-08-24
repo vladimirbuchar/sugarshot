@@ -9,7 +9,7 @@ class DiscusionItems extends DatabaseTable  implements \Inteface\iDataTable{
 
     public $SubjectDiscusion;
     public $TextDiscusion;
-    public $UserId;
+    public $UserId; 
     public $ShowUserName;
     public $DateTime;
     public $UserIp;
@@ -43,9 +43,8 @@ class DiscusionItems extends DatabaseTable  implements \Inteface\iDataTable{
     }
 
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("UserIp", RuleType::$UserIp);
-        $this->SetValidateRule("DateTime", RuleType::$ActualDateTime);
-        $this->SetValidateRule("UserId", RuleType::$UserId);
+        $this->SetValidateRule("UserIp", RuleType::USERIP);
+        $this->SetValidateRule("DateTime", RuleType::ACTUALDATETIME);
     }
 
     public function TableMigrate() {

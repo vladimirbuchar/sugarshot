@@ -47,18 +47,15 @@ class ShopCart extends UserComponents{
             $this->SetReplaceString("SumaPriceVat", $sumaPrice["PriceVatFormat"]);
             $transportInfo = $shop->GetTransport();
             $paymentInfo = $shop->GetPayment();
-            $this->SetReplaceString("TransportName", $transportInfo["name"]);
-            $this->SetReplaceString("TransportPrice", \Utils\StringUtils::PriceFormat($transportInfo["price"], $this->PriceFormat, $this->Currency));
-            $this->SetReplaceString("TransportPriceVat", \Utils\StringUtils::PriceFormat($transportInfo["priceVat"], $this->PriceFormat, $this->Currency));
             
-            $this->SetReplaceString("PaymentName", $paymentInfo["name"]);
-            $this->SetReplaceString("PaymentPrice", \Utils\StringUtils::PriceFormat($paymentInfo["price"], $this->PriceFormat, $this->Currency));
-            $this->SetReplaceString("PaymentPriceVat", \Utils\StringUtils::PriceFormat($paymentInfo["priceVat"], $this->PriceFormat, $this->Currency));
+            $this->SetReplaceString("TransportName", empty($transportInfo) ?"" : $transportInfo["name"]);
+            $this->SetReplaceString("TransportPrice", empty($transportInfo) ?"" :\Utils\StringUtils::PriceFormat($transportInfo["price"], $this->PriceFormat, $this->Currency));
+            $this->SetReplaceString("TransportPriceVat", empty($transportInfo) ?"" :\Utils\StringUtils::PriceFormat($transportInfo["priceVat"], $this->PriceFormat, $this->Currency));
+            
+            $this->SetReplaceString("PaymentName", empty($paymentInfo) ?"" : $paymentInfo["name"]);
+            $this->SetReplaceString("PaymentPrice", empty($paymentInfo) ?"" :\Utils\StringUtils::PriceFormat($paymentInfo["price"], $this->PriceFormat, $this->Currency));
+            $this->SetReplaceString("PaymentPriceVat", empty($paymentInfo) ?"" : \Utils\StringUtils::PriceFormat($paymentInfo["priceVat"], $this->PriceFormat, $this->Currency));
         }
-        
-        
-        
-        
     }
     
     

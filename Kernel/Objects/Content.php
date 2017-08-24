@@ -44,7 +44,7 @@ class Content extends ObjectManager {
         $model->TransactionBegin();
         try {
             $contentVersion = \Model\ContentVersion::GetInstance();
-            if (!$this->HasPrivileges($ObjectId, PrivilegesType::$CanWrite))
+            if (!$this->HasPrivileges($ObjectId, PrivilegesType::CANWRITE))
                 return;
 
 
@@ -191,7 +191,7 @@ class Content extends ObjectManager {
                 $parentid = $this->GetParent($parentid);
             }
 
-            if (!$this->HasPrivileges($parentid, PrivilegesType::$CanWrite) && $testPrivileges) {
+            if (!$this->HasPrivileges($parentid, PrivilegesType::CANWRITE) && $testPrivileges) {
                 \dibi::rollback();
                 return 0;
             }
@@ -347,7 +347,7 @@ class Content extends ObjectManager {
 
     public function UpdateContentItem($contentId, $name, $isActive, $seoUrl, $template, $AvailableOverSeoUrl, $noIncludeSearch = true, $identificator = "", $privileges = array(), $data = "", $domainId = 0, $templateId = 0, $header = "", $activeFrom = "", $activeTo = "", $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $sort = 99999, $formId = 0, $dataArray = array(), $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $settings = "", $caching = false, $sortRule = "") {
         dibi::begin();
-        if (!$this->HasPrivileges($contentId, PrivilegesType::$CanWrite)) {
+        if (!$this->HasPrivileges($contentId, PrivilegesType::CANWRITE)) {
             dibi::rollback();
             return $contentId;
         }
@@ -391,7 +391,7 @@ class Content extends ObjectManager {
         }
 
 
-        if ($this->HasPrivileges($contentId, PrivilegesType::$CanChangePrivileges)) {
+        if ($this->HasPrivileges($contentId, PrivilegesType::CANCHANGEPRIVILEGES)) {
             $isOkSecurity = $this->Security($privileges, $contentId);
             if (!$isOkSecurity) {
                 dibi::rollback();
@@ -555,9 +555,9 @@ class Content extends ObjectManager {
 
     private function SetValidateUserItem() {
         $model = new \Model\ContentVersion();
-        $model->SetValidateRule("SeoUrl", RuleType::$NoEmpty);
-        $model->SetValidateRule("SeoUrl", RuleType::$SeoString);
-        $model->SetValidateRule("SeoUrl", RuleType::$Unique);
+        $model->SetValidateRule("SeoUrl", RuleType::NOEMPTY);
+        $model->SetValidateRule("SeoUrl", RuleType::SEOSTRING);
+        $model->SetValidateRule("SeoUrl", RuleType::UNIQUE);
     }
 
     public function CreateUserItem($name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $lang, $parentid, $privileges, $data, $dataIsPrepared = false, $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $formId = 0, $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $caching = false, $sort = 999999, $sortRule = "") {
@@ -579,7 +579,7 @@ class Content extends ObjectManager {
         $arrayXml = array();
         $arrayXml[0]["LinkType"] = $linkType;
 
-        if ($linkType == LinkType::$Document || $linkType == LinkType::$Repository || $linkType == LinkType::$Form) {
+        if ($linkType == LinkType::DOCUMENT || $linkType == LinkType::REPOSITORY || $linkType == LinkType::FORM) {
 
             $linkInfo[1][0] = "ObjectId";
             $linkInfo[1][1] = $objectId;
@@ -587,29 +587,29 @@ class Content extends ObjectManager {
             $user = new \Objects\Users();
             $data = array();
 
-            if ($linkType == LinkType::$Document)
+            if ($linkType == LinkType::DOCUMENT)
                 $data = $this->GetUserItemDetail($objectId, $user->GetUserGroupId(), $_GET["webid"], $_GET["langid"]);
-            else if ($linkType == LinkType::$Repository)
+            else if ($linkType == LinkType::REPOSITORY)
                 $data = $this->GetFileFolderDetail($objectId, $user->GetUserGroupId(), $_GET["webid"], $_GET["langid"]);
-            else if ($linkType == LinkType::$Form)
+            else if ($linkType == LinkType::FORM)
                 $data = $this->GetFormDetail($objectId, $user->GetUserGroupId(), $_GET["webid"], $_GET["langid"]);
             $linkInfoXml = ArrayUtils::ArrayToXml($arrayXml);
             $row = $data[0];
             return $this->CreateContentItem($row["Name"], true, "link-" . $row["Name"], 0, ContentTypes::LINK, false, $_GET["langid"], $parentId, true, "", $privileges, $linkInfoXml, 0, 0, "", "", "", 0, 0, 0, 99999, 0, true, $linkInfo);
         }
-        else if ($linkType == LinkType::$Link) {
+        else if ($linkType == LinkType::LINK) {
             $linkInfoXml = ArrayUtils::ArrayToXml($arrayXml);
             $url = $externalLinkInfo[1];
             return $this->CreateContentItem($externalLinkInfo[0], true, $url, 0, ContentTypes::EXTERNAL_LINK, false, $_GET["langid"], $parentId, true, "", $privileges, $linkInfoXml, 0, 0, "", "", "", 0, 0, 0, 99999, 0, true, $linkInfo);
-        } else if ($linkType == LinkType::$CssLink) {
+        } else if ($linkType == LinkType::CSSLINK) {
             $linkInfoXml = ArrayUtils::ArrayToXml($arrayXml);
             $url = $externalLinkInfo[1];
             return $this->CreateContentItem($externalLinkInfo[0], true, $url, 0, ContentTypes::CSS_EXTERNAL_LINK, false, $_GET["langid"], $parentId, true, "", $privileges, $linkInfoXml, 0, 0, "", "", "", 0, 0, 0, 99999, 0, true, $linkInfo);
-        } else if ($linkType == LinkType::$JsLink) {
+        } else if ($linkType == LinkType::JSLINK) {
             $linkInfoXml = ArrayUtils::ArrayToXml($arrayXml);
             $url = $externalLinkInfo[1];
             return $this->CreateContentItem($externalLinkInfo[0], true, $url, 0, ContentTypes::JS_EXTERNAL_LINK, false, $_GET["langid"], $parentId, true, "", $privileges, $linkInfoXml, 0, 0, "", "", "", 0, 0, 0, 99999, 0, true, $linkInfo);
-        } else if ($linkType == LinkType::$Javascript) {
+        } else if ($linkType == LinkType::JAVASCRIPT) {
             $linkInfoXml = ArrayUtils::ArrayToXml($arrayXml);
             $url = $externalLinkInfo[1];
             return $this->CreateContentItem($externalLinkInfo[0], true, $url, 0, ContentTypes::JAVASCRIPT_ACTION, false, $_GET["langid"], $parentId, true, "", $privileges, $linkInfoXml, 0, 0, "", "", "", 0, 0, 0, 99999, 0, true, $linkInfo);
@@ -669,7 +669,7 @@ class Content extends ObjectManager {
 
     public function DisconnectObjects($ObjectId, $ConnectedType) {
         $contentVersion = \Model\ContentVersion::GetInstance();
-        if (!$contentVersion->HasPrivileges($ObjectId, PrivilegesType::$CanWrite))
+        if (!$contentVersion->HasPrivileges($ObjectId, PrivilegesType::CANWRITE))
             return;
         $this->DeleteByCondition("ObjectId = " . $ObjectId . " AND ConnectedType = '$ConnectedType'", true, false);
     }
@@ -923,7 +923,7 @@ class Content extends ObjectManager {
             if ($lang == 0 && !empty($_GET["langid"])) {
                 $lang = $_GET["langid"];
             }
-            $canPublish = $this->HasPrivileges($contentId, PrivilegesType::$CanPublish);
+            $canPublish = $this->HasPrivileges($contentId, PrivilegesType::CANPUBLISH);
             if ($lang == 0) {
                 dibi::query("UPDATE ContentVersion SET IsLast = 0 WHERE ContentId = %i ", $contentId);
             } else {
@@ -1893,7 +1893,7 @@ class Content extends ObjectManager {
 
             return FALSE;
         }
-        if (!$this->HasPrivileges($id, PrivilegesType::$CanDelete, true)) {
+        if (!$this->HasPrivileges($id, PrivilegesType::CANDELETE, true)) {
 
             return FALSE;
         }
@@ -1948,10 +1948,10 @@ class Content extends ObjectManager {
             }
 
 
-            if (PrivilegesType::$CanPublish == $privilegesName) {
+            if (PrivilegesType::CANPUBLISH == $privilegesName) {
                 
             }
-            if (PrivilegesType::$CanChangePrivileges == $privilegesName) {
+            if (PrivilegesType::CANCHANGEPRIVILEGES == $privilegesName) {
                 
             }
 
@@ -2084,7 +2084,7 @@ class Content extends ObjectManager {
     }
 
     public function Move($sourceId, $destinationId) {
-        if (!$this->HasPrivileges($sourceId, PrivilegesType::$CanRead, true) || !$this->HasPrivileges($destinationId, PrivilegesType::$CanWrite))
+        if (!$this->HasPrivileges($sourceId, PrivilegesType::CANREAD, true) || !$this->HasPrivileges($destinationId, PrivilegesType::CANWRITE))
             return FALSE;
         $content = \Model\Content::GetInstance();
         if ($this->IsLink($destinationId))
@@ -2094,7 +2094,7 @@ class Content extends ObjectManager {
     }
 
     public function Copy($langId, $webId, $sourceId, $destinationId, $copyChild = true) {
-        if (!$this->HasPrivileges($sourceId, PrivilegesType::$CanRead, true) || !$this->HasPrivileges($destinationId, PrivilegesType::$CanWrite, true)) {
+        if (!$this->HasPrivileges($sourceId, PrivilegesType::CANREAD, true) || !$this->HasPrivileges($destinationId, PrivilegesType::CANWRITE, true)) {
             return FALSE;
         }
         if ($this->IsLink($destinationId))
@@ -2479,7 +2479,7 @@ class Content extends ObjectManager {
     public function PublishItem($contentId, $langId) {
         $user = new \Objects\Users();
         $model = \Model\ContentVersion::GetInstance();
-        if (!$this->HasPrivileges($contentId, PrivilegesType::$CanPublish))
+        if (!$this->HasPrivileges($contentId, PrivilegesType::CANPUBLISH))
             return false;
         $res = $model->SelectByCondition("ContentId = $contentId AND IsLast = 1 AND LangId = $langId");
         if (empty($res))
@@ -2600,14 +2600,14 @@ class Content extends ObjectManager {
     public function SetFiltr($langId, $parentId, $columnName, $filtrMode) {
         $out = array();
         $data = $this->GetDataForFiltr($langId, $parentId, $columnName);
-        if ($filtrMode == FiltrModes::$MinMax) {
+        if ($filtrMode == \Types\FiltrModes::MINMAX) {
             $data = ArrayUtils::SortArray($data, "ValueNoHtml", SORT_ASC);
             $len = count($data) - 1;
 
             $out["MinValue"] = empty($data[0]["ValueNoHtml"]) ? 0 : $data[0]["ValueNoHtml"];
             $out["MaxValue"] = empty($data[$len]["ValueNoHtml"]) ? 0 : $data[$len]["ValueNoHtml"];
         }
-        if ($filtrMode == FiltrModes::$DistinctValues) {
+        if ($filtrMode == \Types\FiltrModes::DISTINCTVALUES) {
             $distinct = ArrayUtils::Distinct($data);
             foreach ($distinct as $row)
                 $out[] = $row["ValueNoHtml"];

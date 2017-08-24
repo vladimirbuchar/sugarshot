@@ -295,7 +295,7 @@ class Users extends ObjectManager {
         if ($password1 != $password2) {
             return;
         }
-        $model->SetValidateRule("UserPassword", \Types\RuleType::$Hash);
+        $model->SetValidateRule("UserPassword", \Types\RuleType::HASH);
         $model->GetObjectById($userId, true);
         $model->UserPassword = $password1;
         $model->SaveObject();

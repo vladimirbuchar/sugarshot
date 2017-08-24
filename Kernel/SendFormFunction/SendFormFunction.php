@@ -44,11 +44,11 @@ class SendFormFunction
     
     public function IsBeforeFunction()
     {
-        return $this->FunctionType == \Types\SendFormFunctionTypes::$Before;;
+        return $this->FunctionType == \Types\SendFormFunctionTypes::BEFORE;;
     }
     public function IsAfterFunction()
     {
-        return $this->FunctionType == \Types\SendFormFunctionTypes::$After;
+        return $this->FunctionType == \Types\SendFormFunctionTypes::AFTER;
     }
     public function GetParametrsFromSaveData($paramname)
     {   

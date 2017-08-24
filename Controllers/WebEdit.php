@@ -210,7 +210,7 @@ class WebEdit extends AdminController {
         $this->SetTemplateData("GroupList", $userGroupList);
 
         $discusion = new \Components\Discusion();
-        $discusion->DiscusionMode = \Types\DiscusionsMode::$AdminMode;
+        $discusion->DiscusionMode = \Types\DiscusionsMode::ADMINMODE;
         $discusion->LoadDiscusionFormSeoUrl = false;
         $discusion->DiscusionId = $id;
         $htmlDiscusion = $discusion->LoadComponent();

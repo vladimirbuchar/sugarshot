@@ -609,7 +609,7 @@ class DatabaseTable extends SqlDatabase {
     public function SetValidateRule($column, $rule, $errorMessage = "") {
         $this->_columnValidate[] = $column;
         // seourl must be first !!
-        if ($rule == RuleType::$SeoString) {
+        if ($rule == RuleType::SEOSTRING) {
             $ar = new ModelRule($column, $rule, $errorMessage);
             array_unshift($this->_rules, $ar);
         } else
@@ -629,12 +629,12 @@ class DatabaseTable extends SqlDatabase {
         if (in_array($columnName, $this->_columnValidate)) {
             foreach ($this->_rules as $row) {
                 if ($row->Column == $columnName) {
-                    if ($row->RuleType == RuleType::$NoEmpty) {
+                    if ($row->RuleType == RuleType::NOEMPTY) {
                         if (empty($value)) {
                             $this->SetError($row->ErrorMessage . "#$columnName");
                         }
                     }
-                    if ($row->RuleType == RuleType::$Unique) {
+                    if ($row->RuleType == RuleType::UNIQUE) {
                         if ($this->ItemExists($row->Column, $value, $noTestId)) {
                             if ($this->_copyMode) {
                                 $value = "";
@@ -643,7 +643,7 @@ class DatabaseTable extends SqlDatabase {
                             }
                         }
                     }
-                    if ($row->RuleType == RuleType::$NoUpdate) {
+                    if ($row->RuleType == RuleType::NOUPDATE) {
                         $res = $this->GetObjectById($noTestId,true,array($columnName));
                         if (!empty($res)) {
                             if ($res->$columnName != $value) {
@@ -651,29 +651,26 @@ class DatabaseTable extends SqlDatabase {
                             }
                         }
                     }
-                    if ($row->RuleType == RuleType::$ToUpper) {
+                    if ($row->RuleType == RuleType::TOUPPER) {
                         $value = strtoupper($value);
                     }
-                    if ($row->RuleType == RuleType::$Hash) {
+                    if ($row->RuleType == RuleType::HASH) {
                         $value = StringUtils::HashString($value);
                     }
-                    if ($row->RuleType == RuleType::$SeoString) {
+                    if ($row->RuleType == RuleType::SEOSTRING) {
                         $value = StringUtils::SeoString($value);
                     }
-                    if ($row->RuleType == RuleType::$RemoveEntity) {
+                    if ($row->RuleType == RuleType::REMOVEENTITY) {
                         if (is_string($value))
                             $value = html_entity_decode($value);
                     }
-                    if ($row->RuleType == RuleType::$UserIp) {
+                    if ($row->RuleType == RuleType::USERIP) {
                         $value = $_SERVER["REMOTE_ADDR"];
                     }
-                    if ($row->RuleType == RuleType::$ActualDateTime) {
+                    if ($row->RuleType == RuleType::ACTUALDATETIME) {
                         $value = mktime(date("H"), date("i"), date("s"), date("n"), date("j"), date("Y"));
                     }
-                    if ($row->RuleType == RuleType::$UserId) {
-                        $u = new \Objects\Users();
-                        $value = $u->GetUserId();
-                    }
+
                 }
             }
         }

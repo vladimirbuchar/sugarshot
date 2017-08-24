@@ -62,7 +62,7 @@ class Page {
             }
 
             if (empty($controllerName) || empty($functionName) || empty($mode)) {
-                return;
+                throw new Exception(xWebExceptions::$NoControlerFunctionMode);
             }
             $controllerPath = CONTROLLER_PATH . "Api/" . $controllerName . "Api.php";
 
@@ -96,7 +96,6 @@ class Page {
                 if ($mode == "get" || $mode == "post" || $mode == "postobject" || $mode == "getobject" || $mode == "postjson" || $mode == "longrequest") {
                     $out = self::RenderXWebComponent($out);
                     $out = preg_replace('({[A-Za-z0-9\-]*})', "", $out);
-
                     echo $out;
                 } else if ($mode == "json" || $mode == "jsonobject" || $mode == "longrequestjson") {
                     echo json_encode($out);
@@ -104,7 +103,7 @@ class Page {
             }
         } catch (Exception $ex) {
             Page::ApplicationError($ex);
-            exit;
+            
         }
     }
 
@@ -446,7 +445,7 @@ class Page {
     }
 
     public static function StartUpdateModel($upadateModel = false) {
-        try {
+        
 
             // nejdříve zkontrolujeme a případně upteneme model
             if ((UPDATE_MODEL || !empty($_GET["updatemodel"]) || $upadateModel) && Page::IsDeveloperIp()) {
@@ -498,10 +497,7 @@ class Page {
                 $folderContentFunction = array_merge($folderContentFunction, $folderContentFunction2);
                 Page::CreateFunction($folderContentFunction);
             }
-        } catch (Exception $e) {
-            echo $e;
-            die();
-        }
+        
     }
 
     public static function LoadCss() {
@@ -574,27 +570,23 @@ class Page {
 
     public static function RunAllTimers() {
         $timers = Folders::GetObjectsInFolder(TIMERS_PATH, true, true);
-        print_r($timers);
+        
     }
 
     private static function NoRenderComponentState($controller, $viewName) {
-        if (($controller == "WebEdit" && $viewName == "TemplateDetail"))
-            return true;
-        return false;
+        return  ($controller == "WebEdit" && $viewName == "TemplateDetail");
     }
 
     public static function RenderXWebComponent($inHtml) {
         $outArray = array();
         preg_match_all("(<xWeb:Component(( )*[A-Za-z]*=\"[\[\]!{}\%:A-Za-z0-9\_\-/\;( )\',\#=\.><]*\")*( )*/>)", $inHtml, $outArray);
-        $inHtml = self::ReplaceComponent($outArray, $inHtml);
-        return $inHtml;
+        return self::ReplaceComponent($outArray, $inHtml);
     }
 
     public static function CallTemplateFunction($inHtml) {
         $outArray = array();
         preg_match_all("(<%(.*)%>)", $inHtml, $outArray);
-        $inHtml = self::RunTemplateFunction($inHtml, $outArray);
-        return $inHtml;
+        return self::RunTemplateFunction($inHtml, $outArray);
     }
 
     private static function RunTemplateFunction($inHtml, $outArray) {
@@ -736,25 +728,16 @@ class Page {
         } else {
             $out = $cache->SelectByCondition("SeoUrl = '$url' ", "", array("HtmlCache"));
         }
-        if (empty($out))
-            return "";
-        return $out[0]["HtmlCache"];
+        return empty($out) ? "" :$out[0]["HtmlCache"];
     }
 
     public static function IsLocalHost() {
-        if (StringUtils::ContainsString(SERVER_NAME, "localhost") || StringUtils::ContainsString(SERVER_NAME, ".dev:")) {
-            return true;
-        }
-        return false;
+        return StringUtils::ContainsString(SERVER_NAME, "localhost") || StringUtils::ContainsString(SERVER_NAME, ".dev:");
     }
 
     public static function GetConfigByDomain() {
-        if (self::IsLocalHost()) {
-
-            if (Files::FileExists(ROOT_PATH . "settings_localhost.php")) {
-                include_once ROOT_PATH . "settings_localhost.php";
-            }
-            return;
+        if (self::IsLocalHost() && Files::FileExists(ROOT_PATH . "settings_localhost.php")) {
+            include_once ROOT_PATH . "settings_localhost.php";
         }
         $serverUrl = SERVER_NAME;
         $serverUrl = StringUtils::RemoveString(SERVER_NAME, SERVER_PROTOCOL);
@@ -779,21 +762,21 @@ class Page {
     }
 
     public static function GetIframeHtml($key) {
-        return $_SESSION["iframe_$key"];
+        $iframe =  $_SESSION["iframe_$key"];
+        //unset($_SESSION["iframe_$key"]);
+        return $iframe;
     }
 
     public static function GetWebRobots() {
         $web = new \Objects\Webs();
-        $info = $web->GetRobotsTxt(SERVER_NAME_LANG);
-        return $info;
+        return $web->GetRobotsTxt(SERVER_NAME_LANG);
     }
 
     public static function GetSitemap() {
         header('Content-type: application/xml');
         header("Content-length: 0");
         $web = new \Objects\Webs();
-        $info = $web->GenerateSitemapXml(SERVER_NAME_LANG);
-        return $info;
+        return $web->GenerateSitemapXml(SERVER_NAME_LANG);
     }
 
     public static function SetOrigin() {

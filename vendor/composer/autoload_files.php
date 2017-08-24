@@ -8,4 +8,5 @@ $baseDir = dirname($vendorDir);
 return array(
     '0097ca414fcb37c7130ac24b05f485f8' => $vendorDir . '/dibi/dibi/src/loader.php',
     'f084d01b0a599f67676cffef638aa95b' => $vendorDir . '/smarty/smarty/libs/bootstrap.php',
+    'bbf73f3db644d3dced353b837903e74c' => $vendorDir . '/php-di/php-di/src/DI/functions.php',
 );

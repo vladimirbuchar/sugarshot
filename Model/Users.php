@@ -41,15 +41,15 @@ class Users extends DatabaseTable  implements \Inteface\iDataTable{
     }
 
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("UserName", RuleType::$NoEmpty, $this->GetWord("word480"));
-        $this->SetValidateRule("UserName", RuleType::$Unique, $this->GetWord("word481"));
-        $this->SetValidateRule("FirstName", RuleType::$NoEmpty, $this->GetWord("word482"));
-        $this->SetValidateRule("LastName", RuleType::$NoEmpty, $this->GetWord("word483"));
-        $this->SetValidateRule("UserEmail", RuleType::$NoEmpty, $this->GetWord("word484"));
-        $this->SetValidateRule("UserEmail", RuleType::$Unique, $this->GetWord("word485"));
+        $this->SetValidateRule("UserName", RuleType::NOEMPTY, $this->GetWord("word480"));
+        $this->SetValidateRule("UserName", RuleType::UNIQUE, $this->GetWord("word481"));
+        $this->SetValidateRule("FirstName", RuleType::NOEMPTY, $this->GetWord("word482"));
+        $this->SetValidateRule("LastName", RuleType::NOEMPTY, $this->GetWord("word483"));
+        $this->SetValidateRule("UserEmail", RuleType::NOEMPTY, $this->GetWord("word484"));
+        $this->SetValidateRule("UserEmail", RuleType::UNIQUE, $this->GetWord("word485"));
         if ($mode) {
-            $this->SetValidateRule("UserPassword", RuleType::$Hash);
-            $this->SetValidateRule("UserPassword", RuleType::$NoEmpty, $this->GetWord("word486"));
+            $this->SetValidateRule("UserPassword", RuleType::HASH);
+            $this->SetValidateRule("UserPassword", RuleType::NOEMPTY, $this->GetWord("word486"));
         }
     }
 

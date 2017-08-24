@@ -20,8 +20,6 @@ class DataTableColumn {
         $this->Length = $length;
         $this->IsAutoIncrement = $isautoincrement;
         $this->Key = $key;
-
-        
     }
 }
 

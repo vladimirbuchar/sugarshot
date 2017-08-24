@@ -1,10 +1,10 @@
 <?php
 namespace Types;
 class DiscusionsMode{
-    public static $AdminMode = "AdminMode";
-    public static $UserMode = "UserMode";
-    public static $ReadOnly = "ReadOnly";
-    public static $AddItems = "AddItems";
+    const ADMINMODE = "AdminMode";
+    const USERMODE = "UserMode";
+    const READONLY = "ReadOnly";
+    const ADDITEMS = "AddItems";
     
 }
 

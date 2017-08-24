@@ -42,9 +42,9 @@ class UserDomains  extends DatabaseTable implements \Inteface\iDataTable{
 
     
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("DomainName", RuleType::$NoEmpty,$this->GetWord("word185"));
-        $this->SetValidateRule("DomainIdentificator", RuleType::$NoEmpty,$this->GetWord("word186"));
-        $this->SetValidateRule("DomainIdentificator", RuleType::$Unique,$this->GetWord("word187"));   
+        $this->SetValidateRule("DomainName", RuleType::NOEMPTY,$this->GetWord("word185"));
+        $this->SetValidateRule("DomainIdentificator", RuleType::NOEMPTY,$this->GetWord("word186"));
+        $this->SetValidateRule("DomainIdentificator", RuleType::UNIQUE,$this->GetWord("word187"));   
     }
     public function TableMigrate()
     {

@@ -31,13 +31,12 @@ class AdminLangs extends DatabaseTable implements \Inteface\iDataTable {
     }
 
     public function SetValidate($mode = false) {
-        $this->SetValidateRule("LangName", RuleType::$NoEmpty, $this->GetWord("word82"));
-        $this->SetValidateRule("LangIdentificator", RuleType::$NoEmpty, $this->GetWord("word83"));
-        $this->SetValidateRule("LangIdentificator", RuleType::$Unique, $this->GetWord("word84"));
-        $this->SetValidateRule("LangIdentificator", RuleType::$NoUpdate);
-        $this->SetValidateRule("LangIdentificator", RuleType::$ToUpper);
+        $this->SetValidateRule("LangName", RuleType::NOEMPTY, $this->GetWord("word82"));
+        $this->SetValidateRule("LangIdentificator", RuleType::NOEMPTY, $this->GetWord("word83"));
+        $this->SetValidateRule("LangIdentificator", RuleType::UNIQUE, $this->GetWord("word84"));
+        $this->SetValidateRule("LangIdentificator", RuleType::NOUPDATE);
+        $this->SetValidateRule("LangIdentificator", RuleType::TOUPPER);
         $this->SetCallModelFunction("WordGroups", "AddColumnLang", "", \Types\DatabaseActions::INSERT);
-
         $this->SetParametrsColumn("LangIdentificator");
     }
 

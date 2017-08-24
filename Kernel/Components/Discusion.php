@@ -27,7 +27,7 @@ class Discusion extends UserComponents{
         $this->AutoReplaceString = true;
         $this->InsertJavascriptToContent = true;
         if (empty($this->DiscusionMode))
-            $this->DiscusionMode = DiscusionsMode::$UserMode;
+            $this->DiscusionMode = DiscusionsMode::USERMODE;
         parent::__construct();
     }
     public function GetComponentHtml()
@@ -120,7 +120,7 @@ class Discusion extends UserComponents{
                 if ($this->_canDiscusion)
                 {
                 
-                    if ($this->DiscusionMode == DiscusionsMode::$AdminMode)    
+                    if ($this->DiscusionMode == DiscusionsMode::ADMINMODE)    
                     {
                         $delete = new Link();
                         $delete->Html =$this->GetWord("word487");
@@ -143,21 +143,21 @@ class Discusion extends UserComponents{
                     $historyDiscusionItems->DataTarget="#HistoryDiscusionItem";
                     $historyDiscusionItems->DataToggle="modal";
                     $historyDiscusionItems->OnClick = "ShowHistoryDiscusionItems(".$row["VersionId"].",0); ";
-                    if ($this->DiscusionMode == DiscusionsMode::$AdminMode)    
+                    if ($this->DiscusionMode == DiscusionsMode::ADMINMODE)    
                     {
                         $blockUserDiscusion = new Link();
                         $blockUserDiscusion->Html = $this->GetWord("word491");
                         $blockUserDiscusion->OnClick = "BlockDiscusionUser(".$row["UserId"].")";
                     }
-                    if ($this->DiscusionMode == DiscusionsMode::$AdminMode)
+                    if ($this->DiscusionMode == DiscusionsMode::ADMINMODE)
                         $divControls->Html = $delete->RenderHtml($delete)." ". $edit->RenderHtml($edit)." ".$addReaction->RenderHtml($addReaction)." ".$historyDiscusionItems->RenderHtml($historyDiscusionItems)." ".$blockUserDiscusion->RenderHtml($blockUserDiscusion);
-                    else if ($this->DiscusionMode == DiscusionsMode::$UserMode)
+                    else if ($this->DiscusionMode == DiscusionsMode::USERMODE)
                         $divControls->Html =  $edit->RenderHtml($edit)." ".$addReaction->RenderHtml($addReaction)." ".$historyDiscusionItems->RenderHtml($historyDiscusionItems);
-                    else if ($this->DiscusionMode ==  DiscusionsMode::$AddItems)
+                    else if ($this->DiscusionMode ==  DiscusionsMode::ADDITEMS)
                     {
                         $divControls->Html =  $addReaction->RenderHtml($addReaction);
                     }
-                    else if ($this->DiscusionMode == DiscusionsMode::$ReadOnly)
+                    else if ($this->DiscusionMode == DiscusionsMode::READONLY)
                     {
                         $divControls->Html ="";
                     }

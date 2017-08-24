@@ -79,15 +79,13 @@ class GlobalClass {
 
     /** @var string */
     protected $ArticleUrl;
-
-    /** @var bool */
-    protected $test = false;
-
+    
     /**  @var  \Utils\SessionManager */
     protected static $SessionManager = null;
 
     /** @var array */
     private static $_wordList = array();
+    
 
     public function __construct() {
 

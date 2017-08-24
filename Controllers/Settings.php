@@ -10,7 +10,7 @@ use Types\TableHeader;
 use Model\Langs;
 use Model\AdminLangs;
 use Utils\Files;
-use Types\TableHeaderFiltrType;
+
 use Model\UserDomains;
 use Model\UserDomainsGroups;
 use Model\UserDomainsAddiction;
@@ -53,7 +53,7 @@ class Settings extends SettingsController {
         $data = $cron->Select();
         $colums = array("Id", "CronName");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word857"), "CronName", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word857"), "CronName");
         $table->Header = $header;
         $table->HideColumns = array("Id", "Deleted", "IsSystem", "CronUrl", "IsActive", "IsRun", "RunMode", "LastRun");
         $table->Data = $data;
@@ -77,7 +77,7 @@ class Settings extends SettingsController {
         $data = $webList->Select(array(), false, false, false, null, "UserGroupId = " . self::$UserGroupId, true);
         $colums = array("Id", "WebName");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word74"), "WebName", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word74"), "WebName");
         $table->Header = $header;
         $table->HideColumns = array("Id", "Deleted", "IsSystem", "SmallHeight", "SmallWidth", "MediumHeight", "MediumWidth", "BigHeight", "BigWidth", "UserGroupId", "WebPrivileges", "AdminUserActive", "UserEmailActivate", "EmailUserLogin", "BlockSendEmails", "BlockAdmin", "UseHttps", "WebIpRestrictionAll", "WebIpRestrictionAceptIp", "WebIpRestrictionBlockIp", "WebIpAddress", "AdminIpRestrictionAll", "AdminIpRestrictionAceptIp", "AdminIpRestrictionBlockIp", "AdminIpAddress", "GenerateAjaxLink", "DefaultFramework", "AfterLoginUrl", "AfterLoginAction", "SendInfoEmailToAdmin", "AdminInfoEmail", "AdmiInfoMailId", "SendInfoEmailToUser", "UserInfoEmailFrom", "UserInfoMailId", "CookiesAccept", "RobotsTxt", "SiteMapStart", "SiteMapEnd", "SiteMapItemUrl", "SiteMapItemImage", "SiteMapItemVideo", "SiteMapItemStart", "SiteMapItemEnd");
         $table->Data = $data;
@@ -107,7 +107,7 @@ class Settings extends SettingsController {
         $this->SetLeftMenu("contentMenu", "contentMenuMailing");
         $colums = array("Id", "Email");
         $header = array();
-        $header[] = new TableHeader("Email", "Email", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader("Email", "Email");
         $table = new Table();
         $table->Header = $header;
         $table->HideColumns = array("Id");
@@ -132,7 +132,7 @@ class Settings extends SettingsController {
     public function LangList() {
         $colums = array("Id", "LangName");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word76"), "LangName", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word76"), "LangName");
         $table = new Table();
         $table->Header = $header;
         $table->HideColumns = array("Id");
@@ -154,13 +154,13 @@ class Settings extends SettingsController {
     public function Words() {
         $table = new Table();
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word78"), "GroupName", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word78"), "GroupName");
         $adminLang = AdminLangs::GetInstance();
         $adminLangData = $adminLang->Select();
         $colums = array("Id", "GroupName");
         foreach ($adminLangData as $row) {
             $colums[] = "Word" . $row->LangIdentificator;
-            $header[] = new TableHeader($row->LangName, "Word" . $row->LangIdentificator, TableHeaderFiltrType::$Textbox);
+            $header[] = new TableHeader($row->LangName, "Word" . $row->LangIdentificator);
         }
         $table->Header = $header;
         $table->HideColumns = array("Id");
@@ -180,8 +180,8 @@ class Settings extends SettingsController {
         $table = new Table();
         $colums = array("Id", "LangName", "LangIdentificator");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word80"), "LangName", TableHeaderFiltrType::$Textbox);
-        $header[] = new TableHeader($this->GetWord("word81"), "LangIdentificator", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word80"), "LangName");
+        $header[] = new TableHeader($this->GetWord("word81"), "LangIdentificator");
         $table->Header = $header;
         $table->HideColumns = array("Id");
         $table->ModelName = "AdminLangs";
@@ -201,9 +201,9 @@ class Settings extends SettingsController {
         $table = new Table();
         $colums = array("Id", "ModuleName", "ModuleControler", "ModuleView");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word153"), "ModuleName", TableHeaderFiltrType::$Textbox);
-        $header[] = new TableHeader($this->GetWord("word154"), "ModuleControler", TableHeaderFiltrType::$Textbox);
-        $header[] = new TableHeader($this->GetWord("word155"), "ModuleView", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word153"), "ModuleName");
+        $header[] = new TableHeader($this->GetWord("word154"), "ModuleControler");
+        $header[] = new TableHeader($this->GetWord("word155"), "ModuleView");
         $table->Header = $header;
         $table->HideColumns = array("Id");
         $table->ModelName = "Modules";
@@ -225,8 +225,8 @@ class Settings extends SettingsController {
         $table = new Table();
         $colums = array("Id", "DomainName", "DomainIdentificator");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word189"), "DomainName", TableHeaderFiltrType::$Textbox);
-        $header[] = new TableHeader($this->GetWord("word190"), "DomainIdentificator", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word189"), "DomainName");
+        $header[] = new TableHeader($this->GetWord("word190"), "DomainIdentificator");
         $table->Header = $header;
         $table->HideColumns = array("Id");
         $table->ModelName = "UserDomains";
@@ -255,8 +255,8 @@ class Settings extends SettingsController {
         $table = new Table();
         $colums = array("Id", "ShowName", "Identificator");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word199"), "ShowName", TableHeaderFiltrType::$Textbox);
-        $header[] = new TableHeader($this->GetWord("word200"), "Identificator", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word199"), "ShowName");
+        $header[] = new TableHeader($this->GetWord("word200"), "Identificator");
         $table->Header = $header;
         $table->HideColumns = array("Id");
         $table->ModelName = "UserDomainsItems";
@@ -299,7 +299,7 @@ class Settings extends SettingsController {
         $removeColumns = array();
         foreach ($items as $row) {
             if ($row["ShowOnlyDetail"] == 0) {
-                $header[] = new TableHeader($row["ShowName"], $row["Identificator"], TableHeaderFiltrType::$None);
+                $header[] = new TableHeader($row["ShowName"], $row["Identificator"]);
                 $colums[] = $row["Identificator"];
             } else {
                 $removeColumns[] = $row["Identificator"];
@@ -353,7 +353,7 @@ class Settings extends SettingsController {
         $userDomainGroups = UserDomainsGroups::GetInstance();
         $groups = $userDomainGroups->SelectByCondition("DomainId = $domainid AND Deleted = 0");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word629"), "GroupName", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word629"), "GroupName");
         $table = new Table();
         $table->Header = $header;
         $table->Data = $groups;
@@ -392,7 +392,7 @@ class Settings extends SettingsController {
         $userDomainAddiction = UserDomainsAddiction::GetInstance();
         $addiction = $userDomainAddiction->SelectByCondition("DomainId = $domainid AND Deleted = 0");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word706"), "AddictionName", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word706"), "AddictionName");
         $table = new Table();
         $table->Header = $header;
         $table->Data = $addiction;
@@ -488,7 +488,7 @@ class Settings extends SettingsController {
         $table = new Table();
         $colums = array("Id", "Value");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word722"), "Value", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word722"), "Value");
 
         $table->Header = $header;
         $table->HideColumns = array("Id", "Deleted", "IsSysystem", "DomainItemId");

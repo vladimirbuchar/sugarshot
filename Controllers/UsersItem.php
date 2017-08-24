@@ -7,7 +7,7 @@ use Model\AdminLangs;
 use Components\Table;
 use Model\UserModulesView;
 use Model\WebsList;
-use Types\TableHeaderFiltrType;
+
 
 class UsersItem extends AdminController {
 
@@ -26,10 +26,10 @@ class UsersItem extends AdminController {
         $this->SharedView = "List";
         $colums = array("Id", "UserName", "FirstName", "LastName", "UserEmail",);
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word170"), "WebName", TableHeaderFiltrType::$Textbox);
-        $header[] = new TableHeader($this->GetWord("word171"), "FirstName", TableHeaderFiltrType::$Textbox);
-        $header[] = new TableHeader($this->GetWord("word172"), "LastName", TableHeaderFiltrType::$Textbox);
-        $header[] = new TableHeader($this->GetWord("word173"), "UserEmail", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word170"), "WebName");
+        $header[] = new TableHeader($this->GetWord("word171"), "FirstName");
+        $header[] = new TableHeader($this->GetWord("word172"), "LastName");
+        $header[] = new TableHeader($this->GetWord("word173"), "UserEmail");
         $userGroups = new \Objects\Users();
         $systemUserGroups = $userGroups->GetSystemGroups();
         $noSystemUserGroup = $userGroups->GetNoSystemGroups();
@@ -83,7 +83,7 @@ class UsersItem extends AdminController {
         $this->SharedView = "List";
         $colums = array("Id", "GroupName");
         $header = array();
-        $header[] = new TableHeader($this->GetWord("word164"), "GroupName", TableHeaderFiltrType::$Textbox);
+        $header[] = new TableHeader($this->GetWord("word164"), "GroupName");
         $table = new Table();
         $table->Header = $header;
         $table->AddAction = "AddUserGroup";
