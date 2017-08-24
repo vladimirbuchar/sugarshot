@@ -147,6 +147,10 @@ class  UserComponents extends GlobalClass {
             {
                 $this->RenderHtml =   Files::ReadFile(COMPONENTS_PATH.$fileName);
             }
+            if (Files::FileExists(COMPONENTS_PATH.$this->Type."/". $fileName))
+            {
+                $this->RenderHtml =   Files::ReadFile(COMPONENTS_PATH.$this->Type."/".$fileName);
+            }
             if (Files::FileExists(COMPONENTS_PATH_PLUGINS.$fileName))
             {
                 $this->RenderHtml =  Files::ReadFile(COMPONENTS_PATH_PLUGINS.$fileName);
@@ -170,9 +174,11 @@ class  UserComponents extends GlobalClass {
             $fileName = $this->_itemFileName.".html";
             if (Files::FileExists(COMPONENTS_PATH.$fileName))
             {
-                
                 $this->ItemHtml =   Files::ReadFile(COMPONENTS_PATH.$fileName);
-                
+            }
+            if (Files::FileExists(COMPONENTS_PATH.$this->Type."/".$fileName))
+            {
+                $this->ItemHtml =   Files::ReadFile(COMPONENTS_PATH.$this->Type."/".$fileName);
             }
             if (Files::FileExists(COMPONENTS_PATH_PLUGINS.$fileName))
             {
