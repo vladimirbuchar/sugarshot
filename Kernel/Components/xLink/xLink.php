@@ -45,7 +45,6 @@ class xLink extends UserComponents{
                     $aHref->Id = $this->Id;
                 $aHref->Type="href";
                 $aHref->Html = $this->GetWord($this->Text);
-                //echo $aHref->Html;
                 if (!empty($this->DataTarget))
                 {
                     $aHref->DataTarget = $this->DataTarget;
@@ -62,7 +61,6 @@ class xLink extends UserComponents{
                     return $aHref->RenderHtml($aHref);
                 }
                 $link = $this->Prefix."/".$this->Controller."/".$this->View."/";
-                
                 if (!empty($this->Param1))
                     $link = $link.$this->Param1."/";
                 if (!empty($this->WebId))
@@ -74,7 +72,6 @@ class xLink extends UserComponents{
                 if (!empty($this->Param2))
                     $link = $link.$this->Param2."/";
                 $aHref->Href = $link;
-                
                 return $aHref->RenderHtml($aHref);
             }
         }

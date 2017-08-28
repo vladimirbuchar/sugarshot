@@ -1,14 +1,17 @@
-RewriteEngine on
-#RewriteCond %{HTTPS} off
-# First rewrite to HTTPS:
-# Don't put www. here. If it is already there it will be included, if not
-# the subsequent rule will catch it.
-#RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-# Now, rewrite any request to the wrong domain to use www.
-# [NC] is a case-insensitive match
-#RewriteCond %{HTTP_HOST} !^www\. [NC]
-#RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    <IfModule mod_ssl.c>
+        #RewriteCond %{HTTPS} off
+        # First rewrite to HTTPS:
+        # Don't put www. here. If it is already there it will be included, if not
+        # the subsequent rule will catch it.
+        RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+        # Now, rewrite any request to the wrong domain to use www.
+        # [NC] is a case-insensitive match
+        RewriteCond %{HTTP_HOST} !^www\. [NC]
+        RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    </IfModule>
+ </IfModule>
 #admin login
 
 RewriteRule   xswadmin[\/]  /index.php?Template=AdminNoLogin&View=AdminLogin&Controller=Login
@@ -57,6 +60,9 @@ RewriteRule   runalltimers[\/] /index.php?runalltimers=true [QSA]
 RewriteRule   caching[\/] /index.php?caching=true [QSA]
 RewriteRule   robots.txt /index.php?robots=true
 RewriteRule   sitemap.xml /index.php?sitemap=true
+#ErrorDocument 403 /Utils/adminer-4.3.1.php
+#Order Allow,Deny
+#Allow from 111.222.333.444
 RewriteRule   adminer[\/] /index.php?adminer=true [QSA] 
 
 # frontend  

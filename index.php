@@ -1,6 +1,8 @@
 <?php
 
 try {
+     error_reporting(E_ALL);
+    ini_set('display_errors', 'On');
     session_start();
     $now = time();
     if (!empty($_SESSION["expired"])) {
@@ -15,6 +17,7 @@ try {
         session_destroy();
         session_start();
     }
+    
     $_SESSION["expired"] = $now + 900;
     include './autoload.php';
     include_once './settings_global.php';
@@ -44,6 +47,7 @@ try {
     $robots = (!empty($_GET["robots"])) ? true : false;
     $sitemap = (!empty($_GET["sitemap"])) ? true : false;
     $adminer = (!empty($_GET["adminer"])&& !empty($_GET["security"]) && $_GET["security"] == SECURITY_STRING) ? true : false;
+    
     if ($updatemodel) {
 
         $options = array(

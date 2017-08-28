@@ -181,7 +181,7 @@ class UsersItemApi extends ApiController {
         if (empty($ajaxParametrs))
             return;
         $user = UserGroups::GetInstance();
-        $user->GetObjectById(self::$UserGroupId,true,array("UserDefaultState"));
+        $user->GetObjectById(self::$UserGroupId, true, array("UserDefaultState"));
         $state = $user->UserDefaultState;
         if (empty($state))
             return "";

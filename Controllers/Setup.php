@@ -11,17 +11,19 @@ class Setup extends PageController {
     }
 
     public function Setup() {
-
+        
+        $this->SetTemplateData("NormalPage", true);
+        $this->SetTemplateData("pageHeader", "");
+        $this->SetTemplateData("pageHtml", "");
+        $pageHtml = "";
         $this->SetStateTitle($this->GetWord("word887"));
         if (!\Utils\Folders::FolderExists(LOG_PATH)) {
             \Utils\Folders::CreateFolder(ROOT_PATH, "Log");
         }
-
-
+        
         if (!\Utils\Folders::FolderExists(TEMP_PATH)) {
             \Utils\Folders::CreateFolder(ROOT_PATH, "Temp");
         }
-
 
         if (!\Utils\Folders::FolderExists(TEMP_EXPORT_PATH)) {
             \Utils\Folders::CreateFolder(TEMP_PATH, "Export");
@@ -46,23 +48,28 @@ class Setup extends PageController {
         if (!\Utils\Folders::FolderExists(PDF_TEMPLATES_PATH)) {
             \Utils\Folders::CreateFolder(RES_PATH, "PDFTemplates");
         }
+        
         if (!$this->isSetupExtensions("zip")) {
-            echo "Install zip - sudo apt-get install php-zip;sudo service apache2 restart;";
+            $pageHtml.=  "Install zip - sudo apt-get install php-zip;sudo service apache2 restart; <br />";
         }
+        
         if (!$this->isSetupExtensions("mbstring")) {
-            echo "Install mbstring - sudo apt-get install php7.0-mbstring;service apache2 restart;";
+            $pageHtml.= "Install mbstring - sudo apt-get install php7.0-mbstring;service apache2 restart; <br />";
         }
+        
         if (!$this->isSetupExtensions("SimpleXML")) {
-            echo "Install xml - sudo apt-get install php7.0-xml;service apache2 restart;";
+            $pageHtml.= "Install xml - sudo apt-get install php7.0-xml;service apache2 restart; <br />";
         }
 
         if (!$this->isSetupExtensions("gd")) {
-            echo "Install gd - sudo apt-get install php-gd;service apache2 restart;";
+            $pageHtml.= "Install gd - sudo apt-get install php-gd;service apache2 restart; <br />";
         }
         
         if (!$this->isSetupExtensions("gd2")) {
-            echo "Install gd2 - sudo apt-get install php-gd2;service apache2 restart;";
+            $pageHtml.= "Install gd2 - sudo apt-get install php-gd2;service apache2 restart; <br />";
         }
+        $this->SetTemplateData("pageHtml", $pageHtml);
+        
     }
 
     private function isSetupExtensions($extensionsName) {

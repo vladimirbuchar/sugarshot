@@ -1,5 +1,7 @@
 <?php
+
 namespace Controller;
+
 use Model\Langs;
 use Utils\ArrayUtils;
 use Model\MailingContacts;
@@ -221,7 +223,7 @@ class WebEditApi extends ApiController {
 
         $id = $_POST["params"];
         $lang = Langs::GetInstance();
-        $lang->GetObjectById($this->LangId,true,array("RootUrl"));
+        $lang->GetObjectById($this->LangId, true, array("RootUrl"));
         $content = new \Objects\Content();
         $detail = $content->GetUserItemDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
         return $lang->RootUrl . "preview/" . $detail[0]["SeoUrl"] . "/";
@@ -553,7 +555,7 @@ class WebEditApi extends ApiController {
     }
 
     public function CreateTree($search = "") {
-        return \Utils\TreeUtils::CreateTree(self::$User->GetUserGroupId(), $this->LangId,$search);
+        return \Utils\TreeUtils::CreateTree(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 
     public function DeleteTemplate() {
@@ -738,7 +740,6 @@ class WebEditApi extends ApiController {
         $data = $ajaxParametrs["Parametrs"];
         if ($id == 0) {
             $id = $content->CreateFile($ajaxParametrs["Name"], $_GET["langid"], $_GET["param1"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $privileges, $data);
-            
         } else {
             $id = $content->UpdateFile($id, $ajaxParametrs["Name"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $privileges, $data);
         }
@@ -844,30 +845,37 @@ class WebEditApi extends ApiController {
         $content = new \Objects\Content();
         $content->UpdateFormStatisticItem($ajaxParametrs["Id"], $ajaxParametrs["ItemId"], $ajaxParametrs["ItemValue"]);
     }
+
     public function CreateTreeDiscusion($search = "") {
         return \Utils\TreeUtils::CreateTreeDiscusion(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
+
     public function CreateTreeInqury($search = "") {
         return \Utils\TreeUtils::CreateTreeInqury(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
-        public function CreateTreeDataSource($search = "") {
+
+    public function CreateTreeDataSource($search = "") {
         return \Utils\TreeUtils::CreateTreeDataSource(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
-    
+
     public function CreateTreeMailing($search = "") {
         return \Utils\TreeUtils::CreateTreeMailing(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
+
     public function CreateTreeMail($search = "") {
         return \Utils\TreeUtils::CreateTreeMail(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
+
     public function CreateTreeForms($search = "") {
         return \Utils\TreeUtils::CreateTreeForms(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
+
     public function CreateTreeJs($search = "") {
         return \Utils\TreeUtils::CreateTreeJs(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
-    
-        public function CreateTreeCss($search = "") {
+
+    public function CreateTreeCss($search = "") {
         return \Utils\TreeUtils::CreateTreeCss(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
+
 }

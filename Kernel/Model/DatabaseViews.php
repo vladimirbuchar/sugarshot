@@ -74,13 +74,15 @@ class DatabaseViews extends SqlDatabase {
         $sql_mode = "";
         try {
             $sql_mode = $this->GetSqlVariable("sql_mode");
-            $this->SetSqlVariable("sql_mode", "");
+            if (!empty($sql_mode))
+                $this->SetSqlVariable("sql_mode", "");
             dibi::query("TRUNCATE TABLE " . $this->ObjectName . "_materialized");
             dibi::query("INSERT INTO  " . $this->ObjectName . "_materialized SELECT * FROM " . strtoupper($this->ObjectName));
         } catch (Exception $ex) {
             \Kernel\Page::ApplicationError($ex);
         } finally {
-            $this->SetSqlVariable("sql_mode", $sql_mode);
+            if (!empty($sql_mode))
+                $this->SetSqlVariable("sql_mode", $sql_mode);
         }
     }
 

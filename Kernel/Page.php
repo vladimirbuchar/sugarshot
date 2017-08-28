@@ -12,11 +12,6 @@ use Utils\Folders;
 
 /** hlavní třída, která se volá jako první z indexu */
 class Page {
-
-    /** $controllerName - jméno použitého controlleru
-     * $viewName - použité view
-     * $templateName - templata
-     */
     private static $_componentsScript;
     private static $_componentCss;
     private static $_emptyComponents;
@@ -24,8 +19,7 @@ class Page {
     public static $MoveJsToHeader = true;
     private static $_words = array();
 
-    /**  */
-    //endregion
+
     public static function PageLoad($controllerName, $viewName, $templateName) {
         try {
             // pokud je nějaká hodnota prázdná zkusíme nastavit defaultuní
@@ -103,7 +97,6 @@ class Page {
             }
         } catch (Exception $ex) {
             Page::ApplicationError($ex);
-            
         }
     }
 
@@ -122,12 +115,12 @@ class Page {
         $templatepPath = TEMPLATE_PATH . $templateName . ".html";
         $templateSystem = null;
 
-        if (self::IsSmarty()) {
-            $templateSystem = new Smarty();
-            $templateSystem->left_delimiter = '<!--{';
-            $templateSystem->right_delimiter = '}-->';
-            $templateSystem->cache_lifetime = 600;
-        }
+
+        $templateSystem = new Smarty();
+        $templateSystem->left_delimiter = '<!--{';
+        $templateSystem->right_delimiter = '}-->';
+        $templateSystem->cache_lifetime = 600;
+
 
 
         $html = "";
@@ -235,23 +228,23 @@ class Page {
                 $templateData["LangId"] = $_GET["langid"];
             else
                 $templateData["LangId"] = 0;
-            if (self::IsSmarty()) {
 
 
-                if (!empty($templateData)) {
-                    if (!empty($controller->SharedView)) {
 
-                        $templateData["stateName"] = VIEWS_PATH . TEMPLATEMODE . "/Shared/" . $controller->SharedView . ".html";
-                        if (Files::FileExists(ROOT_PATH . "Scripts/ViewScripts/$controller->SharedView.js"))
-                            $controller->AddScript("/Scripts/ViewScripts/$controller->SharedView.js");
-                    }
+            if (!empty($templateData)) {
+                if (!empty($controller->SharedView)) {
 
-                    foreach ($templateData as $key => $value) {
-                        $templateSystem->assign($key, $value, false);
-                    }
+                    $templateData["stateName"] = VIEWS_PATH . TEMPLATEMODE . "/Shared/" . $controller->SharedView . ".html";
+                    if (Files::FileExists(ROOT_PATH . "Scripts/ViewScripts/$controller->SharedView.js"))
+                        $controller->AddScript("/Scripts/ViewScripts/$controller->SharedView.js");
                 }
-                $html = $templateSystem->fetch($templatepPath);
+
+                foreach ($templateData as $key => $value) {
+                    $templateSystem->assign($key, $value, false);
+                }
             }
+            $html = $templateSystem->fetch($templatepPath);
+
 
             // zobrazení stránky
             if (!Page::NoRenderComponentState($controllerName, $viewName)) {
@@ -335,13 +328,12 @@ class Page {
                 $html = self::CallTemplateFunction($html);
                 $html = preg_replace('({[A-Za-z0-9\-]*})', "", $html);
                 $html = preg_replace('/<!--(.*)-->/Uis', '', $html);
-                $html = self::CompressString($html);
+                
             }
         }
         $html = str_replace("http://", SERVER_PROTOCOL, $html);
-        if (self::IsSmarty()) {
-            $templateSystem->display('string:' . $html);
-        }
+
+        $templateSystem->display('string:' . $html);
     }
 
     private static function CheckPermintionController($controler) {
@@ -445,71 +437,70 @@ class Page {
     }
 
     public static function StartUpdateModel($upadateModel = false) {
-        
-
-            // nejdříve zkontrolujeme a případně upteneme model
-            if ((UPDATE_MODEL || !empty($_GET["updatemodel"]) || $upadateModel) && Page::IsDeveloperIp()) {
 
 
-                // tabulky
-                $folderContent = Folders::GetObjectsInFolder(MODEL_PATH, true);
-                $folderContent = \Utils\ArrayUtils::GetColumnsvalue($folderContent, "Name");
-                $folderContent2 = Folders::GetObjectsInFolder(MODEL_PATH_PLUGINS, true);
-                $folderContent2 = \Utils\ArrayUtils::GetColumnsvalue($folderContent2, "Name");
-                $folderContent = array_merge($folderContent, $folderContent2);
-
-                $modelPriority = array();
-                $modelPriority[] = "ContentSecurity.php";
-                $modelPriority[] = "ObjectHistory.php";
-                $modelPriority[] = "UserGroups.php";
-                $modelPriority[] = "Users.php";
-                $modelPriority[] = "UsersInGroup.php";
-                $modelPriority[] = "UserGroupsModules.php";
-                $modelPriority[] = "Modules.php";
-                $modelPriority[] = "ContentConnection.php";
-                $modelPriority[] = "AdminLangs.php";
-                $modelPriority[] = "WordGroups.php";
-
-                $folderContent = array_merge($modelPriority, $folderContent);
+        // nejdříve zkontrolujeme a případně upteneme model
+        if ((UPDATE_MODEL || !empty($_GET["updatemodel"]) || $upadateModel) && Page::IsDeveloperIp()) {
 
 
-                $folderContent = array_unique($folderContent);
-                $folderContent = array_values($folderContent);
-                Page::UpdateModel($folderContent);
-                // views
-                $folderContentViewPriority = array();
-                $folderContentViewPriority[] = "FrontendDetailPreview.php";
-                $folderContentView = Folders::GetObjectsInFolder(MODEL_VIEWS_PATH, true);
-                $folderContentView = \Utils\ArrayUtils::GetColumnsvalue($folderContentView, "Name");
-                $folderContentView2 = Folders::GetObjectsInFolder(MODEL_VIEWS_PATH_PLUGINS, true);
-                $folderContentView2 = \Utils\ArrayUtils::GetColumnsvalue($folderContentView2, "Name");
-                $folderContentView = array_merge($folderContentView, $folderContentView2);
-                $folderContentView = array_merge($folderContentViewPriority, $folderContentView);
-                $folderContentView = array_unique($folderContentView);
-                $folderContentView = array_values($folderContentView);
-                Page::CreateViews($folderContentView);
+            // tabulky
+            $folderContent = Folders::GetObjectsInFolder(MODEL_PATH, true);
+            $folderContent = \Utils\ArrayUtils::GetColumnsvalue($folderContent, "Name");
+            $folderContent2 = Folders::GetObjectsInFolder(MODEL_PATH_PLUGINS, true);
+            $folderContent2 = \Utils\ArrayUtils::GetColumnsvalue($folderContent2, "Name");
+            $folderContent = array_merge($folderContent, $folderContent2);
 
-                //functions
-                $folderContentFunction = Folders::GetObjectsInFolder(MODEL_FUNCTIONS_PATH, true);
-                $folderContentFunction2 = Folders::GetObjectsInFolder(MODEL_FUNCTIONS_PATH_PLUGINS, true);
-                $folderContentFunction2 = \Utils\ArrayUtils::GetColumnsvalue($folderContentFunction2, "Name");
-                $folderContentFunction = \Utils\ArrayUtils::GetColumnsvalue($folderContentFunction, "Name");
-                $folderContentFunction = array_merge($folderContentFunction, $folderContentFunction2);
-                Page::CreateFunction($folderContentFunction);
-            }
-        
+            $modelPriority = array();
+            $modelPriority[] = "ContentSecurity.php";
+            $modelPriority[] = "ObjectHistory.php";
+            $modelPriority[] = "UserGroups.php";
+            $modelPriority[] = "Users.php";
+            $modelPriority[] = "UsersInGroup.php";
+            $modelPriority[] = "UserGroupsModules.php";
+            $modelPriority[] = "Modules.php";
+            $modelPriority[] = "ContentConnection.php";
+            $modelPriority[] = "AdminLangs.php";
+            $modelPriority[] = "WordGroups.php";
+
+            $folderContent = array_merge($modelPriority, $folderContent);
+
+
+            $folderContent = array_unique($folderContent);
+            $folderContent = array_values($folderContent);
+            Page::UpdateModel($folderContent);
+            // views
+            $folderContentViewPriority = array();
+            $folderContentViewPriority[] = "FrontendDetailPreview.php";
+            $folderContentView = Folders::GetObjectsInFolder(MODEL_VIEWS_PATH, true);
+            $folderContentView = \Utils\ArrayUtils::GetColumnsvalue($folderContentView, "Name");
+            $folderContentView2 = Folders::GetObjectsInFolder(MODEL_VIEWS_PATH_PLUGINS, true);
+            $folderContentView2 = \Utils\ArrayUtils::GetColumnsvalue($folderContentView2, "Name");
+            $folderContentView = array_merge($folderContentView, $folderContentView2);
+            $folderContentView = array_merge($folderContentViewPriority, $folderContentView);
+            $folderContentView = array_unique($folderContentView);
+            $folderContentView = array_values($folderContentView);
+            Page::CreateViews($folderContentView);
+
+            //functions
+            $folderContentFunction = Folders::GetObjectsInFolder(MODEL_FUNCTIONS_PATH, true);
+            $folderContentFunction2 = Folders::GetObjectsInFolder(MODEL_FUNCTIONS_PATH_PLUGINS, true);
+            $folderContentFunction2 = \Utils\ArrayUtils::GetColumnsvalue($folderContentFunction2, "Name");
+            $folderContentFunction = \Utils\ArrayUtils::GetColumnsvalue($folderContentFunction, "Name");
+            $folderContentFunction = array_merge($folderContentFunction, $folderContentFunction2);
+            Page::CreateFunction($folderContentFunction);
+        }
     }
 
     public static function LoadCss() {
         header("Content-type: text/css");
         $content = new \Objects\Content();
-        return self::CompressString($content->GetFrontendCss($_GET["id"], $_GET["langId"]));
+        return $content->GetFrontendCss($_GET["id"], $_GET["langId"]);
     }
 
     public static function LoadJs() {
         header("Content-type: text/javascript");
         $content = new \Objects\Content();
-        return self::CompressString($content->GetFrontendJs($_GET["id"], $_GET["langId"]));
+        return $content->GetFrontendJs($_GET["id"], $_GET["langId"]);
     }
 
     public static function LoadXml() {
@@ -570,11 +561,10 @@ class Page {
 
     public static function RunAllTimers() {
         $timers = Folders::GetObjectsInFolder(TIMERS_PATH, true, true);
-        
     }
 
     private static function NoRenderComponentState($controller, $viewName) {
-        return  ($controller == "WebEdit" && $viewName == "TemplateDetail");
+        return ($controller == "WebEdit" && $viewName == "TemplateDetail");
     }
 
     public static function RenderXWebComponent($inHtml) {
@@ -684,15 +674,14 @@ class Page {
         }
     }
 
-    private static function IsSmarty() {
-        return TEMPLATEMODE == "Smarty";
-    }
-
-    public static function CompressString($html) {
+    /* private static function IsSmarty() {
+      return TEMPLATEMODE == "Smarty";
+      } */
+/*    public static function CompressString($html) {
         $html = preg_replace('/\s+/', ' ', $html);
         $html = preg_replace('/> </', '><', $html);
         return $html;
-    }
+    }*/
 
     public static function SetLongRequestParam($name, $value) {
         $params = array();
@@ -728,7 +717,7 @@ class Page {
         } else {
             $out = $cache->SelectByCondition("SeoUrl = '$url' ", "", array("HtmlCache"));
         }
-        return empty($out) ? "" :$out[0]["HtmlCache"];
+        return empty($out) ? "" : $out[0]["HtmlCache"];
     }
 
     public static function IsLocalHost() {
@@ -739,7 +728,9 @@ class Page {
         if (self::IsLocalHost() && Files::FileExists(ROOT_PATH . "settings_localhost.php")) {
             include_once ROOT_PATH . "settings_localhost.php";
         }
+
         $serverUrl = SERVER_NAME;
+
         $serverUrl = StringUtils::RemoveString(SERVER_NAME, SERVER_PROTOCOL);
         $ar = explode(".", $serverUrl);
         if (count($ar) > 0) {
@@ -762,8 +753,7 @@ class Page {
     }
 
     public static function GetIframeHtml($key) {
-        $iframe =  $_SESSION["iframe_$key"];
-        //unset($_SESSION["iframe_$key"]);
+        $iframe = $_SESSION["iframe_$key"];
         return $iframe;
     }
 

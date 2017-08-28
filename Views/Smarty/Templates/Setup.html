@@ -1,3 +1,4 @@
+<!--{if $NormalPage}-->
 <!DOCTYPE html>
 
 <html>
@@ -62,7 +63,7 @@
          <!--{foreach from=$scripts key=keyout item=itemout}-->
             <script type="text/javascript" src="<!--{$itemout}-->?version={VERSION}" ></script>
          <!--{/foreach}-->
-         <!--{$LeftMenuSettings}-->
+         
          <script type="text/javascript">
              setInterval(function(){
                  var isLogged = CallPhpFunctionAjax("Templates","IsLoginUser","POST",null);
@@ -112,7 +113,7 @@
             <div class="navbar-header">
                  
                 <a class="navbar-brand"><!--{$word70}--></a>
-                <span class="navbar-brand"><!--{$UserName}--> </span>
+                <span class="navbar-brand"> </span>
                 
                     <div class="navbar-brand">
                     <select id="userLang" class="form-control langSelectTop">
@@ -198,3 +199,4 @@
         
     </body>
 </html>
+<!--{/if}-->

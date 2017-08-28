@@ -41,11 +41,7 @@ class Controllers extends GlobalClass {
     }
 
     protected function GetControllerName() {
-
-        if (empty($_GET["Controller"])) {
-            return DEFAULT_CONTROLER_NAME;
-        }
-        return $_GET["Controller"];
+        return empty($_GET["Controller"]) ? DEFAULT_CONTROLER_NAME :$_GET["Controller"];
     }
 
     protected function SetControllerPermition($settings) {

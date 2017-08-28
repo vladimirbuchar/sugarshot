@@ -1398,7 +1398,7 @@ class Content extends ObjectManager {
             }
             $outXml .= $xmlEnd;
             $outXml = preg_replace('({[A-Za-z0-9\-]*})', "", $outXml);
-            $outXml = \Kernel\Page::CompressString($outXml);
+          //  $outXml = \Kernel\Page::CompressString($outXml);
             $outXml = str_replace("><", ">\n<", $outXml);
             $outXml = preg_replace('/^[ \t]*[\r\n]+/m', '', $outXml);
 

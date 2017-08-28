@@ -1,5 +1,4 @@
 <?php 
-include_once './Kernel/ExternalApi/PHPExcel.php';
 include_once './vendor/autoload.php';
 include_once './vendor/phpmailer/phpmailer/PHPMailerAutoload.php';
 spl_autoload_register('xAutoLoader');

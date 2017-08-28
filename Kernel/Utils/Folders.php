@@ -16,6 +16,8 @@ class Folders {
      */
     public static function GetObjectsInFolder($path, $onlyFile = false, $firstLevel = true) {
 
+        if (!file_exists($path))
+            return array();
         $folders = scandir($path);
         $out = array();
         $child = array();
@@ -37,7 +39,7 @@ class Folders {
                 $out[$x]["Childs"] = $child;
             $x++;
         }
-
+ 
         return $out;
     }
 
@@ -46,6 +48,7 @@ class Folders {
     }
 
     public static function CreateFolder($path, $name, $security = 0777) {
+        echo $name;
         mkdir($path . $name);
         chmod($path . $name, $security);
     }
