@@ -23,9 +23,6 @@ try {
     include_once './settings_global.php';
     \Kernel\Page::GetConfigByDomain();
     include_once './settings.php';
-
-
-
     $ajaxMode = (!empty($_GET["ajax"]) || !empty($_POST["ajax"])) ? true : false;
     $fileUpload = (!empty($_GET["fileUpload"]) || !empty($_POST["fileUpload"])) ? true : false;
     $iscss = (!empty($_GET["css"]) || !empty($_POST["css"])) ? true : false;
@@ -47,6 +44,7 @@ try {
     $robots = (!empty($_GET["robots"])) ? true : false;
     $sitemap = (!empty($_GET["sitemap"])) ? true : false;
     $adminer = (!empty($_GET["adminer"])&& !empty($_GET["security"]) && $_GET["security"] == SECURITY_STRING) ? true : false;
+    $getmyip = (!empty($_GET["getmyip"])&& !empty($_GET["security"]) && $_GET["security"] == SECURITY_STRING) ? true : false;
     
     if ($updatemodel) {
 
@@ -80,6 +78,10 @@ try {
     if ($adminer && Kernel\Page::IsDeveloperIp())
     {
         header('Location: /Utils/adminer-4.3.1.php');
+    }
+    if ($getmyip)
+    {
+        echo \Utils\Utils::GetIp();
     }
 
     if ($updatemodel) {

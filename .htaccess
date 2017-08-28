@@ -60,10 +60,8 @@ RewriteRule   runalltimers[\/] /index.php?runalltimers=true [QSA]
 RewriteRule   caching[\/] /index.php?caching=true [QSA]
 RewriteRule   robots.txt /index.php?robots=true
 RewriteRule   sitemap.xml /index.php?sitemap=true
-#ErrorDocument 403 /Utils/adminer-4.3.1.php
-#Order Allow,Deny
-#Allow from 111.222.333.444
 RewriteRule   adminer[\/] /index.php?adminer=true [QSA] 
+RewriteRule   getmyip[\/] /index.php?getmyip=true [QSA] 
 
 # frontend  
 #with lang 
