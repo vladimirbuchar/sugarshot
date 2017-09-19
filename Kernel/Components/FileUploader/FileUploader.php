@@ -6,7 +6,7 @@ use HtmlComponents\HiddenInput;
 use HtmlComponents\FileUpload;
 use HtmlComponents\Button;
 use HtmlComponents\FontAwesome;
-class FileUploader extends UserComponents{
+class FileUploader extends UserComponents implements \Inteface\iComponent{
     
     public $Id;
     private $_filePath;

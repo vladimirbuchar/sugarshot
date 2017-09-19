@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class Slider extends UserComponents{
+class Slider extends UserComponents implements \Inteface\iComponent{
     
     
     public function __construct() {

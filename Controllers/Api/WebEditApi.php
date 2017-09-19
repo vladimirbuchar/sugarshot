@@ -97,10 +97,7 @@ class WebEditApi extends ApiController {
         return $dialogHtml;
     }
 
-    public function SaveDiscusion() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveDiscusion($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
@@ -112,10 +109,7 @@ class WebEditApi extends ApiController {
         }
     }
 
-    public function CreateWebLink() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-
-
+    public function CreateWebLink($ajaxParametrs) {
         $content = new \Objects\Content();
         $linkId = empty($ajaxParametrs["LinkId"]) ? 0 : $ajaxParametrs["LinkId"];
         $objectLinkId = empty($ajaxParametrs["ObjectLinkId"]) ? 0 : $ajaxParametrs["ObjectLinkId"];
@@ -132,8 +126,7 @@ class WebEditApi extends ApiController {
         return $content->CreateLink($ajaxParametrs["Type"], $ajaxParametrs["ParentId"], $linkId, $linkInfo, $objectLinkId, $arrayPreparedPrivileges);
     }
 
-    public function GetSeoUrlById() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
+    public function GetSeoUrlById($ajaxParametrs) {
         $content = new \Objects\Content();
         $data = $content->GetUserItemDetail($ajaxParametrs["Id"], self::$UserGroupId, $this->WebId, $this->LangId);
         $seoUrl = $data[0]["SeoUrl"];
@@ -142,9 +135,7 @@ class WebEditApi extends ApiController {
         return $seoUrl;
     }
 
-    public function RecoveryItem() {
-        $ajaxParametrs = array();
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
+    public function RecoveryItem($ajaxParametrs) {
         $id = $ajaxParametrs["Id"];
         $content = new \Objects\Content();
         $content->RecoveryItem($id);
@@ -154,9 +145,12 @@ class WebEditApi extends ApiController {
         self::$SessionManager->SetSessionValue("lastEditLang", $this->LangId);
     }
 
-    public function ReSendMails() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
+    public function ReSendMails($ajaxParametrs) {
+        if (empty($ajaxParametrs))
+            return;
         $mailsid = $ajaxParametrs["Mails"];
+        if (empty($mailsid))
+            return;
         $mail = new \Utils\Mail();
         foreach ($mailsid as $mailid) {
             if (!empty($mailid))
@@ -164,12 +158,8 @@ class WebEditApi extends ApiController {
         }
     }
 
-    public function GetActualTree() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetActualTree($ajaxParametrs) {
         $type = $ajaxParametrs["Type"];
-
         $search = "";
         if (!empty($ajaxParametrs["Search"])) {
             $search = $ajaxParametrs["Search"];
@@ -219,9 +209,9 @@ class WebEditApi extends ApiController {
         return $html;
     }
 
-    public function GetArticleUrl() {
+    public function GetArticleUrl($param) {
 
-        $id = $_POST["params"];
+        $id = $param["ObjectId"];
         $lang = Langs::GetInstance();
         $lang->GetObjectById($this->LangId, true, array("RootUrl"));
         $content = new \Objects\Content();
@@ -229,10 +219,7 @@ class WebEditApi extends ApiController {
         return $lang->RootUrl . "preview/" . $detail[0]["SeoUrl"] . "/";
     }
 
-    public function MoveItemFolder() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function MoveItemFolder($ajaxParametrs) {
         /** @var \Model\ContentVersion */
         $content = new \Objects\Content();
         $mode = $ajaxParametrs["Mode"];
@@ -241,8 +228,8 @@ class WebEditApi extends ApiController {
         $content->SetPosition($id, $mode, $contentType);
     }
 
-    public function GetLinkDetail() {
-        $id = $_GET["params"];
+    public function GetLinkDetail($ajax) {
+        $id = $ajax["id"];
         $content = new \Objects\Content();
         $res = $content->GetLinkDetail($id, $this->WebId, $this->LangId);
         $xml = $res[0]["Data"];
@@ -253,8 +240,8 @@ class WebEditApi extends ApiController {
         return $ar;
     }
 
-    public function PublishItem() {
-        $id = $_POST["params"];
+    public function PublishItem($param) {
+        $id = $param["id"];
         $content = new \Objects\Content();
         return $content->PublishItem($id, $this->LangId) ? "true" : "false";
     }
@@ -274,10 +261,7 @@ class WebEditApi extends ApiController {
         return $dialogLink->LoadComponent();
     }
 
-    public function SaveMailing() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveMailing($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
@@ -291,19 +275,13 @@ class WebEditApi extends ApiController {
         return $id;
     }
 
-    public function DeteleteMailing() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DeteleteMailing($ajaxParametrs) {
         $id = empty($ajaxParametrs["Id"]) ? 0 : $ajaxParametrs["Id"];
         $mailinig = MailingContacts::GetInstance();
         $mailinig->DeleteObject($id);
     }
 
-    public function SendMailing() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SendMailing($ajaxParametrs) {
         $id = $ajaxParametrs["ObjectId"];
         $emailid = $ajaxParametrs["Email"];
         $mailingGroupId = $ajaxParametrs["MailingGroup"];
@@ -312,11 +290,7 @@ class WebEditApi extends ApiController {
         $mailing->SendMailing($id, self::$UserGroupId, $this->WebId, $this->LangId, $emailid, $mailingGroupId, $from);
     }
 
-    public function SaveDataSource() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs)) {
-            return;
-        }
+    public function SaveDataSource($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
@@ -329,9 +303,9 @@ class WebEditApi extends ApiController {
         return $id;
     }
 
-    public function GetDomainColumns() {
+    public function GetDomainColumns($param) {
         $ui = new \Objects\UserDomains();
-        return $ui->GetUserDomainItemById($_GET["params"]);
+        return $ui->GetUserDomainItemById($param["domainId"]);
     }
 
     public function GetReletedArticle() {
@@ -358,9 +332,9 @@ class WebEditApi extends ApiController {
         return $dialogHtml;
     }
 
-    public function GetSelectedObjectName() {
+    public function GetSelectedObjectName($param) {
         $content = new \Objects\Content();
-        return $content->GetNameObject($_POST["params"], $this->LangId);
+        return $content->GetNameObject($param["SelectedObject"], $this->LangId);
     }
 
     public function GetObjectsXml() {
@@ -373,42 +347,38 @@ class WebEditApi extends ApiController {
         return $dialogHtml;
     }
 
-    public function GetDomainIdByUserItemId() {
+    public function GetDomainIdByUserItemId($param) {
         $content = new \Objects\Content();
-        return $content->GetUserItemDomainId($_POST["params"]);
+        return $content->GetUserItemDomainId($param["ObjectIdConnection"]);
     }
 
-    public function GetDomainItems() {
-        $domainId = $_GET["params"];
+    public function GetDomainItems($param) {
+        $domainId = $param["domainValue"];
         $udi = new \Objects\UserDomains();
         $res = $udi->GetUserDomainItemById($domainId);
         return $res;
     }
 
-    public function CallDataSourceImport() {
+    public function CallDataSourceImport($param) {
         $content = new \Objects\Content();
         $data = array();
         $rootUrl = $this->GetRoorUrl();
-        $data = $content->GetDataSourceDetail($_POST["params"], self::$UserGroupId, $this->WebId, $this->LangId);
+        $data = $content->GetDataSourceDetail($param["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId);
         $rootUrl = $rootUrl . "xmlimport/";
         $url = $rootUrl . $data[0]["SeoUrl"] . "/";
         $this->CallUrl($url, "?login=system&pswrd=sd15kl20");
     }
 
-    public function CallDataSourceExport() {
+    public function CallDataSourceExport($param) {
         $content = new \Objects\Content();
-        $data = $content->GetDataSourceDetail($_POST["params"], self::$UserGroupId, $this->WebId, $this->LangId);
+        $data = $content->GetDataSourceDetail($param["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId);
         $rooturl = $this->GetRoorUrl() . "xmldownload/";
         return $rooturl . $data[0]["SeoUrl"] . ".xml";
     }
 
-    public function GetObjectData() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetObjectData($ajaxParametrs) {
         $type = $ajaxParametrs["Type"];
         $id = $ajaxParametrs["Id"];
-
         $content = new \Objects\Content();
         $data = array();
         switch ($type) {
@@ -450,16 +420,13 @@ class WebEditApi extends ApiController {
         return $data;
     }
 
-    public function GenerateXmlItem() {
+    public function GenerateXmlItem($param) {
         $content = new \Objects\Content();
-        $data = $content->GenerateXmlItem($_GET["params"], $this->LangId, self::$UserGroupId, $this->WebId);
+        $data = $content->GenerateXmlItem($param["ObjectId"], $this->LangId, self::$UserGroupId, $this->WebId);
         return array("XML" => $data);
     }
 
-    public function SaveIquery() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs($_POST["params"]);
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveIquery($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
@@ -471,10 +438,7 @@ class WebEditApi extends ApiController {
         return $id;
     }
 
-    public function AddAlternativeItem() {
-        $params = $this->PrepareAjaxParametrs();
-        if (empty($params))
-            return;
+    public function AddAlternativeItem($params) {
         $objectId = $params["ObjectId"];
         $userGroup = $params["UserGroup"];
         $alternativeItemId = $params["AlternativeItem"];
@@ -482,24 +446,24 @@ class WebEditApi extends ApiController {
         $alternativeItem->SaveAlternativeItem($objectId, $userGroup, $alternativeItemId);
     }
 
-    public function GetAlternativeItem() {
+    public function GetAlternativeItem($param) {
         $content = new \Objects\Content();
-        return $content->GetAlternativeItems($_GET["params"], $this->LangId);
+        return $content->GetAlternativeItems($param["ObjectId"], $this->LangId);
     }
 
-    public function CheckFile() {
+    public function CheckFile($param) {
 
         $content = new \Objects\Content();
         $data = array();
         $rootUrl = $this->GetRoorUrl();
-        $data = $content->GetDataSourceDetail($_POST["params"], self::$UserGroupId, $this->WebId, $this->LangId);
+        $data = $content->GetDataSourceDetail($param["ObjectId"], self::$UserGroupId, $this->WebId, $this->LangId);
         $rootUrl = $rootUrl . "checkxmlimport/";
         $url = $rootUrl . $data[0]["SeoUrl"] . "/";
         $this->CallUrl($url);
     }
 
-    public function GetFormItemDetail() {
-        $id = $_GET["params"];
+    public function GetFormItemDetail($param) {
+        $id = $param["id"];
         $form = new \Utils\Forms();
         return $form->GetFormItemDetail($id);
     }
@@ -532,16 +496,13 @@ class WebEditApi extends ApiController {
         return $dialogLink->LoadComponent();
     }
 
-    public function DeleteAlternativeItems() {
-        $id = $_GET["params"];
+    public function DeleteAlternativeItems($param) {
+        $id = $param["id"];
         $contentAlernative = ContentAlternative::GetInstance();
         $contentAlernative->DeleteObject($id, true, false);
     }
 
     public function SaveTemplate($ajaxParametrs) {
-        if (empty($ajaxParametrs))
-            return;
-
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
@@ -558,19 +519,13 @@ class WebEditApi extends ApiController {
         return \Utils\TreeUtils::CreateTree(self::$User->GetUserGroupId(), $this->LangId, $search);
     }
 
-    public function DeleteTemplate() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DeleteTemplate($ajaxParametrs) {
         $id = $ajaxParametrs["Id"];
         $content = new \Objects\Content();
         return $content->DeleteItem($id) ? "TRUE" : "FALSE";
     }
 
-    public function SaveCss() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveCss($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
@@ -584,13 +539,8 @@ class WebEditApi extends ApiController {
         return $id;
     }
 
-    public function GetDomainFromTemplate() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-
-        if (empty($ajaxParametrs))
-            return;
+    public function GetDomainFromTemplate($ajaxParametrs) {
         $content = new \Objects\Content();
-
         $templateId = $ajaxParametrs["Id"];
         $domain = new \Objects\UserDomains();
         $identificator = $domain->GetUserDomainByTemplateId($templateId);
@@ -620,10 +570,7 @@ class WebEditApi extends ApiController {
         return $out;
     }
 
-    public function SaveUserItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveUserItem($ajaxParametrs) {
         $noChild = $ajaxParametrs["NoChild"] == 1 ? true : false;
         $useTemplateInChild = $ajaxParametrs["UseTemplateInChild"] == "1" || $ajaxParametrs["UseTemplateInChild"] == 1 ? true : false;
         $privileges = $ajaxParametrs["Privileges"];
@@ -647,10 +594,7 @@ class WebEditApi extends ApiController {
         return $id;
     }
 
-    public function SaveForm() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveForm($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
@@ -659,56 +603,42 @@ class WebEditApi extends ApiController {
 
         unset($ajaxParametrs["Parametrs"]);
         if ($id == 0) {
-            $id = $content->CreateForm($ajaxParametrs["Name"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $_GET["langid"], $_GET["param1"], $privileges, $data);
+            $id = $content->CreateForm($ajaxParametrs["Name"], empty($ajaxParametrs["SeoUrl"]) ? "":$ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], empty($ajaxParametrs["Identificator"])?"":$ajaxParametrs["Identificator"], empty($ajaxParametrs["ActiveFrom"])?date('Y-m-d H:i:s'):$ajaxParametrs["ActiveFrom"], empty($ajaxParametrs["ActiveTo"]) ? date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")):$ajaxParametrs["ActiveTo"], empty($ajaxParametrs["Template"])? 0:$ajaxParametrs["Template"], $ajaxParametrs["Publish"], $_GET["langid"], $_GET["param1"], $privileges, $data);
         } else {
-            $id = $content->UpdateForm($id, $ajaxParametrs["Name"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $privileges, $data);
+            $id = $content->UpdateForm($id, $ajaxParametrs["Name"], empty($ajaxParametrs["SeoUrl"]) ? "":$ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], empty($ajaxParametrs["Identificator"])?"":$ajaxParametrs["Identificator"], empty($ajaxParametrs["ActiveFrom"])?date('Y-m-d H:i:s'):$ajaxParametrs["ActiveFrom"], empty($ajaxParametrs["ActiveTo"]) ? date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")):$ajaxParametrs["ActiveTo"],  empty($ajaxParametrs["Template"])? 0:$ajaxParametrs["Template"], $ajaxParametrs["Publish"], $privileges, $data);
         }
         return $id;
     }
 
-    public function MoveItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
-
-
+    public function MoveItem($ajaxParametrs) {
         $sourceId = $ajaxParametrs["sourceId"];
-
         $destinationId = $ajaxParametrs["destinationId"];
         $contentVersion = new \Objects\Content();
         return $contentVersion->Move($sourceId, $destinationId) ? "TRUE" : "FALSE";
     }
 
-    public function CopyItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function CopyItem($ajaxParametrs) {
         $sourceId = $ajaxParametrs["sourceId"];
         $destinationId = $ajaxParametrs["destinationId"];
         $contentVersion = new \Objects\Content();
         return $contentVersion->Copy($_GET["langid"], $_GET["webid"], $sourceId, $destinationId) ? "TRUE" : "FALSE";
     }
 
-    public function SaveFolderFile() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveFolderFile($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
+        
         if ($id == 0) {
-            $id = $content->CreateFileFolder($ajaxParametrs["Name"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $_GET["langid"], $_GET["param1"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $privileges);
+            $id = $content->CreateFileFolder($ajaxParametrs["Name"], empty($ajaxParametrs["SeoUrl"]) ?"":$ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"],$_GET["langid"], $_GET["param1"], $ajaxParametrs["NoIncludeSearch"],empty($ajaxParametrs["Identificator"]) ? "" :$ajaxParametrs["Identificator"], empty($ajaxParametrs["ActiveFrom"])? date('Y-m-d H:i:s') :$ajaxParametrs["ActiveFrom"], empty($ajaxParametrs["ActiveTo"]) ? date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")) :$ajaxParametrs["ActiveTo"], $privileges);
         } else {
-            $id = $content->UpdateFileFolder($id, $ajaxParametrs["Name"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $privileges);
+            $id = $content->UpdateFileFolder($id, $ajaxParametrs["Name"], empty($ajaxParametrs["SeoUrl"]) ?"":$ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], empty($ajaxParametrs["Identificator"]) ? "" :$ajaxParametrs["Identificator"], empty($ajaxParametrs["ActiveFrom"])? date('Y-m-d H:i:s') :$ajaxParametrs["ActiveFrom"], empty($ajaxParametrs["ActiveTo"]) ? date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")) :$ajaxParametrs["ActiveTo"], $privileges);
         }
         return $id;
     }
 
-    public function GetDomainByIdentificator() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetDomainByIdentificator($ajaxParametrs) {
         $identificator = $ajaxParametrs["Identifcator"];
         $data = "";
         $content = new \Objects\Content();
@@ -729,99 +659,80 @@ class WebEditApi extends ApiController {
         return $this->GetUserDomain($identificator, 0, false, $data);
     }
 
-    public function SaveFile() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveFile($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         $data = $ajaxParametrs["Parametrs"];
         if ($id == 0) {
-            $id = $content->CreateFile($ajaxParametrs["Name"], $_GET["langid"], $_GET["param1"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $privileges, $data);
+            $id = $content->CreateFile($ajaxParametrs["Name"], $_GET["langid"], $_GET["param1"], $ajaxParametrs["NoIncludeSearch"], empty($ajaxParametrs["Identificator"]) ? "" :$ajaxParametrs["Identificator"], empty($ajaxParametrs["ActiveFrom"]) ? date('Y-m-d H:i:s'):$ajaxParametrs["ActiveFrom"] , empty($ajaxParametrs["ActiveTo"]) ?date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")):$ajaxParametrs["ActiveTo"], $privileges, $data);
         } else {
-            $id = $content->UpdateFile($id, $ajaxParametrs["Name"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $privileges, $data);
+            $id = $content->UpdateFile($id, $ajaxParametrs["Name"], $ajaxParametrs["NoIncludeSearch"], empty($ajaxParametrs["Identificator"]) ? "" :$ajaxParametrs["Identificator"], empty($ajaxParametrs["ActiveFrom"]) ? date('Y-m-d H:i:s'):$ajaxParametrs["ActiveFrom"] , empty($ajaxParametrs["ActiveTo"]) ?date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")):$ajaxParametrs["ActiveTo"], $privileges, $data);
         }
         return $id;
     }
 
-    public function ConnectObject() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function ConnectObject($ajaxParametrs) {
         $conObj = new \Objects\Content();
         $conObj->CreateConnection($ajaxParametrs["ObjectId"], $ajaxParametrs["ObjectIdConnection"], $ajaxParametrs["Mode"], $ajaxParametrs["Data"]);
     }
 
-    public function GetRelatedObject() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetRelatedObject($ajaxParametrs) {
         $conObj = new \Objects\Content();
         return $conObj->GetRelatedObject($ajaxParametrs["ObjectId"], $_GET["langid"], $ajaxParametrs["ObjectType"]);
     }
 
-    public function DisconnectObject() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DisconnectObject($ajaxParametrs) {
         $conObj = ContentConnection::GetInstance();
         $id = $ajaxParametrs["ObjectId"];
         $conObj->DeleteObject($id, true, false);
     }
 
-    public function GetArticleDiscusion() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
-
+    public function GetArticleDiscusion($ajaxParametrs) {
         $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         return $content->GetArticleDiscusion($id);
     }
 
-    public function BlockDiscusionUser() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function BlockDiscusionUser($ajaxParametrs) {
+        
         $id = $ajaxParametrs["UserId"];
 
         self::$User->BlockDiscusionUser($id);
     }
 
-    public function SaveJs() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveJs($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
 
         if ($id == 0) {
-            $id = $content->CreateJs($ajaxParametrs["Name"], $privileges, $ajaxParametrs["CssCode"], $_GET["param1"], $_GET["langid"], $ajaxParametrs["Publish"], $ajaxParametrs["Sort"]);
+            $id = $content->CreateJs($ajaxParametrs["Name"], $privileges, $ajaxParametrs["CssCode"], $_GET["param1"], $_GET["langid"], $ajaxParametrs["Publish"], empty($ajaxParametrs["Sort"]) ? 0 :$ajaxParametrs["Sort"]);
         } else
-            $id = $content->UpdateJs($id, $ajaxParametrs["Name"], $privileges, $ajaxParametrs["CssCode"], $ajaxParametrs["Publish"], $ajaxParametrs["Sort"]);
+            $id = $content->UpdateJs($id, $ajaxParametrs["Name"], $privileges, $ajaxParametrs["CssCode"], $ajaxParametrs["Publish"], empty($ajaxParametrs["Sort"]) ? 0 :$ajaxParametrs["Sort"]);
         return $id;
     }
 
-    public function SaveEmail() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveEmail($ajaxParametrs) {
         $privileges = $ajaxParametrs["Privileges"];
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
-
+         $editors = $this->GetHtmlEditors($ajaxParametrs);
+         
         if ($id == 0) {
-            $id = $content->CreateMail($ajaxParametrs["Name"], $_GET["langid"], $_GET["param1"], $privileges, $ajaxParametrs["EmailText"], $ajaxParametrs["Publish"]);
+            $id = $content->CreateMail($ajaxParametrs["Name"], $_GET["langid"], $_GET["param1"], $privileges, $editors["EmailText"], $ajaxParametrs["Publish"]);
         } else {
-            $id = $content->UpdateMail($id, $ajaxParametrs["Name"], $privileges, $ajaxParametrs["EmailText"], $ajaxParametrs["Publish"]);
+            $id = $content->UpdateMail($id, $ajaxParametrs["Name"], $privileges, $editors["EmailText"], $ajaxParametrs["Publish"]);
         }
         return $id;
     }
+    
+    
+    
+    
 
     public function GetRootId() {
         /** @var 
@@ -832,16 +743,16 @@ class WebEditApi extends ApiController {
         return $folderId;
     }
 
-    public function DeleteLangVersion() {
+    public function DeleteLangVersion($param) {
         /** @var 
           \Model\ContentVersion
          */
         $content = new \Objects\Content();
-        $content->DeleteLangVersion($_GET["params"], $_GET["langid"]);
+        $content->DeleteLangVersion($param["objectId"], $_GET["langid"]);
+        
     }
 
-    public function UpdateFormStatisticItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
+    public function UpdateFormStatisticItem($ajaxParametrs) {
         $content = new \Objects\Content();
         $content->UpdateFormStatisticItem($ajaxParametrs["Id"], $ajaxParametrs["ItemId"], $ajaxParametrs["ItemValue"]);
     }

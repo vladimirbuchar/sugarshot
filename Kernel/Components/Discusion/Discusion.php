@@ -3,7 +3,7 @@ namespace Components;
 use HtmlComponents\Div;
 use Types\DiscusionsMode;
 use HtmlComponents\Link;
-class Discusion extends UserComponents{
+class Discusion extends UserComponents implements \Inteface\iComponent{
     
     public $DiscusionMode;
     public $HideGoToDiscusion = false;

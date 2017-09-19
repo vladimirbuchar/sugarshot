@@ -1,7 +1,7 @@
 function UserLogin()
 {
   var params = PrepareParametrs("userLogin");
-  var out = CallPhpFunctionAjax("Ajax","UserLogin","JSON",params);
+  var out = CallPhpFunctionAjax("Ajax","UserLogin","JSONOBJECT",params);
   var error = out.Error;
   if (error =="error")
   {

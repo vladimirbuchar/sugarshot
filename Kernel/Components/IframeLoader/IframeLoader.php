@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class IframeLoader extends UserComponents{
+class IframeLoader extends UserComponents implements \Inteface\iComponent{
 
     public $ExternalUrl;
     public $ReplaceUrl="";
@@ -18,8 +18,9 @@ class IframeLoader extends UserComponents{
         
     } 
     public function GetComponentHtml() {
-        
-        $html = file_get_contents($this->ExternalUrl);
+        $html = "";
+        if (file_exists($this->ExternalUrl))
+            $html = file_get_contents($this->ExternalUrl);
         if (!empty($this->ReplaceUrl) || !empty($this->NewUrl))
         {
             $html = preg_replace("/(?<=<a href=(\"|'))[^\"']+(?=(\"|'))/",$this->NewUrl,$html);

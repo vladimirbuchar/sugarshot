@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class Repeater extends UserComponents{
+class Repeater extends UserComponents implements \Inteface\iComponent{ 
     
     public function __construct() {
         

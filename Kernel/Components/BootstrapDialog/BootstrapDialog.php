@@ -4,7 +4,7 @@ use HtmlComponents\Div;
 use HtmlComponents\Button;
 use HtmlComponents\Span;
 use HtmlComponents\H4;
-class BootstrapDialog extends UserComponents {
+class BootstrapDialog extends UserComponents implements \Inteface\iComponent{
     public $DialogId = "";
     public $DialogTitle ="";
     public $DialogContent ="";

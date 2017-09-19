@@ -78,6 +78,7 @@ class Page {
                     $params = $_GET["params"];
                     $out = $controller->$functionName($params);
                 } else if ($mode == "jsonobject") {
+                    
                     $params = $_GET["params"];
                     $out = $controller->$functionName($params);
                 } else if ($mode == "longrequest" || $mode == "longrequestjson") {
@@ -695,7 +696,9 @@ class Page {
     }
 
     private static function GetLongRequest() {
-        return $_SESSION["longRequestParams"];
+        if (!empty($_SESSION["longRequestParams"]))
+            return $_SESSION["longRequestParams"];
+        return null;
     }
 
     private static function ClearLongRequest() {

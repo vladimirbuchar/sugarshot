@@ -1,7 +1,7 @@
 <?php
 namespace Components;
-class FileList extends UserComponents{
-    
+class FileList extends UserComponents implements \Inteface\iComponent{
+     
     public $FileType;
     public function __construct() {
         

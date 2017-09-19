@@ -11,12 +11,8 @@
                 sendId[i] =selectbox.attr("id");
             }
         }
-        var params = new Array();
-        var ar1 = new Array();
-        ar1[0] = "Mails";
-        ar1[1] = sendId;
-        params[0] =ar1;
-        CallPhpFunctionAjax("WebEdit", "ReSendMails", "POST", params);
+        var params = {Mails:sendId };
+        CallPhpFunctionAjax("WebEdit", "ReSendMails", "POSTOBJECT", params);
         
     
 }

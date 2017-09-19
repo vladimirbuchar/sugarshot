@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class ItemForm extends UserComponents{
+class ItemForm extends UserComponents implements \Inteface\iComponent{
     
     public $ElementId = "";
     public $DomainIdentificator = "";

@@ -15,11 +15,9 @@ function SaveItem(dialogId,controllerName,actionName,model)
     if (ValidateForm(dialogId))
     {
         var parametrs = PrepareParametrs(dialogId,"ignoreDomainsave");
-        var ar = new Array();
-        ar[0] = "ModelName";
-        ar[1] = model;
-        parametrs[parametrs.length] = ar;
-        var outData = CallPhpFunctionAjax(controllerName, actionName, "JSON", parametrs);
+        console.log(parametrs);
+        parametrs.ModelName = model;
+        var outData = CallPhpFunctionAjax(controllerName, actionName, "JSONOBJECT", parametrs);
         var insertId = outData["Id"];
         if (IsUndefined(insertId))
             insertId = outData;
@@ -42,16 +40,8 @@ function ShowEditForm(controllerName,detailAction,detailId,model)
 {
     
     $(".noUpdate").attr("disabled","disabled");
-    var params = Array();
-    var ar = Array();
-    ar[0] = "Id";
-    ar[1] = detailId;
-    params[0] = ar;
-    var ar1 = Array();
-    ar1[0] = "ModelName";
-    ar1[1] = model;
-    params[1] = ar1;
-    var data = CallPhpFunctionAjax(controllerName, detailAction, "JSON", params);
+    var params = {Id:detailId,ModelName:model};
+    var data = CallPhpFunctionAjax(controllerName, detailAction, "JSONOBJECT", params);
     WriteData(data);
     CallUserLoadDetail(detailId);
 }
@@ -88,23 +78,9 @@ function SetDeleteItem(name,id)
 
 function DeleteDomianItem(controllerName,actionName,deleteId,model)
 {
-    var inArray = new  Array();
-    var ar = Array();
-    ar[0] = "Id";
-    ar[1] = deleteId;
-    inArray[0] = ar;
-    var ar1 = Array();
-    ar1[0] = "ModelName";
-    ar1[1] = model;
-    inArray[1] = ar1;
-    var ar2 = new Array();
-    ar2[0] = "DeletePernamently";
     var showMode = $(".showItem").val();
-    ar2[1] =false;
-    if(showMode =="DeleteItem") 
-        ar2[1] =true;
-    inArray[2] = ar2;
-    CallPhpFunctionAjax(controllerName, actionName, "POST", inArray);
+    var inArray =  {Id:deleteId,ModelName:model,DeletePernamently: showMode =="DeleteItem"};
+    CallPhpFunctionAjax(controllerName, actionName, "POSTOBJECT", inArray);
 }
 
 
@@ -141,7 +117,7 @@ function ShowMultiDeleteDialog()
 
 function RecoveryMultiSelect(multiselectIdentificator,  controllerName, actionName,idPrefix, model)
 {
-    
+        
         var selectedItem = $("." + multiselectIdentificator);
         for (var i = 0; i < selectedItem.length; i++)
         {
@@ -197,42 +173,25 @@ function RecoveryDialog(name,id)
 
 function Recovery(controllerName, actionName, parametrsAction, model)
 {
-    var inArray = Array();
-    var ar = Array();
-    ar[0] = "Id";
-    ar[1] = parametrsAction;
-    inArray[0] = ar;
-    var ar1 = Array();
-    ar1[0] = "ModelName";
-    ar1[1] = model;
-    inArray[1] = ar1;
-
-    CallPhpFunctionAjax(controllerName, actionName, "POST", inArray);
+    var inArray = {Id:parametrsAction,ModelName:model};
+    CallPhpFunctionAjax(controllerName, actionName, "POSTOBJECT", inArray);
     
 }
 
 function GridReload(tableId, functionName, controllerName, idPrefixRow, modelName, sortColumn, sortType)
 {
     $(".noData").addClass("dn");
-    var params = new Array();
-    var ar = new Array();
-    ar[0] = "ModelName";
-    ar[1] = modelName;
-    params[0] = ar;
+    var params = {};
+    params.ModelName =modelName;
+    
 
     if (!IsUndefined(sortColumn))
     {
-        var ar1 = new Array();
-        ar1[0] = "SortColumn";
-        ar1[1] = sortColumn;
-        params[params.length] = ar1;
+        params.SortColumn =sortColumn;
     }
     if (!IsUndefined(sortType))
     {
-        var ar2 = new Array();
-        ar2[0] = "SortType";
-        ar2[1] = sortType;
-        params[params.length] = ar2;
+        params.SortType =sortType;
     }
     var filtrTextbox = $(".filtrTextbox");
     
@@ -269,27 +228,15 @@ function GridReload(tableId, functionName, controllerName, idPrefixRow, modelNam
     }
     if (where != "")
     {
-        var ar3 = new Array();
-        ar3[0] = "Where";
-        ar3[1] = where;
-        params[params.length] = ar3;
+        params.Where = where; 
+        
     }
     else 
     {
-        var ar3 = new Array();
-        ar3[0] = "Where";
-        ar3[1] = "clear";
-        params[params.length] = ar3;
+        params.Where = "clear";
     }
-    var ar4 = new Array();
-    ar4[0] = "SaveFiltrSortToSession";
-    ar4[1] = true;
-    params[params.length] = ar4;
-    
-    var ar5 =  new Array();
-    ar5[0] = "ShowItem";
-    ar5[1] = $("#"+tableId +" .showItem").val();
-    params[params.length] = ar5;
+    params.SaveFiltrSortToSession = true;
+    params.ShowItem = $("#"+tableId +" .showItem").val();
     if ($("#"+tableId +" .showItem").val() =="DeleteItem")
     {
         $(".showInDeleted").removeClass("dn");
@@ -301,9 +248,7 @@ function GridReload(tableId, functionName, controllerName, idPrefixRow, modelNam
         $(".showInNormal").removeClass("dn");
         
     }
-    
-
-    var outData = CallPhpFunctionAjax(controllerName, functionName, "JSON", params);
+    var outData = CallPhpFunctionAjax(controllerName, functionName, "JSONOBJECT", params);
     var tableTr = $("#" + tableId + " table tr");
     for (var i = 0; i < tableTr.length; i++)
     {
@@ -374,17 +319,7 @@ function CopyDialog(name,id)
 
 function CopyRow(parametrsAction, controllerName, actionName,  model)
 {
-    var params = Array();
-    var ar = Array();
-    ar[0] = "Id";
-    ar[1] = parametrsAction;
-    params[0] = ar;
-
-
-    var ar1 = Array();
-    ar1[0] = "ModelName";
-    ar1[1] = model;
-    params[1] = ar1;
+    var params = {Id: parametrsAction, ModelName: model};
     CallPhpFunctionAjax(controllerName, actionName, "JSON", params);
     
 }
@@ -416,16 +351,8 @@ function IsSelected()
 }
 function ShowHistory(conrollerName,historyAction,ModelName,id)
 {
-    var params = new Array();
-    var ar1 = new Array();
-    ar1[0] ="ModelName";
-    ar1[1] =ModelName;
-    params[0] = ar1;
-    var ar2 = new Array();
-    ar2[0] ="Id";
-    ar2[1] =id;
-    params[1] = ar2;
-    var historyData = CallPhpFunctionAjax(conrollerName, historyAction, "JSON", params)
+    var params = {ModelName:ModelName, Id: id};
+    var historyData = CallPhpFunctionAjax(conrollerName, historyAction, "JSONOBJECT", params)
     var historyObject = $("#HistoryObject .historyTemplate").html();
     $(".historyItem").remove();
     for (row in historyData)
@@ -461,12 +388,7 @@ function ShowHistory(conrollerName,historyAction,ModelName,id)
 
 function RecoveryItemFromHistory(id,controllerName)
 {
-    var params = new Array();
-    var ar = new Array();
-    ar[0] = "Id";
-    ar[1] = id;
-    params[0] = ar;
-    CallPhpFunctionAjax(controllerName, "RecoveryFromHistory", "POST", params)
+    CallPhpFunctionAjax(controllerName, "RecoveryFromHistory", "POSTOBJECT", {Id:id})
 }
 
 

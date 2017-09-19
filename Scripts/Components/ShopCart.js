@@ -25,28 +25,9 @@ function Recount(productId)
         productCount = 1;
         $("#"+productId).val(productCount);
     }
-    var params = new Array();
-    var ar1 = new Array();
-    ar1[0] = "ProductId";
-    ar1[1] = productId;
-    params[0] = ar1;
+    var params = {ProductId:productId, Count:productCount,Currency:$("#Currency").val(),PriceFormat:$("#PriceFormat").val() };
     
-    var ar2 = new Array();
-    ar2[0] = "Count";
-    ar2[1] = productCount;
-    params[1] = ar2;
-    
-    var ar3 = new Array();
-    ar3[0] = "Currency";
-    ar3[1] = $("#Currency").val();
-    params[2] = ar3;
-    
-    var ar4 = new Array();
-    ar4[0] = "PriceFormat";
-    ar4[1] = $("#PriceFormat").val();
-    params[3] = ar4;
-    
-    var out =  CallPhpFunctionAjax("Shop","RecountProduct","JSON",params);
+    var out =  CallPhpFunctionAjax("Shop","RecountProduct","JSONOBJECT",params);
     $("#"+productId+"-productPrice").html(out.Price1ks);
     $("#"+productId+"-productPriceVat").html(out.PriceVat1ks);
     $("#"+productId+"-productPriceCount").html(out.PriceCount);
@@ -71,24 +52,8 @@ function Recount(productId)
 
 function DeleteProduct(productId)
 {
-    var params = new Array();
-    var ar1 = new Array();
-    ar1[0] = "ProductId";
-    ar1[1] = productId;
-    params[0] = ar1;
-    
-    var ar3 = new Array();
-    ar3[0] = "Currency";
-    ar3[1] = $("#Currency").val();
-    params[1] = ar3;
-    
-    var ar4 = new Array();
-    ar4[0] = "PriceFormat";
-    ar4[1] = $("#PriceFormat").val();
-    params[2] = ar4;
-    
-    var out = CallPhpFunctionAjax("Shop","DeleteProductFromCart","JSON",params);
-    //alert(out.ProductPriceFormated);
+    var params = {ProductId:productId,Currency:$("#Currency").val(),PriceFormat:$("#PriceFormat").val()}
+    var out = CallPhpFunctionAjax("Shop","DeleteProductFromCart","JSONOBJECT",params);
     $("#sumaPrice").html(out.ProductPriceFormated);
     $("#sumaPriceVat").html(out.ProductPriceVatFormated)
     $("#product-"+productId).remove();

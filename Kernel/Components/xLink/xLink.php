@@ -3,7 +3,7 @@ namespace Components;
 use Utils\StringUtils;
 use HtmlComponents\Link;
 
-class xLink extends UserComponents{
+class xLink extends UserComponents implements \Inteface\iComponent{
 
     public $Controller;
     public $View;

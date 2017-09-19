@@ -30,29 +30,21 @@ class AjaxApi extends ApiController {
         return $_SERVER['HTTP_REFERER'];
     }
 
-    public function SaveSurveyAnswer() {
-        $ajax = $this->PrepareAjaxParametrs();
-        if (empty($ajax))
-            return;
+    public function SaveSurveyAnswer($ajax) {
+        
         $content = new \Objects\Content();
         $id = $ajax["ParentId"];
         unset($ajax["ParentId"]);
         $content->CreateSurveyAnswer($this->LangId, $id, $ajax);
     }
 
-    public function GetUserGroupMain() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetUserGroupMain($ajaxParametrs) {
         $userId = $ajaxParametrs["UserId"];
         $userGroup = new \Objects\UsersGroups();
         return $userGroup->GetMainUserGroup($userId);
     }
 
-    public function GetUserGroupMinority() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetUserGroupMinority($ajaxParametrs) {
         $userId = $ajaxParametrs["UserId"];
         $userGroup = new \Objects\UsersGroups();
         return $userGroup->GetMinorityUserGroup($userId);
@@ -63,13 +55,12 @@ class AjaxApi extends ApiController {
         $this->Referesch();
     }
 
-    public function DeleteUserItem() {
+    public function DeleteUserItem($params) {
         $content = new \Objects\Content();
-        $content->DeleteItem($_POST["params"]);
+        $content->DeleteItem($params["id"]);
     }
 
-    public function SaveUserProfile() {
-        $ajax = $this->PrepareAjaxParametrs();
+    public function SaveUserProfile($ajax) {
         $user = new Users();
         $user->GetObjectById(self::$UserId, true);
         $user->FirstName = $ajax["FirstName"];
@@ -94,14 +85,13 @@ class AjaxApi extends ApiController {
         $udv->SaveDomainValue($domainName, self::$UserId, $preparedData);
     }
 
-    public function Search() {
+    public function Search($ajax) {
         $contentVersion = new \Objects\Content();
         $seourl = $contentVersion->GetSeoUrlByIdentificator("search", $this->LangId);
-        return $seourl . base64_encode($_POST["params"]) . "/";
+        return $seourl . base64_encode($ajax["Search"]) . "/";
     }
 
-    public function UserLogin() {
-        $ajax = $this->PrepareAjaxParametrs();
+    public function UserLogin($ajax) {
         $web = \Model\Webs::GetInstance();
         $web->GetObjectById($this->WebId,true,array("AfterLoginAction","AfterLoginUrl","EmailUserLogin"));
         $outData = array();
@@ -124,10 +114,8 @@ class AjaxApi extends ApiController {
         return $outData;
     }
 
-    public function UserRegister() {
-        $ajax = $this->PrepareAjaxParametrs();
-        if (empty($ajax))
-            return;
+    public function UserRegister($profile) {
+        
         $user = new \Objects\Users();
 
         $profile = $ajax;
@@ -142,11 +130,7 @@ class AjaxApi extends ApiController {
         return $status;
     }
 
-    public function AddDiscusionItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
-
+    public function AddDiscusionItem($ajaxParametrs) {
         $discusion = new \Objects\Discusion();
         $id = $ajaxParametrs["Id"];
         $subject = $ajaxParametrs["SubjectDiscusion"];
@@ -157,28 +141,19 @@ class AjaxApi extends ApiController {
         $discusion->AddNewDiscusionItem($subject, $text, $showUserName, $parent, $discusionId, $id);
     }
 
-    public function HistoryItemDetail() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function HistoryItemDetail($ajaxParametrs) {
         $id = $ajaxParametrs["DiscusionItem"];
         $discusion = new \Objects\Discusion();
         return $discusion->GetHistoryItemDetail($id);
     }
 
-    public function DiscusionItemDetail() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DiscusionItemDetail($ajaxParametrs) {
         $id = $ajaxParametrs["DiscusionItem"];
         $discusion = DiscusionItems::GetInstance();
         return $discusion->GetObjectById($id);
     }
 
-    public function DeleteDiscusionItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DeleteDiscusionItem($ajaxParametrs) {
         $id = $ajaxParametrs["DiscusionItem"];
         $discusion = DiscusionItems::GetInstance();
         $discusion->DeleteObject($id);

@@ -11,7 +11,7 @@ use HtmlComponents\HtmlTableTd;
 use HtmlComponents\HtmlTableTr;
 use HtmlComponents\HtmlTableTh;
 use HtmlComponents\Checkbox;
-class Table extends UserComponents {
+class Table extends UserComponents implements \Inteface\iComponent{
     // prověřit použití
     //$aAdd->OnClick = "ShowDialog('$this->JoinAddDialogId','$this->ControllerName','$this->AddAction','$this->TableId','$this->PrefixIdRow','$this->DataSource');return false;";
     //$this->AddItemMode == "dialog"
@@ -136,7 +136,7 @@ class Table extends UserComponents {
     $this->NoObjectSelect  = $this->GetWord($this->NoObjectSelect);
         
         
-        $this->DataSource = empty($this->ViewName)?$this->ModelName:$this->ViewName;
+        $this->DataSource = empty($this->ViewNameClass)?$this->ModelName:$this->ViewNameClass;
         $mainDiv = new Div();
         $mainDiv->CssClass = $this->CssClass;
         $mainDiv->Id = $this->TableId;
@@ -176,6 +176,7 @@ class Table extends UserComponents {
             $dAdd->DataTarget = "#MultiDelete";
             $dAdd->DataToggle = "modal";
             $dAdd->OnClick = "ShowMultiDeleteDialog()";
+            
             //$dAdd->OnClick = "$this->MultiDeleteAction('$this->MultiselectIdentificator','$this->MultiDeleteQuestion','$this->ControllerName','$this->DeleteAction','$this->TableId','$this->PrefixIdRow','$this->DataSource','$this->NoObjectSelect'); return false;";
             $li->SetChild($dAdd);
             $li->CssClass="btn btn-default";
@@ -188,6 +189,7 @@ class Table extends UserComponents {
             $dAdd->Html = $this->RecoveryMultiItemText;
             $dAdd->DataTarget = "#MultiRecovery";
             $dAdd->DataToggle = "modal";
+            $dAdd->Datadismiss ="modal";
             $dAdd->OnClick = "ShowMultiRecoveryDialog()";
             $li->CssClass = "showInDeleted dn btn btn-default";
             

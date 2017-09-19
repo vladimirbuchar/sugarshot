@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class AdminSearch extends UserComponents{
+class AdminSearch extends UserComponents implements \Inteface\iComponent{
     
     public $ContentType = "";
     public function __construct() {

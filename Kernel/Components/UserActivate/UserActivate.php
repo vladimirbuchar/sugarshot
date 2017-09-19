@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class UserActivate extends UserComponents{
+class UserActivate extends UserComponents implements \Inteface\iComponent{
     
     public function __construct() {
         

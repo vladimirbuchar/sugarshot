@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class ArticleList extends UserComponents{
+class ArticleList extends UserComponents implements \Inteface\iComponent{
     
     public $DivId = "";
     public $LoadUrl ="";

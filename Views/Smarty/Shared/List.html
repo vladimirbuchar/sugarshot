@@ -184,7 +184,7 @@
             </div>
                     <div class="modal-footer">
                         <div class=" SelectedItem dn">
-            <button type="button" class="btn btn-primary" onclick="ShowLoading();DeleteSelectItem('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','<!--{$DeleteAction}-->','row-','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiDelete');HideLoading();"><!--{$word373}--></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowLoading();DeleteSelectItem('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','<!--{$DeleteAction}-->','row-','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiDelete');HideLoading();"><!--{$word373}--></button>
             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiDelete')"><!--{$word374}--></button>
                         </div>
                         <div class="NoSelectedItem dn">
@@ -238,7 +238,11 @@
             </div>
                     <div class="modal-footer">
                         <div class=" SelectedItem dn">
-            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowLoading();RecoveryMultiSelect('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','<!--{$RecoveryServerAction}-->','row-','<!--{$ModelName}-->');GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-',,'<!--{$ModelName}-->',undefined,undefined);CloseDialog('MultiRecovery');HideLoading();"><!--{$word373}--></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ShowLoading();
+                RecoveryMultiSelect('<!--{$MultiselectIdentificator}-->', '<!--{$ControllerName}-->','<!--{$RecoveryServerAction}-->','row-','<!--{$ModelName}-->');
+                GridReload('<!--{$TableId}-->','<!--{$RefreschTable}-->','<!--{$ControllerName}-->','row-','<!--{$ModelName}-->',undefined,undefined);
+                CloseDialog('MultiRecovery');
+                HideLoading();"><!--{$word373}--></button>
             <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CloseDialog('MultiRecovery')"><!--{$word374}--></button>
                         </div>
                         <div class="NoSelectedItem dn">

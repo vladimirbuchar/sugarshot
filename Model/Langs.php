@@ -20,7 +20,7 @@ class Langs  extends DatabaseTable implements \Inteface\iDataTable{
         parent::__construct();
         $this->ObjectName = "Langs";
         $this->MultiWeb = true;
-        $this->SaveHistory = true;
+        $this->SaveHistory = false;
         $this->SetSelectColums(array("LangName","RootUrl","Title","Keywords","Description","CategoryPage","LangIdentificator"));
         $this->SetDefaultSelectColumns();
     }

@@ -2,7 +2,7 @@
     $("#OtherLang").change(function(){
             Save(false,false);
              SetIgnoreExit(true);
-                    CallPhpFunctionAjax("WebEdit", "ChangeLangVersion", "POST", null);
+                    CallPhpFunctionAjax("WebEdit", "ChangeLangVersion", "POSTOBJECT", null);
                     var selectLang = $(this).val();
                     window.location.href = "/xadm/WebEdit/MailingDetail/" + $("#WebId").val() + "/" + selectLang + "/" + $(" # ObjectId").val() + " / 0/";
     });
@@ -12,30 +12,16 @@
                     {
                             ShowLoading();
                             var params = PrepareParametrs("itemForm");
-                            var nextItem = params.length;
-                            var ar1 = new Array();
-                            ar1[0] = "Publish";
-                            ar1[1] = publish;
-                            params[nextItem] = ar1;
-                            nextItem++;
-                            var ar2 = new Array();
-                            ar2[0] = "Id";
-                            ar2[1] = $("#ObjectId").val();
-                            params[nextItem] = ar2;
-                            nextItem++;
+                            params.Publish = publish;
+                            params.Id = $("#ObjectId").val();
+                            
                             var privileges = ReadUserPrivileges("userSecurity");
-                            var ar3 = new Array();
-                            ar3[0] = "Privileges";
-                            ar3[1] = privileges;
-                            params[nextItem] = ar3;
-                            nextItem++;
+                            params.Privileges = privileges;
+                            
                             var mailingParametrs = PrepareParametrs("mailingParametrs");
-                            var ar4 = new Array();
-                            ar4[0] = "MailingParametrs";
-                            ar4[1] = mailingParametrs;
-                            params[nextItem] = ar4;
-                            nextItem++;
-                            var outId = CallPhpFunctionAjax("WebEdit", "SaveMailing", "POST", params);
+                            params.MailingParametrs = mailingParametrs;
+                            
+                            var outId = CallPhpFunctionAjax("WebEdit", "SaveMailing", "POSTOBJECT", params);
                             $("#ObjectId").val(outId);
                             LoadData(outId,"mailing");
                             HideLoading();
@@ -82,28 +68,8 @@
              function SendMailing()
              {
                  Save(true,true);
-                 var params = new Array();
-                 var ar1 = new Array();
-                 ar1[0] = "ObjectId";
-                 ar1[1] = $("#ObjectId").val();
-                 params[0] = ar1;
-                 
-                 var ar2 = new Array();
-                 ar2[0] = "Email";
-                 ar2[1] = $("#Email").val();
-                 params[1] = ar2;
-                 
-                 var ar3 = new Array();
-                 ar3[0] = "MailingGroup";
-                 ar3[1] = $("#MailingGroup").val();
-                 params[2] = ar3;
-                 
-
-                var ar4 = new Array();
-                 ar4[0] = "MailSender";
-                 ar4[1] = $("#UserMailing").val();
-                 params[3] = ar4;
-                 CallPhpFunctionAjax("WebEdit", "SendMailing", "POST", params);
+                 var params = {ObjectId:$("#ObjectId").val(), Email:$("#Email").val(),MailingGroup:$("#MailingGroup").val(),MailSender:$("#UserMailing").val()}
+                 CallPhpFunctionAjax("WebEdit", "SendMailing", "POSTOBJECT", params);
              }
     
     

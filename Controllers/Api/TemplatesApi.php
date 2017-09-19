@@ -11,8 +11,8 @@ class TemplatesApi extends ApiController {
         $this->SetApiFunction("IsLoginUser", array("*"));
     }
 
-    public function SetAdminLang() {
-        self::$SessionManager->SetSessionValue("AdminUserLang", $_POST["params"]);
+    public function SetAdminLang($param) {
+        self::$SessionManager->SetSessionValue("AdminUserLang", $param["selectlang"]);
     }
 
     public function IsLoginUser() {

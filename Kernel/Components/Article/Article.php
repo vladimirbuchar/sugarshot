@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class Article extends UserComponents{
+class Article extends UserComponents implements \Inteface\iComponent{
     
     
     public function __construct() {

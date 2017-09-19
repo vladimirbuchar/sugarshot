@@ -1,7 +1,7 @@
 <?php
 
 try {
-     error_reporting(E_ALL);
+    error_reporting(E_ALL);
     ini_set('display_errors', 'On');
     session_start();
     $now = time();
@@ -17,7 +17,7 @@ try {
         session_destroy();
         session_start();
     }
-    
+
     $_SESSION["expired"] = $now + 900;
     include './autoload.php';
     include_once './settings_global.php';
@@ -43,9 +43,9 @@ try {
     $iframe = (!empty($_GET["iframe"])) ? true : false;
     $robots = (!empty($_GET["robots"])) ? true : false;
     $sitemap = (!empty($_GET["sitemap"])) ? true : false;
-    $adminer = (!empty($_GET["adminer"])&& !empty($_GET["security"]) && $_GET["security"] == SECURITY_STRING) ? true : false;
-    $getmyip = (!empty($_GET["getmyip"])&& !empty($_GET["security"]) && $_GET["security"] == SECURITY_STRING) ? true : false;
-    
+    $adminer = (!empty($_GET["adminer"]) && !empty($_GET["security"]) && $_GET["security"] == SECURITY_STRING) ? true : false;
+    $getmyip = (!empty($_GET["getmyip"]) && !empty($_GET["security"]) && $_GET["security"] == SECURITY_STRING) ? true : false;
+
     if ($updatemodel) {
 
         $options = array(
@@ -57,8 +57,12 @@ try {
             'charset' => CHARSET
         );
         \dibi::connect($options);
-        \dibi::query("CREATE DATABASE IF NOT EXISTS " . SQL_DATABASE);
-        \dibi::query("USE " . SQL_DATABASE);
+        try {
+            \dibi::query("CREATE DATABASE IF NOT EXISTS " . SQL_DATABASE);
+            \dibi::query("USE " . SQL_DATABASE);
+        } catch (Exception $ex) {
+            \Kernel\Page::ApplicationError($ex);
+        }
     } else {
         $options = array(
             'driver' => SQL_DRIVER,
@@ -74,13 +78,11 @@ try {
         phpinfo();
         return;
     }
-    
-    if ($adminer && Kernel\Page::IsDeveloperIp())
-    {
+
+    if ($adminer && Kernel\Page::IsDeveloperIp()) {
         header('Location: /Utils/adminer-4.3.1.php');
     }
-    if ($getmyip)
-    {
+    if ($getmyip) {
         echo \Utils\Utils::GetIp();
     }
 
@@ -90,26 +92,25 @@ try {
         return;
     }
 
-    if ($ajaxMode) 
-    {
-        \Kernel\Page::SetOrigin ();
+    if ($ajaxMode) {
+        \Kernel\Page::SetOrigin();
         $controller = empty($_GET["Controller"]) ? "" : $_GET["Controller"];
         $functionName = empty($_GET["functionName"]) ? "" : $_GET["functionName"];
         $paramsMode = empty($_GET["paramsMode"]) ? "" : $_GET["paramsMode"];
         \Kernel\Page::ApiFunction($controller, $functionName, $paramsMode);
     } else if ($fileUpload) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         echo \Utils\Files::FileUpload();
-    }  else if ($iscss) {
-        \Kernel\Page::SetOrigin ();
+    } else if ($iscss) {
+        \Kernel\Page::SetOrigin();
         echo \Kernel\Page::LoadCss();
     } else if ($isjs) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         echo \Kernel\Page::LoadJs();
     } else if ($isxml) {
         echo \Kernel\Page::LoadXml();
     } else if ($isxmlImport) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         \Kernel\Page::RequestLogin();
         \Kernel\Page::XmlImport();
         \Kernel\Page::RequestLogout();
@@ -118,26 +119,26 @@ try {
     } else if ($checkXmlImport) {
         echo \Kernel\Page::CheckXmlImport();
     } else if ($test) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         $className = $_GET["ClassName"];
         echo \Kernel\Page::RunTest($className);
     } else if ($runalltest) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         echo \Kernel\Page::RunAllTest();
     } else if ($timers) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         \Kernel\Page::RunTimer($_GET["timerName"]);
     } else if ($multiuaploadfiles) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         echo Utils\Files::UploadFiles();
     } else if ($setLongRequest) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         Kernel\Page::SetLongRequestParam($_POST["name"], $_POST["value"]);
     } else if ($runalltimers) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         Kernel\Page::RunAllTimers();
     } else if ($iframe) {
-        \Kernel\Page::SetOrigin ();
+        \Kernel\Page::SetOrigin();
         echo \Kernel\Page::GetIframeHtml($_GET["key"]);
     } else if ($robots) {
         echo \Kernel\Page::GetWebRobots();

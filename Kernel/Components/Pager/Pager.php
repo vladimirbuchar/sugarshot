@@ -1,7 +1,7 @@
 <?php
 namespace Components;
 use HtmlComponents\Span;
-class Pager extends UserComponents{
+class Pager extends UserComponents implements \Inteface\iComponent{
     public $PagerDivId = "";
     public $AddItemText = "word676";
     public $UseUrl;

@@ -1,12 +1,8 @@
 function AddLink()
 {
-    var params = new Array();
-    var ar1 = new Array();
-    var ObjectIdConnection = GetSelectTree("linkDialog2");
-    ar1[0] = "Id";
-    ar1[1] = ObjectIdConnection;
-    params[0] = ar1;
-    var seoUrl = CallPhpFunctionAjax("WebEdit", "GetSeoUrlById", "POST",params);
+    var params = {Id: GetSelectTree("linkDialog2")};
+    
+    var seoUrl = CallPhpFunctionAjax("WebEdit", "GetSeoUrlById", "POSTOBJECT",params);
     $("#GoToPage").val(seoUrl);
 }
 function AddSource()
@@ -14,7 +10,7 @@ function AddSource()
     if (activeTab == 1)
     {
         var selectData = GetSelectTree("linkDialog");
-        var name = CallPhpFunctionAjax("WebEdit", "GetSelectedObjectName", "POST",selectData);
+        var name = CallPhpFunctionAjax("WebEdit", "GetSelectedObjectName", "POSTOBJECT",{SelectedObject: selectData});
         $("#saveFolderName").html(name);
         $("#SaveTo").val(selectData);
     }
@@ -23,7 +19,7 @@ function AddSource()
         $("#OtherLang").change(function(){
             Save(false,false);
             SetIgnoreExit(true);
-             CallPhpFunctionAjax("WebEdit","ChangeLangVersion","POST",null);
+             CallPhpFunctionAjax("WebEdit","ChangeLangVersion","POSTOBJECT",null);
              var selectLang = $(this).val();
              window.location.href= "/xadm/WebEdit/FormEditor/"+$("#WebId").val()+"/"+ selectLang+"/"+$("#ObjectId").val()+"/0/";
         });
@@ -166,7 +162,7 @@ function AddSource()
                 var saveTo = $("#SaveTo").val();
                 if (saveTo != "")
                 {
-                    var name = CallPhpFunctionAjax("WebEdit", "GetSelectedObjectName", "POST",saveTo);
+                    var name = CallPhpFunctionAjax("WebEdit", "GetSelectedObjectName", "POSTOBJECT",{SelectedObject: saveTo});
                     $("#saveFolderName").html(name);
                 }
                 ShowForms();
@@ -211,65 +207,34 @@ function AddSource()
     {
 ShowLoading();
     var params = PrepareParametrs("itemForm");
-            var nextItem = params.length;
-            var ar1 = new Array();
-            ar1[0] = "Publish";
-            ar1[1] = publish;
-            params[nextItem] = ar1;
-            nextItem++;
-            var ar2 = new Array();
-            ar2[0] = "Id";
-            ar2[1] = $("#ObjectId").val();
-            params[nextItem] = ar2;
-            nextItem++;
-            var privileges = ReadUserPrivileges("userSecurity");
-            var ar3 = new Array();
-            ar3[0] = "Privileges";
-            ar3[1] = privileges;
-            params[nextItem] = ar3;
-            nextItem++;
-            var domainValues = PrepareParametrs("parametrs");
-            //alert(domainValues);
-            var ar4 = new Array();
-            ar4[0] = "Parametrs";
-            ar4[1] = domainValues;
-            params[nextItem] = ar4;
-            nextItem++;
-            var outId = CallPhpFunctionAjax("WebEdit", "SaveForm", "POST",params);
+    params.Publish = publish;
+    params.Id = $("#ObjectId").val();
+    var privileges = ReadUserPrivileges("userSecurity");
+    params.Privileges = privileges;
+    var domainValues = PrepareParametrs("parametrs");
+    params.Parametrs = domainValues;        
+            
+            
+            var outId = CallPhpFunctionAjax("WebEdit", "SaveForm", "POSTOBJECT",params);
         $("#ObjectId").val(outId);
         LoadData(outId,"form");
         HideLoading();
     }
     function LoadLinkDialogAddFormSave()
 {
-    var html = CallPhpFunctionAjax("WebEdit", "GetTreeLinkDialogSaveForm", "POST", null);
+    var html = CallPhpFunctionAjax("WebEdit", "GetTreeLinkDialogSaveForm", "POSTOBJECT", null);
     $("#dialogComponentLink").html(html);
 }
    function LoadLinkDialogAddLink()
 {
-    var html = CallPhpFunctionAjax("WebEdit", "GetTreeLinkDialogAddLinkForm", "POST", null);
+    var html = CallPhpFunctionAjax("WebEdit", "GetTreeLinkDialogAddLinkForm", "POSTOBJECT", null);
     $("#dialogComponentLink2").html(html);
 }
 
 function SaveFormItemDetail(id,formItemId)
 {
-    var params = new Array();
-    var ar1 = new Array();
-    ar1[0] = "Id";
-    ar1[1] = id;
-    params[0] = ar1;
-    
-    var ar2 = new Array();
-    ar2[0] = "ItemId";
-    ar2[1] = formItemId;
-    params[1] = ar2;
-    
-    var ar3 = new Array();
-    ar3[0] = "ItemValue";
-    ar3[1] = $("#"+formItemId).val();
-    params[2] = ar3;
-    
-    CallPhpFunctionAjax("WebEdit", "UpdateFormStatisticItem", "POST",params);
+    var params = {Id:id, ItemId:formItemId,ItemValue: $("#"+formItemId).val() };
+    CallPhpFunctionAjax("WebEdit", "UpdateFormStatisticItem", "POSTOBJECT",params);
     
 }
 

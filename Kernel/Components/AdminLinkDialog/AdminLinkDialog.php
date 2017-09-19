@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class AdminLinkDialog extends UserComponents{
+class AdminLinkDialog extends UserComponents implements \Inteface\iComponent{
     
     public $ContentType = "";
     public function __construct() {

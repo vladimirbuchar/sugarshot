@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class ProductsInOrder extends UserComponents{
+class ProductsInOrder extends UserComponents implements \Inteface\iComponent{
     
     
     public function __construct() {

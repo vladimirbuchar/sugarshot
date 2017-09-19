@@ -1,6 +1,6 @@
 <?php
 
-class UserProfile extends UserComponentsDatasource{
+class UserProfile extends UserComponentsDatasource implements \Inteface\iComponent{
     
     
     public function UserProfile() {

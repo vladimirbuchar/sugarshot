@@ -2,8 +2,8 @@
 
 namespace Model;
  use Types\RuleType;
-use Types\DataTableColumn;
-
+ use Types\DataTableColumn;
+ 
 class UserDomainsItems  extends DatabaseTable implements \Inteface\iDataTable{
     public $DomainId;
     public $ShowName;
@@ -64,7 +64,7 @@ class UserDomainsItems  extends DatabaseTable implements \Inteface\iDataTable{
         $this->AddColumn(new DataTableColumn("Validate", \Types\DataColumnsTypes::TEXT, "", true));     
         $this->AddColumn(new DataTableColumn("CssClass", \Types\DataColumnsTypes::TEXT, "", true));     
         $this->AddColumn(new DataTableColumn("MoreHtmlAtribut", \Types\DataColumnsTypes::TEXT, "", true));     
-        $this->AddColumn(new DataTableColumn("Domain", \Types\DataColumnsTypes::INTEGER, 0, false, 9));
+        $this->AddColumn(new DataTableColumn("Domain", \Types\DataColumnsTypes::INTEGER, 0, TRUE, 9));
         $this->AddColumn(new DataTableColumn("UniqueValue", \Types\DataColumnsTypes::BOOLEAN, FALSE, true, 1));
         $this->AddColumn(new DataTableColumn("NoUpdate", \Types\DataColumnsTypes::BOOLEAN, false, true, 1));
         $this->AddColumn(new DataTableColumn("XmlSettings", \Types\DataColumnsTypes::VARCHAR, "", true, 255));
@@ -92,7 +92,7 @@ class UserDomainsItems  extends DatabaseTable implements \Inteface\iDataTable{
     }
     public function TableMigrate()
     {
-        
+//        $this->RunTableMigrate("ALTER TABLE `UserDomainsItems`CHANGE `Domain` `Domain` int(9) NULL DEFAULT '0' AFTER `MoreHtmlAtribut`");
     }
     public function TableExportSettings()
     {

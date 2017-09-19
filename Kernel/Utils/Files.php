@@ -187,15 +187,17 @@ class Files {
                     $zip->addFile($filePath, $zipPath . basename($filePath));
                 }
                 if (is_dir($filePath)) {
-                    $child = $file["Childs"];
-                    if (!empty($child)) {
-                        $zipPath2 = "";
+                    if (!empty($file["Childs"])) {
+                        $child = $file["Childs"];
+                        if (!empty($child)) {
+                            $zipPath2 = "";
 
-                        if (empty($zipPath))
-                            $zipPath2 = $file["Name"] . "/";
-                        else
-                            $zipPath2 = $zipPath . $file["Name"] . "/";
-                        self::AddFolderToZip($zip, $child, $filePath, $zipPath2);
+                            if (empty($zipPath))
+                                $zipPath2 = $file["Name"] . "/";
+                            else
+                                $zipPath2 = $zipPath . $file["Name"] . "/";
+                            self::AddFolderToZip($zip, $child, $filePath, $zipPath2);
+                        }
                     }
                 }
             }
@@ -206,11 +208,13 @@ class Files {
 
     public static function DowlandFile($file_url) {
         try {
-            header('Content-Type: application/octet-stream');
-            header("Content-Transfer-Encoding: Binary");
-            header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\"");
-            readfile($file_url);
-            exit;
+            if (self::FileExists($file_url)) {
+                header('Content-Type: application/octet-stream');
+                header("Content-Transfer-Encoding: Binary");
+                header("Content-disposition: attachment; filename=\"" . basename($file_url) . "\"");
+                readfile($file_url);
+                exit;
+            }
         } catch (Exception $ex) {
             Page::ApplicationError($ex);
         }

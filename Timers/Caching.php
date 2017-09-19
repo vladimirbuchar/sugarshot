@@ -1,6 +1,6 @@
 <?php
 
-class Caching extends Timers {
+class Caching extends Timers implements \Inteface\iTimer{
     public function Caching()
     {
         $this->TimerName = "Caching";

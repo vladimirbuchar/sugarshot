@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class MiniCart extends UserComponents{
+class MiniCart extends UserComponents implements \Inteface\iComponent{
     
       public $Currency ="cs_CZ"  ;
       public $PriceFormat = '%.2n';

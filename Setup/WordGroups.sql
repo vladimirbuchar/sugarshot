@@ -813,7 +813,7 @@
     (812, 0, NULL, 'word803', 'Poslední kus skladem', '1 piece is available', '1 шт. в наличии'),
     (813, 0, NULL, 'word804', 'Zboží není dostupné', 'This good is unavailable', 'Товар не доступен'),
     (814, 0, NULL, 'word805', 'Zboží je na cestě', 'The good is on the way', 'Товар в пути'),
-    (815, 0, NULL, 'word806', 'Zboiží je skladem u výrobce', 'The good is available at the producer\'s', 'Товар в наличии у произвдителя'),
+    (815, 0, NULL, 'word806', 'Zboiží je skladem u výrobce', "The good is available at the producer's", 'Товар в наличии у произвдителя'),
     (816, 0, NULL, 'word807', 'Předobjednávky', 'Pre-ordr', 'Предзаказ'),
     (817, 0, NULL, 'word808', 'Dostupné na dotaz', 'Available on the request', 'Доступность по запросу'),
     (818, 0, NULL, 'word809', 'Dostupné do 14-ti dnů', 'Available up tu 14 days', 'Доступность в течении 14 дней'),
@@ -929,4 +929,5 @@
     (928, 0, NULL, 'word904', 'Začátek itemu sitemapy', '', ''),
     (929, 0, NULL, 'word905', 'Konec item sitemapy', '', ''),
     (930, 0, NULL, 'word906', 'Šablona detailu statistiky formuláře', '', ''),
-    (931, 0, NULL, 'word907', 'Stav objednávky', '', '');
+    (931, 0, NULL, 'word907', 'Stav objednávky', '', ''),
+    (932, 0, NULL, 'word908', 'Instalace systému', '', '');

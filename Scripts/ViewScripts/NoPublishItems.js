@@ -1,6 +1,6 @@
  function ShowPreview(id)
     {
-        var url = CallPhpFunctionAjax("WebEdit","GetArticleUrl","POST",id);
+        var url = CallPhpFunctionAjax("WebEdit","GetArticleUrl","POSTOBJECT",{ObjectId:id});
         window.open(url+"?preview=true");
     }
     
@@ -28,7 +28,7 @@
     
     function PublishItem(id)
     {
-        var out = CallPhpFunctionAjax("WebEdit","PublishItem","POST",id);
+        var out = CallPhpFunctionAjax("WebEdit","PublishItem","POSTOBJECT",{id: id});
         if (out =="true")
         {
             $("#row_"+id).remove();

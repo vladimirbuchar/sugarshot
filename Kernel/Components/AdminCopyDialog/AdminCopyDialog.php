@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class AdminCopyDialog extends UserComponents{
+class AdminCopyDialog extends UserComponents implements \Inteface\iComponent{
     
     public $ContentType = "";
     public function __construct() {

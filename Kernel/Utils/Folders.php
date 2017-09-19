@@ -48,7 +48,6 @@ class Folders {
     }
 
     public static function CreateFolder($path, $name, $security = 0777) {
-        echo $name;
         mkdir($path . $name);
         chmod($path . $name, $security);
     }
@@ -76,5 +75,29 @@ class Folders {
             }
         }
         closedir($dir);
+    }
+    
+    public static function DeleteObjects($path,$ignoreDelete = array())
+    {
+        $files = self::GetObjectsInFolder($path);
+        foreach ($files as $row)
+        {
+            $name = $row["Name"];
+            if(is_dir($path.$name))
+            {
+                self::DeleteObjects($path.$name."/",$ignoreDelete);
+            }
+            if (!in_array($name, $ignoreDelete))
+            {
+                if (is_file($path.$name))
+                {
+                    unlink($path.$name);
+                }
+                if (is_dir($path.$name))
+                {
+                    rmdir($path.$name);
+                }
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Components;
 use HtmlComponents\Span;
-class Word extends UserComponents{
+class Word extends UserComponents implements \Inteface\iComponent{
     public $WordId = "";
     
     

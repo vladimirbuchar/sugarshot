@@ -13,18 +13,16 @@ class AdminApi extends ApiController {
         $this->SetApiFunction("GetLangListByWeb", array("system", "Administrators"));
     }
 
-    public function GetJavascriptWord() {
-        $wordid = $_POST["params"];
-        if (empty($wordid))
-            return "";
+    public function GetJavascriptWord($param) {
+        $wordid = $param["wordid"];
         $wordid = StringUtils::RemoveString($wordid, '<!--{$');
         $wordid = StringUtils::RemoveString($wordid, '}-->');
         $word = $this->GetWord($wordid);
         return empty($word) ? $wordid : $word;
     }
 
-    public function GetLangListByWeb() {
-        $id = $_GET["params"];
+    public function GetLangListByWeb($param) {
+        $id = $param["web"];
         $lang = new \Objects\Langs();
         return $lang->GetLangListByWeb($id);
     }

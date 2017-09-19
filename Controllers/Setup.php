@@ -17,6 +17,7 @@ class Setup extends PageController {
         $this->SetTemplateData("pageHtml", "");
         $pageHtml = "";
         $this->SetStateTitle($this->GetWord("word887"));
+        
         if (!\Utils\Folders::FolderExists(LOG_PATH)) {
             \Utils\Folders::CreateFolder(ROOT_PATH, "Log");
         }

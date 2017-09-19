@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class LangSelect extends UserComponents{
+class LangSelect extends UserComponents implements \Inteface\iComponent{
     
     public function __construct() {
         $this->Type = "LangSelect";

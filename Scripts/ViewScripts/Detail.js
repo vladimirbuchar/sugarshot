@@ -1,28 +1,28 @@
 
 function AlternativeContent()
     {
-        var html = CallPhpFunctionAjax("WebEdit", "GetAlernativeArticle", "POST", null);
+        var html = CallPhpFunctionAjax("WebEdit", "GetAlernativeArticle", "POSTOBJECT", null);
         $("#dialogComponentAlternativeContent").html(html);
     }
     function ShowAddReletedDocuments()
     {
-        var html = CallPhpFunctionAjax("WebEdit", "GetReletedArticle", "POST", null);
+        var html = CallPhpFunctionAjax("WebEdit", "GetReletedArticle", "POSTOBJECT", null);
         $("#dialogComponent").html(html);
     }
     function AddGalleryFromRepository()
     {
-        var html = CallPhpFunctionAjax("WebEdit", "GetGalleryList", "POST", null);
+        var html = CallPhpFunctionAjax("WebEdit", "GetGalleryList", "POSTOBJECT", null);
         $("#dialogComponentGallery").html(html);
     }
     
     function AddGalleryFromArticle()
     {
-        var html = CallPhpFunctionAjax("WebEdit", "GetGalleryFromArticle", "POST", null);
+        var html = CallPhpFunctionAjax("WebEdit", "GetGalleryFromArticle", "POSTOBJECT", null);
         $("#dialogComponentArticleGallery").html(html);
     }
     function AddDiscusionFromArticle()
     {
-        var html = CallPhpFunctionAjax("WebEdit", "GetGalleryFromArticle", "POST", null);
+        var html = CallPhpFunctionAjax("WebEdit", "GetGalleryFromArticle", "POSTOBJECT", null);
         $("#dialogComponentDiscusionGallery").html(html);
     }
     function HideChildSettings(hide)
@@ -59,7 +59,7 @@ function AlternativeContent()
         $("#OtherLang").change(function(){
             Save(false,false);
             SetIgnoreExit(true);
-             CallPhpFunctionAjax("WebEdit","ChangeLangVersion","POST",null);
+             CallPhpFunctionAjax("WebEdit","ChangeLangVersion","POSTOBJECT",null);
              var selectLang = $(this).val();
              window.location.href= "/xadm/WebEdit/Detail/"+$("#WebId").val()+"/"+ selectLang+"/"+$("#ObjectId").val()+"/0/";
         });
@@ -110,12 +110,9 @@ function AlternativeContent()
         $("#GoToDiscusion").click(function(){
             SetIgnoreExit(true);
             Save(false,false);
-            var parmetrs = new Array();
-            var ar1 = new Array();
-            ar1[0] = "Id";
-            ar1[1] = $("#ObjectId").val();
-            parmetrs[0] =ar1;
-            var discusionId = CallPhpFunctionAjax("WebEdit","GetArticleDiscusion","POST",parmetrs);
+            var parmetrs = {Id: $("#ObjectId").val()};  
+            
+            var discusionId = CallPhpFunctionAjax("WebEdit","GetArticleDiscusion","POSTOBJECT",parmetrs);
             Redirect("WebEdit", "Discusion", "xadm",$("#WebId").val(), $("#LangId").val(), discusionId)
         });
     });
@@ -191,31 +188,14 @@ function AlternativeContent()
     
     function GetRelatedObjects(objectType)
     {
-        var parmetrs = new Array();
-        var ar1 = new Array();
-        ar1[0] = "ObjectId";
-        ar1[1] = $("#ObjectId").val();
-        parmetrs[0] =ar1;
-        var ar2 = new Array();
-        ar2[0] = "ObjectType";
-        ar2[1] = objectType;
-        parmetrs[1] =ar2;
-        return CallPhpFunctionAjax("WebEdit","GetRelatedObject","JSON",parmetrs);
+        var parmetrs = {ObjectId: $("#ObjectId").val(), ObjectType: objectType};
+        return CallPhpFunctionAjax("WebEdit","GetRelatedObject","JSONOBJECT",parmetrs);
     }
     
     function LoadDomainItems(value,data,readOnly )
     {
         
-        var param = Array();
-        var ar = Array();
-        ar[0] = "Id";
-        ar[1] = value;
-        param[0] = ar;
-        
-        var ar1 = Array();
-        ar1[0] = "ObjectId";
-        ar1[1] = $("#ObjectId").val();
-        param[2] = ar1;    
+        var param = {Id:value,ObjectId:  $("#ObjectId").val()};
         
         if (IsUndefined(readOnly))
         {
@@ -233,10 +213,8 @@ function AlternativeContent()
                     readOnly = true;
             }
         }
-        var ar2 = Array();
-        ar2[0] = "ReadOnly";
-        ar2[1] = readOnly;
-        param[1] = ar2;   
+        param.ReadOnly = readOnly;
+        
         var outData = CallPhpFunctionAjax("WebEdit","GetDomainFromTemplate","JSON",param);
         var html = outData["Html"];
         var xml = outData["TemplateSettings"];
@@ -309,61 +287,20 @@ function AlternativeContent()
         }
         
         var params = PrepareParametrs("itemForm");
+        params.Publish = publish; 
+        params.Id = $("#ObjectId").val(); 
         
-        var nextItem = params.length;
-        var ar1 =  new Array();
-        ar1[0] = "Publish";
-        ar1[1] = publish;
-        params[nextItem] = ar1;
-        nextItem++;
-        var ar2 = new Array();
-        ar2[0] = "Id";
-        ar2[1] = $("#ObjectId").val();
-        params[nextItem] = ar2;
-        nextItem++;
         var privileges = ReadUserPrivileges("userSecurity");
-        var ar3 = new Array();
-        ar3[0] = "Privileges";
-        ar3[1] = privileges;
-        params[nextItem] = ar3;
-        nextItem++;
+        params.Privileges = privileges;
         
         var domainValues = PrepareParametrs("parametrs");
+        params.Parametrs = domainValues;
+        params.GallerySettings = $("#mediaGallerySettings").val();
+        params.DiscusionSettings = $("#discussionSettings").val();
+        params.FormSettings = $("#formSettings").val();
+        params.InquerySettings = $("#Inquery").val();
+        params.Discusion = $("#Discusion").val();
         
-        var ar4 = new Array();
-        ar4[0] = "Parametrs";
-        ar4[1] = domainValues;
-        params[nextItem] = ar4;
-        nextItem++;
-        var ar5 = new Array();
-        ar5[0] = "GallerySettings";
-        ar5[1] = $("#mediaGallerySettings").val();
-        params[nextItem] = ar5;
-        nextItem++;
-        var ar6 = new Array();
-        ar6[0] = "DiscusionSettings";
-        ar6[1] = $("#discussionSettings").val();
-        params[nextItem] = ar6;
-        nextItem++;
-        
-        var ar7 = new Array();
-        ar7[0] = "FormSettings";
-        ar7[1] = $("#formSettings").val();
-        params[nextItem] = ar7;
-        nextItem++;
-        
-        var ar8 = new Array();
-        ar8[0] = "InquerySettings";
-        ar8[1] = $("#Inquery").val();
-        params[nextItem] = ar8;
-        nextItem++;
-        
-        var ar9 = new Array();
-        ar9[0] = "Discusion";
-        ar9[1] = $("#Discusion").val();
-        params[nextItem] = ar9;
-        nextItem++;
-
         var outId = CallPhpFunctionAjax("WebEdit","SaveUserItem","POST",params);
         $("#ObjectId").val(outId);
         LoadData(outId,"useritem");
@@ -374,65 +311,42 @@ function AlternativeContent()
     }
     function AddArticle(mode)
     {
-        var parmetrs = new Array();
-        var ar1 = new Array();
-        ar1[0] = "ObjectId";
-        ar1[1] = $("#ObjectId").val();
-        parmetrs[0] =ar1;
+        var parmetrs = {ObjectId: $("#ObjectId").val(),Data:""};
         
-        var ar2 = new Array();
-        var ar3 = new Array();
-        ar3[0] = "Data";
-        ar3[1] = "";
+        
+        
         var ObjectIdConnection = 0;
         if (mode == "document")
         {
-            //var $f = $(".SelectDialog");
             ObjectIdConnection = GetSelectTree("ReletedArticle");
-            ar2[0] = "ObjectIdConnection";
-            ar2[1] = ObjectIdConnection;
+            parmetrs.ObjectIdConnection = ObjectIdConnection;
+            
             
         }
         else if (mode == "link")
         {
-            ar2[0] = "ObjectIdConnection";
-            ar2[1] = ObjectIdConnection;
-            ar3[1] = $f.get(0).contentWindow.GetLinkSetting();
+            parmetrs.ObjectIdConnection = ObjectIdConnection;
+            parmetrs.Data = $f.get(0).contentWindow.GetLinkSetting();
         }
         else if (mode == "gallery")
         {
             if ($("#mediaGallerySettings").val() == "1")
             {
                 ObjectIdConnection = GetSelectTree("GalleryItemDialog");
-                ar2[0] = "ObjectIdConnection";
-                ar2[1] = ObjectIdConnection;
-                //alert(ObjectIdConnection);
+                parmetrs.ObjectIdConnection = ObjectIdConnection;
             }
             else if ($("#mediaGallerySettings").val() == 2 || $("#mediaGallerySettings").val() == 3)
             {
-                var $f = $(".SelectDialogGalleryArticle");
-                ObjectIdConnection = $f.get(0).contentWindow.GetSelectTree();
-                ar2[0] = "ObjectIdConnection";
-                ar2[1] = ObjectIdConnection;
+                ObjectIdConnection = GetSelectTree("SelectDialogGalleryArticle");
+                parmetrs.ObjectIdConnection = ObjectIdConnection;
             }
         }
-        /*else if (mode == "discusion")
-        {
-            ObjectIdConnection = GetSelectTree("SelectDialogGalleryArticle");
-            ObjectIdConnection = CallPhpFunctionAjax("WebEdit","GetDiscusionByItemId","POST",ObjectIdConnection);
-            $("#DiscusionId").val(ObjectIdConnection);
-        }*/
+        parmetrs.Mode = mode;
         
-        parmetrs[1] =ar2;
-        parmetrs[2] =ar3;
-        var ar4 = new Array();
-        ar4[0] = "Mode";
-        ar4[1] = mode;
-        parmetrs[3] =ar4;
         Save(false,false);
         if (mode != "discusion")
         {
-            CallPhpFunctionAjax("WebEdit","ConnectObject","POST",parmetrs);
+            CallPhpFunctionAjax("WebEdit","ConnectObject","POSTOBJECT",parmetrs);
             if (mode == "document" || mode == "link")
             {
                 GetRelatedArticle();
@@ -465,12 +379,9 @@ function AlternativeContent()
     }
     function DeleteRelation(id)
     {
-        var parmetrs = new Array();
-        var ar1 = new Array();
-        ar1[0] = "ObjectId";
-        ar1[1] = id;
-        parmetrs[0] =ar1;
-        CallPhpFunctionAjax("WebEdit","DisconnectObject","POST",parmetrs);
+        var parmetrs = {ObjectId:id}
+        
+        CallPhpFunctionAjax("WebEdit","DisconnectObject","POSTOBJECT;",parmetrs);
         if ($("#tab-3").hasClass("active"))
         {
             GetRelatedArticle();
@@ -507,7 +418,7 @@ function AlternativeContent()
     function ShowPreview()
     {
         Save(false,false);
-        var url = CallPhpFunctionAjax("WebEdit","GetArticleUrl","POST",$("#ObjectId").val());
+        var url = CallPhpFunctionAjax("WebEdit","GetArticleUrl","POSTOBJECT",{ObjectId:$("#ObjectId").val()});
         window.open(url+"?preview=true");
     }
     function SaveAlternativeItem()
@@ -521,28 +432,15 @@ function AlternativeContent()
         Save(false,false);
         
         var ObjectIdConnection = GetSelectTree("AlternativeArticle");
-        var params = new Array();
-        var ar1 = new Array();
-        ar1[0] = "ObjectId";
-        ar1[1] = objectId;
-        params[0] = ar1;
+        var params = {ObjectId:objectId,UserGroup:userGroup,AlternativeItem:ObjectIdConnection};
         
-        var ar2 = new Array();
-        ar2[0] = "UserGroup";
-        ar2[1] = userGroup;
-        params[1] = ar2;
-        
-        var ar3 = new Array();
-        ar3[0] = "AlternativeItem";
-        ar3[1] = ObjectIdConnection;
-        params[2] = ar3;
-        CallPhpFunctionAjax("WebEdit","AddAlternativeItem","POST",params);
+        CallPhpFunctionAjax("WebEdit","AddAlternativeItem","POSTOBJECT",params);
         GetAlternativeItem();
     }
     
     function GetAlternativeItem()
     {    
-        var data = CallPhpFunctionAjax("WebEdit","GetAlternativeItem","JSON",$("#ObjectId").val());
+        var data = CallPhpFunctionAjax("WebEdit","GetAlternativeItem","JSONOBJECT",{ObjectId: $("#ObjectId").val()});
         var html  = "<tr><th>"+GetWord("word680")+"</th><th>" +GetWord("word681")+"</th><th>&nbsp;</th></tr>";
         for(var i = 0; i<data.length; i++)
         {
@@ -564,7 +462,7 @@ function AlternativeContent()
         $("#alternativeItems").html(html);
     }
     function DeleteAlternativeItems(id){
-        CallPhpFunctionAjax("WebEdit","DeleteAlternativeItems","GET",id);
+        CallPhpFunctionAjax("WebEdit","DeleteAlternativeItems","GETOBJECT",{id:id});
         GetAlternativeItem();
     }
     function UploadFiles()
@@ -572,7 +470,7 @@ function AlternativeContent()
         Save(false,false);
         var langId =  $("#LangId").val();
         var webId =  $("#WebId").val();
-        var id = CallPhpFunctionAjax("WebEdit","GetRootId","GET");
+        var id = CallPhpFunctionAjax("WebEdit","GetRootId","GETOBJECT");
         $.ajaxSetup({async: false});
         var filesCount = $("#FileUploader").prop('files').length;
         for (var i = 0; i<filesCount; i++ )
@@ -593,25 +491,8 @@ function AlternativeContent()
                 },
                 
             }).done(function(ObjectIdConnection){
-                var parmetrs = new Array();
-                var ar1 = new Array();
-                ar1[0] = "ObjectId";
-                ar1[1] = $("#ObjectId").val();
-                parmetrs[0] =ar1;
-                var ar2 = new Array();
-                var ar3 = new Array();
-                ar3[0] = "Data";
-                ar3[1] = "";
-                ar2[0] = "ObjectIdConnection";
-                ar2[1] = ObjectIdConnection;
-                
-                 parmetrs[1] =ar2;
-                 parmetrs[2] =ar3;
-                 var ar4 = new Array();
-                 ar4[0] = "Mode";
-                 ar4[1] = "gallery";
-                 parmetrs[3] =ar4;
-                 CallPhpFunctionAjax("WebEdit","ConnectObject","POST",parmetrs);
+                var parmetrs = {ObjectId: $("#ObjectId").val(),ObjectIdConnection:ObjectIdConnection,Data:"",Mode:"gallery"}
+                 CallPhpFunctionAjax("WebEdit","ConnectObject","POSTOBJECT",parmetrs);
                  GetGalleryItems();   
             
         

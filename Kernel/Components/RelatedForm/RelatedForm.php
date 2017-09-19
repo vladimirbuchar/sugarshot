@@ -2,7 +2,7 @@
 namespace Components;
 
 use Utils\Forms;
-class RelatedForm extends UserComponents{
+class RelatedForm extends UserComponents implements \Inteface\iComponent{
     
     public function __construct() {
         $this->Type = "RelatedForm";

@@ -55,27 +55,21 @@ class SettingsApi extends ApiController {
         $this->SetApiFunction("RecoveryFromHistory", array("system", "Administrators"));
     }
 
-    public function GetUserDomainDetail() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetUserDomainDetail($ajaxParametrs) {
+        
         $domainValues = new \Objects\UserDomains();
         return $domainValues->GetDomainValueByDomainId($_GET["objectid"], $ajaxParametrs["Id"]);
     }
 
-    public function SaveUserDomainValue() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveUserDomainValue($ajaxParametrs) {
+        
         $userValues = new \Objects\UserDomains();
         $out["Id"] = $userValues->SaveUserDomainData($ajaxParametrs);
         return $out;
     }
 
-    public function UserDomaiReloadList() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function UserDomaiReloadList($ajaxParametrs) {
+        
         $deleted = $ajaxParametrs["ShowItem"] == "DeleteItem" ? TRUE : FALSE;
         $domainid = $_GET["objectid"];
         $userDomainValue = new \Objects\UserDomains();
@@ -83,21 +77,19 @@ class SettingsApi extends ApiController {
         return $values;
     }
 
-    public function DeleteValueInUserDomain() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DeleteValueInUserDomain($ajaxParametrs) {
+        
         $userDomainValue = new \Objects\UserDomains();
         $userDomainValue->Delete($ajaxParametrs["Id"]);
     }
 
-    public function ExportSettings() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
+    public function ExportSettings($ajaxParametrs) {
         $files = array();
         $folderName = \Utils\StringUtils::GenerateRandomString();
         \Utils\Folders::CreateFolder(TEMP_EXPORT_PATH, $folderName);
         foreach ($ajaxParametrs as $key => $value) {
             if ($value == 1) {
+                
                 $ex = new ExportSetting($key, $folderName);
                 $out = $ex->CallExport();
                 if (!empty($out))
@@ -108,42 +100,29 @@ class SettingsApi extends ApiController {
         return Files::ZipFolder($zipFolder);
     }
 
-    public function SaveWebPrivileges() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
+    public function SaveWebPrivileges($ajaxParametrs) {
         $web = new \Objects\Webs();
         $web->SaveWebPrivileges($ajaxParametrs["Id"], $ajaxParametrs["privileges"]);
     }
 
-    public function StartCopyLang() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function StartCopyLang($ajaxParametrs) {
         $content = new \Objects\Content();
         $content->CopyLang($ajaxParametrs["SourceLang"], $ajaxParametrs["DestinationLang"]);
     }
 
-    public function GetUserDomainGroupDetail() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetUserDomainGroupDetail($ajaxParametrs) {
         $userDomGroup = UserDomainsGroups::GetInstance();
         return $userDomGroup->GetObjectById($ajaxParametrs["Id"]);
     }
 
-    public function SaveUserDomainGroup() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveUserDomainGroup($ajaxParametrs) {
         $group = new \Objects\UserDomains();
         $out["Id"] = $group->SaveGroup($ajaxParametrs["Id"], $ajaxParametrs["GroupName"], $ajaxParametrs["DomainId"]);
         return $out;
     }
 
-    public function UserDomainGroupReloadTable() {
+    public function UserDomainGroupReloadTable($ajaxParametrs) {
         $domainid = $_GET["objectid"];
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
         $udg = UserDomainsGroups::GetInstance();
         $deleted = $ajaxParametrs["ShowItem"] == "DeleteItem" ? TRUE : FALSE;
         if ($deleted)
@@ -152,27 +131,22 @@ class SettingsApi extends ApiController {
             return $udg->SelectByCondition("Deleted= 0 AND DomainId = $domainid");
     }
 
-    public function DeleteUserDomainGroupItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DeleteUserDomainGroupItem($ajaxParametrs) {
         $userDomainValue = UserDomainsGroups::GetInstance();
         $userDomainValue->DeleteObject($ajaxParametrs["Id"]);
     }
 
-    public function AddDomainItemToGroup() {
-        $params = $_POST["params"];
+    public function AddDomainItemToGroup($params) {
         $groupSetting = new \Objects\UserDomains();
         $groupSetting->SaveItemInGroup($params[0][1], $params);
     }
 
-    public function GetIntemsInDomainGroup() {
+    public function GetIntemsInDomainGroup($param) {
         $groupSetting = new \Objects\UserDomains();
-        return $groupSetting->GetUserItemInGroups($_GET["params"]);
+        return $groupSetting->GetUserItemInGroups($param["id"]);
     }
 
-    public function StartCleanDatabase() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
+    public function StartCleanDatabase($ajaxParametrs) {
         if ($ajaxParametrs["DeleteContent"]) {
             $content = Content::GetInstance();
             $contentVersion = ContentVersion::GetInstance();
@@ -247,29 +221,20 @@ class SettingsApi extends ApiController {
         }
     }
 
-    public function GetUserDomainAddictionDetail() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetUserDomainAddictionDetail($ajaxParametrs) {
         $userDomAd = \Model\UserDomainsAddiction::GetInstance();
         return $userDomAd->GetObjectById($ajaxParametrs["Id"]);
     }
 
-    public function SaveUserDomainAddiction() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveUserDomainAddiction($ajaxParametrs) {
         $addiction = new \Objects\UserDomains();
         $out["Id"] = $addiction->SaveAddiction($ajaxParametrs["Id"], $ajaxParametrs["DomainId"], $ajaxParametrs["AddictionName"], $ajaxParametrs["Item1"], $ajaxParametrs["RuleName"], $ajaxParametrs["Item1Value"], $ajaxParametrs["ActionName"], $ajaxParametrs["ItemXValue"], $ajaxParametrs["ItemX"], $ajaxParametrs["Priority"]);
         return $out;
     }
 
-    public function UserDomainAddictionReloadTable() {
+    public function UserDomainAddictionReloadTable($ajaxParametrs) {
         $domainid = $_GET["objectid"];
-        $ajaxParametrs = array();
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+        
         $udg = \Model\UserDomainsAddiction::GetInstance();
         $deleted = $ajaxParametrs["ShowItem"] == "DeleteItem" ? TRUE : FALSE;
         if ($deleted)
@@ -278,19 +243,13 @@ class SettingsApi extends ApiController {
             return $udg->SelectByCondition("Deleted= 0 AND DomainId = $domainid");
     }
 
-    public function DeleteUserDomainAddctionItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DeleteUserDomainAddctionItem($ajaxParametrs) {
         $id = $ajaxParametrs["Id"];
         $userDomainValue = \Model\UserDomainsAddiction::GetInstance();
         $userDomainValue->DeleteObject($id);
     }
 
-    public function GetMailingItemDetail() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetMailingItemDetail($ajaxParametrs) {
         $out = array();
         $mailinig = new \Objects\MailingContacts();
         $detail = $mailinig->GetMailingDetail($ajaxParametrs["Id"]);
@@ -300,17 +259,13 @@ class SettingsApi extends ApiController {
         return $out;
     }
 
-    public function SetDefaultWebPriviles() {
+    public function SetDefaultWebPriviles($param) {
         $web = new \Objects\Webs();
-        $web->SetDefaultWebPrivileges($_POST["params"]);
+        $web->SetDefaultWebPrivileges($param["id"]);
     }
 
-    public function SaveMailinContact() {
+    public function SaveMailinContact($ajaxParametrs) {
 
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-
-        if (empty($ajaxParametrs))
-            return;
         $id = empty($ajaxParametrs["Id"]) ? 0 : $ajaxParametrs["Id"];
         if ($id == 0)
             return;
@@ -320,13 +275,8 @@ class SettingsApi extends ApiController {
     }
 
     /** metoda pro smazání objektu */
-    public function DeleteItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DeleteItem($ajaxParametrs) {
         $deletePernamently = false;
-
-
         if (!empty($ajaxParametrs["DeletePernamently"])) {
             if ($ajaxParametrs["DeletePernamently"] == "true")
                 $deletePernamently = true;
@@ -337,13 +287,11 @@ class SettingsApi extends ApiController {
     }
 
     /** metoda pro přidání položky */
-    public function AddItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
+    public function AddItem($ajaxParametrs) {
         if (empty($ajaxParametrs))
             return 0;
         if (empty($ajaxParametrs["ModelName"]))
             return 0;
-
         $model = "Model\\" . $ajaxParametrs["ModelName"];
         unset($ajaxParametrs["ModelName"]);
         unset($ajaxParametrs["deleteId"]);
@@ -352,9 +300,8 @@ class SettingsApi extends ApiController {
         $item = $model::GetInstance();
         if (empty($ajaxParametrs["Id"]))
             $ajaxParametrs["Id"] = 0;
-
         $id = $item->AddItem($item, $ajaxParametrs);
-
+        
         $out = array();
         $out["Id"] = $id;
         if ($item->IsError) {
@@ -364,10 +311,7 @@ class SettingsApi extends ApiController {
     }
 
     /** metoda pro zobrazení detailu položky */
-    public function GetDetailItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetDetailItem($ajaxParametrs) {
         $model = "Model\\" . $ajaxParametrs["ModelName"];
         $item = new $model();
         return (array) $item->GetObjectById($ajaxParametrs["Id"]);
@@ -375,22 +319,14 @@ class SettingsApi extends ApiController {
     }
 
     /** metoda pro zkopírování položky */
-    public function CopyItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
-        
+    public function CopyItem($ajaxParametrs) {
         $model = "Model\\" . $ajaxParametrs["ModelName"];
         $item = new $model();
         return $item->CopyObject($ajaxParametrs["Id"]);
     }
 
     /** metoda  pro vyexportování dat z číselníku  */
-    public function ExportData() {
-
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function ExportData($ajaxParametrs) {
         $modelName = "Model\\" . $ajaxParametrs["ModelName"];
         $model = new $modelName();
         $mode = $ajaxParametrs["ExportType"];
@@ -398,10 +334,7 @@ class SettingsApi extends ApiController {
     }
 
     /** metoda pro naimportovaní dat do číselníku */
-    public function Import() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function Import($ajaxParametrs) {
         $modelName = "Model\\" . $ajaxParametrs["ModelName"];
         $model = new $modelName();
         $filePath = $ajaxParametrs["FilePath"];
@@ -410,12 +343,8 @@ class SettingsApi extends ApiController {
     }
 
     /** metoda pro znovu načtení tabulky  */
-    public function LoadTable() {
+    public function LoadTable($ajaxParametrs) {
         self::$SessionManager->UnsetKey("where");
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
-
         $sort = null;
         $where = "";
         $saveToSession = true;
@@ -456,10 +385,7 @@ class SettingsApi extends ApiController {
     }
 
     /** metoda pro zobrazení smazaných dat z číselníku */
-    public function RecoveryItem() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function RecoveryItem($ajaxParametrs) {
         $modelName = "Model\\" . $ajaxParametrs["ModelName"];
         $model = new $modelName();
         $item = new $model();
@@ -467,10 +393,7 @@ class SettingsApi extends ApiController {
     }
 
     /** metoda pro zobrazení historie změn v objektu */
-    public function ShowHistory() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function ShowHistory($ajaxParametrs) {
         $modelName = "Model\\" . $ajaxParametrs["ModelName"];
         $model = new $modelName();
         $item = new \Objects\ObjectHistory();
@@ -478,10 +401,7 @@ class SettingsApi extends ApiController {
     }
 
     /** metoda pro obnovení dat z historie */
-    public function RecoveryFromHistory() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function RecoveryFromHistory($ajaxParametrs) {
         $item = new \Objects\ObjectHistory();
         return $item->RecoveryItemFromHistory($ajaxParametrs["Id"]);
     }

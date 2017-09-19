@@ -5,12 +5,9 @@ namespace Controller;
 use Components\Table;
 use Model\WebsList;
 use Types\TableHeader;
-
-
 use Model\Langs;
 use Model\AdminLangs;
 use Utils\Files;
-
 use Model\UserDomains;
 use Model\UserDomainsGroups;
 use Model\UserDomainsAddiction;
@@ -26,14 +23,14 @@ class Settings extends SettingsController {
         $this->SetTemplateData("controllerName", $this->ControllerName);
         $this->SetViewSettings("WebList", array("system", "Administrators"));
         $this->SetViewSettings("CronManager", array("system", "Administrators"));
-        $this->SetViewSettings("LangList", array("system", "Administrators"),true);
+        $this->SetViewSettings("LangList", array("system", "Administrators"), true);
         $this->SetViewSettings("Words", array("system", "Administrators"));
         $this->SetViewSettings("AdminLangs", array("system", "Administrators"));
-        $this->SetViewSettings("Modules", array("system", "Administrators",true));
-        $this->SetViewSettings("UserDomain", array("system", "Administrators"),true);
+        $this->SetViewSettings("Modules", array("system", "Administrators", true));
+        $this->SetViewSettings("UserDomain", array("system", "Administrators"), true);
         $this->SetViewSettings("UserDomainDetail", array("system", "Administrators"));
         $this->SetViewSettings("UserDomainValueList", array("system", "Administrators"));
-        $this->SetViewSettings("DeveloperTools", array("system", "Administrators"),true,true);
+        $this->SetViewSettings("DeveloperTools", array("system", "Administrators"), true, true);
         $this->SetViewSettings("CopyLang", array("system", "Administrators"));
         $this->SetViewSettings("LogView", array("system", "Administrators"));
         $this->SetViewSettings("UserDomainGroupItem", array("system", "Administrators"));
@@ -70,8 +67,6 @@ class Settings extends SettingsController {
     }
 
     public function WebList() {
-
-
         $table = new Table();
         $webList = new WebsList();
         $data = $webList->Select(array(), false, false, false, null, "UserGroupId = " . self::$UserGroupId, true);
@@ -250,8 +245,10 @@ class Settings extends SettingsController {
     }
 
     public function UserDomainDetail() {
-        $this->SetLeftMenu("settingsmenu", "settingsmenuUserDomain");
+
+
         $this->SetTemplateData("DomainId", $_GET["objectid"]);
+
         $table = new Table();
         $colums = array("Id", "ShowName", "Identificator");
         $header = array();
@@ -268,7 +265,9 @@ class Settings extends SettingsController {
         $table->ShowCopyItem = false;
         $table->ShowCopySelected = false;
         $table->ScrollClass = "scrollTable1200";
+
         $links = array();
+
         $links[] = $this->CreateLink("Settings", "AutoComplecteList", "word721", "xadm", $this->WebId, $this->LangId, "{" . $table->IdColumn . "}");
 
 
@@ -278,8 +277,10 @@ class Settings extends SettingsController {
         $userDomain = UserDomains::GetInstance();
         $userDomainList = $userDomain->Select(array("Id", "DomainName"), false, false, true);
         $this->SetTemplateData("UserDomainList", $userDomainList);
+
         $this->PrepareList($this->GetWord("word198"), $colums, $table, $parent);
         $this->SetWordList();
+        $this->SetLeftMenu("settingsmenu", "settingsmenuUserDomain");
     }
 
     public function UserDomainValueList() {
@@ -473,7 +474,9 @@ class Settings extends SettingsController {
         $this->SharedView = "";
         $this->SetStateTitle($this->GetWord("word595"));
         $errors = Files::ReadFile(ROOT_PATH . "/Log/Errors.log");
+        $errors = htmlentities($errors);
         $errors = str_replace("\n", "<br />", $errors);
+
         $this->SetTemplateData("Errors", $errors);
     }
 
@@ -509,17 +512,16 @@ class Settings extends SettingsController {
 
     public function ClearLog() {
         $logPath = LOG_PATH . ERROR_LOG_FILENAME;
-        if (Files::FileExists($logPath))
-        {
+        if (Files::FileExists($logPath)) {
             $logCopy = LOG_PATH . \Utils\StringUtils::GenerateRandomString() . ".log";
             copy($logPath, $logCopy);
             unlink($logPath);
         }
         $this->Referesch();
-    }
+    }   
 
     public function DowlandFile() {
-        Files::DowlandFile(SERVER_NAME."Log/Errors.log");
+        Files::DowlandFile(SERVER_NAME . "Log/Errors.log");
     }
 
 }

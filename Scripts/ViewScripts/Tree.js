@@ -1,7 +1,7 @@
 
 function SetCopyMoveAction(action)
     {
-        var html = CallPhpFunctionAjax("WebEdit", "GetTreeCopyDialog", "POST", null);
+        var html = CallPhpFunctionAjax("WebEdit", "GetTreeCopyDialog", "POSTOBJECT", null);
         $("#dialogCopyMoveTree").html(html);
         copyModeAction = action;
     }

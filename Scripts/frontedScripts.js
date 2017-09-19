@@ -8,16 +8,8 @@ $(document).ready(function(){
 async function SendUserForm(formId)
 {
     $.ajaxSetup({async: false});
-    var params = new Array();
-    var ar = new Array();
-    ar[0] = "FormId";
-    ar[1] = formId;
-    params[0] =ar;
-    var ar2 = new Array();
-    ar2[0]="parametrs";
-    ar2[1] = PrepareParametrs("form-"+formId);
-    params[1] =ar2;
-    var out = await CallPhpFunctionAjax("Forms","SendFormWeb","JSON",params);
+    var params = {FormId: formId,parametrs: PrepareParametrs("form-"+formId) }
+    var out = await CallPhpFunctionAjax("Forms","SendFormWeb","JSONOBJECT",params);
     if (out["Errors"].length > 0)
     {
         var captcha = out["captchaImage"];
@@ -111,12 +103,8 @@ function Search()
 
 function RegenerateCaptcha(formId)
 {
-    var params = new Array();
-    var ar1 = new Array();                                     
-    ar1[0] ="Id";
-    ar1[1] =formId;
-    params[0]=ar1;                            
-    var captcha = CallPhpFunctionAjax("Forms","RegenerateCaptcha","POST",params);
+    var params = {Id: formId};
+    var captcha = CallPhpFunctionAjax("Forms","RegenerateCaptcha","POSTOBJECT",params);
     if (captcha !="")
     	$("#captchaform"+formId).attr("src",captcha);
 }
@@ -125,13 +113,13 @@ function RegenerateCaptcha(formId)
 
 function Logout()
 {
-    CallPhpFunctionAjax("Ajax","UserLogout","GET");
+    CallPhpFunctionAjax("Ajax","UserLogout","GETOBJECT");
     Refresh();
 }
 function SaveSurveyAnswer(id)
 {
     var data = PrepareParametrs(id);
-    CallPhpFunctionAjax("Ajax","SaveSurveyAnswer","POST",data);
+    CallPhpFunctionAjax("Ajax","SaveSurveyAnswer","POSTOBJECT",data);
     $("#"+id+" input").attr("disabled","disabled");
 }
 

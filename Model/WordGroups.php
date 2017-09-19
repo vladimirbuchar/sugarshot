@@ -9,6 +9,7 @@ class WordGroups  extends DatabaseTable implements \Inteface\iDataTable{
     {
         parent::__construct();
         $this->ObjectName = "WordGroups";
+        $this->AutoCreateDataInsertScript = true;
     }
     
     
@@ -31,6 +32,7 @@ class WordGroups  extends DatabaseTable implements \Inteface\iDataTable{
         $this->SetValidateRule("GroupName", RuleType::NOEMPTY,$this->GetWord("word90"));
         $this->SetValidateRule("GroupName", RuleType::UNIQUE,$this->GetWord("word91"));
     }
+    
     public function TableMigrate()
     {
        
@@ -48,5 +50,4 @@ class WordGroups  extends DatabaseTable implements \Inteface\iDataTable{
             $this->SetExportSettings("Word".$row->LangIdentificator, $row->LangName);
         }
     }
-
 }

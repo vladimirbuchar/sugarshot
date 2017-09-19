@@ -72,13 +72,15 @@ class DatabaseTable extends SqlDatabase {
     private $_errors = array();
 
     /** @var  array */
-    private $_ignoredSave = array("TableName", "_columnsInfo", "Deleted", "WasCreated", "MultiWeb", "MultiLang", "_errors", "IsError", "WasExternalSet", "_rules", "_columnValidate", "_exportSettings", "_exportColumns", "SaveHistory", "_callModelFunction", "_parametrsColumn", "IsInsert", "_afterInsertAction", "ParentColumn", "IsBadLogin", "_tableSupportMove", "IsTable", "IsView", "DomainValidateErrors", "IgnoreValidate", "ExportColumns", "ObjectName", "IsFunction", "_ignoredSave", "TestQuery", "_copyMode", "_instance", "_sqlParams", "_utf8Set", "SelectColumns", "_readOnlyObject");
+    private $_ignoredSave = array("TableName", "_columnsInfo", "Deleted", "WasCreated", "MultiWeb", "MultiLang", "_errors", "IsError", "WasExternalSet", "_rules", "_columnValidate", "_exportSettings", "_exportColumns", "SaveHistory", "_callModelFunction", "_parametrsColumn", "IsInsert", "_afterInsertAction", "ParentColumn", "IsBadLogin", "_tableSupportMove", "IsTable", "IsView", "DomainValidateErrors", "IgnoreValidate", "ExportColumns", "ObjectName", "IsFunction", "_ignoredSave", "TestQuery", "_copyMode", "_instance", "_sqlParams", "_utf8Set", "SelectColumns", "_readOnlyObject","AutoCreateDataInsertScript");
 
     /** @var bool */
     private $_copyMode = false;
 
     /** @var bool */
     private $_readOnlyObject = false;
+   
+    protected  $AutoCreateDataInsertScript = false;
 
     public function __construct() {
         $this->IsTable = true;
@@ -102,24 +104,26 @@ class DatabaseTable extends SqlDatabase {
     protected function CreteKey($keyName, $keyType, $keyColumns) {
         if (!$this->KeyExists($keyName)) {
             $columns = implode(",", $keyColumns);
-            if ($keyType == KeyType::$INDEX) {
+            if ($keyType == KeyType::INDEX) {
                 try {
                     dibi::query("ALTER TABLE `$this->ObjectName` ADD INDEX `$keyName` ($columns)");
                 } catch (Exception $ex) {
                     \Kernel\Page::ApplicationError($ex);
                 }
-            } else if ($keyType == KeyType::$UNIQUE) {
+            } else if ($keyType == KeyType::UNIQUE) {
                 try {
                     dibi::query("ALTER TABLE `$this->ObjectName` ADD UNIQUE `$keyName` ($columns)");
                 } catch (Exception $ex) {
                     \Kernel\Page::ApplicationError($ex);
                 }
-            } else if ($keyType == KeyType::$FULLTEXT)
+            } else if ($keyType == KeyType::FULLTEXT)
+            {
                 try {
                     dibi::query("ALTER TABLE `$this->ObjectName` ADD FULLTEXT `$keyName` ($columns)");
                 } catch (Exception $ex) {
                     \Kernel\Page::ApplicationError($ex);
                 }
+            }
         }
     }
 
@@ -159,14 +163,14 @@ class DatabaseTable extends SqlDatabase {
      * @return integer
      */
     public function AddItem($obj, $parametrs) {
+        
         foreach ($parametrs as $key => $value) {
             $key = trim($key);
             if (empty($key))
                 continue;
-            $obj->$key = trim(" " . $value);
+            $this->$key = trim(" " . $value);
         }
-        $id = $obj->SaveObject();
-        return $id;
+        return $this->SaveObject();
     }
 
     /**
@@ -209,10 +213,10 @@ class DatabaseTable extends SqlDatabase {
         $res = array();
         $historyWebId = 0;
         if (!empty(($id))) {
-            $res = $this->GetObjectById($id,true);
+            $res = $this->GetObjectById($id,false,array("Deleted"));
             if (!empty($res)) {
                 $insert = FALSE;
-                if ($res->Deleted) {
+                if ($res["Deleted"]) {
                     $this->SetError($this->GetWord("word119"));
                 }
             }
@@ -225,18 +229,22 @@ class DatabaseTable extends SqlDatabase {
 
 
         foreach ($this as $item => $value) {
+            
             if ($item == "" || in_array($item, $this->_ignoredSave))
                 continue;
             if ($item == "HistoryWebId") {
                 $historyWebId = $value;
                 continue;
             }
-
+            
+            if (is_bool($value))
+                $value = $value ? 1:0;
+            
             $value = $this->IsValidColumn($item, $value, $id);
             if (in_array($item, $this->_parametrsColumn)) {
                 $parametrs[$item] = $value;
             }
-            $data[$item] = $value;
+            $data[$item] = trim($value);
         }
 
 
@@ -259,6 +267,8 @@ class DatabaseTable extends SqlDatabase {
             else {
                 unset($data["LangId"]);
             }
+            if (empty($data["IsSystem"]))
+                $data["IsSystem"] = 0;  
             $action = DatabaseActions::NONE_ACTION;
             if ($insert) {
                 // INSERT 
@@ -274,6 +284,7 @@ class DatabaseTable extends SqlDatabase {
                 $parametrs["Id"] = $id;
             } else {
                 // UPDATE
+                
                 $action = DatabaseActions::UPDATE;
                 $this->IsInsert = false;
                 try {
@@ -299,7 +310,7 @@ class DatabaseTable extends SqlDatabase {
     }
 
     private function AddDefaultsColums() {
-        $this->_columnsInfo[] = new DataTableColumn("Id", \Types\DataColumnsTypes::INTEGER, "", false, 11, true, KeyType::$PrimaryKey);
+        $this->_columnsInfo[] = new DataTableColumn("Id", \Types\DataColumnsTypes::INTEGER, "", false, 11, true, \Types\KeyType::PRIMARYKEY);
         $this->_columnsInfo[] = new DataTableColumn("Deleted", \Types\DataColumnsTypes::BOOLEAN, 0, true, 1);
         $this->_columnsInfo[] = new DataTableColumn("IsSystem", \Types\DataColumnsTypes::BOOLEAN, 0, true, 1);
         if ($this->MultiWeb) {
@@ -791,8 +802,8 @@ class DatabaseTable extends SqlDatabase {
                 if (empty($parametrs))
                     $class->$function();
                 else {
-                    $param = implode(",", $parametrs);
-                    eval($class->$function($param));
+                    //$param = implode(",", $parametrs);
+                    eval($class->$function($parametrs));
                 }
             }
         }
@@ -869,6 +880,7 @@ class DatabaseTable extends SqlDatabase {
      */
     protected function RunTableMigrate($query) {
         $dbMigrations = new DbMigrations();
+        //$query = htmlentities($query);*
         $res = $dbMigrations->SelectByCondition("QueryMigrations = '$query'", "", array("Id"));
         if (empty($res)) {
             try{
@@ -883,5 +895,14 @@ class DatabaseTable extends SqlDatabase {
             $dbMigrations->SaveObject();
         }
     }
+    
+    private function CreateDataScript($sql,$fileName)
+    {
+        if ($this->AutoCreateDataInsertScript)
+        {
+            
+        }
+    }
+    
 
 }

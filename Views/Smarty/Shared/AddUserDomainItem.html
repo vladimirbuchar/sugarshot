@@ -145,8 +145,8 @@
                     </div>
                     <div class="form-group Domain"><label for="Domain" class="control-label col-sm-4"><!--{$word355}--></label>
                     <div class="col-sm-8">
-                        <select id="Domain" name="Domain" class="required form-control">
-                            <option value=""><!--{$word213}--></option>
+                        <select id="Domain" name="Domain" class="required form-control" data-defaultvalue="0">
+                            <option value="0"><!--{$word213}--></option>
                             <!--{section name=data loop=$UserDomainList}-->
                             <option value="<!--{$UserDomainList[data].Id}-->"><!--{$UserDomainList[data].DomainName}--></option>
                             <!--{/section}--> 
@@ -257,3 +257,4 @@
         </div>
         
     </div>
+    

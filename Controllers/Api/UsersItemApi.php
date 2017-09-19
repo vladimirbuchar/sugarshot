@@ -30,43 +30,32 @@ class UsersItemApi extends ApiController {
         $this->SetApiFunction("SaveUsersModules", array("system", "Administrators"));
     }
 
-    public function GroupDetail() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GroupDetail($ajaxParametrs) {
         $id = $ajaxParametrs["Id"];
         $userGroup = new \Objects\Users();
         $userGroupDetail = $userGroup->GetUserGroupDetail($id);
         return $userGroupDetail;
     }
 
-    public function AddUserGroup() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function AddUserGroup($ajaxParametrs) {
         $userGroup = UserGroups::GetInstance();
-        $userGroup->Id = $ajaxParametrs["Id"];
-        $userGroup->GroupIdentificator = $ajaxParametrs["GroupIdentificator"];
+        $id = empty($ajaxParametrs["Id"]) ? 0 : $ajaxParametrs["Id"];
+        $userGroup->Id = $id;
+        $userGroup->GroupIdentificator = empty($ajaxParametrs["GroupIdentificator"]) ? "": $ajaxParametrs["GroupIdentificator"];
         $userGroup->GroupName = $ajaxParametrs["GroupName"];
         $userGroup->IsSystemGroup = $ajaxParametrs["IsSystemGroup"];
         $userGroup->UserDefaultState = $ajaxParametrs["UserDefaultState"];
         return $userGroup->SaveObject();
     }
 
-    public function DeleteUserGroup() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DeleteUserGroup($ajaxParametrs) {
         $userGroup = UserGroups::GetInstance();
         $pernametly = $ajaxParametrs["DeletePernamently"] == "true";
         $userGroup->DeleteObject($ajaxParametrs["Id"], $pernametly);
     }
 
-    public function GroupListLoadTable() {
+    public function GroupListLoadTable($ajaxParametrs) {
         self::$SessionManager->UnsetKey("where");
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
         $sort = null;
         $where = "";
         $saveToSession = false;
@@ -96,58 +85,29 @@ class UsersItemApi extends ApiController {
         return $outData;
     }
 
-    public function UserDetail() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function UserDetail($ajaxParametrs) {
+        
         $userDetail = self::$User->GetUserDetail($ajaxParametrs["Id"]);
         return $userDetail;
     }
 
-    public function AddUser() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function AddUser($ajaxParametrs) {
+        
         $user = new \Objects\Users();
-        return $user->CreateUser($ajaxParametrs["Id"], $ajaxParametrs["FirstName"], $ajaxParametrs["LastName"], $ajaxParametrs["UserEmail"], $ajaxParametrs["UserName"], $ajaxParametrs["UserPassword"], $ajaxParametrs["BlockDiscusion"], $ajaxParametrs["MainUserGroup"], array(), $ajaxParametrs["IsActive"], $ajaxParametrs["DefaultLang"], true);
+        $password = empty($ajaxParametrs["UserPassword"]) ? "": $ajaxParametrs["UserPassword"];
+        return $user->CreateUser($ajaxParametrs["Id"], $ajaxParametrs["FirstName"], $ajaxParametrs["LastName"], $ajaxParametrs["UserEmail"], $ajaxParametrs["UserName"],$password , $ajaxParametrs["BlockDiscusion"], $ajaxParametrs["MainUserGroup"], array(), $ajaxParametrs["IsActive"], $ajaxParametrs["DefaultLang"], true);
     }
 
-    public function SaveProfile() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
+    public function SaveProfile($ajaxParametrs) {
         $this->SaveUserDomain($ajaxParametrs);
     }
 
-    public function RecoveryUserGroup() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function RecoveryUserGroup($ajaxParametrs) {
         $ug = UserGroups::GetInstance();
         $ug->RecoveryObject($ajaxParametrs["Id"]);
     }
 
-    public function UserListLoadTable() {
-        self::$SessionManager->UnsetKey("where");
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-
-        if (empty($ajaxParametrs))
-            return;
-        $sort = null;
-        $where = "";
-        $saveToSession = false;
-        if (!empty($ajaxParametrs["SortColumn"]) && !empty($ajaxParametrs["SortType"]))
-            $sort = new SortDatabase($ajaxParametrs["SortType"], $ajaxParametrs["SortColumn"]);
-        $model = Users::GetInstance();
-        if (!empty($ajaxParametrs["SaveFiltrSortToSession"])) {
-            $saveToSession = $ajaxParametrs["SaveFiltrSortToSession"];
-        }
-        if (!empty($ajaxParametrs["Where"])) {
-            if ($saveToSession) {
-                $modelName = $ajaxParametrs["ModelName"];
-                self::$SessionManager->SetSessionValue("where", $ajaxParametrs["Where"], $modelName);
-            }
-            $where = $model->PrepareWhere($ajaxParametrs["Where"]);
-        }
-
+    public function UserListLoadTable($ajaxParametrs) {
         $showDeleteItem = false;
         if (!empty($ajaxParametrs["ShowItem"])) {
             if ($ajaxParametrs["ShowItem"] == "DeleteItem")
@@ -155,44 +115,35 @@ class UsersItemApi extends ApiController {
             else
                 $showDeleteItem = false;
         }
-        return $model->Select(array(), $showDeleteItem, true, true, $sort, $where, $saveToSession);
+        $model = Users::GetInstance();
+        return $model->Select(array(), $showDeleteItem, true, true);
     }
 
-    public function DeleteUser() {
-
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function DeleteUser($ajaxParametrs) {
         $userGroup = Users::GetInstance();
         $pernametly = $ajaxParametrs["DeletePernamently"] == "true";
         $userGroup->DeleteObject($ajaxParametrs["Id"], $pernametly);
     }
 
-    public function ChangePassword() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function ChangePassword($ajaxParametrs) {
         $user = new \Objects\Users();
         return $user->ChangePassword($ajaxParametrs["password1"], $ajaxParametrs["password2"], $ajaxParametrs["UserId"]);
     }
 
-    public function GetDefaultState() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function GetDefaultState($ajaxParametrs) {
+        
         $user = UserGroups::GetInstance();
         $user->GetObjectById(self::$UserGroupId, true, array("UserDefaultState"));
         $state = $user->UserDefaultState;
         if (empty($state))
+        {
             return "";
+        }
         $ar = explode("#", $state);
         return "/xadm/" . $ar[0] . "/" . $ar[1] . "/" . $ajaxParametrs["SelectWebId"] . "/" . $ajaxParametrs["SelectLangId"] . "/";
     }
 
-    public function SaveOtherUserGroups() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function SaveOtherUserGroups($ajaxParametrs) {
         $userGr = new \Objects\UsersGroups();
         $userId = $ajaxParametrs["UserId"];
         unset($ajaxParametrs["UserId"]);
@@ -205,8 +156,7 @@ class UsersItemApi extends ApiController {
         }
     }
 
-    public function SaveUsersGroupWeb() {
-        $ajax = $this->PrepareAjaxParametrs();
+    public function SaveUsersGroupWeb($ajax) {
         $id = $ajax["UserGroupId"];
         $uweb = UserGroupsWeb::GetInstance();
         $uweb->DeleteByCondition("UserGroupId = $id AND Deleted= 0", false, false);
@@ -223,8 +173,7 @@ class UsersItemApi extends ApiController {
         }
     }
 
-    public function SaveUsersModules() {
-        $ajax = $this->PrepareAjaxParametrs();
+    public function SaveUsersModules($ajax) {
         $ugm = UserGroupsModules::GetInstance();
         $id = $ajax["UserGroupId"];
         $ugm->DeleteByCondition("UserGroupId = $id AND Deleted= 0", false, false);

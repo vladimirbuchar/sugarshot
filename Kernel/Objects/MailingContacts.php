@@ -54,14 +54,15 @@ class MailingContacts extends ObjectManager{
     
     public function AddContactToMailingGroup($contactId,$mailingGroupId)
     {
+        
         $model = \Model\MailingContactsInGroups::GetInstance();
         $model->DeleteByCondition("ContactId = $contactId",true);
-        for ($i= 0; $i< count($mailingGroupId);$i++)
+        foreach ($mailingGroupId as $key => $value)
         {
                
-            if ($mailingGroupId[$i][1] == 1)
+            if ($value == 1)
             {
-                $this->SaveContactToMailingGroup($contactId, $mailingGroupId[$i][0]);
+                $this->SaveContactToMailingGroup($contactId, StringUtils::RemoveString($key, "MailingGroupName_"));
                 
             }
         }

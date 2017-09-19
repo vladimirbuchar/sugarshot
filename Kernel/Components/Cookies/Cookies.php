@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class Cookies extends UserComponents{
+class Cookies extends UserComponents implements \Inteface\iComponent{
     
     public $MoreInfoLink = "#";
     public function __construct() {

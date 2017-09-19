@@ -12,6 +12,7 @@ Temp/
 cache/
 Log/
 nbproject/
+.idea/
 *.tmp
 *.bak
 *.swp

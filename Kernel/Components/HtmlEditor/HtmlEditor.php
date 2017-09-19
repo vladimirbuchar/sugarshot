@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class HtmlEditor extends UserComponents{
+class HtmlEditor extends UserComponents implements \Inteface\iComponent{
     public $Html;
     public $HtmlEditorId = "";
     public $ShowEditHtmlCode = false;

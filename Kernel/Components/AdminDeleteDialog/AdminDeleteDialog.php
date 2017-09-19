@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class AdminDeleteDialog extends UserComponents{
+class AdminDeleteDialog extends UserComponents implements \Inteface\iComponent{
     
     public $ContentType = "";
     public function __construct() {

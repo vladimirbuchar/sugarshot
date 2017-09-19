@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class SearchResult extends UserComponents{
+class SearchResult extends UserComponents implements \Inteface\iComponent{
     
     public function __construct() {
         

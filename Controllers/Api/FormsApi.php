@@ -11,19 +11,16 @@ class Forms extends ApiController {
         $this->SetControllerPermition(array("*"));
         $this->SetApiFunction("SendFormWeb", array("*"));
         $this->SetApiFunction("RegenerateCaptcha", array("*"));
-        $this->SetApiFunction("ValidateForm", array("*"));
+        //$this->SetApiFunction("ValidateForm", array("*"));
     }
 
-    public function SendFormWeb() {
+    public function SendFormWeb($ajaxParametrs) {
 
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
 
 
         $formData = $ajaxParametrs["parametrs"]; //$this->PrepareAjaxParametrs();
         $formData = $this->PrepareDomains($formData);
-        $formDataTmp = $this->PrepareAjaxParametrs($formData);
+        $formDataTmp = $ajaxParametrs;
         $id = $ajaxParametrs["FormId"];
         $content = new \Objects\Content();
         $form = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);
@@ -56,13 +53,8 @@ class Forms extends ApiController {
         return $outArray;
     }
 
-    public function ValidateForm() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-
-        if (empty($ajaxParametrs))
-            return;
+    /*public function ValidateForm($ajaxParametrs) {
         $formData = $ajaxParametrs["parametrs"];
-
         $formData = $this->PrepareDomains($formData);
         $formDataTmp = $this->PrepareAjaxParametrs($formData);
         $id = $ajaxParametrs["FormId"];
@@ -75,12 +67,9 @@ class Forms extends ApiController {
             $outArray["Errors"] = $form->GetError();
         }
         return $outArray;
-    }
+    }*/
 
-    public function RegenerateCaptcha() {
-        $ajaxParametrs = $this->PrepareAjaxParametrs();
-        if (empty($ajaxParametrs))
-            return;
+    public function RegenerateCaptcha($ajaxParametrs) {
         $id = $ajaxParametrs["Id"];
         $content = new \Objects\Content();
         $form = $content->GetFormDetail($id, self::$UserGroupId, $this->WebId, $this->LangId);

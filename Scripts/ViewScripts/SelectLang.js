@@ -11,7 +11,7 @@ $(document).ready(function(){
 function GetLangByWeb()
 {
     ShowLoading();
-    var data = CallPhpFunctionAjax('Admin','GetLangListByWeb','JSON',$("#web").val());
+    var data = CallPhpFunctionAjax('Admin','GetLangListByWeb','JSONOBJECT',{web:$("#web").val()});
     $("#selectLang").addClass("dn");
     $("#noLang").addClass("dn");
     
@@ -44,17 +44,14 @@ function AddLang()
 }
 function OpenDefaultState()
 {
-    var params = new Array();
-    var ar1 = new Array();
-    ar1[0]= "SelectWebId";
-    ar1[1]= $("#web").val();
-    params[0] = ar1;
-    var ar2 = new Array();
-    ar2[0]= "SelectLangId";
-    ar2[1]= $("#lang").val();
-    params[1] = ar2;
+    var params = {SelectWebId:$("#web").val(), SelectLangId: $("#lang").val()};
     var href= "/xadm/WebEdit/Tree/"+$("#web").val()+"/"+$("#lang").val()+"/";
-    var newHref = CallPhpFunctionAjax("UsersItem","GetDefaultState","POST",params);
-    if (newHref !="") href = newHref;
+    var newHref = CallPhpFunctionAjax("UsersItem","GetDefaultState","POSTOBJECT",params);
+    if (newHref !="") 
+    {
+        
+        href = newHref;
+    }
+    
     window.location.href=href;
 }

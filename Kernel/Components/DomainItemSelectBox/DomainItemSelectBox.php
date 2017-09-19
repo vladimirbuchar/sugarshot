@@ -2,7 +2,7 @@
 
 namespace Components;
 
-class DomainItemSelectBox extends UserComponents {
+class DomainItemSelectBox extends UserComponents implements \Inteface\iComponent{
 
     public $SelectId = "";
     public $ValueIdetificator = "";

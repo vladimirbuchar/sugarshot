@@ -5,7 +5,7 @@ use HtmlComponents\Ul;
 use HtmlComponents\Li;
 use HtmlComponents\Link;
 use Types\ContentTypes;
-class Menu extends UserComponents{
+class Menu extends UserComponents implements \Inteface\iComponent{
     
     public $MainParent ="mainmenu";
     public $AcceptUserTeplates = "";

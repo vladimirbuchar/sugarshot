@@ -2,7 +2,7 @@ $(document).ready(function(){
                     $("#OtherLang").change(function(){
                         SaveTemplate(false);
              SetIgnoreExit(true);
-             CallPhpFunctionAjax("WebEdit","ChangeLangVersion","POST",null);
+             CallPhpFunctionAjax("WebEdit","ChangeLangVersion","POSTOBJECT",null);
              var selectLang = $(this).val();
              window.location.href= "/xadm/WebEdit/JsEditor/"+$("#WebId").val()+"/"+ selectLang+"/"+$("#ObjectId").val()+"/0/";
              
@@ -21,25 +21,11 @@ function SaveTemplate(publish)
 {
     ShowLoading();
     var params = PrepareParametrs("settingTemplate");
-    var nextItem = params.length;
     var privileges = ReadUserPrivileges("userSecurity");
-    var ar1 = new Array();
-    ar1[0] = "Privileges";
-    ar1[1] = privileges;
-    params[nextItem] = ar1;
-    
-    var ar2 = new Array();
-    ar2[0] = "Id";
-    ar2[1] = $("#ObjectId").val();
-    nextItem++;
-    params[nextItem] = ar2;
-    
-    var ar3 = new Array();
-    ar3[0] = "Publish";
-    ar3[1] = publish;
-    nextItem++;
-    params[nextItem] = ar3;
-   var outId = CallPhpFunctionAjax("WebEdit","SaveJs","POST",params);
+    params.Privileges = privileges;
+    params.Id = $("#ObjectId").val();
+    params.Publish = publish;
+    var outId = CallPhpFunctionAjax("WebEdit","SaveJs","POSTOBJECT",params);
    $("#ObjectId").val(outId);
    LoadData(outId,"js");
    HideLoading();

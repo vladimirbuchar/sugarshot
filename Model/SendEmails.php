@@ -16,9 +16,8 @@ class SendEmails  extends DatabaseTable implements \Inteface\iDataTable{
     }
     
     public function OnCreateTable() {
-        $this->AddColumn(new DataTableColumn("MailId", \Types\DataColumnsTypes::INTEGER, 0, true, 9));
-        
-    }
+        $this->AddColumn(new DataTableColumn("MailId", \Types\DataColumnsTypes::INTEGER, 0, true, 9)); 
+   }
     
 
     public function InsertDefaultData() {

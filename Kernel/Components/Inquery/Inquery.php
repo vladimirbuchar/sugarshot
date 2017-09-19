@@ -1,7 +1,7 @@
 <?php
 namespace Components;
 use Utils\Forms;
-class Inquery extends UserComponents{
+class Inquery extends UserComponents implements \Inteface\iComponent{
     
     public function __construct() {
         

@@ -9,7 +9,7 @@ class ObjectHistory extends ObjectManager{
     }
     public function GetHistoryObject($objectName,$objectId)
     {
-        return \dibi::query("SELECT * FROM  ObjectHistory WHERE ObjectName = %s AND ObjectId = %i  AND ActiveItem = 1 ORDER BY CreateDate DESC ",$objectName,$objectId)->fetchAll();
+        return \dibi::query("SELECT * FROM  ObjectHistory WHERE ObjectHistoryName = %s AND ObjectId = %i  AND ActiveItem = 1 ORDER BY CreateDate DESC ",$objectName,$objectId)->fetchAll();
     }
     public function RecoveryItemFromHistory($idHistory)
     {
@@ -36,6 +36,7 @@ class ObjectHistory extends ObjectManager{
     }
     public function CreateHistoryItem($objectName,$objectId,$action,$userId,$IP,$oldData,$activeItem,$userName,$historyWebId)
     {
+        $date = new \DateTime();
         $model = new \Model\ObjectHistory();
         $model->ObjectHistoryName = $objectName;
         $model->ObjectId = $objectId;
@@ -43,7 +44,7 @@ class ObjectHistory extends ObjectManager{
         $model->UserId = $userId;
         $model->IP = $IP;
         $model->OldData = $oldData;
-        $model->CreateDate = new \DateTime();
+        $model->CreateDate =$date;
         $model->ActiveItem = $activeItem;
         $model->UserName = $userName;
         $model->HistoryWebId = $historyWebId;

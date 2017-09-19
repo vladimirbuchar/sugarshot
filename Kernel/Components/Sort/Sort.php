@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class Sort extends UserComponents{
+class Sort extends UserComponents implements \Inteface\iComponent{
     public $SortDivId = "";
     public $SortDomain = "";
     public $ShowSortByName = false;

@@ -4,14 +4,14 @@ namespace Objects;
 use Types\DataTableColumn;
 
 class WordGroups extends ObjectManager{
-    private static $_webInfo = array();
     public function __construct() {
         parent::__construct();
 
     }
     
-    public function AddColumnLang($wordIndetificator)
+    public function AddColumnLang($parametrs)
     {
+        $wordIndetificator = $parametrs["LangIdentificator"];
         $model =  \Model\WordGroups::GetInstance();
         if (!empty($wordIndetificator))
         {

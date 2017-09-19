@@ -1,7 +1,7 @@
 function FrontendSearch()
 {
-  var value = $("#SearchInput").val();
-  var url = CallPhpFunctionAjax("Ajax","Search","POST",value);
+  var value = {Search: $("#SearchInput").val()};
+  var url = CallPhpFunctionAjax("Ajax","Search","POSTOBJECT",value);
   window.location.href=url;
   
 }

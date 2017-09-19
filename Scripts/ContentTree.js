@@ -37,7 +37,7 @@ function EditItem(controllerName,viewName,prefix)
     if (contentType == "Link" || contentType=="ExternalLink" || contentType=="CssExternalLink" || contentType=="JsExternalLink" || contentType=="JavascriptAction")
     {
         $("#createLink a").click();
-        var data = CallPhpFunctionAjax(controllerName, "GetLinkDetail", "JSON", id);
+        var data = CallPhpFunctionAjax(controllerName, "GetLinkDetail", "JSONOBJECT", {id:id});
         
         var type = data["LinkType"];
         var linkObjectId = data["ObjectId"];
@@ -72,13 +72,10 @@ function DeleteItem()
     var id = selectedObject.attr("id");
     if(IsUndefined(id)) id = selectId;
     else id = id.replace("_anchor", "");
-    var params = Array();
-    var ar1 = Array();
-    ar1[0] = "Id";
-    ar1[1] = id;
-    params[0] = ar1;
+    var params = {Id:id};
     
-    var outValue = CallPhpFunctionAjax("WebEdit", "DeleteTemplate", "POST", params);
+    
+    var outValue = CallPhpFunctionAjax("WebEdit", "DeleteTemplate", "POSTOBJECT", params);
     if (outValue == "FALSE")
     {
         alert(GetWord("word605"));
@@ -137,13 +134,9 @@ function SetChildClick(value)
 
 function ReloadTree(type)
 {
-    var parametrs = new Array();
-    var ar1 = new Array();
-    ar1[0] = "Type";
-    ar1[1] = type;
-    parametrs[0] = ar1;
+    var parametrs = {Type:type};
     var data = "";
-    data = CallPhpFunctionAjax("WebEdit", "GetActualTree", "POST", parametrs);
+    data = CallPhpFunctionAjax("WebEdit", "GetActualTree", "POSTOBJECT", parametrs);
     $(".tree").html(data);
     $('.tree').treegrid();
 }
@@ -155,20 +148,8 @@ function ItemDoubleClick()
  {
      ShowLoading();
      var searchValue = $("#SearchText").val();
-     var parametrs = new Array();
-     var ar1 = new Array();
-     ar1[0] = "Type";
-     ar1[1] = type;
-     parametrs[0] = ar1;
-     var ar2 = new Array();
-     ar2[0] = "Search";
-     ar2[1] = searchValue;
-     parametrs[1] = ar2;
-     var data = "";
-     if (type == "file")
-         data = CallPhpFunctionAjax("FilerepositoryManger", "GetActualTree", "POST", parametrs);
-     else 
-         data = CallPhpFunctionAjax("WebEdit", "GetActualTree", "POST", parametrs);
+     var parametrs = {Type:type,Search:searchValue};
+     var data = CallPhpFunctionAjax("WebEdit", "GetActualTree", "POSTOBJECT", parametrs);
      $(".tree").html(data);
      $('.tree').treegrid();
      HideLoading();
@@ -188,21 +169,8 @@ function MoveDown(id,type)
 }
 function MoveItem(id,mode,type)
 {
-    var params = new Array();
-    var ar1 = new Array();
-    ar1[0] = "Id";
-    ar1[1] = id;
-    params[0] = ar1;
-    var ar2= new Array();
-    ar2[0] = "Mode";
-    ar2[1] = mode;
-    params[1] = ar2;
-    var ar3= new Array();
-    ar3[0] = "ContentType";
-    ar3[1] = type;
-    params[2] = ar3;
-    
-    CallPhpFunctionAjax("WebEdit","MoveItemFolder","POST",params);
+    var params = {Id:id,Mode:mode,ContentType:type}
+    CallPhpFunctionAjax("WebEdit","MoveItemFolder","POSTOBJECT",params);
     if (type =="UserItem" || type=="ExternalLink" || type=="Link" )
         type ="useritem";
     else if (type =="Template")
@@ -254,51 +222,29 @@ function CreateLink(mode)
             
         
         
-        var params = new Array();
-        var ar1 = new Array();
-        var y = 0;
-        ar1[0] = "Type";
-        ar1[1] = type;
-        params[y] = ar1;
-        y++;
+        var params = {};
+        params.Type = type; 
+        
         if (activeTab == 1 || activeTab == 2 || activeTab == 4)
         {
-            var ar3 = new Array();
-            ar3[0] = "LinkId";
-            ar3[1] = GetSelectTree("linkDialog");
-            params[y] = ar3;
-            y++;
+            params.LinkId = GetSelectTree("linkDialog");
         }
         else if (activeTab == 3 || activeTab == 5)
         {
-            var ar2 = new Array();
-            ar2[0] = "LinkInfo";
-            ar2[1] = GetLinkSetting("linkDialog");
-            params[y] = ar2;
-            y++;
+            params.LinkInfo = GetLinkSetting("linkDialog");
         }
         var selectedObject = $("#folderTree .selected");
         var source = selectedObject.attr("id");
         
         if(IsUndefined(source)) source = selectId;
         else source = source.replace("_anchor", "");
-        var ar4 = new Array();
-        ar4[0] = "ParentId";
-        ar4[1] = source;
-        params[y] = ar4;
-        y++;
+        params.ParentId = source; 
+        
         var objectLinkId = $("#ObjectLinkId").val();
-        var ar5 = new Array();
-        ar5[0] = "ObjectLinkId";
-        ar5[1] = objectLinkId;
-        params[y] = ar5;
-        y++;
-        var ar6 = new Array();
-        ar6[0] = "Privileges";
-        ar6[1] = privileges;
-        params[y] = ar6;
-        y++;
-        CallPhpFunctionAjax("WebEdit","CreateWebLink","POST",params);
+        params.ObjectLinkId = objectLinkId; 
+        
+        params.Privileges = privileges; 
+        CallPhpFunctionAjax("WebEdit","CreateWebLink","POSTOBJECT",params);
         $("#ObjectLinkId").val("0");
     }
     function CopyMove()
@@ -320,18 +266,11 @@ function CreateLink(mode)
         }
         if (source == dest)
             return;
-        var param = new Array();
-        var ar1 = new Array();
-        ar1[0] = "sourceId";
-        ar1[1] = source;
-        param[0] = ar1;
-        var ar2 = new Array();
-        ar2[0] = "destinationId";
-        ar2[1] = dest;
-        param[1] = ar2;
+        var param = {sourceId:source,destinationId:dest};
+        
         if (copyModeAction == "move")
         {
-            var value = CallPhpFunctionAjax("WebEdit", "MoveItem", "POST", param);
+            var value = CallPhpFunctionAjax("WebEdit", "MoveItem", "POSTOBJECT", param);
             if (value == "FALSE")
             {
                 alert(GetWord("word606"));
@@ -339,7 +278,7 @@ function CreateLink(mode)
         }
         if (copyModeAction == "copy")
         {
-            var value = CallPhpFunctionAjax("WebEdit", "CopyItem", "POST", param);
+            var value = CallPhpFunctionAjax("WebEdit", "CopyItem", "POSTOBJECT", param);
             if (value == "FALSE")
             {
                 alert(GetWord("word607"));
@@ -350,16 +289,8 @@ function CreateLink(mode)
 
 function LoadData(outId,type)
 {
-    var loadParams = new Array();
-    var loadParams1 = new Array();
-    loadParams1[0] = "Type";
-    loadParams1[1] = type;
-    loadParams[0] =loadParams1;
-    var loadParams2 = new Array();
-    loadParams2[0] = "Id";
-    loadParams2[1] = outId;
-    loadParams[1] =loadParams2;
-    var outdata =  CallPhpFunctionAjax("WebEdit","GetObjectData","JSON",loadParams);
+    var loadParams = {Type:type,Id:outId};
+    var outdata =  CallPhpFunctionAjax("WebEdit","GetObjectData","JSONOBJECT",loadParams);
     if (type== "useritem" || type=="form" || type=="filefolder" || type=="datasource") 
     {
         var seoUrl = outdata[0].SeoUrl;
@@ -379,12 +310,12 @@ function LoadData(outId,type)
 }
 function LoadLinkDialog()
 {
-    var html = CallPhpFunctionAjax("WebEdit", "GetTreeLinkDialog", "POST", null);
+    var html = CallPhpFunctionAjax("WebEdit", "GetTreeLinkDialog", "POST");
     $("#dialogComponentLink").html(html);
 }
 function LoadLinkDialogCss()
 {
-    var html = CallPhpFunctionAjax("WebEdit", "GetTreeLinkDialogCss", "POST", null);
+    var html = CallPhpFunctionAjax("WebEdit", "GetTreeLinkDialogCss", "POST");
     $("#dialogComponentLink").html(html);
 }
 
@@ -474,7 +405,7 @@ function SetActiveTab(type,linkObjectId,name,url,dialogId)
         var objectId = $("#ObjectId").val();
         if (confirm(GetWord("word887")))
         {
-            CallPhpFunctionAjax("WebEdit","DeleteLangVersion","GET",objectId);
+            CallPhpFunctionAjax("WebEdit","DeleteLangVersion","GETOBJECT",{objectId: objectId});
             GoToBack();    
         }
     }

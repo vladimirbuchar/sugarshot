@@ -31,6 +31,21 @@ class ApiController extends \Controller\Controllers {
         return in_array($functionName, $this->_ajaxFunctions);
     }
     
+    protected function GetHtmlEditors($ajaxParametrs)
+    {
+        $editors = array();
+        foreach ($ajaxParametrs as $key => $value)
+        {
+            if (StringUtils::EndWith($key, "__ishtmleditor__")) {
+                $key = StringUtils::RemoveString($key, "__ishtmleditor__");
+                $key = StringUtils::RemoveLastChar($key, 5);
+                $editors[$key] = $value;
+            }
+        }
+         return $editors;
+        
+    }
+    
     protected function PrepareAjaxParametrs($params = null) {
         if ($params == null) {
             if (!empty($_GET["params"]))

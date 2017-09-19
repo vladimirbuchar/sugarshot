@@ -1,7 +1,7 @@
 <?php
 namespace Components;
 use Utils\ArrayUtils;
-class Filtr extends UserComponents{
+class Filtr extends UserComponents implements \Inteface\iComponent{
     public $FiltrDivId = "";
     public $FiltrDomain ="";
     public function __construct() {

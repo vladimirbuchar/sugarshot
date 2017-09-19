@@ -6,7 +6,7 @@ use HtmlComponents\Textbox;
 use HtmlComponents\Span;
 use HtmlComponents\FontAwesome;
 use HtmlComponents\Button;
-class Search extends UserComponents{
+class Search extends UserComponents implements \Inteface\iComponent{
     
     public $DefaultText ="";
      

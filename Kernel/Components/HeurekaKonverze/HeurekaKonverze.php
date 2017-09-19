@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class HeurekaKonverze extends UserComponents{
+class HeurekaKonverze extends UserComponents implements \Inteface\iComponent{
     public function __construct() {
         $this->IgnoreCache = true;
         parent::__construct();

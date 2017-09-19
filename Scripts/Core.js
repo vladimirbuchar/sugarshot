@@ -2,7 +2,7 @@ $(document).ready(function(){
     
    $("#userLang").change(function(){
       var value = $(this).val();
-      CallPhpFunctionAjax("Templates","SetAdminLang","POST",value);
+      CallPhpFunctionAjax("Templates","SetAdminLang","POSTOBJECT",{selectlang:value});
       window.location.href="";
    });
 });
@@ -15,7 +15,7 @@ function Refresh()
 
 function GetWord(wordid)
 {
-    return CallPhpFunctionAjax("Admin","GetJavascriptWord","POST",wordid);
+    return CallPhpFunctionAjax("Admin","GetJavascriptWord","POSTOBJECT",{wordid:wordid});
 }
 
 
@@ -27,7 +27,7 @@ function CallPhpFunction(functionName)
         mainForm.submit();
     }
 }
- function  CallPhpFunctionAjax(controllerName, functionName, type, params, params1,params2)
+function  CallPhpFunctionAjax(controllerName, functionName, type, params, params1,params2)
 {
     try{
         var out;
@@ -53,7 +53,6 @@ function CallPhpFunction(functionName)
             isFrontEnd = $("#IsFrontEnd").val();
             url = url + isFrontEnd+"/";
         }
-        //console.log(functionName,url);
         if (type == "GET")
         {
             $.get(url, {params: params, params1: params1,params2: params2 }, function (data) {
@@ -75,7 +74,7 @@ function CallPhpFunction(functionName)
         else if (type =="POSTOBJECT")
         {
             $.post(url,{params: params}, function (data) {
-                out = data;
+                out = $.trim(data);
             })
         }
         else if (type == "JSONOBJECT")
@@ -87,7 +86,7 @@ function CallPhpFunction(functionName)
         else if (type =="GETOBJECT")
         {
             $.get(url,{params: params}, function (data) {
-                out = data;
+                out = $.trim(data);
             })
         }
         else if (type == "LONGREQUEST")
@@ -353,7 +352,7 @@ function userValidate(re,value)
 {
     return re.test(value);
 }
-
+/*
 function ValidateUserParametrs(id)
 {
     var data = PrepareParametrs(id);
@@ -365,7 +364,7 @@ function ValidateUserParametrs(id)
     CallPhpFunctionAjax();
     
 }
-
+*/
 function Clear(id)
 {
     $(".noUpdate").removeAttr("disabled");
@@ -433,24 +432,17 @@ function Clear(id)
 function SaveDomain(domainName,controllerName,functionName)
 {
     var data = PrepareParametrs(domainName);
-    CallPhpFunctionAjax(controllerName, functionName, "POST", data)
-}
-
-function PrepareParametrsFromData(elementId)
-{
-    
+    CallPhpFunctionAjax(controllerName, functionName, "POSTOBJECT", data)
 }
 
 function PrepareParametrs(id,ignoreItems)
 {
+    var outObject = {};
     var webid =$("#WebId").val();
     if (IsUndefined(ignoreItems))
         ignoreItems = "";
-    // najdu všechny inputy
+    // inputs
     var inputs = $("#" + id + " input");
-    var outArray = new Array();
-    var y = 0;
-    
     for (var i = 0; i < inputs.length; i++)
     {
         
@@ -470,7 +462,12 @@ function PrepareParametrs(id,ignoreItems)
         if (type == "text" || type == "hidden" || type=="color" || type=="email" || type=="number" || type=="search" || type=="tel" || type=="url" || type=="password" )
         {   
            value = input.val();    
+           if (value == null || value =="")
+            { 
+                value = input.data("defaultvalue");
+            }
         }
+        
         else if (type == "file")
         {
             var file_data = $('#'+ItemId).prop('files')[0];
@@ -499,9 +496,7 @@ function PrepareParametrs(id,ignoreItems)
         }
         else if (type=="checkbox" || type== "radio")
         {
-            
             var isChecked = input.is(":checked");
-            //alert(input.attr("class"));
             if (input.hasClass("domainRadioButton"))
             {
                 if (!isChecked)
@@ -529,13 +524,9 @@ function PrepareParametrs(id,ignoreItems)
             }
             
         }
-        var ar = new Array();
-        ar[0] = ItemId;
-        ar[1] = value;
-        outArray[y] = ar;
-        y++;
+        if (!IsUndefined(ItemId))
+            outObject[ItemId] = value;
     }
-    // selects 
     var selects = $("#" + id + " select");
     for (var i = 0; i< selects.length; i++)
     {
@@ -544,14 +535,16 @@ function PrepareParametrs(id,ignoreItems)
         if (select.hasClass(ignoreItems) && ignoreItems !="") continue;
         var value = select.val();
         var ItemId = select.attr("id");
-        var ar = new Array();
-        ar[0] = ItemId;
-        ar[1] = value;
-        outArray[y] = ar;
-        y++;    
+        if (value == null)
+        {
+            value = select.data("defaultvalue");
+        }
+        if (!IsUndefined(ItemId))
+        outObject[ItemId] = value;
+          
     }
     
-        // selects 
+    // textarea
     var textareas = $("#" + id + " textarea");
     
     for (var i = 0; i< textareas.length; i++)
@@ -561,11 +554,8 @@ function PrepareParametrs(id,ignoreItems)
         if (textarea.hasClass(ignoreItems) && ignoreItems !="") continue;
         var value = textarea.val();
         var ItemId = textarea.attr("id");
-        var ar = new Array();
-        ar[0] = ItemId;
-        ar[1] = value;
-        outArray[y] = ar;
-        y++;    
+        outObject[ItemId] = value;
+        
     }
     
    
@@ -580,7 +570,6 @@ function PrepareParametrs(id,ignoreItems)
             var table = $(tables[i]);
             var ItemId = table.attr("id");
             var trs = $("#"+ItemId+" tr");
-            //var xml = new Array();
             var xml ="";
             var xmlPos = 0;
             xml +="<items>";
@@ -610,29 +599,29 @@ function PrepareParametrs(id,ignoreItems)
                 
             }
             xml +="</items>";
-            var ar = new Array();
-            ar[0] = ItemId;
-            ar[1] = xml;
+            if (!IsUndefined(ItemId))
+            outObject[ItemId] = value;
             
-            outArray[y] = ar;
-            y++;    
         }
     }
+    
     if (RegisteredHtmlEditor.length > 0)
     {
-        
+    
         
         for (i=0; i < tinyMCE.editors.length; i++){
            try{ 
            var content = tinyMCE.editors[i].getContent();
            if (content != "")
            {   
-               var ar = new Array();
-               ar[0] = tinyMCE.editors[i].id+"__ishtmleditor__";
-               ar[1] = content;
-               outArray[y] = ar;
-               y++;     
-           }
+               
+               var ItemId = tinyMCE.editors[i].id+"__ishtmleditor__";
+               if (!IsUndefined(ItemId))
+               {
+                   outObject[ItemId] = content;
+                   
+                }
+              }
             }
             catch (e){
                 
@@ -640,7 +629,7 @@ function PrepareParametrs(id,ignoreItems)
         }
     }
     
-    return outArray;
+    return outObject;
 }
 
 function ConvertSystemArrayToObject(data)
@@ -670,17 +659,9 @@ function AddNewRowByJson(outData, tableId, idPrefixRow)
 
 function ExportData( functionName, controllerName, modelName)
 {
-    var params = Array();
-    var ar = Array();
-    ar[0] = "ModelName";
-    ar[1] = modelName;
-    params[0] = ar;
     var outFile = $(".ExportType:checked").val();
-    var ar1 = Array();
-    ar1[0] = "ExportType";
-    ar1[1] = outFile;
-    params[1] = ar1;
-    var outData = CallPhpFunctionAjax(controllerName, functionName, "POST", params);
+    var params = {ModelName:modelName,ExportType: outFile};
+    var outData = CallPhpFunctionAjax(controllerName, functionName, "POSTOBJECT", params);
     window.location.href = outData;
 }
 function Import( functionName, controllerName, modelName)
@@ -701,22 +682,9 @@ function Import( functionName, controllerName, modelName)
                     data: form_data,
                     type: 'post',
                     success: function (filepath) {
-                        var params = Array();
-                        var ar = Array();
-                        ar[0] = "ModelName";
-                        ar[1] = modelName;
-                        params[0] = ar;
-
-                        var ar1 = Array();
-                        ar1[0] = "FilePath";
-                        ar1[1] = filepath;
-                        params[1] = ar1;
-
-                        var ar2 = Array();
-                        ar2[0] = "Mode";
-                        ar2[1] = modeImport
-                        params[2] = ar2;
-                        CallPhpFunctionAjax(controllerName, functionName, "POST", params)
+                        var params = {ModelName:modelName,FilePath:filepath,Mode:modeImport}
+                        
+                        CallPhpFunctionAjax(controllerName, functionName, "POSTOBJECT", params)
                         
                     }
                 });
@@ -820,19 +788,19 @@ function DeleteUserItemFrontend(id)
 {
     if (confirm(GetWord("word700")))
     {
-        CallPhpFunctionAjax("Ajax","DeleteUserItem","POST",id);
+        CallPhpFunctionAjax("Ajax","DeleteUserItem","POSTOBJECT",{id:id });
         Refresh();
     }
 }
 function SaveUserProfile(formId)
 {
     var data = PrepareParametrs(formId);
-    CallPhpFunctionAjax("Ajax","SaveUserProfile","POST",data);
+    CallPhpFunctionAjax("Ajax","SaveUserProfile","POSTOBJECT",data);
 
 }
 function FormItemDetail(id)
 {
-    var data = CallPhpFunctionAjax("WebEdit", "GetFormItemDetail", "GET", id);
+    var data = CallPhpFunctionAjax("WebEdit", "GetFormItemDetail", "GETOBJECT", {id:id });
     $("#showPanel").html(data);
     
 }

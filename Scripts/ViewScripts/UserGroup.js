@@ -7,28 +7,13 @@ $(document).ready(function(){
           function OnAfterSaveItem(id)
           {
                 var webList = PrepareParametrs("webList");
-                var parametrs = new Array();
-                var p1 = new Array();
-                p1[0] = "UserGroupId";
-                p1[1] = id;
-                parametrs[0] = p1;
-                var p2 = new Array();
-                p2[0] = "WebList";
-                p2[1] = webList;
-                parametrs[1] = p2;
-                CallPhpFunctionAjax("UsersItem","SaveUsersGroupWeb","POST",parametrs);
+                var parametrs = {UserGroupId:id,WebList:webList}
+                
+                CallPhpFunctionAjax("UsersItem","SaveUsersGroupWeb","POSTOBJECT",parametrs);
                 
                 
                 var moduleList = PrepareParametrs("moduleList");
-                var parametrsmoduleList = new Array();
-                var p1 = new Array();
-                p1[0] = "UserGroupId";
-                p1[1] = id;
-                parametrsmoduleList[0] = p1;
-                var p2 = new Array();
-                p2[0] = "ModuleList";
-                p2[1] = moduleList;
-                parametrsmoduleList[1] = p2;
-                CallPhpFunctionAjax("UsersItem","SaveUsersModules","POST",parametrsmoduleList);
+                var parametrsmoduleList = {UserGroupId:id, ModuleList:moduleList}
+                CallPhpFunctionAjax("UsersItem","SaveUsersModules","POSTOBJECT",parametrsmoduleList);
                 
           }

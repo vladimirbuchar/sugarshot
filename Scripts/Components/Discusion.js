@@ -1,23 +1,14 @@
 function AddDiscusionItem()
 {
     var params = PrepareParametrs("itemForm");
-    var nextItem = params.length;
-    var ar1 =  new Array();
-    ar1[0] = "DiscusionId";
-    ar1[1] = $("#DiscusionId").val();
-    params[nextItem] = ar1;
-    nextItem++;
-    CallPhpFunctionAjax("Ajax","AddDiscusionItem","POST",params);   
- }
+    params.DiscusionId = DiscusionId:$("#DiscusionId").val();
+    CallPhpFunctionAjax("Ajax","AddDiscusionItem","POSTOBJECT",params);   
+}
     
 function LoadDiscusionItemDetail(id)
 {
-    var params = new Array();
-    var ar1 =  new Array();
-    ar1[0] = "DiscusionItem";
-    ar1[1] = id;
-    params[0] = ar1;
-    var data = CallPhpFunctionAjax("Ajax","DiscusionItemDetail","JSON",params);   
+    var params = {DiscusionItem:id}
+    var data = CallPhpFunctionAjax("Ajax","DiscusionItemDetail","JSONOBJECT",params);   
     WriteData(data);
 }
 function SetParentId(parentId,id)
@@ -27,23 +18,15 @@ function SetParentId(parentId,id)
 }
 function DeleteDiscusionItem(id)
     {
-        var params = new Array();
-        var ar1 =  new Array();
-        ar1[0] = "DiscusionItem";
-        ar1[1] = id;
-        params[0] = ar1;
-        CallPhpFunctionAjax("Ajax","DeleteDiscusionItem","POST",params);   
+        var params = {DiscusionItem:id}
+        CallPhpFunctionAjax("Ajax","DeleteDiscusionItem","POSTOBJECT",params);   
         LoadDiscusion();   
     }
     
     function ShowHistoryDiscusionItems(id)
     {
-        var params = new Array();
-        var ar1 =  new Array();
-        ar1[0] = "DiscusionItem";
-        ar1[1] = id;
-        params[0] = ar1;
-        var data = CallPhpFunctionAjax("Ajax","HistoryItemDetail","JSON",params);   
+        var params = {DiscusionItem:id};
+        var data = CallPhpFunctionAjax("Ajax","HistoryItemDetail","JSONO|BJECT",params);   
         var html = "";
          html += "<tr>";
          html += "<th> "+GetWord("word407");
@@ -71,12 +54,8 @@ function DeleteDiscusionItem(id)
     }
     function BlockDiscusionUser(userId)
     {
-        var params = new Array();
-        var ar1 =  new Array();
-        ar1[0] = "UserId";
-        ar1[1] = userId;
-        params[0] = ar1;
-        CallPhpFunctionAjax("WebEdit","BlockDiscusionUser","POST",params);   
+        var params = {UserId:userId}
+        CallPhpFunctionAjax("WebEdit","BlockDiscusionUser","POSTOBJECT",params);   
         window.location.href="";
     }
     

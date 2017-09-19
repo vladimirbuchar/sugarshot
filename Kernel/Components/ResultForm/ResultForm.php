@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class ResultForm extends UserComponents{
+class ResultForm extends UserComponents implements \Inteface\iComponent{
     
     
     public function __construct() {

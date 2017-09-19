@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class UserRegister extends UserComponents{
+class UserRegister extends UserComponents implements \Inteface\iComponent{
     
     public function __construct() {
         

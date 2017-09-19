@@ -1,16 +1,9 @@
  function SavePrivileges()
     {
-        var params = new Array();
-        var ar1= new Array();
-        ar1[0] = "Id";
-        ar1[1] = $("#Id").val();
-        params[0] = ar1;
         var privileges = ReadUserPrivileges("userSecurity");
-        var ar2= new Array();
-        ar2[0] = "privileges";
-        ar2[1] = privileges;
-        params[1] = ar2;
-        CallPhpFunctionAjax("Settings","SaveWebPrivileges","POST",params);
+        var params = {Id:$("#Id").val() ,privileges:  privileges};
+        
+        CallPhpFunctionAjax("Settings","SaveWebPrivileges","POSTOBJECT",params);
     }
     function OnLoadItemDetail()
     {
@@ -40,5 +33,5 @@
     }
     function OnAfterSaveItem(id)
     {
-        CallPhpFunctionAjax("Settings","SetDefaultWebPriviles","POST",id);
+        CallPhpFunctionAjax("Settings","SetDefaultWebPriviles","POSTOBJECT",{id:id});
     }

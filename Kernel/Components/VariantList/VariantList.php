@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class VariantList extends UserComponents{
+class VariantList extends UserComponents implements \Inteface\iComponent{
     
     public $DivId = "";
     public $LoadUrl ="";

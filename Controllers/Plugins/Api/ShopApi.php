@@ -16,18 +16,12 @@ class ShopApi extends ApiController {
         $this->SetApiFunction("IsEmptyCart",array("*"));
     }
 
-    public function AddProductToCart() {
-        $ajax = $this->PrepareAjaxParametrs();
-        if (empty($ajax))
-            return;
+    public function AddProductToCart($params) {
         $shop = new \xweb_plugins\Shop();
-        $shop->AddProductToCart($ajax["ProductId"], self::$UserGroupId, $this->WebId, $this->LangId, $ajax["Count"], "Price", "Vat", $ajax["SelectVariant"]);
+        $shop->AddProductToCart($params["ProductId"], self::$UserGroupId, $this->WebId, $this->LangId, $params["Count"], "Price", "Vat", $params["SelectVariant"]);
     }
 
-    public function RecountProduct() {
-        $ajax = $this->PrepareAjaxParametrs();
-        if (empty($ajax))
-            return;
+    public function RecountProduct($ajax) {
         $shop = new \xweb_plugins\Shop();
         $prices = $shop->RecountProduct($ajax["ProductId"], $ajax["Count"], $ajax["Currency"], $ajax["PriceFormat"]);
         $prices["Price1ks"] = \Utils\StringUtils::PriceFormat($prices["Price1ks"], $ajax["PriceFormat"], $ajax["Currency"]);
@@ -40,10 +34,7 @@ class ShopApi extends ApiController {
         return $prices;
     }
 
-    public function DeleteProductFromCart() {
-        $ajax = $this->PrepareAjaxParametrs();
-        if (empty($ajax))
-            return;
+    public function DeleteProductFromCart($ajax) {
         $shop = new \xweb_plugins\Shop();
         $shop->DeleteProductFromCart($ajax["ProductId"]);
         $allPrices = $shop->GetShopPrice($ajax["PriceFormat"], $ajax["Currency"]);

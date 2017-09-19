@@ -16,7 +16,7 @@
         $("#OtherLang").change(function(){
              SaveTemplate(false);
              SetIgnoreExit(true);;
-             CallPhpFunctionAjax("WebEdit","ChangeLangVersion","POST",null);
+             CallPhpFunctionAjax("WebEdit","ChangeLangVersion","POSTOBJECT",null);
              var selectLang = $(this).val();
              window.location.href= "/xadm/WebEdit/TemplateDetail/"+$("#WebId").val()+"/"+ selectLang+"/"+$("#ObjectId").val()+"/0/";
         });
@@ -24,7 +24,7 @@
 function LoadDomainItems(domainValue)
 {
     
-    var data = CallPhpFunctionAjax("WebEdit","GetDomainItems","JSON",domainValue);
+    var data = CallPhpFunctionAjax("WebEdit","GetDomainItems","JSONOBJECT",{domainValue: domainValue});
     var outHtml = "";
     for(var i = 0; i< data.length; i++)
     {
@@ -49,43 +49,13 @@ function SaveTemplate(publish)
     var iframeData = $("#Data").val();
     var params = PrepareParametrs("settingTemplate");
     var nextItem = params.length;
-    
-     var ar = new Array();
-    ar[0] = "Content";
-    ar[1] = iframeData;
-    params[nextItem] = ar;
+    params.Content = iframeData;
     var privileges = ReadUserPrivileges("userSecurity");
-    var ar1 = new Array();
-    ar1[0] = "Privileges";
-    ar1[1] = privileges;
-    ar1[2] = false;
-    nextItem++;
-    params[nextItem] = ar1;
-    var ar2 = new Array();
-    ar2[0] = "Id";
-    ar2[1] = $("#ObjectId").val();
-    nextItem++;
-    params[nextItem] = ar2;
-    var ar3 = new Array();
-    ar3[0] = "Publish";
-    ar3[1] = publish;
-    nextItem++;
-    params[nextItem] = ar3;
-    var ar4 = new Array();
-    ar4[0] = "TemplateHeader";
-    ar4[1] = $("#TemplateHeader").val();
-    nextItem++;
-    params[nextItem] = ar4;
-    var ar5 = new Array();
-    ar5[0] = "TemplateSettings";
-    ar5[1] = PrepareParametrs("templateSettings");
-    nextItem++;
-    params[nextItem] = ar5;
-    
-    
-    
-    
-    
+    params.Privileges = privileges;
+    params.Id = $("#ObjectId").val();
+    params.Publish = publish;
+    params.TemplateHeader = $("#TemplateHeader").val();
+    params.TemplateSettings = PrepareParametrs("templateSettings");
     var outId = CallPhpFunctionAjax("WebEdit","SaveTemplate","LONGREQUEST",params);
     $("#ObjectId").val(outId);
     LoadData(outId,"template");

@@ -207,23 +207,25 @@ class Content extends ObjectManager {
             $content->Identificator = $identificator;
             $content->DomainId = $domainId;
             $content->TemplateId = $templateId;
+            $content->GalleryId = 0;
             $content->GallerySettings = $gallerySettings;
             $content->DiscusionSettings = $discusionSettings;
             $content->FormId = $formId;
-            $content->NoChild = $noChild;
+            $content->NoChild = $noChild ? 1 :0;
             $content->NoLoadSubItems = $noLoadSubItems;
-            $content->UseTemplateInChild = !$noChild ? $useTemplateInChild : false;
-            $content->ChildTemplateId = !$noChild ? $childTemplate : 0;
-            $content->CopyDataToChild = !$noChild ? $copyDataToChild : false;
-            $content->ActivatePager = $ActivatePager;
-            $content->FirstItemLoadPager = $FirstItemLoadPager;
-            $content->NextItemLoadPager = $NextItemLoadPager;
+            $content->UseTemplateInChild = !$noChild ? ($useTemplateInChild ? 1:0) : 0;
+            $content->ChildTemplateId = !$noChild ? $childTemplate   : 0;
+            $content->CopyDataToChild = !$noChild ? ($copyDataToChild ? 1:0): 0;
+            $content->ActivatePager = $ActivatePager ? 1:0;
+            $content->FirstItemLoadPager = $FirstItemLoadPager ? 0 :$FirstItemLoadPager;
+            $content->NextItemLoadPager = $NextItemLoadPager? 0 :$NextItemLoadPager;
             $content->Owner = $userId;
             $content->Inquery = $inquery;
 
             $content->DiscusionId = $connectDiscusion;
-            $content->SaveToCache = $caching;
+            $content->SaveToCache = $caching? 1:0;
             $content->SortRule = $sortRule;
+            $content->LastVisited = "1900-01-01 00:00:01";
             $contentId = $content->SaveObject();
 
             if ($contentId == 0) {
@@ -274,7 +276,7 @@ class Content extends ObjectManager {
 
     private function SaveData($data, $contentId, $langId = 0) {
         try {
-
+            
             if (!empty($data)) {
 
                 if ($langId == 0) {
@@ -284,13 +286,14 @@ class Content extends ObjectManager {
                 $contentData->DeleteByCondition("ContentId = $contentId AND LangId = $langId", true, false);
                 $contentData->ContentId = $contentId;
                 $contentData->LangId = $langId;
+                $contentData->ItemId = 0;
 
                 if (is_array($data)) {
 
-                    foreach ($data as $row) {
-                        $contentData->Value = html_entity_decode($row[1]);
-                        $contentData->ValueNoHtml = strip_tags(html_entity_decode($row[1]));
-                        $contentData->ItemName = $row[0];
+                    foreach ($data as $key => $value ) {
+                        $contentData->Value = html_entity_decode($value);
+                        $contentData->ValueNoHtml = strip_tags(html_entity_decode($value));
+                        $contentData->ItemName = $key;
                         $contentData->SaveObject();
                     }
                 }
@@ -383,7 +386,7 @@ class Content extends ObjectManager {
         $content->ChildTemplateId = !$noChild ? $childTemplate : 0;
         $content->CopyDataToChild = !$noChild ? $copyDataToChild : false;
         $content->DiscusionId = $connectDiscusion;
-        $content->SaveToCache = $caching;
+        $content->SaveToCache = $caching ? 1:0;
         $contentId = $content->SaveObject();
         if ($contentId == 0) {
             dibi::rollback();
@@ -517,14 +520,14 @@ class Content extends ObjectManager {
     }
 
     public function CreateInquery($name, $privileges = array(), $data = array(), $parentId = 0, $lang = 0, $publish = false) {
-        $data = $this->PrepareXmlFromArray($data);
+        $data = $this->PrepareXmlFromArray($data,"keyvalue");
         return $this->CreateContentItem($name, $publish, "", 0, ContentTypes::INQUERY, FALSE, $lang, $parentId, true, "", $privileges, $data, 0, 0, "");
     }
 
     public function UpdateDataSource($id, $name, $privileges = array(), $seoUrl = "", $data = "", $publish = false, $sort = 99999, $dataIsPrepared = false) {
         $tmpData = $data;
         if (!$dataIsPrepared)
-            $data = $this->PrepareXmlFromArray($data);
+            $data = $this->PrepareXmlFromArray($data,"keyvalue");
         return $this->UpdateContentItem($id, $name, $publish, $seoUrl, 0, true, true, "", $privileges, $data, 0, 0, "", "", "", 0, 0, 0, $sort, 0, $tmpData);
     }
 
@@ -535,7 +538,7 @@ class Content extends ObjectManager {
     public function CreateDataSource($name, $privileges = array(), $seoUrl = "", $data = "", $parentId = 0, $lang = 0, $publish = false, $sort = 99999, $dataIsPrepared = false) {
         $tmpData = $data;
         if (!$dataIsPrepared)
-            $data = $this->PrepareXmlFromArray($data);
+            $data = $this->PrepareXmlFromArray($data,"keyvalue");
         return $this->CreateContentItem($name, $publish, $seoUrl, 0, ContentTypes::DATASOURCE, FALSE, $lang, $parentId, true, "", $privileges, $data, 0, 0, "", "", "", 0, 0, 0, $sort, 0, $tmpData);
     }
 
@@ -544,7 +547,7 @@ class Content extends ObjectManager {
     }
 
     public function UpdateInquery($id, $name, $privileges = array(), $data = array(), $publish = false) {
-        $data = $this->PrepareXmlFromArray($data);
+        $data = $this->PrepareXmlFromArray($data,"keyvalue");
         return $this->UpdateContentItem($id, $name, $publish, "", 0, true, true, "", $privileges, $data, 0, 0, "");
     }
 
@@ -618,7 +621,7 @@ class Content extends ObjectManager {
 
     public function CreateForm($name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $lang, $parentid, $privileges, $data) {
         $this->SetValidateUserItem();
-        $data = $this->PrepareXmlFromArray($data);
+        $data = $this->PrepareXmlFromArray($data,"keyvalue");
         return $this->CreateContentItem($name, $isActive, $seoUrl, 0, ContentTypes::FORM, $availableOverSeoUrl, $lang, $parentid, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo, 0, 0, 0);
     }
 
@@ -627,7 +630,7 @@ class Content extends ObjectManager {
     }
 
     public function CreateMailing($name, $lang, $parentid, $privileges, $data, $active) {
-        $data = $this->PrepareXmlFromArray($data);
+        $data = $this->PrepareXmlFromArray($data,"keyvalue");
         return $this->CreateContentItem($name, $active, "", 0, ContentTypes::MAILING, false, $lang, $parentid, true, "", $privileges, $data, 0, 0, "", "", "", 0, 0, 0, 99999, 0);
     }
 
@@ -675,13 +678,13 @@ class Content extends ObjectManager {
     }
 
     public function UpdateMailing($contentId, $name, $privileges, $data, $active) {
-        $data = $this->PrepareXmlFromArray($data);
+        $data = $this->PrepareXmlFromArray($data,"keyvalue");
         return $this->UpdateContentItem($contentId, $name, $active, "", 0, false, true, "", $privileges, $data);
     }
 
     public function UpdateForm($contentId, $name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $privileges, $data) {
         $this->SetValidateUserItem();
-        $data = $this->PrepareXmlFromArray($data);
+        $data = $this->PrepareXmlFromArray($data,"keyvalue" );
         return $this->UpdateContentItem($contentId, $name, $isActive, $seoUrl, 0, $availableOverSeoUrl, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo);
     }
 
@@ -690,7 +693,7 @@ class Content extends ObjectManager {
     }
 
     public function CreateFile($name, $lang, $parentid, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $privileges, $data) {
-        $data = $this->PrepareXmlFromArray($data);
+        $data = $this->PrepareXmlFromArray($data,"keyvalue");
         $id = $this->CreateContentItem($name, true, "", 0, ContentTypes::FILEUPLOAD, true, $lang, $parentid, $noIncludeSearch, $identificator, $privileges, $data, 0, 0, "", $activeFrom, $activeTo);
         
         $this->GetFileType($id, $data, $lang);
@@ -707,6 +710,7 @@ class Content extends ObjectManager {
 
         if (strpos($data, ".jpg") !== false || strpos($data, ".gif") !== false || strpos($data, ".png") !== false || strpos($data, ".jpeg") !== false) {
 
+            
             $content->UploadedFileType = "image";
             $img = new Image();
             $web = \Model\Webs::GetInstance();
@@ -719,7 +723,7 @@ class Content extends ObjectManager {
             $actualFile = ROOT_PATH . $data;
 
             $newFileNameB = $img->CreateFileName($actualFile, "_b");
-
+            
             $img->Resizer($actualFile, $newFileNameB, $web->BigWidth, $web->BigHeight);
             $newFileNameB = str_replace(ROOT_PATH, "", $newFileNameB);
             $xml .= "<FileUpload_big>";
@@ -761,7 +765,7 @@ class Content extends ObjectManager {
     }
 
     public function UpdateFile($contentId, $name, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $privileges, $data) {
-        $data = $this->PrepareXmlFromArray($data);
+        $data = $this->PrepareXmlFromArray($data,"keyvalue");
         $id = $this->UpdateContentItem($contentId, $name, true, "", 0, true, $noIncludeSearch, $identificator, $privileges, $data, 0, 0, "", $activeFrom, $activeTo);
         $this->GetFileType($contentId, $data, $_GET["langid"]);
         return $id;
@@ -871,9 +875,9 @@ class Content extends ObjectManager {
                     $security->SecurityType = $privileges[$i][0];
                     $types[] = $privileges[$i][0];
                     $security->GroupId = $privileges[$i][1];
-                    $security->Value = $privileges[$i][2] == "true" ? true : false;
+                    $security->Value = $privileges[$i][2] == "true" ? 1 : 0;
                     if ($setDefault) {
-                        $setDefault = $privileges[$i][1] == $systemgroup->Id ? false : true;
+                        $setDefault = $privileges[$i][1] == $systemgroup->Id ? 0 : 1;
                     }
                     $security->SaveObject();
                 }
@@ -957,8 +961,8 @@ class Content extends ObjectManager {
 
 
             $model->Data = $data;
-            $model->ActiveFrom = $activeFrom;
-            $model->ActiveTo = $activeTo;
+            $model->ActiveFrom =empty($activeFrom) ? date('Y-m-d H:i:s'): $activeFrom ;
+            $model->ActiveTo = empty($activeTo) ? date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")): $activeTo;
             $model->ContentSettings = $settings;
             $vesionId = $model->SaveObject();
             if ($vesionId == 0) {
@@ -1899,9 +1903,11 @@ class Content extends ObjectManager {
         }
 
         $content = \Model\Content::GetInstance();
+        $contentVersion  = \Model\ContentVersion::GetInstance();
+        
         $security = \Model\ContentSecurity::GetInstance();
         $content->DeleteObject($id, false, false);
-        $this->DeleteByCondition("ContentId = $id", false, false);
+        $contentVersion->DeleteByCondition("ContentId = $id", false, false);
         $security->DeleteByCondition("ObjectId = $id", false, false);
         $langId = $_GET["langid"];
         $childs = $this->GetTree($langId, $id);
@@ -2444,15 +2450,14 @@ class Content extends ObjectManager {
                 }
 
                 $name = empty($saveData[0]["Name"]) ? "" : $saveData[0]["Name"];
-                $isActive = empty($saveData[0]["IsActive"]) ? false : $saveData[0]["IsActive"];
+                $isActive = empty($saveData[0]["IsActive"]) ? 0 : (bool)$saveData[0]["IsActive"];
                 $seoUrl = empty($saveData[0]["SeoUrl"]) ? "" : $saveData[0]["SeoUrl"];
                 $template = empty($saveData[0]["TemplateId"]) ? 0 : $saveData[0]["TemplateId"];
                 $AvailableOverSeoUrl = empty($saveData[0]["AvailableOverSeoUrl"]) ? 0 : $saveData[0]["AvailableOverSeoUrl"];
-                $data = empty($saveData[0]["Data"]) ? 0 : $saveData[0]["Data"];
-                $header = empty($saveData[0]["Header"]) ? 0 : $saveData[0]["Header"];
-                $activeFrom = empty($saveData[0]["ActiveFrom"]) ? 0 : $saveData[0]["ActiveFrom"];
-                $activeTo = empty($saveData[0]["ActiveTo"]) ? 0 : $saveData[0]["ActiveTo"];
-
+                $data = empty($saveData[0]["Data"]) ? "" : $saveData[0]["Data"];
+                $header = empty($saveData[0]["Header"]) ? "" : $saveData[0]["Header"];
+                $activeFrom = empty($saveData[0]["ActiveFrom"]) ? "0000-01-01 00:00:01" : $saveData[0]["ActiveFrom"];
+                $activeTo = empty($saveData[0]["ActiveTo"]) ? "9999-01-01 00:00:01" : $saveData[0]["ActiveTo"];
                 $this->CreateVersion($id, $name, $isActive, $userId, $seoUrl, $template, $AvailableOverSeoUrl, $destinationLang, $data, $header, $activeFrom, $activeTo, true, $mode);
             }
         }
@@ -2489,6 +2494,8 @@ class Content extends ObjectManager {
         $this->DeactiveAllVersion($contentId, $langId);
         $model->IsActive = true;
         $model->PublishUser = $user->GetUserId();
+        $model->ActiveFrom =empty($model->ActiveFrom) ? date('Y-m-d H:i:s'): $model->ActiveFrom ;
+        $model->ActiveTo = empty($model->ActiveTo) ? date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")): $model->ActiveTo;
         $model->SaveObject();
         $xml = $model->Data;
         $xmld = simplexml_load_string($xml);

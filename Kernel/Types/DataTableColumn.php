@@ -12,7 +12,7 @@ class DataTableColumn {
 
     public function __construct($name = "",$type="",$defaultValue="",$isnull = true, $length = 99999,$isautoincrement = false,$key = "")
     {   
-        $this->Mode = AlterTableMode::$AddColumn;
+        $this->Mode = AlterTableMode::ADDCOLUMN;
         $this->Name =$name;
         $this->Type = $type;
         $this->DefaultValue = $defaultValue;
@@ -24,11 +24,11 @@ class DataTableColumn {
 }
 
 class  KeyType{
-    public static $PrimaryKey = "PRIMARY KEY";
-    public static $INDEX   = "INDEX";
-    public static $UNIQUE   = "UNIQUE";
-    public static $FULLTEXT ="FULLTEXT";
+    const PRIMARYKEY= "PRIMARY KEY";
+    const INDEX   = "INDEX";
+    const UNIQUE   = "UNIQUE";
+    const FULLTEXT ="FULLTEXT";
 }
 class AlterTableMode{
-    public static $AddColumn = "ADD COLUMN";
+    const ADDCOLUMN = "ADD COLUMN";
 }

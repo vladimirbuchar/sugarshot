@@ -1,7 +1,7 @@
 <?php
 namespace Components;
 use HtmlComponents\Iframe;
-class SelectDialog extends UserComponents{
+class SelectDialog extends UserComponents implements \Inteface\iComponent{
     
     public $Id = "";
     public $CssClass = "SelectDialog";

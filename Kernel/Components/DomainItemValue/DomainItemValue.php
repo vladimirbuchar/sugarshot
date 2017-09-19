@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class DomainItemValue extends UserComponents{
+class DomainItemValue extends UserComponents implements \Inteface\iComponent{
     
     public $ValueIdetificator="";
     public $LoadId = 0;
