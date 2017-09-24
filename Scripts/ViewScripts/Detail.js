@@ -215,7 +215,7 @@ function AlternativeContent()
         }
         param.ReadOnly = readOnly;
         
-        var outData = CallPhpFunctionAjax("WebEdit","GetDomainFromTemplate","JSON",param);
+        var outData = CallPhpFunctionAjax("WebEdit","GetDomainFromTemplate","JSONOBJECT",param);
         var html = outData["Html"];
         var xml = outData["TemplateSettings"];
         xmlDoc = $.parseXML(xml);
@@ -300,8 +300,7 @@ function AlternativeContent()
         params.FormSettings = $("#formSettings").val();
         params.InquerySettings = $("#Inquery").val();
         params.Discusion = $("#Discusion").val();
-        
-        var outId = CallPhpFunctionAjax("WebEdit","SaveUserItem","POST",params);
+        var outId = CallPhpFunctionAjax("WebEdit","SaveUserItem","POSTOBJECT",params);
         $("#ObjectId").val(outId);
         LoadData(outId,"useritem");
         HideLoading();

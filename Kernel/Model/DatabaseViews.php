@@ -60,10 +60,10 @@ class DatabaseViews extends SqlDatabase {
 
         foreach ($columns as $row) {
             $dbnull = $row["Null"] == "YES" ? "NOT NULL" : ""; // db null
-
             $defaultValue = empty($row["Default"]) ? "" : "DEFAULT " . $row["Default"];
             $sql[] = $row["Field"] . " " . $row["Type"] . " $dbnull " . " " . $defaultValue;
-        }
+            
+        }   
         $this->_columnsInfo = array();
         return implode(",", $sql);
     }
@@ -71,18 +71,11 @@ class DatabaseViews extends SqlDatabase {
     /** function for updaste special table when is view materialized 
      */
     public function UpdateMaterializeView() {
-        $sql_mode = "";
         try {
-            $sql_mode = $this->GetSqlVariable("sql_mode");
-            if (!empty($sql_mode))
-                $this->SetSqlVariable("sql_mode", "");
             dibi::query("TRUNCATE TABLE " . $this->ObjectName . "_materialized");
-            dibi::query("INSERT INTO  " . $this->ObjectName . "_materialized SELECT * FROM " . strtoupper($this->ObjectName));
+            $this->QueryWithMysqli("INSERT INTO  " . $this->ObjectName . "_materialized SELECT * FROM " . strtoupper($this->ObjectName));
         } catch (Exception $ex) {
             \Kernel\Page::ApplicationError($ex);
-        } finally {
-            if (!empty($sql_mode))
-                $this->SetSqlVariable("sql_mode", $sql_mode);
         }
     }
 

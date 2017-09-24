@@ -692,6 +692,7 @@ class Page {
             $params[$name] = $value;
         else
             $params[$name] = base64_decode($value);
+        
         $_SESSION["longRequestParams"] = $params;
     }
 

@@ -507,7 +507,7 @@ class Content extends ObjectManager {
     }
 
     public function CreateTemplate($name, $identificator, $privileges = array(), $data = "", $parentId = 0, $lang = 0, $domainId = 0, $templateId = 0, $publish = false, $header = "", $settings = "") {
-        $settings = $this->PrepareXmlFromArray($settings);
+        $settings = $this->PrepareXmlFromArray($settings,"keyvalue");
         return $this->CreateContentItem($name, $publish, "", 0, ContentTypes::TEMPLATE, FALSE, $lang, $parentId, true, $identificator, $privileges, $data, $domainId, $templateId, $header, "", "", 0, 0, 0, 99999, 0, true, array(), false, false, 0, false, false, 0, 0, 0, 0, $settings);
     }
 
@@ -552,7 +552,7 @@ class Content extends ObjectManager {
     }
 
     public function UpdateTemplate($id, $name, $identificator, $privileges = array(), $data = "", $domainId = 0, $templateId = 0, $publish = false, $header = "", $settings = "") {
-        $settings = $this->PrepareXmlFromArray($settings);
+        $settings = $this->PrepareXmlFromArray($settings,"keyvalue");
         return $this->UpdateContentItem($id, $name, $publish, "", 0, true, true, $identificator, $privileges, $data, $domainId, $templateId, $header, "", "", 0, 0, 0, 99999, 0, array(), false, false, 0, false, false, 0, 0, 0, 0, $settings);
     }
 
@@ -567,7 +567,7 @@ class Content extends ObjectManager {
         $this->SetValidateUserItem();
         $tmpData = $data;
         if (!$dataIsPrepared)
-            $data = $this->PrepareXmlFromArray($data);
+            $data = $this->PrepareXmlFromArray($data,"keyvalue");
         return $this->CreateContentItem($name, $isActive, $seoUrl, 0, ContentTypes::USERITEM, $availableOverSeoUrl, $lang, $parentid, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo, $gallerySettings, $discusionSettings, $connectDiscusion, $sort, $formId, true, $tmpData, $noChild, $useTemplateInChild, $childTemplate, $copyDataToChild, $ActivatePager, $FirstItemLoadPager, $NextItemLoadPager, $inquery, $noLoadSubItems, "", $caching);
     }
 
@@ -778,7 +778,7 @@ class Content extends ObjectManager {
     public function UpdateUserItem($contentId, $name, $seoUrl, $availableOverSeoUrl, $noIncludeSearch, $identificator, $activeFrom, $activeTo, $template, $isActive, $privileges, $data, $gallerySettings = 0, $discusionSettings = 0, $connectDiscusion = 0, $formId = 0, $noChild = false, $useTemplateInChild = false, $childTemplate = 0, $copyDataToChild = false, $ActivatePager = false, $FirstItemLoadPager = 0, $NextItemLoadPager = 0, $inquery = 0, $noLoadSubItems = 0, $caching = false, $sort = 99999, $sortRule) {
         $this->SetValidateUserItem();
         $dataTmp = $data;
-        $data = $this->PrepareXmlFromArray($data);
+        $data = $this->PrepareXmlFromArray($data,"keyvalue");
         return $this->UpdateContentItem($contentId, $name, $isActive, $seoUrl, 0, $availableOverSeoUrl, $noIncludeSearch, $identificator, $privileges, $data, 0, $template, "", $activeFrom, $activeTo, $gallerySettings, $discusionSettings, $connectDiscusion, $sort, $formId, $dataTmp, $noChild, $useTemplateInChild, $childTemplate, $copyDataToChild, $ActivatePager, $FirstItemLoadPager, $NextItemLoadPager, $inquery, $noLoadSubItems, "", $caching, $sortRule);
     }
 
@@ -842,7 +842,7 @@ class Content extends ObjectManager {
                 foreach ($array as $key => $value) {
                     if (!empty($key)) {
                         if (StringUtils::EndWith($key, "__ishtmleditor__")) {
-                            $key = StringUtils::RemoveString($id, "__ishtmleditor__");
+                            $key = StringUtils::RemoveString($key, "__ishtmleditor__");
                             $id = StringUtils::RemoveLastChar($key, 5);
                         }
                         $xml .= "<" . $key . "><![CDATA[" . $value . "]]></" . $key . ">";

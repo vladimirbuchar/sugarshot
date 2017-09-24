@@ -92,14 +92,12 @@ function  CallPhpFunctionAjax(controllerName, functionName, type, params, params
         else if (type == "LONGREQUEST")
         {
             
-            for (var i = 0; i< params.length; i++)
+            for (var name in params) 
             {
-                var row = params[i];
-                var name = row[0];
-                
-                var base64 = (name === "Privileges" || name ==="TemplateSettings" ? false : true);
-                var value =  base64 ? b64EncodeUnicode(row[1]) :row[1];
-                $.post("/longrequest/", {name: name, value: value });   
+               var value = params[name];
+               var base64 = (name === "Privileges" || name ==="TemplateSettings" ? false : true);
+               value =  base64 ? b64EncodeUnicode(value) :value;
+               $.post("/longrequest/", {name: name, value: value });   
             }
             $.post(url,{}, function (data) {
                 out = data;

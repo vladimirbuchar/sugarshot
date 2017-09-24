@@ -508,10 +508,11 @@ class WebEditApi extends ApiController {
         $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
         $templateSettings = $ajaxParametrs["TemplateSettings"];
+        
         if ($id == 0)
-            $id = $content->CreateTemplate($ajaxParametrs["Name"], $ajaxParametrs["Identificator"], $privileges, $ajaxParametrs["Content"], $_GET["param1"], $_GET["langid"], $ajaxParametrs["Domain"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $ajaxParametrs["TemplateHeader"], $templateSettings);
+            $id = $content->CreateTemplate($ajaxParametrs["Name"], $ajaxParametrs["Identificator"], $privileges, $ajaxParametrs["Content"], $_GET["param1"], $_GET["langid"], empty($ajaxParametrs["Domain"]) ? 0: $ajaxParametrs["Domain"], empty($ajaxParametrs["Template"]) ? 0: $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $ajaxParametrs["TemplateHeader"], $templateSettings);
         else
-            $id = $content->UpdateTemplate($id, $ajaxParametrs["Name"], $ajaxParametrs["Identificator"], $privileges, $ajaxParametrs["Content"], $ajaxParametrs["Domain"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $ajaxParametrs["TemplateHeader"], $templateSettings);
+            $id = $content->UpdateTemplate($id, $ajaxParametrs["Name"], $ajaxParametrs["Identificator"], $privileges, $ajaxParametrs["Content"], empty($ajaxParametrs["Domain"]) ? 0: $ajaxParametrs["Domain"], empty($ajaxParametrs["Template"]) ? 0: $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $ajaxParametrs["TemplateHeader"], $templateSettings);
         return $id;
     }
 
@@ -577,12 +578,14 @@ class WebEditApi extends ApiController {
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
-        $data = $ajaxParametrs["Parametrs"];
+        $data = empty($ajaxParametrs["Parametrs"]) ? array():$ajaxParametrs["Parametrs"];
+        $editors = $this->GetHtmlEditors($ajaxParametrs);
+        $data = array_merge($data,$editors);
         unset($ajaxParametrs["Parametrs"]);
         if ($id == 0) {
-            $id = $content->CreateUserItem($ajaxParametrs["NameObject"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $_GET["langid"], $_GET["param1"], $privileges, $data, false, $ajaxParametrs["GallerySettings"], $ajaxParametrs["Discusion"] == 0 ? 0 : 1, $ajaxParametrs["Discusion"], $ajaxParametrs["FormSettings"], $noChild, $useTemplateInChild, $ajaxParametrs["ChildTemplate"], $ajaxParametrs["CopyDataToChild"], $ajaxParametrs["ActivatePager"], $ajaxParametrs["FirstItemLoadPager"], $ajaxParametrs["NextItemLoadPager"], $ajaxParametrs["InquerySettings"], $ajaxParametrs["NoLoadSubitems"], $ajaxParametrs["SaveToCache"], $ajaxParametrs["Sort"], $ajaxParametrs["SortRule"]);
+            $id = $content->CreateUserItem($ajaxParametrs["NameObject"], empty($ajaxParametrs["SeoUrl"]) ?"":$ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], empty($ajaxParametrs["Identificator"]) ? "":$ajaxParametrs["Identificator"], empty($ajaxParametrs["ActiveFrom"])?date('Y-m-d H:i:s'):$ajaxParametrs["ActiveFrom"], empty($ajaxParametrs["ActiveTo"])? date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")):$ajaxParametrs["ActiveTo"] , empty($ajaxParametrs["Template"])?0:$ajaxParametrs["Template"], $ajaxParametrs["Publish"], $_GET["langid"], $_GET["param1"], $privileges, $data, false, $ajaxParametrs["GallerySettings"], $ajaxParametrs["Discusion"] == 0 ? 0 : 1, $ajaxParametrs["Discusion"], $ajaxParametrs["FormSettings"], $noChild, $useTemplateInChild, $ajaxParametrs["ChildTemplate"], $ajaxParametrs["CopyDataToChild"], $ajaxParametrs["ActivatePager"], empty($ajaxParametrs["FirstItemLoadPager"]) ?0:$ajaxParametrs["FirstItemLoadPager"], empty($ajaxParametrs["NextItemLoadPager"]) ? 0:$ajaxParametrs["NextItemLoadPager"], $ajaxParametrs["InquerySettings"], $ajaxParametrs["NoLoadSubitems"], $ajaxParametrs["SaveToCache"], $ajaxParametrs["Sort"], $ajaxParametrs["SortRule"]);
         } else {
-            $id = $content->UpdateUserItem($id, $ajaxParametrs["NameObject"], $ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], $ajaxParametrs["Identificator"], $ajaxParametrs["ActiveFrom"], $ajaxParametrs["ActiveTo"], $ajaxParametrs["Template"], $ajaxParametrs["Publish"], $privileges, $data, $ajaxParametrs["GallerySettings"], $ajaxParametrs["Discusion"] == 0 ? 0 : 1, $ajaxParametrs["Discusion"], $ajaxParametrs["FormSettings"], $noChild, $useTemplateInChild, $ajaxParametrs["ChildTemplate"], $ajaxParametrs["CopyDataToChild"], $ajaxParametrs["ActivatePager"], $ajaxParametrs["FirstItemLoadPager"], $ajaxParametrs["NextItemLoadPager"], $ajaxParametrs["InquerySettings"], $ajaxParametrs["NoLoadSubitems"], $ajaxParametrs["SaveToCache"], $ajaxParametrs["Sort"], $ajaxParametrs["SortRule"]);
+            $id = $content->UpdateUserItem($id, $ajaxParametrs["NameObject"], empty($ajaxParametrs["SeoUrl"]) ?"":$ajaxParametrs["SeoUrl"], $ajaxParametrs["AvailableOverSeoUrl"], $ajaxParametrs["NoIncludeSearch"], empty($ajaxParametrs["Identificator"]) ? "":$ajaxParametrs["Identificator"], empty($ajaxParametrs["ActiveFrom"])?date('Y-m-d H:i:s'):$ajaxParametrs["ActiveFrom"], empty($ajaxParametrs["ActiveTo"])? date('Y-m-d',strtotime(date("Y-m-d", time()) . " + 36500 day")):$ajaxParametrs["ActiveTo"], empty($ajaxParametrs["Template"])?0:$ajaxParametrs["Template"], $ajaxParametrs["Publish"], $privileges, $data, $ajaxParametrs["GallerySettings"], $ajaxParametrs["Discusion"] == 0 ? 0 : 1, $ajaxParametrs["Discusion"], $ajaxParametrs["FormSettings"], $noChild, $useTemplateInChild, $ajaxParametrs["ChildTemplate"], $ajaxParametrs["CopyDataToChild"], $ajaxParametrs["ActivatePager"], empty($ajaxParametrs["FirstItemLoadPager"]) ?0:$ajaxParametrs["FirstItemLoadPager"], empty($ajaxParametrs["NextItemLoadPager"]) ? 0:$ajaxParametrs["NextItemLoadPager"], $ajaxParametrs["InquerySettings"], $ajaxParametrs["NoLoadSubitems"], $ajaxParametrs["SaveToCache"], $ajaxParametrs["Sort"], $ajaxParametrs["SortRule"]);
         }
         if ($ajaxParametrs["Publish"]) {
             $canPublish = $content->HasPrivileges($id, \Types\PrivilegesType::CANPUBLISH);
@@ -599,7 +602,7 @@ class WebEditApi extends ApiController {
         unset($ajaxParametrs["Privileges"]);
         $content = new \Objects\Content();
         $id = $ajaxParametrs["Id"];
-        $data = $ajaxParametrs["Parametrs"];
+        $data = empty($ajaxParametrs["Parametrs"]) ? array():$ajaxParametrs["Parametrs"];
 
         unset($ajaxParametrs["Parametrs"]);
         if ($id == 0) {

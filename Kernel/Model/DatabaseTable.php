@@ -821,23 +821,7 @@ class DatabaseTable extends SqlDatabase {
         }
     }
 
-    /**
-     * run direct mysql query
-     * @param  string $query
-     */
-    private function QueryWithMysqli($query) {
-        try {
-            $sql_mode = $this->GetSqlVariable("sql_mode");
-            $this->SetSqlVariable("sql_mode","");
-            $con = mysqli_connect(SQL_SERVER, SQL_LOGIN, SQL_PASSWORD, SQL_DATABASE);
-            mysqli_query($con, "SET NAMES 'utf8'");
-            mysqli_query($con, $query);
-            $this->SetSqlVariable("sql_mode",$sql_mode);
-            mysqli_close($con);
-        } catch (Exception $e) {
-            \Kernel\Page::ApplicationError($ex);
-        }
-    }
+    
     
     /**
      * test table is empty
