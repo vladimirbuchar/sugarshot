@@ -136,7 +136,8 @@ class UserComponents extends GlobalClass {
             }
 
             if (Files::FileExists(COMPONENTS_PATH_PLUGINS . $this->Type . "/" . $fileName)) {
-                $this->RenderHtml = Files::ReadFile(COMPONENTS_PATH_PLUGINS . $fileName);
+                $this->RenderHtml = Files::ReadFile(COMPONENTS_PATH_PLUGINS .$this->Type . "/" . $fileName);
+                
             }
         }
     }

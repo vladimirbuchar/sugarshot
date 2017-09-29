@@ -1,6 +1,6 @@
 <?php
 namespace Components;
-class AddToCart extends UserComponents implements \Inteface\iComponent{
+    class AddToCart extends UserComponents implements \Inteface\iComponent{
     
     public $ButtonName = "";
     public $SelectItem ="";

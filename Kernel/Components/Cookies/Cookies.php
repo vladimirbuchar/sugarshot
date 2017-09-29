@@ -25,7 +25,7 @@ class Cookies extends UserComponents implements \Inteface\iComponent{
         $this->SetReplaceString("externalLink", $this->MoreInfoLink);
         if (empty($this->MoreInfoLink)|| $this->MoreInfoLink =="#")
             $this->SetReplaceString ("HideMoreLink", "dn");
-        $this->AddMoreScript("/Scripts/ExternalApi/jquery.cookie.js");
+        $this->AddMoreScript("/node_modules/jquery.cookie/jquery.cookie.js");
         
     }
     

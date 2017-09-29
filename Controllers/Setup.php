@@ -69,6 +69,7 @@ class Setup extends PageController {
         if (!$this->isSetupExtensions("gd2")) {
             $pageHtml.= "Install gd2 - sudo apt-get install php-gd2;service apache2 restart; <br />";
         }
+        \dibi::query("set global sql_mode=''");
         $this->SetTemplateData("pageHtml", $pageHtml);
         
     }
