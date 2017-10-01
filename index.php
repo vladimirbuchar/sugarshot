@@ -87,7 +87,6 @@ try {
     }
 
     if ($updatemodel) {
-
         Kernel\Page::StartUpdateModel();
         return;
     }
